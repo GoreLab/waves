@@ -24,5 +24,9 @@ Imports:
     MASS,
     wesanderson,
     magrittr,
-    tidyselect
+    tidyselect,
+    ggplot2,
+    tidyr,
+    stringr,
+    rlang
 RoxygenNote: 6.1.1
