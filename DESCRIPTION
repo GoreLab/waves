@@ -1,0 +1,13 @@
+Package: waves
+Title: Vis-NIR Spectral Analysis Wrapper
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Jenna",
+           family = "Hershberger",
+           role = c("aut", "cre"),
+           email = "jmh579@cornell.edu",
+           comment = c(ORCID = "https://orcid.org/0000-0002-3147-6867"))
+Description: What the package does (one paragraph).
+License: MIT
+Encoding: UTF-8
+LazyData: true
