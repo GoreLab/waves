@@ -72,6 +72,7 @@
 #' @importFrom stats cor predict sd
 #' @importFrom spectacles postResampleSpectro
 #' @importFrom randomForest importance
+#' @importFrom rlang .data
 #'
 #' @export
 #'

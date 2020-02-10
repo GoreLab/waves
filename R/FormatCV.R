@@ -38,6 +38,7 @@
 #' @importFrom dplyr group_by ungroup filter
 #' @importFrom tidyr nest unnest
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 #' @return List of data.frames (training set, test set) compiled according to user-provided
 #' cross validation scheme.

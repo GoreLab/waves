@@ -8,6 +8,7 @@
 #' any missing values
 #' @param wavelengths List of wavelengths (numerical format) represented by each spectral column in `input.df`
 #' @param num.col.before.spectra Number of columns to the left of the spectral matrix (including unique ID).
+#'
 #' @importFrom dplyr mutate distinct
 #' @importFrom ggplot2 ggplot aes geom_line theme_minimal labs scale_color_manual
 #' @importFrom wesanderson wes_palette
