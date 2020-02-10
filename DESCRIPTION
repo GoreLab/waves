@@ -1,13 +1,26 @@
 Package: waves
 Title: Vis-NIR Spectral Analysis Wrapper
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "Jenna",
-           family = "Hershberger",
-           role = c("aut", "cre"),
-           email = "jmh579@cornell.edu",
-           comment = c(ORCID = "https://orcid.org/0000-0002-3147-6867"))
+Authors@R: c(
+              person(given = "Jenna", family = "Hershberger", role = c("aut", "cre"),
+                email = "jmh579@cornell.edu",
+                comment = c(ORCID = "0000-0002-3147-6867")),
+              person(given = "Michael", family = "Gore", role = "ths"),
+              person("NSF BREAD IOS-1543958", role = "fnd")
+              )
 Description: What the package does (one paragraph).
-License: MIT
+Depends: R (>= 3.5)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    dplyr,
+    prospectr,
+    spectacles,
+    caret,
+    pls,
+    kernlab,
+    randomForest,
+    MASS,
+    wesanderson
+RoxygenNote: 6.1.1
