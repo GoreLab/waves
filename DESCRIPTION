@@ -22,5 +22,7 @@ Imports:
     kernlab,
     randomForest,
     MASS,
-    wesanderson
+    wesanderson,
+    magrittr,
+    tidyselect
 RoxygenNote: 6.1.1
