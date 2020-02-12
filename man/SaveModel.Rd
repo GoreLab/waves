@@ -34,11 +34,11 @@ will save to working directory.}
 \item{tune.length}{Sets the sample space for tuning of hyperparameters.
 (Example// "ncomp", or number of components for "pls" model; "ntree" and "mtry" for "rf" model)}
 
-\item{model.method}{Model type to use for training. Options include:
-*Partial least squares regression, "pls" (Default)
-*Random forest, "rf"
-*Support vector machine with linear kernel, "svmLinear"
-*Support vector machine with radial kernel, "svmRadial"}
+\item{model.method}{Model type to use for training. Valid options include:
+*"pls": Partial least squares regression (Default)
+*"rf": Random forest
+*"svmLinear": Support vector machine with linear kernel
+*"svmRadial": Support vector machine with radial kernel}
 
 \item{num.iterations}{Number of training iterations to perform for model statistics}
 

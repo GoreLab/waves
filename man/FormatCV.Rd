@@ -27,10 +27,10 @@ Formatting must be consistent with `trial1`.}
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
 Options for cv.scheme include:
-*"CV1", untested lines in tested environments
-*"CV2", tested lines in tested environments
-*"CV0", tested lines in untested environments
-*"CV00", untested lines in untested environments}
+*"CV1": untested lines in tested environments
+*"CV2": tested lines in tested environments
+*"CV0": tested lines in untested environments
+*"CV00": untested lines in untested environments}
 
 \item{seed}{Number used in the function `set.seed()` for reproducible randomization.
 If `NULL`, no seed is set. Default is `NULL`.}
@@ -46,9 +46,13 @@ cross validation scheme.
 Standalone function that is also used within [TrainSpectralModel()]
 }
 \details{
-Use of a CV scheme requires a column in the input `data.frame` named "genotype" to
-ensure proper sorting of training and test sets. Variables `trial1` and `trial2` are required,
-while `trial 3` is optional.
+Use of a cross-validation scheme requires a column in the input `data.frame` named
+"genotype" to ensure proper sorting of training and test sets. Variables `trial1` and `trial2`
+are required, while `trial 3` is optional.
+}
+\examples{
+
+
 }
 \references{
 Jarquín, D., C. Lemes da Silva, R. C. Gaynor, J. Poland, A. Fritz, R. Howard,

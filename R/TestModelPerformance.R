@@ -18,11 +18,11 @@
 #' @param wavelengths List of wavelengths represented by each column in `train.data`
 #' @param tune.length Number deliniating search space for tuning of the PLSR hyperparameter `ncomp`.
 #' Default is 50.
-#' @param model.method Model type to use for training. Options include:
-#' *Partial least squares regression, "pls" (Default)
-#' *Random forest, "rf"
-#' *Support vector machine with linear kernel, "svmLinear"
-#' *Support vector machine with radial kernel, "svmRadial"
+#' @param model.method Model type to use for training. Valid options include:
+#' *"pls": Partial least squares regression (Default)
+#' *"rf": Random forest
+#' *"svmLinear": Support vector machine with linear kernel
+#' *"svmRadial": Support vector machine with radial kernel
 #' @param output.summary boolean that controls function output.
 #' *If `TRUE`, a summary df will be output (1st row = means, 2nd row = standard deviations). Default is `TRUE`.
 #' *If `FALSE`, entire results data frame will be output.
@@ -50,10 +50,10 @@
 #' Formatting must be consistent with `trial1`.
 #' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
 #' Options for cv.scheme include:
-#' *"CV1", untested lines in tested environments
-#' *"CV2", tested lines in tested environments
-#' *"CV0", tested lines in untested environments
-#' *"CV00", untested lines in untested environments
+#' *"CV1": untested lines in tested environments
+#' *"CV2": tested lines in tested environments
+#' *"CV0": tested lines in untested environments
+#' *"CV00": untested lines in untested environments
 #' @param split.test boolean that allows for a fixed training set and a split test set.
 #' Example// train model on data from two breeding programs and a stratified subset (70\%)
 #' of a third and test on the remaining samples (30\%)  of the third. If `FALSE`, the entire provided

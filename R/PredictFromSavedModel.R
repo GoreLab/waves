@@ -9,13 +9,13 @@
 #' @param model.stats.location String containing file path (including file name) to save location
 #' of "(model.name)_stats.csv" as output from the SaveModel function.
 #' @param model.location String containing file path (including file name) to location where the
-#' trained model ("(model.name).Rds") was saved as output by the SaveModel function.
+#' trained model ("(model.name).Rds") was saved as output by the [SaveModel()] function.
 #' @param wavelengths List of wavelengths represented by each column in `input.data`
-#' @param model.method Model type to use for training. Options include:
-#' *Partial least squares regression, "pls" (Default)
-#' *Random forest, "rf"
-#' *Support vector machine with linear kernel, "svmLinear"
-#' *Support vector machine with radial kernel, "svmRadial"
+#' @param model.method Model type to use for training. Valid options include:
+#' *"pls": Partial least squares regression (Default)
+#' *"rf": Random forest
+#' *"svmLinear": Support vector machine with linear kernel
+#' *"svmRadial": Support vector machine with radial kernel
 #'
 #' @importFrom stats predict
 #' @importFrom utils read.csv

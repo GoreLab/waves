@@ -16,15 +16,15 @@ right of spectra! Column names of spectra must start with "X".}
 of "(model.name)_stats.csv" as output from the SaveModel function.}
 
 \item{model.location}{String containing file path (including file name) to location where the
-trained model ("(model.name).Rds") was saved as output by the SaveModel function.}
+trained model ("(model.name).Rds") was saved as output by the [SaveModel()] function.}
 
 \item{wavelengths}{List of wavelengths represented by each column in `input.data`}
 
-\item{model.method}{Model type to use for training. Options include:
-*Partial least squares regression, "pls" (Default)
-*Random forest, "rf"
-*Support vector machine with linear kernel, "svmLinear"
-*Support vector machine with radial kernel, "svmRadial"}
+\item{model.method}{Model type to use for training. Valid options include:
+*"pls": Partial least squares regression (Default)
+*"rf": Random forest
+*"svmLinear": Support vector machine with linear kernel
+*"svmRadial": Support vector machine with radial kernel}
 }
 \value{
 `data.frame` object of predictions for each sample (row). First column is unique identifier

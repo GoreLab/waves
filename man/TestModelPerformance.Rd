@@ -31,11 +31,11 @@ analyzed. If `FALSE`, input data is analyzed as is (raw). Default is `FALSE`.}
 \item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter `ncomp`.
 Default is 50.}
 
-\item{model.method}{Model type to use for training. Options include:
-*Partial least squares regression, "pls" (Default)
-*Random forest, "rf"
-*Support vector machine with linear kernel, "svmLinear"
-*Support vector machine with radial kernel, "svmRadial"}
+\item{model.method}{Model type to use for training. Valid options include:
+*"pls": Partial least squares regression (Default)
+*"rf": Random forest
+*"svmLinear": Support vector machine with linear kernel
+*"svmRadial": Support vector machine with radial kernel}
 
 \item{output.summary}{boolean that controls function output.
 *If `TRUE`, a summary df will be output (1st row = means, 2nd row = standard deviations). Default is `TRUE`.
@@ -53,10 +53,10 @@ random sampling. This term is only used if `test.data = NULL`. Default is `TRUE`
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
 Options for cv.scheme include:
-*"CV1", untested lines in tested environments
-*"CV2", tested lines in tested environments
-*"CV0", tested lines in untested environments
-*"CV00", untested lines in untested environments}
+*"CV1": untested lines in tested environments
+*"CV2": tested lines in tested environments
+*"CV0": tested lines in untested environments
+*"CV00": untested lines in untested environments}
 
 \item{trial1}{`data.frame` object that is for use only when `cv.scheme` is provided.
 Contains the trial to be tested in subsequent model training functions. The first column

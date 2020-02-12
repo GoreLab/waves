@@ -20,11 +20,11 @@
 #' @param best.model.metric Metric used to decide which model is best. Must be either "RMSE or "Rsquared".
 #' @param tune.length Sets the sample space for tuning of hyperparameters.
 #' (Example// "ncomp", or number of components for "pls" model; "ntree" and "mtry" for "rf" model)
-#' @param model.method Model type to use for training. Options include:
-#' *Partial least squares regression, "pls" (Default)
-#' *Random forest, "rf"
-#' *Support vector machine with linear kernel, "svmLinear"
-#' *Support vector machine with radial kernel, "svmRadial"
+#' @param model.method Model type to use for training. Valid options include:
+#' *"pls": Partial least squares regression (Default)
+#' *"rf": Random forest
+#' *"svmLinear": Support vector machine with linear kernel
+#' *"svmRadial": Support vector machine with radial kernel
 #' @param num.iterations Number of training iterations to perform for model statistics
 #' @param wavelengths List of wavelengths represented by each column in `train.data`
 #' @param stratified.sampling boolean that, if `TRUE``, will trigger the use of stratified random

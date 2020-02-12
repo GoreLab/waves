@@ -2,9 +2,9 @@
 #' according to user-provided cross validation scheme
 #' @name FormatCV
 #' @description Standalone function that is also used within [TrainSpectralModel()]
-#' @details Use of a CV scheme requires a column in the input `data.frame` named "genotype" to
-#' ensure proper sorting of training and test sets. Variables `trial1` and `trial2` are required,
-#' while `trial 3` is optional.
+#' @details Use of a cross-validation scheme requires a column in the input `data.frame` named
+#' "genotype" to ensure proper sorting of training and test sets. Variables `trial1` and `trial2`
+#' are required, while `trial 3` is optional.
 #'
 #' @param trial1 `data.frame` object that is for use only when `cv.scheme` is provided.
 #' Contains the trial to be tested in subsequent model training functions. The first column
@@ -21,10 +21,10 @@
 #' Formatting must be consistent with `trial1`.
 #' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
 #' Options for cv.scheme include:
-#' *"CV1", untested lines in tested environments
-#' *"CV2", tested lines in tested environments
-#' *"CV0", tested lines in untested environments
-#' *"CV00", untested lines in untested environments
+#' *"CV1": untested lines in tested environments
+#' *"CV2": tested lines in tested environments
+#' *"CV0": tested lines in untested environments
+#' *"CV00": untested lines in untested environments
 #' @param seed Number used in the function `set.seed()` for reproducible randomization.
 #' If `NULL`, no seed is set. Default is `NULL`.
 #' @param remove.genotype boolean that, if `TRUE`, removes the "genotype" column is removed from

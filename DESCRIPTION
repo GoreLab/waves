@@ -8,7 +8,8 @@ Authors@R: c(
               person(given = "Michael", family = "Gore", role = "ths"),
               person("NSF BREAD IOS-1543958", role = "fnd")
               )
-Description: What the package does (one paragraph).
+Description: Originally designed application in the context of resource-limited plant research and breeding programs, waves provides an open-source solution to spectral data processing and model devleopment by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes plotting, filtering, aggregation, preprocessing, model training, and prediction functions to enable open-source association of spectral and reference data. 
+URL: https://github.com/GoreLab/waves 
 Depends: R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -30,3 +31,5 @@ Imports:
     stringr,
     rlang
 RoxygenNote: 6.1.1
+Suggests: 
+    testthat (>= 2.1.0)

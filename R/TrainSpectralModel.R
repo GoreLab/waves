@@ -13,11 +13,11 @@
 #' stratified sample of 70\%. Default is `NULL`.
 #' @param tune.length Number deliniating search space for tuning of the PLSR hyperparameter `ncomp`.
 #' Default is 50.
-#' @param model.method Model type to use for training. Options include:
-#' *Partial least squares regression, "pls" (Default)
-#' *Random forest, "rf"
-#' *Support vector machine with linear kernel, "svmLinear"
-#' *Support vector machine with radial kernel, "svmRadial"
+#' @param model.method Model type to use for training. Valid options include:
+#' *"pls": Partial least squares regression (Default)
+#' *"rf": Random forest
+#' *"svmLinear": Support vector machine with linear kernel
+#' *"svmRadial": Support vector machine with radial kernel
 #' @param output.summary boolean that controls function output.
 #' *If `TRUE`, a summary df will be output (1st row = means, 2nd row = standard deviations). Default is `TRUE`.
 #' *If `FALSE`, entire results data frame will be output

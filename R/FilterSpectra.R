@@ -57,12 +57,15 @@ FilterSpectra <- function(df,
   # Create list of Mahalanobis distances for each sample and bind to input df
   h.distances <- mahalanobis(x = spectra.subset, center = colMeans(spectra.subset),
                              cov = spectra.cov, tol=1e-22)
+  if(sum(h.distances <= 0) > 0){
+    stop("Please increase window size.")
+  }
   df.distances <- cbind(df, h.distances)
 
   if(filter){
     # Filter input data based on Mahalanobis distance
     chisq95 <- qchisq(.95, df = ncol(spectra))
-    df.filtered <- df.distances[which(h.distances < chisq95),]
+    df.filtered <- df.distances[which(abs(h.distances) < chisq95),]
 
     # How many samples were removed?
     cat(paste("\nRemoved", nrow(df) - nrow(df.filtered), "rows.\n"))
@@ -73,7 +76,11 @@ FilterSpectra <- function(df,
     }
 
   } else{
-    # Don't filter, just return input df with distances as rightmost column
-    return(df.distances)
+    # Don't filter, just return input df with or without distances as rightmost column
+    if(return.distances){
+      return(df.distances)
+    } else{
+      return(dplyr::select(df.distances, -h.distances))
+    }
   }
 }
