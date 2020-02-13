@@ -5,50 +5,15 @@
 #' @details Wrapper that uses [DoPreprocessing()], [FormatCV()] and [TrainSpectralModel()] functions.
 #' @author Jenna Hershberger
 #'
-#' @param df a `data.frame` object. First column contains unique identifier, second
-#' contains reference values, followed by spectral columns to the right. No missing
-#' values permitted! Include no other columns to right of spectra!
-#' @param preprocessing If `TRUE`, function will evaluate the full panel of preprocessing
-#' techniques and determine the best using the best.model.metric. If `FALSE`, no
-#' preprocessing will be applied and raw data will be used. Default is `FALSE`.
+#' @inheritParams TestModelPerformance
+#' @inheritParams TrainSpectralModel
 #' @param save.model If `TRUE`, the trained model will be saved in .Rds format to the
 #' location specified by `model.save.folder`. If `FALSE`, model will be output by function
 #' but will not save to file. Default is `TRUE`.
 #' @param model.save.folder Path to folder where model will be saved. If not provided,
 #' will save to working directory.
 #' @param model.name Name that model will be saved as in `model.save.folder`. Default is 'PredictionModel'.
-#' @param best.model.metric Metric used to decide which model is best. Must be either "RMSE or "Rsquared".
-#' @param tune.length Sets the sample space for tuning of hyperparameters.
-#' (Example// "ncomp", or number of components for "pls" model; "ntree" and "mtry" for "rf" model)
-#' @param model.method Model type to use for training. Valid options include:
-#' *"pls": Partial least squares regression (Default)
-#' *"rf": Random forest
-#' *"svmLinear": Support vector machine with linear kernel
-#' *"svmRadial": Support vector machine with radial kernel
-#' @param num.iterations Number of training iterations to perform for model statistics
-#' @param wavelengths List of wavelengths represented by each column in `train.data`
-#' @param stratified.sampling boolean that, if `TRUE``, will trigger the use of stratified random
-#' sampling for selection of training and test sets.This term is only used if separate test set is not
-#' provided. Default is `TRUE`.
-#' @param trial1 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' Contains the trial to be tested in subsequent model training functions. The first column
-#' contains unique identifiers, second contains genotypes, third contains reference values,
-#' followed by spectral columns. Include no other columns to right of spectra! Column names
-#' of spectra must start with "X", reference column must be named "reference", and genotype column
-#' must be named "genotype".
-#' @param trial2 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' This data.frame contains a trial that has overlapping genotypes with `trial1`
-#' but that were grown in a different site/year (different environment). Formatting must be
-#' consistent with `trial1`.
-#' @param trial3 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' This data.frame contains a trial that may or may not contain genotypes that overlap with `trial1`.
-#' Formatting must be consistent with `trial1`.
-#' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
-#' Options for cv.scheme include:
-#' *"CV1", untested lines in tested environments
-#' *"CV2", tested lines in tested environments
-#' *"CV0", tested lines in untested environments
-#' *"CV00", untested lines in untested environments
+#' @param wavelengths List of wavelengths represented by each column in `df`
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate select

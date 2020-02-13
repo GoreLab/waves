@@ -54,10 +54,10 @@ random sampling. This term is only used if `test.data = NULL`. Default is `TRUE`
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
 Options for cv.scheme include:
-*"CV1", untested lines in tested environments
-*"CV2", tested lines in tested environments
-*"CV0", tested lines in untested environments
-*"CV00", untested lines in untested environments}
+*"CV1": untested lines in tested environments
+*"CV2": tested lines in tested environments
+*"CV0": tested lines in untested environments
+*"CV00": untested lines in untested environments}
 
 \item{trial1}{`data.frame` object that is for use only when `cv.scheme` is provided.
 Contains the trial to be tested in subsequent model training functions. The first column

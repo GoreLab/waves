@@ -5,60 +5,15 @@
 #' @details Calls [DoPreprocessing()], [FormatCV()], and [TrainSpectralModel()] functions.
 #' @author Jenna Hershberger
 #'
+#' @inheritParams FormatCV
+#' @inheritParams TrainSpectralModel
 #' @param train.data `data.frame` object of spectral data for input into a spectral prediction model.
 #' First column contains unique identifiers, second contains reference values, followed by spectral
 #' columns. Include no other columns to right of spectra! Column names of spectra must start with "X"
 #' and reference column must be named "reference".
-#' @param num.iterations Number of training iterations to perform
-#' @param test.data `data.frame` with same specifications as `train.data`. Use if specific test set is
-#' desired for hyperparameter tuning. If `NULL`, function will automatically train with a
-#' stratified sample of 70\%. Default is `NULL`.
 #' @param preprocessing If `TRUE`, 12 preprocessing methods will be applied and their performance
 #' analyzed. If `FALSE`, input data is analyzed as is (raw). Default is `FALSE`.
 #' @param wavelengths List of wavelengths represented by each column in `train.data`
-#' @param tune.length Number deliniating search space for tuning of the PLSR hyperparameter `ncomp`.
-#' Default is 50.
-#' @param model.method Model type to use for training. Valid options include:
-#' *"pls": Partial least squares regression (Default)
-#' *"rf": Random forest
-#' *"svmLinear": Support vector machine with linear kernel
-#' *"svmRadial": Support vector machine with radial kernel
-#' @param output.summary boolean that controls function output.
-#' *If `TRUE`, a summary df will be output (1st row = means, 2nd row = standard deviations). Default is `TRUE`.
-#' *If `FALSE`, entire results data frame will be output.
-#' @param rf.variable.importance
-#' *If `TRUE`, `model.method` must be set to "rf". Returns a list with a model performance
-#' `data.frame` and a second `data.frame` with variable importance values for each wavelength
-#' for each training iteration. If `return.model` is also `TRUE`, returns list of three elements
-#' with trained model first, model performance second, and variable importance last. Dimensions are
-#' `nrow = num.iterations`, `ncol = length(wavelengths)`.
-#' *If `FALSE`, no variable importance is returned. Default is `FALSE`.
-#' @param stratified.sampling If `TRUE`, training and test sets will be selected using stratified
-#' random sampling. This term is only used if `test.data = NULL`. Default is `TRUE`.
-#' @param trial1 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' Contains the trial to be tested in subsequent model training functions. The first column
-#' contains unique identifiers, second contains genotypes, third contains reference values,
-#' followed by spectral columns. Include no other columns to right of spectra! Column names
-#' of spectra must start with "X", reference column must be named "reference", and genotype column
-#' must be named "genotype".
-#' @param trial2 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' This data.frame contains a trial that has overlapping genotypes with `trial1`
-#' but that were grown in a different site/year (different environment). Formatting must be
-#' consistent with `trial1`.
-#' @param trial3 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' This data.frame contains a trial that may or may not contain genotypes that overlap with `trial1`.
-#' Formatting must be consistent with `trial1`.
-#' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
-#' Options for cv.scheme include:
-#' *"CV1": untested lines in tested environments
-#' *"CV2": tested lines in tested environments
-#' *"CV0": tested lines in untested environments
-#' *"CV00": untested lines in untested environments
-#' @param split.test boolean that allows for a fixed training set and a split test set.
-#' Example// train model on data from two breeding programs and a stratified subset (70\%)
-#' of a third and test on the remaining samples (30\%)  of the third. If `FALSE`, the entire provided
-#' test set `test.data` will remain as a testing set or if none is provided, 30\% of the provided
-#' `train.data` will be used for testing. Default is `FALSE`.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select

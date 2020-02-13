@@ -4,6 +4,7 @@
 #' @details #TODO
 #' @author Jenna Hershberger
 #'
+#' @inheritParams FormatCV
 #' @param df `data.frame` object. First column contains unique identifiers, second contains
 #' reference values, followed by spectral columns. Include no other columns to right of spectra!
 #' Column names of spectra must start with "X" and reference column must be named "reference"
@@ -35,25 +36,6 @@
 #' *If `FALSE`, no variable importance is returned. Default is `FALSE`.
 #' @param stratified.sampling If `TRUE`, training and test sets will be selected using stratified
 #' random sampling. This term is only used if `test.data = NULL`. Default is `TRUE`.
-#' @param trial1 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' Contains the trial to be tested in subsequent model training functions. The first column
-#' contains unique identifiers, second contains genotypes, third contains reference values,
-#' followed by spectral columns. Include no other columns to right of spectra! Column names
-#' of spectra must start with "X", reference column must be named "reference", and genotype column
-#' must be named "genotype".
-#' @param trial2 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' This data.frame contains a trial that has overlapping genotypes with `trial1`
-#' but that were grown in a different site/year (different environment). Formatting must be
-#' consistent with `trial1`.
-#' @param trial3 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' This data.frame contains a trial that may or may not contain genotypes that overlap with `trial1`.
-#' Formatting must be consistent with `trial1`.
-#' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
-#' Options for cv.scheme include:
-#' *"CV1", untested lines in tested environments
-#' *"CV2", tested lines in tested environments
-#' *"CV0", tested lines in untested environments
-#' *"CV00", untested lines in untested environments
 #' @param split.test boolean that allows for a fixed training set and a split test set.
 #' Example// train model on data from two breeding programs and a stratified subset (70\%)
 #' of a third and test on the remaining samples (30\%)  of the third. If `FALSE`, the entire provided

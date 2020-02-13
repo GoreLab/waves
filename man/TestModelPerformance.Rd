@@ -19,7 +19,7 @@ and reference column must be named "reference".}
 
 \item{num.iterations}{Number of training iterations to perform}
 
-\item{test.data}{`data.frame` with same specifications as `train.data`. Use if specific test set is
+\item{test.data}{`data.frame` with same specifications as `df`. Use if specific test set is
 desired for hyperparameter tuning. If `NULL`, function will automatically train with a
 stratified sample of 70\%. Default is `NULL`.}
 
@@ -39,7 +39,7 @@ Default is 50.}
 
 \item{output.summary}{boolean that controls function output.
 *If `TRUE`, a summary df will be output (1st row = means, 2nd row = standard deviations). Default is `TRUE`.
-*If `FALSE`, entire results data frame will be output.}
+*If `FALSE`, entire results data frame will be output}
 
 \item{rf.variable.importance}{*If `TRUE`, `model.method` must be set to "rf". Returns a list with a model performance
 `data.frame` and a second `data.frame` with variable importance values for each wavelength

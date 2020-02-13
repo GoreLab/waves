@@ -50,10 +50,6 @@ Use of a cross-validation scheme requires a column in the input `data.frame` nam
 "genotype" to ensure proper sorting of training and test sets. Variables `trial1` and `trial2`
 are required, while `trial 3` is optional.
 }
-\examples{
-
-
-}
 \references{
 Jarquín, D., C. Lemes da Silva, R. C. Gaynor, J. Poland, A. Fritz, R. Howard,
 S. Battenfield, and J. Crossa. 2017. Increasing Genomic-Enabled Prediction Accuracy by Modeling

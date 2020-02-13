@@ -12,13 +12,12 @@ SaveModel(df, preprocessing = F, save.model = T,
   trial2 = NULL, trial3 = NULL)
 }
 \arguments{
-\item{df}{a `data.frame` object. First column contains unique identifier, second
-contains reference values, followed by spectral columns to the right. No missing
-values permitted! Include no other columns to right of spectra!}
+\item{df}{`data.frame` object. First column contains unique identifiers, second contains
+reference values, followed by spectral columns. Include no other columns to right of spectra!
+Column names of spectra must start with "X" and reference column must be named "reference"}
 
-\item{preprocessing}{If `TRUE`, function will evaluate the full panel of preprocessing
-techniques and determine the best using the best.model.metric. If `FALSE`, no
-preprocessing will be applied and raw data will be used. Default is `FALSE`.}
+\item{preprocessing}{If `TRUE`, 12 preprocessing methods will be applied and their performance
+analyzed. If `FALSE`, input data is analyzed as is (raw). Default is `FALSE`.}
 
 \item{save.model}{If `TRUE`, the trained model will be saved in .Rds format to the
 location specified by `model.save.folder`. If `FALSE`, model will be output by function
@@ -29,10 +28,10 @@ will save to working directory.}
 
 \item{model.name}{Name that model will be saved as in `model.save.folder`. Default is 'PredictionModel'.}
 
-\item{best.model.metric}{Metric used to decide which model is best. Must be either "RMSE or "Rsquared".}
+\item{best.model.metric}{Metric used to decide which model is best. Must be either "RMSE" or "Rsquared"}
 
-\item{tune.length}{Sets the sample space for tuning of hyperparameters.
-(Example// "ncomp", or number of components for "pls" model; "ntree" and "mtry" for "rf" model)}
+\item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter `ncomp`.
+Default is 50.}
 
 \item{model.method}{Model type to use for training. Valid options include:
 *"pls": Partial least squares regression (Default)
@@ -40,20 +39,19 @@ will save to working directory.}
 *"svmLinear": Support vector machine with linear kernel
 *"svmRadial": Support vector machine with radial kernel}
 
-\item{num.iterations}{Number of training iterations to perform for model statistics}
+\item{num.iterations}{Number of training iterations to perform}
 
-\item{wavelengths}{List of wavelengths represented by each column in `train.data`}
+\item{wavelengths}{List of wavelengths represented by each column in `df`}
 
-\item{stratified.sampling}{boolean that, if `TRUE``, will trigger the use of stratified random
-sampling for selection of training and test sets.This term is only used if separate test set is not
-provided. Default is `TRUE`.}
+\item{stratified.sampling}{If `TRUE`, training and test sets will be selected using stratified
+random sampling. This term is only used if `test.data = NULL`. Default is `TRUE`.}
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
 Options for cv.scheme include:
-*"CV1", untested lines in tested environments
-*"CV2", tested lines in tested environments
-*"CV0", tested lines in untested environments
-*"CV00", untested lines in untested environments}
+*"CV1": untested lines in tested environments
+*"CV2": tested lines in tested environments
+*"CV0": tested lines in untested environments
+*"CV00": untested lines in untested environments}
 
 \item{trial1}{`data.frame` object that is for use only when `cv.scheme` is provided.
 Contains the trial to be tested in subsequent model training functions. The first column
