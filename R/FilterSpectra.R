@@ -63,9 +63,9 @@ FilterSpectra <- function(df,
   df.distances <- cbind(df, h.distances)
 
   if(filter){
-    # Filter input data based on Mahalanobis distance
+    # Filter input data based on square of Mahalanobis distance
     chisq95 <- qchisq(.95, df = ncol(spectra))
-    df.filtered <- df.distances[which(abs(h.distances) < chisq95),]
+    df.filtered <- df.distances[which(h.distances**2 < chisq95),]
 
     # How many samples were removed?
     cat(paste("\nRemoved", nrow(df) - nrow(df.filtered), "rows.\n"))
