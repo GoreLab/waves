@@ -27,7 +27,7 @@
 #' *If TRUE, function return list of c(model, results).
 #' *If FALSE, returns results data frame without model. Default is FALSE.
 #' @param best.model.metric Metric used to decide which model is best. Must be either "RMSE" or "Rsquared"
-#' @param rf.variable.importance
+#' @param rf.variable.importance boolean that:
 #' *If `TRUE`, `model.method` must be set to "rf". Returns a list with a model performance
 #' `data.frame` and a second `data.frame` with variable importance values for each wavelength
 #' for each training iteration. If `return.model` is also `TRUE`, returns list of three elements
@@ -97,7 +97,7 @@ TrainSpectralModel <- function(df,
 
   if(!is.null(cv.scheme)){
     if(!(cv.scheme %in% c("CV1", "CV2", "CV0", "CV00"))){
-      stop('cv.scheme must be "CV0", "CV00", "CV1", or "CV2"')
+      stop('cv.scheme must be NULL, "CV0", "CV00", "CV1", or "CV2"')
     }
 
     # Set num.iterations based on cv.scheme
