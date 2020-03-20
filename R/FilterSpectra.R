@@ -14,11 +14,12 @@
 #' @param df obj a `data.frame` object containing columns of spectra and rows of observations.
 #' May also contain columns of metadata to the left of the spectra.
 #' @param filter boolean that determines whether or not the input `data.frame` will be filtered.
-#' If `TRUE`, `df` will be filtered according to Mahalanobis distance with a 95% cutoff from a chi-square
-#' distribution with degrees of freedom = number of spectral columns. If `FALSE`, a column of Mahalanobis
+#' If `TRUE`, `df` will be filtered according to squared Mahalanobis distance with a 95% cutoff from a chi-square
+#' distribution with degrees of freedom = number of spectral columns. If `FALSE`, a column of squared Mahalanobis
 #' distances `h.distance` will be added to the right side of df and all rows will be returned. Default is `TRUE`.
-#' @param return.distances boolean that determines whether a column of Mahalanobis distances will be included in output `data.frame`.
-#' If `TRUE`, a column of Mahalanobis distances for each row will be added to the right side of `df`. Default is `FALSE`.
+#' @param return.distances boolean that determines whether a column of squared Mahalanobis distances will be included
+#' in output `data.frame`. If `TRUE`, a column of Mahalanobis distances for each row will be added to the right
+#' side of `df`. Default is `FALSE`.
 #' @param num.col.before.spectra number of columns to the left of the spectral matrix in `df`. Default is 4.
 #' @param window.size number defining the size of window to use when calculating the covariance of the
 #' spectra (required to calculate Mahalanobis distance). Default is 10.
@@ -35,7 +36,8 @@ FilterSpectra <- function(df,
                           filter = T,
                           return.distances = F,
                           num.col.before.spectra = 4,
-                          window.size = 10){
+                          window.size = 10,
+                          stringent = F){
 
   # Error handling
   # mahalanobis function does not allow missing values or non-numeric data
@@ -65,10 +67,15 @@ FilterSpectra <- function(df,
   if(filter){
     # Filter input data based on square of Mahalanobis distance
     chisq95 <- qchisq(.95, df = ncol(spectra))
-    df.filtered <- df.distances[which(h.distances**2 < chisq95),]
+    df.filtered <- df.distances[which(h.distances < chisq95),]
 
     # How many samples were removed?
-    cat(paste("\nRemoved", nrow(df) - nrow(df.filtered), "rows.\n"))
+    if( nrow(df) - nrow(df.filtered) != 1){
+      cat(paste("\nRemoved", nrow(df) - nrow(df.filtered), "rows.\n"))
+    } else{
+      cat(paste("\nRemoved 1 row.\n"))
+    }
+
     if(return.distances){
       return(df.filtered)
     } else{
