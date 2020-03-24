@@ -10,19 +10,19 @@
 #' @param test.data `data.frame` object with same format as train.data. Will be appended to df
 #       during preprocessing so that the same transformations are applied to each row. Default is NULL.
 #' @param preprocessing.method Number or list of numbers 1:13 corresponding to desired pretreatment method(s):
-#' *1 = raw data (default)
-#' *2 = standard normal variate (SNV)
-#' *3 = SNV and first derivative
-#' *4 = SNV and second derivative
-#' *5 = first derivative
-#' *6 = second derivative
-#' *7 = Savitzky–Golay filter (SG)
-#' *8 = SNV and SG
-#' *9 = gap segment derivative (window size = 11)
-#' *10 = SG and first derivative (window size = 5)
-#' *11 = SG and first derivative (window size = 11)
-#' *12 = SG and second derivative (window size = 5)
-#' *13 = SG and second derivative (window size = 11)
+#' * 1 = raw data (default)
+#' * 2 = standard normal variate (SNV)
+#' * 3 = SNV and first derivative
+#' * 4 = SNV and second derivative
+#' * 5 = first derivative
+#' * 6 = second derivative
+#' * 7 = Savitzky–Golay filter (SG)
+#' * 8 = SNV and SG
+#' * 9 = gap segment derivative (window size = 11)
+#' * 10 = SG and first derivative (window size = 5)
+#' * 11 = SG and first derivative (window size = 11)
+#' * 12 = SG and second derivative (window size = 5)
+#' * 13 = SG and second derivative (window size = 11)
 #' @param wavelengths List of wavelengths represented by each column in `df`
 #'
 #' @importFrom prospectr standardNormalVariate savitzkyGolay gapDer

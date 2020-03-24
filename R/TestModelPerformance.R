@@ -164,8 +164,9 @@ TestModelPerformance <- function(train.data,
         # Raw data example// ((1-1) * 50) + 1 = (0*50) +1 = 1
         # SNV example// ((2-1*50)+1) = 51
         starting.row <- ((i-1) * num.iterations) + 1
-        results.df$Pretreatment[starting.row:(starting.row + num.iterations - 1), 1] <- methods.list[i]
-        results.df[starting.row:(starting.row + num.iterations - 1), -1] <- training.results
+        ending.row <- starting.row + num.iterations - 1
+        results.df$Pretreatment[(starting.row:ending.row)] <- methods.list[i]
+        results.df[(starting.row:ending.row), -1 ] <- training.results
       }
     } # End of loop
 
