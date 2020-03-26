@@ -1,3 +1,7 @@
+# Jenna Hershberger
+# jmh579@cornell.edu
+# March 26, 2020
+
 # Raw data from:
 # Rapid analyses of dry matter content and carotenoids in fresh cassava roots using a portable
 # visible and near infrared spectrometer (Vis/NIRS). PLoS One 12(12): 1–17.
@@ -63,6 +67,9 @@ U15I <- read_excel("./data-raw/Ikeogu_et_al_2017/U15I.xlsx") %>%
   mutate(prep.method = "intact") %>%
   rename(sample.id = `Sample Number`) %>%
   rename(DMC.oven = DM) %>%
+  # The existing TCC column was measured with different methods in this trial as opposed to the
+  # CIAT trials, so it has been removed here to reduce confusion.
+  mutate(TCC = NA) %>%
   dplyr::select(study.name, location, year, prep.method, sample.id, DMC.oven, TCC, X350:X2500)
 
 U16I <- read_excel("./data-raw/Ikeogu_et_al_2017/U16I.xlsx") %>%
