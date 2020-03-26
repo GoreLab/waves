@@ -2,7 +2,7 @@
 % Please edit documentation in R/TrainSpectralModel.R
 \name{TrainSpectralModel}
 \alias{TrainSpectralModel}
-\title{Train model based spectral data to predict reference values}
+\title{Train a model based predict reference values with spectral data}
 \usage{
 TrainSpectralModel(df, num.iterations, test.data = NULL,
   tune.length = 50, model.method = "pls", output.summary = TRUE,
@@ -12,52 +12,64 @@ TrainSpectralModel(df, num.iterations, test.data = NULL,
   split.test = F)
 }
 \arguments{
-\item{df}{`data.frame` object. First column contains unique identifiers, second contains
+\item{df}{\code{data.frame} object. First column contains unique identifiers, second contains
 reference values, followed by spectral columns. Include no other columns to right of spectra!
 Column names of spectra must start with "X" and reference column must be named "reference"}
 
 \item{num.iterations}{Number of training iterations to perform}
 
-\item{test.data}{`data.frame` with same specifications as `df`. Use if specific test set is
-desired for hyperparameter tuning. If `NULL`, function will automatically train with a
-stratified sample of 70\%. Default is `NULL`.}
+\item{test.data}{\code{data.frame} with same specifications as \code{df}. Use if specific test set is
+desired for hyperparameter tuning. If \code{NULL}, function will automatically train with a
+stratified sample of 70\%. Default is \code{NULL}.}
 
-\item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter `ncomp`.
+\item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter \code{ncomp}.
 Default is 50.}
 
 \item{model.method}{Model type to use for training. Valid options include:
-*"pls": Partial least squares regression (Default)
-*"rf": Random forest
-*"svmLinear": Support vector machine with linear kernel
-*"svmRadial": Support vector machine with radial kernel}
+\itemize{
+  \item "pls": Partial least squares regression (Default)
+  \item "rf": Random forest
+  \item "svmLinear": Support vector machine with linear kernel
+  \item "svmRadial": Support vector machine with radial kernel
+}}
 
 \item{output.summary}{boolean that controls function output.
-*If `TRUE`, a summary df will be output (1st row = means, 2nd row = standard deviations). Default is `TRUE`.
-*If `FALSE`, entire results data frame will be output}
+\itemize{
+  \item If \code{TRUE}, a summary df will be output (1st row = means, 2nd row = standard
+  deviations). Default is \code{TRUE}.
+  \item If \code{FALSE}, entire results data frame will be output
+}}
 
-\item{return.model}{boolean that, if `TRUE`, causes the function to return the trained model
+\item{return.model}{boolean that, if \code{TRUE}, causes the function to return the trained model
 in addition to the results data frame.
-*If TRUE, function return list of c(model, results).
-*If FALSE, returns results data frame without model. Default is FALSE.}
+\itemize{
+  \item If \code{TRUE}, function return list of \code{[model, results]}.
+  \item If \code{FALSE}, returns results data frame without model. Default is \code{FALSE}.
+}}
 
 \item{best.model.metric}{Metric used to decide which model is best. Must be either "RMSE" or "Rsquared"}
 
-\item{rf.variable.importance}{*If `TRUE`, `model.method` must be set to "rf". Returns a list with a model performance
-`data.frame` and a second `data.frame` with variable importance values for each wavelength
-for each training iteration. If `return.model` is also `TRUE`, returns list of three elements
+\item{rf.variable.importance}{boolean that:
+\itemize{
+  \item If \code{TRUE}, \code{model.method} must be set to "rf". Returns a list with a model performance
+\code{data.frame} and a second \code{data.frame} with variable importance values for each wavelength
+for each training iteration. If \code{return.model} is also \code{TRUE}, returns list of three elements
 with trained model first, model performance second, and variable importance last. Dimensions are
-`nrow = num.iterations`, `ncol = length(wavelengths)`.
-*If `FALSE`, no variable importance is returned. Default is `FALSE`.}
+\code{nrow = num.iterations}, \code{ncol = length(wavelengths)}.
+  \item If \code{FALSE}, no variable importance is returned. Default is \code{FALSE}.
+}}
 
-\item{stratified.sampling}{If `TRUE`, training and test sets will be selected using stratified
-random sampling. This term is only used if `test.data = NULL`. Default is `TRUE`.}
+\item{stratified.sampling}{If \code{TRUE}, training and test sets will be selected using stratified
+random sampling. This term is only used if \code{test.data == NULL}. Default is \code{TRUE}.}
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
 Options for cv.scheme include:
-*"CV1": untested lines in tested environments
-*"CV2": tested lines in tested environments
-*"CV0": tested lines in untested environments
-*"CV00": untested lines in untested environments}
+\itemize{
+  \item "CV1": untested lines in tested environments
+  \item "CV2": tested lines in tested environments
+  \item "CV0": tested lines in untested environments
+  \item "CV00": untested lines in untested environments
+}}
 
 \item{trial1}{`data.frame` object that is for use only when `cv.scheme` is provided.
 Contains the trial to be tested in subsequent model training functions. The first column
@@ -77,30 +89,43 @@ Formatting must be consistent with `trial1`.}
 
 \item{split.test}{boolean that allows for a fixed training set and a split test set.
 Example// train model on data from two breeding programs and a stratified subset (70\%)
-of a third and test on the remaining samples (30\%)  of the third. If `FALSE`, the entire provided
-test set `test.data` will remain as a testing set or if none is provided, 30\% of the provided
-`train.data` will be used for testing. Default is `FALSE`.}
+of a third and test on the remaining samples (30\%)  of the third. If \code{FALSE}, the entire provided
+test set \code{test.data} will remain as a testing set or if none is provided, 30\% of the provided
+\code{train.data} will be used for testing. Default is \code{FALSE}.}
 
 \item{vector.input}{The mode of this vector of numbers will be calculated by this function}
 }
 \value{
-`data.frame` with model performance statistics (RMSE, Rsquared, RPD, RPIQ, CCC, Bias, SE, K)
+\code{data.frame} with model performance statistics (RMSE, Rsquared, RPD, RPIQ, CCC, Bias, SE, K)
 either in summary format (2 rows, one with mean and one with standard deviation of all training iterations)
-or in long format (number of rows = `num.iterations`).
-Also returns trained model if `return.model` is `TRUE`.
+or in long format (number of rows = \code{num.iterations}).
+Also returns trained model if \code{return.model} is \code{TRUE}.
 
 mode of the numbers in `vector.input`
 }
 \description{
-#TODO
+Trains spectral prediction models using one of several algorithms and sampling
+procedures.
 
 Get the mode of a set of numbers. Used in getting summary of results
 within [TrainSpectralModel()]
 }
-\details{
-#TODO
+\examples{
+\dontrun{
+ikeogu.2017 \%>\%
+filter(study.name == "C16Mcal") \%>\%
+  rename(reference = DMC.oven) \%>\%
+  dplyr::select(sample.id, reference, starts_with("X")) \%>\%
+  na.omit() \%>\%
+  TrainSpectralModel(df = .,
+                     num.iterations = 10,
+                     output.summary = T,
+                     return.model = F,
+                     best.model.metric = "RMSE",
+                     stratified.sampling = T)
+}
 }
 \author{
-Jenna Hershberger
+Jenna Hershberger \url{jmh579@cornell.edu}
 }
 \keyword{internal}

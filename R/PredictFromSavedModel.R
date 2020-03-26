@@ -1,8 +1,9 @@
 #' @title Use provided model object to predict trait values with input dataset
 #' @name PredictFromSavedModel
-#' @description #TODO
-#' @details #TODO
+#' @description Loads an existing model and cross-validation performance statistics
+#' (created with [SaveModel()]) and makes predictions based on new spectra.
 #'
+#' @inheritParams TestModelPerformance
 #' @param input.data `data.frame` object of spectral data for input into a spectral prediction model.
 #' First column contains unique identifiers followed by spectral columns. Include no other columns to
 #' right of spectra! Column names of spectra must start with "X".
@@ -11,12 +12,6 @@
 #' @param model.location String containing file path (including file name) to location where the
 #' trained model ("(model.name).Rds") was saved as output by the [SaveModel()] function.
 #' @param wavelengths List of wavelengths represented by each column in `input.data`
-#' @param model.method Model type to use for training. Valid options include:
-#' *"pls": Partial least squares regression (Default)
-#' *"rf": Random forest
-#' *"svmLinear": Support vector machine with linear kernel
-#' *"svmRadial": Support vector machine with radial kernel
-#'
 #' @importFrom stats predict
 #' @importFrom utils read.csv
 #'
@@ -25,13 +20,20 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' ikeogu.2017 %>%
+#'   dplyr::select(sample.id, starts_with("X")) %>%
+#'   PredictFromSavedModel(input.data = .,
+#'                         model.stats.location = paste0(getwd(), "/my_model_stats.csv"),
+#'                         model.location = paste0(getwd(), "/my_model.Rds"),
+#'                         wavelengths = 350:2500)
+#' }
+
 PredictFromSavedModel <- function(input.data,
                                   model.stats.location,
                                   model.location,
                                   wavelengths = 740:1070,
                                   model.method = "pls") {
-
-  # TODO error handling
 
   # Load model and model statistics
   model.stats <- read.csv(model.stats.location)

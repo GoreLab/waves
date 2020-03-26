@@ -1,30 +1,41 @@
-#' @title Wrapper that trains models based spectral data to predict reference values and reports
-#     model performance statistics
+#' @title Test the performance of spectral models
 #' @name TestModelPerformance
-#' @description #TODO
+#' @description Wrapper that trains models based spectral data to predict reference values and reports
+#     model performance statistics
 #' @details Calls [DoPreprocessing()], [FormatCV()], and [TrainSpectralModel()] functions.
-#' @author Jenna Hershberger
+#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
 #'
 #' @inheritParams FormatCV
 #' @inheritParams TrainSpectralModel
-#' @param train.data `data.frame` object of spectral data for input into a spectral prediction model.
+#' @param train.data \code{data.frame} object of spectral data for input into a spectral prediction model.
 #' First column contains unique identifiers, second contains reference values, followed by spectral
 #' columns. Include no other columns to right of spectra! Column names of spectra must start with "X"
 #' and reference column must be named "reference".
-#' @param preprocessing If `TRUE`, 12 preprocessing methods will be applied and their performance
-#' analyzed. If `FALSE`, input data is analyzed as is (raw). Default is `FALSE`.
-#' @param wavelengths List of wavelengths represented by each column in `train.data`
+#' @param preprocessing If \code{TRUE}, 12 preprocessing methods will be applied and their performance
+#' analyzed. If \code{FALSE}, input data is analyzed as is (raw). Default is \code{FALSE}.
+#' @param wavelengths List of wavelengths represented by each column in \code{train.data}
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
 #'
-#' @return `data.frame` with model performance statistics (RMSE, Rsquared, RPD, RPIQ, CCC, Bias, SE, K)
+#' @return \code{data.frame} with model performance statistics (RMSE, Rsquared, RPD, RPIQ, CCC, Bias, SE, K)
 #' in summary format (2 rows, one with mean and one with standard deviation of all training iterations)
-#' or in long format (number of rows = num.iterations). *Note* if `preprocessing = TRUE`, only the first
+#' or in long format (number of rows = num.iterations). *Note* if \code{preprocessing = TRUE}, only the first
 #' mean of summary statistics for all iterations of training are provided for each technique.
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' ikeogu.2017 %>%
+#'   rename(reference = DMC.oven) %>%
+#'   rename(unique.id = sample.id) %>%
+#'   dplyr::select(unique.id, reference, starts_with("X")) %>%
+#'   na.omit() %>%
+#'   TestModelPerformance(.,
+#'                        num.iterations = 10,
+#'                        preprocessing = F,
+#'                        wavelengths = 350:2500)
+#' }
 TestModelPerformance <- function(train.data,
                                  num.iterations,
                                  test.data = NULL,
@@ -112,11 +123,11 @@ TestModelPerformance <- function(train.data,
       train.data <- rbind(trial1, trial2, trial3)
     }
     df.list <- DoPreprocessing(df = train.data, test.data = test.data, preprocessing.method = 1:13,
-                               wavelengths = wavelengths) # TODO make sure this works and retains genotype
+                               wavelengths = wavelengths)
 
     # Training loop
     cat("Training models...\n")
-    for (i in c(1:13)) { # TODO: allow output of all iterations from each method (not just summary)
+    for (i in c(1:13)) {
       methods.list <- c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG", "SNVSG", "SGD1", "SG.D1W5",
                         "SG.D1W11", "SG.D2W5", "SG.D2W11")
       cat(paste("Working on method", i, "of 13:", methods.list[i], "\n", sep = " "))

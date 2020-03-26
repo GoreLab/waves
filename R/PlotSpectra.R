@@ -1,6 +1,9 @@
 #' @title Plot spectral data, highlighting outliers as identified using Mahalanobis distance
-#' @description TODO
-#' @author Jenna Hershberger
+#' @description Generates a ggplot object of given spectra, with wavelength on the x axis and
+#' given spectral values on the y. Mahalanobis distance is used to calculate outliers, which are
+#' both identified on the plot. Rows from the original dataframe are printed to the console for each
+#' outlier that is identified.
+#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
 #'
 #' @param input.df `data.frame` object containing columns of spectra. Spectral columns must be labeled
 #' with an "X" and then the wavelength (example: "X740" = 740nm). Left-most column must be unique ID.
@@ -21,6 +24,15 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#'ikeogu.2017 %>%
+#'  rename(unique.id = sample.id) %>%
+#'  dplyr::select(unique.id, everything(), -TCC) %>%
+#'  na.omit() %>%
+#'  PlotSpectra(input.df = .,
+#'              wavelengths = 350:2500,
+#'              num.col.before.spectra = 7)
+#' }
 PlotSpectra <- function(input.df, wavelengths, num.col.before.spectra){
   # Error handling
   # Mahalanobis function does not allow missing values or non-numeric data
@@ -53,7 +65,7 @@ PlotSpectra <- function(input.df, wavelengths, num.col.before.spectra){
                                aes(x = .data$wl,
                                    y = .data$s.value,
                                    group = .data$unique.id,
-                                   color = .data$Outlier)) + #TODO fix this unique id required
+                                   color = .data$Outlier)) +
     geom_line(alpha = .5) +
     geom_line(data = subset(.data$hdists.df, .data$Outlier == T), alpha = .7) +
     scale_color_manual(values = wes_palette(name = "Zissou1")[c(1,5)], name = "Outlier?") +
@@ -62,8 +74,13 @@ PlotSpectra <- function(input.df, wavelengths, num.col.before.spectra){
          subtitle = "Raw spectra", x = "Wavelength", y = "Spectral Value")
 
   # Print metadata for each outlier
-  cat("Outliers:\n")
-  print(filtered.df %>% dplyr::filter(.data$h.distances > chisq95) %>%
-          dplyr::select(-starts_with("X")) %>% distinct())
+  if(sum(hdists.df$Outlier > 0)){
+    cat("Outliers:\n")
+    print(filtered.df %>% dplyr::filter(.data$h.distances > chisq95) %>%
+            dplyr::select(-starts_with("X")) %>% distinct())
+  } else{
+    cat("No outliers detected.\n")
+  }
+
   return(hdist.chisq95.plot)
 }

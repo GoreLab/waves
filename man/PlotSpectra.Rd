@@ -21,8 +21,22 @@ Prints unique ID and metadata for rows identified as outliers. Returns plot of s
 data with non-outliers in blue and outliers in red. X-axis is wavelengths and y-axis is spectral values.
 }
 \description{
-TODO
+Generates a ggplot object of given spectra, with wavelength on the x axis and
+given spectral values on the y. Mahalanobis distance is used to calculate outliers, which are
+both identified on the plot. Rows from the original dataframe are printed to the console for each
+outlier that is identified.
+}
+\examples{
+\dontrun{
+ikeogu.2017 \%>\%
+ rename(unique.id = sample.id) \%>\%
+ dplyr::select(unique.id, everything(), -TCC) \%>\%
+ na.omit() \%>\%
+ PlotSpectra(input.df = .,
+             wavelengths = 350:2500,
+             num.col.before.spectra = 7)
+}
 }
 \author{
-Jenna Hershberger
+Jenna Hershberger \url{jmh579@cornell.edu}
 }

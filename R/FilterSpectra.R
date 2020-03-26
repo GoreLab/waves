@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 #' @title Filter spectral data frame based on Mahalanobis distance
 #' @name FilterSpectra
 #' @description Determine Mahalanobis distances of observations (rows) within a given `data.frame`
@@ -10,17 +8,15 @@
 #' @author Jenna Hershberger \url{jmh579@@cornell.edu}
 #' @usage FilterSpectra(df, filter, return.distances, num.col.before.spectra, window.size)
 #' @importFrom stats cov mahalanobis na.omit qchisq
-#'
-#' @param df obj a `data.frame` object containing columns of spectra and rows of observations.
-#' May also contain columns of metadata to the left of the spectra.
-#' @param filter boolean that determines whether or not the input `data.frame` will be filtered.
-#' If `TRUE`, `df` will be filtered according to squared Mahalanobis distance with a 95% cutoff from a chi-square
-#' distribution with degrees of freedom = number of spectral columns. If `FALSE`, a column of squared Mahalanobis
-#' distances `h.distance` will be added to the right side of df and all rows will be returned. Default is `TRUE`.
+#' @param df obj a \code{data.frame} object containing columns of spectra and rows of observations. May also contain columns of metadata to the left of the spectra.
+#' @param filter boolean that determines whether or not the input \code{data.frame} will be filtered.
+#' If \code{TRUE}, \code{df} will be filtered according to squared Mahalanobis distance with a 95% cutoff from a chi-square
+#' distribution with degrees of freedom = number of spectral columns. If \code{FALSE}, a column of squared Mahalanobis
+#' distances \code{h.distance} will be added to the right side of df and all rows will be returned. Default is `TRUE`.
 #' @param return.distances boolean that determines whether a column of squared Mahalanobis distances will be included
-#' in output `data.frame`. If `TRUE`, a column of Mahalanobis distances for each row will be added to the right
-#' side of `df`. Default is `FALSE`.
-#' @param num.col.before.spectra number of columns to the left of the spectral matrix in `df`. Default is 4.
+#' in output \code{data.frame}. If \code{TRUE}, a column of Mahalanobis distances for each row will be added to the right
+#' side of \code{df}. Default is \code{FALSE}.
+#' @param num.col.before.spectra number of columns to the left of the spectral matrix in \code{df}. Default is 4.
 #' @param window.size number defining the size of window to use when calculating the covariance of the
 #' spectra (required to calculate Mahalanobis distance). Default is 10.
 #'
@@ -32,6 +28,15 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' ikeogu.2017 %>%
+#'   dplyr::select(-TCC) %>%
+#'   na.omit() %>%
+#'   FilterSpectra(df = .,
+#'                 filter = T,
+#'                 return.distances = F,
+#'                 num.col.before.spectra = 7)
+#' }
 FilterSpectra <- function(df,
                           filter = T,
                           return.distances = F,

@@ -26,6 +26,16 @@ Must be either "mean" or "median". Default is "mean".}
 Use grouping variables to collapse spectral `data.frame` by mean or median.
 Recommended for use after `FilterSpectra`
 }
+\examples{
+\dontrun{
+ikeogu.2017 \%>\%
+  dplyr::select(-TCC) \%>\%
+  na.omit() \%>\%
+  AggregateSpectra(grouping.colnames = c("study.name"),
+                   reference.value.colname = "DMC.oven",
+                   agg.function = "mean")
+}
+}
 \author{
 Jenna Hershberger
 }

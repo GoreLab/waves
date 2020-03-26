@@ -1,19 +1,19 @@
 #' @title Save spectral prediction model and model performance statistics
 #' @name SaveModel
-#' @description Saves model and model statistics to model.save.folder as model.name.Rds
-#' and model.name_stats.csv respectively
+#' @description Saves spectral prediction model and model statistics to \code{model.save.folder}
+#' as \code{model.name.Rds} and \code{model.name_stats.csv} respectively
 #' @details Wrapper that uses [DoPreprocessing()], [FormatCV()] and [TrainSpectralModel()] functions.
-#' @author Jenna Hershberger
+#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
 #'
 #' @inheritParams TestModelPerformance
 #' @inheritParams TrainSpectralModel
-#' @param save.model If `TRUE`, the trained model will be saved in .Rds format to the
-#' location specified by `model.save.folder`. If `FALSE`, model will be output by function
-#' but will not save to file. Default is `TRUE`.
+#' @param save.model If \code{TRUE}, the trained model will be saved in .Rds format to the
+#' location specified by \code{model.save.folder}. If \code{FALSE}, model will be output by function
+#' but will not save to file. Default is \code{TRUE}.
 #' @param model.save.folder Path to folder where model will be saved. If not provided,
 #' will save to working directory.
-#' @param model.name Name that model will be saved as in `model.save.folder`. Default is 'PredictionModel'.
-#' @param wavelengths List of wavelengths represented by each column in `df`
+#' @param model.name Name that model will be saved as in \code{model.save.folder}. Default is "PredictionModel".
+#' @param wavelengths List of wavelengths represented by each column in \code{df}
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate select
@@ -21,17 +21,27 @@
 #' @importFrom rlang .data
 #' @importFrom utils write.csv
 #'
-#' @return List of model stats (in `data.frame`) and trained model object. Saves both to
-#' `model.save.folder` as well. To use optimally trained model for predictions, extract `$finalModel`
-#' and use tuned parameters from `$bestTune`
+#' @return List of model stats (in \code{data.frame}) and trained model object. Saves both to
+#' \code{model.save.folder} as well. To use optimally trained model for predictions, extract
+#' \code{$finalModel} and use tuned parameters from \code{$bestTune}
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' ikeogu.2017 %>%
+#'   filter(study.name == "C16Mcal") %>%
+#'   rename(reference = DMC.oven) %>%
+#'   dplyr::select(sample.id, reference, starts_with("X")) %>%
+#'   na.omit() %>%
+#'   SaveModel(df = .,
+#'             model.name = "my_prediction_model",
+#'             wavelengths = 350:2500)
+#' }
 SaveModel <- function(df,
                       preprocessing = F,
                       save.model = T,
                       model.save.folder = NULL,
-                      model.name = "PredictionModel", # TODO automatically generate a name based on sys date
+                      model.name = "PredictionModel",
                       best.model.metric = "RMSE",
                       tune.length = 50,
                       model.method = "pls",
@@ -138,14 +148,14 @@ SaveModel <- function(df,
 
   if(save.model){
     cat(paste0("\nSaving model and model statistics to ", model.save.folder, ".\n"))
-    # output stats to model.save.folder as 'model.name_stats.csv'
+    # Output stats to model.save.folder as 'model.name_stats.csv'
     write.csv(best.model.stats,
               file = paste0(model.save.folder, '/', model.name, '_stats.csv'), row.names = F)
-    # save model in save location as 'model.name.Rds'
+    # Save model in save location as 'model.name.Rds'
     saveRDS(best.model, file = paste0(model.save.folder, '/', model.name, ".Rds"))
   }
 
-  # output list of model stats data frame and model
+  # Output list of model stats data frame and model
   output.list <- list(best.model.stats, best.model)
   return(output.list)
 }

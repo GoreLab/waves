@@ -1,42 +1,47 @@
 #' @title Preproccess spectral data according to user-designated method
 #' @name DoPreprocessing
-#' @description #TODO
-#'
-#'
-#' @param df `data.frame` object containing spectral data. First column(s) (optional)
+#' @description Preprocessing, also known as pretreatment, is often used to increase the signal to
+#' noise ratio in vis-NIR datasets. The waves function DoPreprocessing() applies common spectral
+#' preprocessing methods such as standard normal variate and the Savitzky-Golay filter.
+#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
+#' @param df \code{data.frame} object containing spectral data. First column(s) (optional)
 #' include metadata (with or without reference value column) followed by spectral columns.
 #' Spectral column names must be formatted as "X" followed by wavelength
 #' Include no other columns to right of spectra! No missing values permitted.
-#' @param test.data `data.frame` object with same format as train.data. Will be appended to df
+#' @param test.data \code{data.frame} object with same format as train.data. Will be appended to df
 #       during preprocessing so that the same transformations are applied to each row. Default is NULL.
 #' @param preprocessing.method Number or list of numbers 1:13 corresponding to desired pretreatment method(s):
-#' * 1 = raw data (default)
-#' * 2 = standard normal variate (SNV)
-#' * 3 = SNV and first derivative
-#' * 4 = SNV and second derivative
-#' * 5 = first derivative
-#' * 6 = second derivative
-#' * 7 = Savitzky–Golay filter (SG)
-#' * 8 = SNV and SG
-#' * 9 = gap segment derivative (window size = 11)
-#' * 10 = SG and first derivative (window size = 5)
-#' * 11 = SG and first derivative (window size = 11)
-#' * 12 = SG and second derivative (window size = 5)
-#' * 13 = SG and second derivative (window size = 11)
-#' @param wavelengths List of wavelengths represented by each column in `df`
+#' \itemize{
+#'   \item 1 = raw data (default)
+#'   \item 2 = standard normal variate (SNV)
+#'   \item 3 = SNV and first derivative
+#'   \item 4 = SNV and second derivative
+#'   \item 5 = first derivative
+#'   \item 6 = second derivative
+#'   \item 7 = Savitzky–Golay filter (SG)
+#'   \item 8 = SNV and SG
+#'   \item 9 = gap segment derivative (window size = 11)
+#'   \item 10 = SG and first derivative (window size = 5)
+#'   \item 11 = SG and first derivative (window size = 11)
+#'   \item 12 = SG and second derivative (window size = 5)
+#'   \item 13 = SG and second derivative (window size = 11)
+#' }
+#' @param wavelengths List of wavelengths represented by each column in \code{df}. Default is 740:1070.
 #'
 #' @importFrom prospectr standardNormalVariate savitzkyGolay gapDer
 #'
-#' @return Preprocessed `df` (or list of `data.frames`) with reference column intact
+#' @return Preprocessed \code{df}` (or list of \code{data.frame}s) with reference column intact
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' ikeogu.2017 %>% DoPreprocessing(wavelengths = 350:2500)
+#' }
 DoPreprocessing <- function(df,
                             test.data = NULL,
                             preprocessing.method = 1,
                             wavelengths = 740:1070
 ) {
-  # TODO error handling
   # Format input data frames for processing
   # Combine training.data and test.data so that the same transformations are applied to all samples
   if (!is.null(test.data)) {

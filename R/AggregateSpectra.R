@@ -21,6 +21,14 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' ikeogu.2017 %>%
+#'   dplyr::select(-TCC) %>%
+#'   na.omit() %>%
+#'   AggregateSpectra(grouping.colnames = c("study.name"),
+#'                    reference.value.colname = "DMC.oven",
+#'                    agg.function = "mean")
+#' }
 AggregateSpectra <- function(df,
                              grouping.colnames = c("trial", "plot"),
                              reference.value.colname = "reference",

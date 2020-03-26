@@ -1,29 +1,31 @@
 #' @title Example vis-NIRS and reference dataset
 #' @name ikeogu.2017
+#' @author Original authors:
 #' @description The `ikeogu.2017` data set contains raw vis-NIRS scans, total carotenoid content,
 #' and cassava root dry matter content (using the oven method) from the 2017 PLoS One paper by Ikeogu et al.
 #' This dataset contains all original scans but only some of the reference values from the supplementary
-#' files of the paper. Please see the original paper for more in-depth information about the dataset.
-#'
-#'
+#' files of the paper.
 #' `ikeogu.2017` is a `data.frame` that contains the following columns:
 #'   * study.name = Name of the study as described in Ikeogu et al. (2017).
 #'   * location = Location from which the data was collected
 #'   * year = Year in which data was collected
 #'   * prep.method = Method used for sample preparation. Either "intact" for sliced roots or "mashed" for those blended in a food processor before scanning.
 #'   * DMC.oven = Cassava root dry matter content, the percentage of dry weight relative to fresh weight of a sample after oven drying.
-#'   * TCC = Total carotenoid content as measured by high performance liquid chromatography in the studies from CIAT,
-#' those for which `study.name` starts with "C", and by spectrophotometer in the studies from Umudike, Nigeria,
-#' those for which `study.name` starts with "U"
-#' * X350:X2500 = spectral reflectance measured with the QualitySpec Trek: S-10016 vis-NIR spectrometer.
+#'   * TCC = Total carotenoid content (ug/g, unknown whether on a fresh or dry weight basis) as measured by
+#'   high performance liquid chromatography in the studies from CIAT,
+#'   those for which `study.name` starts with "C", and by spectrophotometer in the studies from Umudike, Nigeria,
+#'   those for which `study.name` starts with "U"
+#'   * X350:X2500 = spectral reflectance measured with the QualitySpec Trek: S-10016 vis-NIR spectrometer.
 #' Each cell represents the mean of 150 scans on a single root at a single wavelength.
-#' @author
+#' @author Original authors: Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, and J. Jannink.
+#' Curated by Jenna Hershberger
 #' @references Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, et al. 2017.
 #' Rapid analyses of dry matter content and carotenoids in fresh cassava roots using a portable
 #' visible and near infrared spectrometer (Vis/NIRS). PLoS One 12(12): 1–17.
 #' doi: 10.1371/journal.pone.0188918.
 #'
 #' @examples
+#' \dontrun{
 #' data(ikeogu.2017)
 #'
 #' ikeogu.2017[1:10,1:10]
@@ -36,4 +38,5 @@
 #' facet_wrap(~ trait, scales='free_y', nrow=2) +
 #' geom_boxplot() +
 #' theme_bw()
+#' }
 "ikeogu.2017"

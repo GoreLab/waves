@@ -1,7 +1,9 @@
 #' @title Format multiple trials with or without overlapping genotypes into training and test sets
 #' according to user-provided cross validation scheme
 #' @name FormatCV
-#' @description Standalone function that is also used within [TrainSpectralModel()]
+#' @description Standalone function that is also used within [TrainSpectralModel()] to divide
+#' trials or studies into training and test sets based on overlap in trial environments and
+#' genotype entries
 #' @details Use of a cross-validation scheme requires a column in the input `data.frame` named
 #' "genotype" to ensure proper sorting of training and test sets. Variables `trial1` and `trial2`
 #' are required, while `trial 3` is optional.
@@ -21,10 +23,12 @@
 #' Formatting must be consistent with `trial1`.
 #' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
 #' Options for cv.scheme include:
-#' *"CV1": untested lines in tested environments
-#' *"CV2": tested lines in tested environments
-#' *"CV0": tested lines in untested environments
-#' *"CV00": untested lines in untested environments
+#' \itemize{
+#'   \item "CV1": untested lines in tested environments
+#'   \item "CV2": tested lines in tested environments
+#'   \item "CV0": tested lines in untested environments
+#'   \item "CV00": untested lines in untested environments
+#' }
 #' @param seed Number used in the function `set.seed()` for reproducible randomization.
 #' If `NULL`, no seed is set. Default is `NULL`.
 #' @param remove.genotype boolean that, if `TRUE`, removes the "genotype" column is removed from
@@ -45,9 +49,27 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' # Must have a column called "genotype", so we'll create a fake one for now
+#' # We will use CV00, which does not require any overlap in genotypes
+#' # In real scenarios, CV schemes that rely on genotypes should not be applied when
+#' # genotypes are unknown, as in this case
+#' trials <- ikeogu.2017 %>%
+#'   mutate(genotype = 1:nrow(ikeogu.2017)) %>% # these are fake for this example
+#'   rename(reference = DMC.oven) %>%
+#'   dplyr::select(study.name, sample.id, genotype, reference, starts_with("X")) %>%
+#'   na.omit()
+#' trial1 <- trials %>%
+#'   filter(study.name == "C16Mcal") %>%
+#'   dplyr::select(-study.name)
+#' trial2 <- trials %>%
+#'   filter(study.name == "C16Mval") %>%
+#'   dplyr::select(-study.name)
+#' FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00", remove.genotype = T)
+#' }
 FormatCV <- function(trial1,
                      trial2,
-                     trial3,
+                     trial3 = NULL,
                      cv.scheme,
                      seed = NULL,
                      remove.genotype = FALSE){
@@ -85,7 +107,11 @@ FormatCV <- function(trial1,
     # Untested lines in untested environment
     # check for overlapping genotypes and remove from either training or test set
     trial2.no.overlap <- trial2 %>% dplyr::filter(!.data$genotype %in% t1.a$genotype)
-    trial3.no.overlap <- trial3 %>% dplyr::filter(!.data$genotype %in% t1.a$genotype)
+    if(!is.null(trial3)){
+      trial3.no.overlap <- trial3 %>% dplyr::filter(!.data$genotype %in% t1.a$genotype)
+    } else{
+      trial3.no.overlap <- NULL
+    }
     test.set <- t1.a
     train.set <- rbind(trial2.no.overlap, trial3.no.overlap)
   }

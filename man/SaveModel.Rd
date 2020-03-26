@@ -12,46 +12,50 @@ SaveModel(df, preprocessing = F, save.model = T,
   trial2 = NULL, trial3 = NULL)
 }
 \arguments{
-\item{df}{`data.frame` object. First column contains unique identifiers, second contains
+\item{df}{\code{data.frame} object. First column contains unique identifiers, second contains
 reference values, followed by spectral columns. Include no other columns to right of spectra!
 Column names of spectra must start with "X" and reference column must be named "reference"}
 
-\item{preprocessing}{If `TRUE`, 12 preprocessing methods will be applied and their performance
-analyzed. If `FALSE`, input data is analyzed as is (raw). Default is `FALSE`.}
+\item{preprocessing}{If \code{TRUE}, 12 preprocessing methods will be applied and their performance
+analyzed. If \code{FALSE}, input data is analyzed as is (raw). Default is \code{FALSE}.}
 
-\item{save.model}{If `TRUE`, the trained model will be saved in .Rds format to the
-location specified by `model.save.folder`. If `FALSE`, model will be output by function
-but will not save to file. Default is `TRUE`.}
+\item{save.model}{If \code{TRUE}, the trained model will be saved in .Rds format to the
+location specified by \code{model.save.folder}. If \code{FALSE}, model will be output by function
+but will not save to file. Default is \code{TRUE}.}
 
 \item{model.save.folder}{Path to folder where model will be saved. If not provided,
 will save to working directory.}
 
-\item{model.name}{Name that model will be saved as in `model.save.folder`. Default is 'PredictionModel'.}
+\item{model.name}{Name that model will be saved as in \code{model.save.folder}. Default is "PredictionModel".}
 
 \item{best.model.metric}{Metric used to decide which model is best. Must be either "RMSE" or "Rsquared"}
 
-\item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter `ncomp`.
+\item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter \code{ncomp}.
 Default is 50.}
 
 \item{model.method}{Model type to use for training. Valid options include:
-*"pls": Partial least squares regression (Default)
-*"rf": Random forest
-*"svmLinear": Support vector machine with linear kernel
-*"svmRadial": Support vector machine with radial kernel}
+\itemize{
+  \item "pls": Partial least squares regression (Default)
+  \item "rf": Random forest
+  \item "svmLinear": Support vector machine with linear kernel
+  \item "svmRadial": Support vector machine with radial kernel
+}}
 
 \item{num.iterations}{Number of training iterations to perform}
 
-\item{wavelengths}{List of wavelengths represented by each column in `df`}
+\item{wavelengths}{List of wavelengths represented by each column in \code{df}}
 
-\item{stratified.sampling}{If `TRUE`, training and test sets will be selected using stratified
-random sampling. This term is only used if `test.data = NULL`. Default is `TRUE`.}
+\item{stratified.sampling}{If \code{TRUE}, training and test sets will be selected using stratified
+random sampling. This term is only used if \code{test.data == NULL}. Default is \code{TRUE}.}
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
 Options for cv.scheme include:
-*"CV1": untested lines in tested environments
-*"CV2": tested lines in tested environments
-*"CV0": tested lines in untested environments
-*"CV00": untested lines in untested environments}
+\itemize{
+  \item "CV1": untested lines in tested environments
+  \item "CV2": tested lines in tested environments
+  \item "CV0": tested lines in untested environments
+  \item "CV00": untested lines in untested environments
+}}
 
 \item{trial1}{`data.frame` object that is for use only when `cv.scheme` is provided.
 Contains the trial to be tested in subsequent model training functions. The first column
@@ -70,17 +74,29 @@ This data.frame contains a trial that may or may not contain genotypes that over
 Formatting must be consistent with `trial1`.}
 }
 \value{
-List of model stats (in `data.frame`) and trained model object. Saves both to
-`model.save.folder` as well. To use optimally trained model for predictions, extract `$finalModel`
-and use tuned parameters from `$bestTune`
+List of model stats (in \code{data.frame}) and trained model object. Saves both to
+\code{model.save.folder} as well. To use optimally trained model for predictions, extract
+\code{$finalModel} and use tuned parameters from \code{$bestTune}
 }
 \description{
-Saves model and model statistics to model.save.folder as model.name.Rds
-and model.name_stats.csv respectively
+Saves spectral prediction model and model statistics to \code{model.save.folder}
+as \code{model.name.Rds} and \code{model.name_stats.csv} respectively
 }
 \details{
 Wrapper that uses [DoPreprocessing()], [FormatCV()] and [TrainSpectralModel()] functions.
 }
+\examples{
+\dontrun{
+ikeogu.2017 \%>\%
+  filter(study.name == "C16Mcal") \%>\%
+  rename(reference = DMC.oven) \%>\%
+  dplyr::select(sample.id, reference, starts_with("X")) \%>\%
+  na.omit() \%>\%
+  SaveModel(df = .,
+            model.name = "my_prediction_model",
+            wavelengths = 350:2500)
+}
+}
 \author{
-Jenna Hershberger
+Jenna Hershberger \url{jmh579@cornell.edu}
 }

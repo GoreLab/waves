@@ -21,18 +21,28 @@ trained model ("(model.name).Rds") was saved as output by the [SaveModel()] func
 \item{wavelengths}{List of wavelengths represented by each column in `input.data`}
 
 \item{model.method}{Model type to use for training. Valid options include:
-*"pls": Partial least squares regression (Default)
-*"rf": Random forest
-*"svmLinear": Support vector machine with linear kernel
-*"svmRadial": Support vector machine with radial kernel}
+\itemize{
+  \item "pls": Partial least squares regression (Default)
+  \item "rf": Random forest
+  \item "svmLinear": Support vector machine with linear kernel
+  \item "svmRadial": Support vector machine with radial kernel
+}}
 }
 \value{
 `data.frame` object of predictions for each sample (row). First column is unique identifier
 supplied by `input.data` and second is predicted values
 }
 \description{
-#TODO
+Loads an existing model and cross-validation performance statistics
+(created with [SaveModel()]) and makes predictions based on new spectra.
 }
-\details{
-#TODO
+\examples{
+\dontrun{
+ikeogu.2017 \%>\%
+  dplyr::select(sample.id, starts_with("X")) \%>\%
+  PredictFromSavedModel(input.data = .,
+                        model.stats.location = paste0(getwd(), "/my_model_stats.csv"),
+                        model.location = paste0(getwd(), "/my_model.Rds"),
+                        wavelengths = 350:2500)
+}
 }
