@@ -42,7 +42,7 @@ ikeogu.2017 %>% dplyr::select(-starts_with("X")) %>%
 ```
 
 ## Example dataset reference distributions:
-![Reference distributions](./man/figures/example_ref_dists.png)
+![Reference distributions](./man/figures/example_ref_dists_h.png)
 
 A. Root dry matter content as measured by the oven method for the four studies included in the example dataset
 

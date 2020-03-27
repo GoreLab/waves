@@ -29,9 +29,15 @@ dmc.plot <- ikeogu.2017 %>%
   ggplot(aes(x= study.name, fill = study.name)) +
   scale_fill_manual(values = lacroix_palette("PeachPear", n = 7, type = "continuous"))+
   theme_bw() +
-  theme(legend.position = "none", axis.title.x=element_blank(), axis.ticks.x = element_blank()) +
-  labs(y = "Root dry matter content (%)") +
   geom_violin(aes(y = DMC.oven))
+
+dmc.plot.v <- dmc.plot +
+  theme(legend.position = "none", axis.title.x=element_blank(), axis.ticks.x = element_blank()) +
+  labs(y = "Root dry matter content (%)")
+
+dmc.plot.h <- dmc.plot +
+  theme(legend.position = "none") +
+  labs(y = "Root dry matter content (%)", x = "Study")
 
 tcc.plot <- ikeogu.2017 %>%
   dplyr::select(-starts_with("X")) %>%
@@ -43,13 +49,16 @@ tcc.plot <- ikeogu.2017 %>%
   theme_bw() +
   theme(legend.position = "none")
 
-reference.distributions <- ggarrange(dmc.plot+ rremove("x.text"), tcc.plot ,
+reference.distributions.vertical <- ggarrange(dmc.plot.v + rremove("x.text"), tcc.plot ,
                                      labels = c("A", "B"),
                                      ncol = 1, nrow = 2)
-ggsave(reference.distributions,
-       filename = "./man/figures/example_ref_dists.png", width = 4, height = 7, units = "in", bg = "transparent")
+ggsave(reference.distributions.vertical,
+       filename = "./man/figures/example_ref_dists_v.png", width = 4, height = 7, units = "in", bg = "transparent")
 
+reference.distributions.horizontal <- ggarrange(dmc.plot.h, tcc.plot, labels = c("A", "B"), ncol = 2, nrow = 1)
 
+ggsave(reference.distributions.horizontal,
+       filename = "./man/figures/example_ref_dists_h.png", width = 7, height = 5, units = "in", bg = "transparent")
 
 
 #### Model performance figure for README.md ####
