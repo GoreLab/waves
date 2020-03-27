@@ -6,7 +6,7 @@
 ![status: WIP](https://img.shields.io/badge/status-WorkInProgress-red.svg)
 <!-- badges: end -->
 
-The goal of waves is to ...
+\code{waves} enables streamlined filtering, preprocessing, model training, and trait prediction for vis-NIRS data within a cross-validation framework that is tailored to plant breeding use cases.
 
 ## Installation
 ``` r
@@ -44,9 +44,9 @@ ikeogu.2017 %>% dplyr::select(-starts_with("X")) %>%
 ## Example dataset reference distributions:
 ![Reference distributions](./man/figures/example_ref_dists.png)
 
-A. Root dry matter content as measured by the oven method for the seven included trials
+A. Root dry matter content as measured by the oven method for the four studies included in the example dataset
 
-B. Total carotenoid content as measured by HPLC. For consistency, only data from CIAT (study names beginning with "C") were included, as data collection methods for this trait differed from the studies in Umudike.
+B. Total carotenoid content as measured by HPLC
 
 ## Performance tests
 ```{r}
@@ -72,7 +72,7 @@ test_results <- TestModelPerformance(train.data = C16Mcal,
 ```
 ![Pretreatment performance with example data](./man/figures/testplot1.png)
 
-Root dry matter content prediction model RMSE distributions for models trained on samples from the C16Mcal study and tested on samples from C16Mval using PLSR
+Root dry matter content prediction model RMSE of prediction distributions for models trained on samples from the C16Mcal study and tested on samples from C16Mval using PLSR
 
 
 

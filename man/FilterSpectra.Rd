@@ -46,7 +46,7 @@ ikeogu.2017 \%>\%
   FilterSpectra(df = .,
                 filter = T,
                 return.distances = F,
-                num.col.before.spectra = 7)
+                num.col.before.spectra = 5)
 }
 }
 \references{

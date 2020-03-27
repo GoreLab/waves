@@ -34,7 +34,7 @@ ikeogu.2017 \%>\%
  na.omit() \%>\%
  PlotSpectra(input.df = .,
              wavelengths = 350:2500,
-             num.col.before.spectra = 7)
+             num.col.before.spectra = 5)
 }
 }
 \author{
