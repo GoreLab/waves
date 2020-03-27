@@ -4,7 +4,7 @@
 \name{ikeogu.2017}
 \alias{ikeogu.2017}
 \title{Example vis-NIRS and reference dataset}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 808 rows and 2158 columns.}
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 309 rows and 2158 columns.}
 \usage{
 ikeogu.2017
 }

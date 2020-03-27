@@ -47,7 +47,7 @@ reference.distributions <- ggarrange(dmc.plot+ rremove("x.text"), tcc.plot ,
                                      labels = c("A", "B"),
                                      ncol = 1, nrow = 2)
 ggsave(reference.distributions,
-       filename = "./man/figures/example_ref_dists.png", width = 5, height = 7, units = "in", bg = "transparent")
+       filename = "./man/figures/example_ref_dists.png", width = 4, height = 7, units = "in", bg = "transparent")
 
 
 

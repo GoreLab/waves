@@ -94,12 +94,13 @@ U16M <- read_excel("./data-raw/Ikeogu_et_al_2017/U16M.xlsx") %>%
   mutate(TCC = NA) %>%
   dplyr::select(study.name, location, year, prep.method, sample.id, DMC.oven, TCC, X350:X2500)
 
-ikeogu.2017 <- rbind(C16I66, C16M66, C16Mcal, C16Mval, U15I, U16I, U16M)
+#ikeogu.2017 <- rbind(C16I66, C16M66, C16Mcal, C16Mval, U15I, U16I, U16M)
+ikeogu.2017 <- rbind(C16I66, C16M66, C16Mcal, C16Mval)
 ikeogu.2017$DMC.oven <- as.numeric(ikeogu.2017$DMC.oven)
 ikeogu.2017$TCC <- as.numeric(ikeogu.2017$TCC)
 
 # At this point, ikeogu.2017 is ready for export
-usethis::use_data(ikeogu.2017)
+usethis::use_data(ikeogu.2017, overwrite = TRUE)
 
 
 
