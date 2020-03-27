@@ -26,10 +26,10 @@ load("./data/ikeogu.2017.rda")
 dmc.plot <- ikeogu.2017 %>%
   dplyr::select(-starts_with("X")) %>%
   group_by(study.name) %>%
-  ggplot(aes(x= study.name, fill = study.name)) +
+  ggplot(aes(x= study.name, fill = study.name, y = DMC.oven)) +
   scale_fill_manual(values = lacroix_palette("PeachPear", n = 7, type = "continuous"))+
   theme_bw() +
-  geom_violin(aes(y = DMC.oven))
+  geom_violin() + geom_boxplot(width = 0.15)
 
 dmc.plot.v <- dmc.plot +
   theme(legend.position = "none", axis.title.x=element_blank(), axis.ticks.x = element_blank()) +
@@ -45,7 +45,7 @@ tcc.plot <- ikeogu.2017 %>%
   ggplot(aes(x= study.name, y = TCC, fill = study.name)) +
   scale_fill_manual(values = lacroix_palette("PeachPear", n = 7, type = "continuous"))+
   labs(y = expression(paste("Total carotenoid content (", mu, "g/g)")), x = "Study") +
-  geom_violin() +
+  geom_violin() + geom_boxplot(width = 0.15) +
   theme_bw() +
   theme(legend.position = "none")
 
@@ -58,7 +58,7 @@ ggsave(reference.distributions.vertical,
 reference.distributions.horizontal <- ggarrange(dmc.plot.h, tcc.plot, labels = c("A", "B"), ncol = 2, nrow = 1)
 
 ggsave(reference.distributions.horizontal,
-       filename = "./man/figures/example_ref_dists_h.png", width = 7, height = 5, units = "in", bg = "transparent")
+       filename = "./man/figures/example_ref_dists_h.png", width = 7, height = 3, units = "in", bg = "transparent")
 
 
 #### Model performance figure for README.md ####
