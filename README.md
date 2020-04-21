@@ -6,7 +6,7 @@
 ![status: WIP](https://img.shields.io/badge/status-WorkInProgress-red.svg)
 <!-- badges: end -->
 
-\code{waves} enables streamlined filtering, preprocessing, model training, and trait prediction for vis-NIRS data within a cross-validation framework that is tailored to plant breeding use cases.
+waves enables streamlined filtering, preprocessing, model training, and trait prediction for vis-NIRS data within a cross-validation framework that is tailored to plant breeding use cases.
 
 ## Installation
 ``` r

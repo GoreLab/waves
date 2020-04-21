@@ -7,9 +7,15 @@
 #'
 #' @inheritParams TestModelPerformance
 #' @inheritParams TrainSpectralModel
+#' @inheritParams DoPreprocessing
 #' @param save.model If \code{TRUE}, the trained model will be saved in .Rds format to the
 #' location specified by \code{model.save.folder}. If \code{FALSE}, model will be output by function
 #' but will not save to file. Default is \code{TRUE}.
+#' @param autoselect.preprocessing Boolean that, if \code{TRUE}, will choose the
+#' preprocessing method for the saved model using the \code{best.model.metric}. If
+#' \code{FALSE}, the user must supply the preprocessing method (1-12, see
+#' [DoPreprocessing()] documentation for more information) of the saved model. Default
+#' is \code{TRUE}.
 #' @param model.save.folder Path to folder where model will be saved. If not provided,
 #' will save to working directory.
 #' @param model.name Name that model will be saved as in \code{model.save.folder}. Default is "PredictionModel".
@@ -38,8 +44,9 @@
 #'             wavelengths = 350:2500)
 #' }
 SaveModel <- function(df,
-                      preprocessing = F,
                       save.model = T,
+                      autoselect.preprocessing = T,
+                      preprocessing.method = NULL,
                       model.save.folder = NULL,
                       model.name = "PredictionModel",
                       best.model.metric = "RMSE",
@@ -70,6 +77,10 @@ SaveModel <- function(df,
     stop("model.name must be a string!")
   }
 
+  if(autoselect.preprocessing & is.null(preprocessing.method)){
+    stop("Please select a preprocessing method (1-12) if not using autoselect.")
+  }
+
   if(is.null(model.save.folder)){
     model.save.folder = getwd()
   }
@@ -78,10 +89,10 @@ SaveModel <- function(df,
   methods.list <- c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG", "SNVSG", "SGD1", "SG.D1W5",
                     "SG.D1W11", "SG.D2W5", "SG.D2W11")
 
-  if (!preprocessing) {
+  if (!autoselect.preprocessing) {
     cat("Training model...\n")
     formatted.df <- DoPreprocessing(df = df, test.data = NULL,
-                                    preprocessing.method = 1,
+                                    preprocessing.method = preprocessing.method,
                                     wavelengths = wavelengths)
     training.results <- TrainSpectralModel(df = formatted.df, num.iterations = num.iterations,
                                            test.data = NULL,tune.length = tune.length,
@@ -92,7 +103,7 @@ SaveModel <- function(df,
     best.model <- training.results[[1]]
     best.model.stats <- training.results[[2]]
     best.model.stats <- best.model.stats %>%
-      dplyr::mutate(Pretreatment = "Raw_data") %>% # Create "Pretreatment" column
+      dplyr::mutate(Pretreatment = methods.list[preprocessing.method]) %>% # Create "Pretreatment" column
       dplyr::select(.data$Pretreatment, everything()) # move "Pretreatment" column to far left
     print(best.model.stats)
   } else {

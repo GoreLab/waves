@@ -41,8 +41,8 @@ FilterSpectra <- function(df,
                           filter = T,
                           return.distances = F,
                           num.col.before.spectra = 4,
-                          window.size = 10,
-                          stringent = F){
+                          window.size = 10
+                          ){
 
   # Error handling
   # mahalanobis function does not allow missing values or non-numeric data

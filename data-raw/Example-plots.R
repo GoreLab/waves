@@ -106,3 +106,15 @@ testplot <- test4.1 %>% group_by(Pretreatment) %>%
 testplot
 ggsave(testplot, filename = "./man/figures/testplot1.png", width = 7, height = 4, units = "in", bg = "transparent")
 
+
+# TODO needs work
+manuscript_plot <- ggarrange(testplot,
+                             ggarrange(dmc.plot.h, tcc.plot,
+                                       labels = c("B", "C"),
+                                       ncol = 2, nrow = 1),
+                             nrow = 2,
+                             labels = c("A"))
+
+
+
+

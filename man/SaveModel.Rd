@@ -4,24 +4,44 @@
 \alias{SaveModel}
 \title{Save spectral prediction model and model performance statistics}
 \usage{
-SaveModel(df, preprocessing = F, save.model = T,
-  model.save.folder = NULL, model.name = "PredictionModel",
-  best.model.metric = "RMSE", tune.length = 50, model.method = "pls",
-  num.iterations = 10, wavelengths = 740:1070,
-  stratified.sampling = T, cv.scheme = NULL, trial1 = NULL,
-  trial2 = NULL, trial3 = NULL)
+SaveModel(df, save.model = T, autoselect.preprocessing = T,
+  preprocessing.method = NULL, model.save.folder = NULL,
+  model.name = "PredictionModel", best.model.metric = "RMSE",
+  tune.length = 50, model.method = "pls", num.iterations = 10,
+  wavelengths = 740:1070, stratified.sampling = T, cv.scheme = NULL,
+  trial1 = NULL, trial2 = NULL, trial3 = NULL)
 }
 \arguments{
 \item{df}{\code{data.frame} object. First column contains unique identifiers, second contains
 reference values, followed by spectral columns. Include no other columns to right of spectra!
 Column names of spectra must start with "X" and reference column must be named "reference"}
 
-\item{preprocessing}{If \code{TRUE}, 12 preprocessing methods will be applied and their performance
-analyzed. If \code{FALSE}, input data is analyzed as is (raw). Default is \code{FALSE}.}
-
 \item{save.model}{If \code{TRUE}, the trained model will be saved in .Rds format to the
 location specified by \code{model.save.folder}. If \code{FALSE}, model will be output by function
 but will not save to file. Default is \code{TRUE}.}
+
+\item{autoselect.preprocessing}{Boolean that, if \code{TRUE}, will choose the
+preprocessing method for the saved model using the \code{best.model.metric}. If
+\code{FALSE}, the user must supply the preprocessing method (1-12, see
+[DoPreprocessing()] documentation for more information) of the saved model. Default
+is \code{TRUE}.}
+
+\item{preprocessing.method}{Number or list of numbers 1:13 corresponding to desired pretreatment method(s):
+\itemize{
+  \item 1 = raw data (default)
+  \item 2 = standard normal variate (SNV)
+  \item 3 = SNV and first derivative
+  \item 4 = SNV and second derivative
+  \item 5 = first derivative
+  \item 6 = second derivative
+  \item 7 = Savitzky–Golay filter (SG)
+  \item 8 = SNV and SG
+  \item 9 = gap segment derivative (window size = 11)
+  \item 10 = SG and first derivative (window size = 5)
+  \item 11 = SG and first derivative (window size = 11)
+  \item 12 = SG and second derivative (window size = 5)
+  \item 13 = SG and second derivative (window size = 11)
+}}
 
 \item{model.save.folder}{Path to folder where model will be saved. If not provided,
 will save to working directory.}

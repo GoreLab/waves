@@ -197,7 +197,7 @@ TrainSpectralModel <- function(df,
     #     Example// for 'pls', train hyperparameter "ncomps", where tune.length is number of ncomps tried
     if(model.method != "rf"){
       # 5-fold cross validation on training set
-      cv.5 <- trainControl(method = "cv", number = 5, savePredictions = TRUE)
+      cv.5 <- trainControl(method = "cv", number = 5, savePredictions = TRUE, seeds = 1:num.iterations)
       data.trained <- train(reference ~ ., data = train.ref.spectra, method = model.method,
                             tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
     }
@@ -221,7 +221,7 @@ TrainSpectralModel <- function(df,
                                              newdata = as.matrix(test.spectra)))
 
     } else if(model.method == "rf"){
-      cv.oob <- trainControl(method = "oob", number = 5, savePredictions = TRUE)
+      cv.oob <- trainControl(method = "oob", number = 5, savePredictions = TRUE, seeds = 1:num.iterations)
       data.trained <- train(reference ~ ., data = train.ref.spectra, method = model.method,
                             tuneLength = tune.length, trControl = cv.5, metric = best.model.metric,
                             importance = TRUE)
