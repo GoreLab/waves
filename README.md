@@ -3,14 +3,14 @@
 
 <!-- badges: start -->
 ![language: R](https://img.shields.io/badge/language-R-blue.svg)
-![status: Beta](https://img.shields.io/badge/status-Beta-yellow.svg)
+![status: beta](https://img.shields.io/badge/status-beta-yellow.svg)
 <!-- badges: end -->
 
 `waves` enables streamlined filtering, preprocessing, model training, and trait prediction for visible and near-infrared (vis-NIR) spectral data within a cross-validation framework that is tailored to plant breeding use cases.
 
 ## Testing
 
-Follow the installation instructions below, and then go wild! Use `waves` to analyze your own data. Please report any bugs or feature requests by opening issues in this repository
+Follow the installation instructions below, and then go wild! Use `waves` to analyze your own data. Please report any bugs or feature requests by opening issues in this repository.
 
 ## Installation
 
@@ -22,6 +22,38 @@ library(devtools)
 install_github("GoreLab/waves", auth_token = github_pat())
 library(waves)
 ```
+
+## Overview
+1. Format your data. Match spectra with reference values so that you have a dataframe with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with "X".
+![Example Format](./man/figures/formatted_data.png)
+
+2. Visualize and filter spectra using `PlotSpectra()` and `FilterSpectra()`.
+![Filter data](./man/figures/filter_data.png)
+
+3. If you have more than one scan per unique identifier, aggregate the scans by mean or median with `AggregateSpectra()`.
+![Aggregate](./man/figures/aggregate.png)
+
+4. Use `TestModelPerformance()` to perform preprocessing, cross-validation set formation, and model training functions over multiple iterations.
+
+  a. Applies any of 12 combinations of spectral preprocessing methods using `DoPreprocessing()`.
+![Preprocess](./man/figures/preprocess.png)
+
+  b. Determines cross-validation scheme with `FormatCV()`. Choose from random, stratified random, or a plant breeding-specific scheme from Jarqu&iacute;n et *al.*, 2017. *The Plant Genome*.
+![CV](./man/figures/cv_schemes.png)
+
+  c. Trains spectral prediction models using `TrainSpectralModel()`.
+   - Choose from partial least squares regression, random forest, and support vector machine algorithms
+   - Uses 5-fold cross validation within the training set to tune model hyperparameters
+   - Outputs model performance statistics (RMSE, R<sup>2</sup>, Bias, etc) as assessed with test set
+
+5. Save trained prediction models with `SaveModel()`.
+  - Intended for a production environment
+  - Can evaluate preprocessing methods using the input dataset
+  - Selects best model using the metric provided (RMSE or R2)
+  - Returns trained model with option to save as .Rds object
+
+6. Predict phenotypic values with new spectra and a saved model using `PredictFromSavedModel()`.
+
 
 ## Examples
 
