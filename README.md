@@ -38,18 +38,18 @@ library(waves)
   a. Applies any of 12 combinations of spectral preprocessing methods using `DoPreprocessing()`.
 ![Preprocess](./man/figures/preprocess.png)
 
-  b. Determines cross-validation scheme with `FormatCV()`. Choose from random, stratified random, or a plant breeding-specific scheme from Jarqu&iacute;n et *al.*, 2017. *The Plant Genome*.
+  b. Determines cross-validation scheme with `FormatCV()`. Choose from random, stratified random, or a plant breeding-specific scheme from [Jarqu&iacute;n et *al.*, 2017. *The Plant Genome*](https://doi.org/10.3835/plantgenome2016.12.0130).
 ![CV](./man/figures/cv_schemes.png)
 
   c. Trains spectral prediction models using `TrainSpectralModel()`.
    - Choose from partial least squares regression, random forest, and support vector machine algorithms
    - Uses 5-fold cross validation within the training set to tune model hyperparameters
-   - Outputs model performance statistics (RMSE, R<sup>2</sup>, Bias, etc) as assessed with test set
+   - Outputs model performance statistics (RMSE, R<sup>2</sup>, Bias, etc.) as assessed with test set
 
 5. Save trained prediction models with `SaveModel()`.
   - Intended for a production environment
   - Can evaluate preprocessing methods using the input dataset
-  - Selects best model using the metric provided (RMSE or R2)
+  - Selects best model using the metric provided (RMSE or  R<sup>2</sup>)
   - Returns trained model with option to save as .Rds object
 
 6. Predict phenotypic values with new spectra and a saved model using `PredictFromSavedModel()`.
