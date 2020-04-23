@@ -57,7 +57,7 @@ library(waves)
 
 ## Examples
 
-The package comes with an example dataset from [Ikeogu et al. (2017) *PLoS ONE](https://doi.org/10.1371/journal.pone.0188918) that can be used to try out package capabilities:
+The package comes with an example dataset from [Ikeogu et *al.* (2017) *PLoS ONE*](https://doi.org/10.1371/journal.pone.0188918) that can be used to try out package capabilities:
 
 ``` r
 # Load and preview the example dataset (ikeogu.2017)
