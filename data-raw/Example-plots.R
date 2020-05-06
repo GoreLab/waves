@@ -72,7 +72,7 @@ test1 <- ikeogu.2017 %>% rename(reference = DMC.oven) %>% rename(unique.id = sam
 C16Mcal <- ikeogu.2017 %>% filter(study.name == "C16Mcal") %>% rename(reference = DMC.oven) %>%
   rename(unique.id = sample.id) %>%
   dplyr::select(unique.id, reference, starts_with("X")) %>% na.omit()
-C16Mval <- ikeogu.2017 %>% filter(study.name == "C16Mcal") %>% rename(reference = DMC.oven) %>%
+C16Mval <- ikeogu.2017 %>% filter(study.name == "C16Mval") %>% rename(reference = DMC.oven) %>%
   rename(unique.id = sample.id) %>%
   dplyr::select(unique.id, reference, starts_with("X")) %>% na.omit()
 
