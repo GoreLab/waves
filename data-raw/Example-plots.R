@@ -72,7 +72,7 @@ test1 <- ikeogu.2017 %>% rename(reference = DMC.oven) %>% rename(unique.id = sam
 C16Mcal <- ikeogu.2017 %>% filter(study.name == "C16Mcal") %>% rename(reference = DMC.oven) %>%
   rename(unique.id = sample.id) %>%
   dplyr::select(unique.id, reference, starts_with("X")) %>% na.omit()
-C16Mval <- ikeogu.2017 %>% filter(study.name == "C16Mcal") %>% rename(reference = DMC.oven) %>%
+C16Mval <- ikeogu.2017 %>% filter(study.name == "C16Mval") %>% rename(reference = DMC.oven) %>%
   rename(unique.id = sample.id) %>%
   dplyr::select(unique.id, reference, starts_with("X")) %>% na.omit()
 
@@ -97,7 +97,7 @@ testplot <- test4.1 %>% group_by(Pretreatment) %>%
   summarize(`Median RMSE` = median(RMSE)) %>%
   full_join(test4.1) %>%
   ggplot(aes(y=RMSE, x = Pretreatment, fill = `Median RMSE`)) +
-  geom_boxplot() + labs(title = "DMC prediction model performance") +
+  geom_boxplot() + labs(title = "Root dry matter content prediction model performance") +
   scale_fill_gradientn(colors = wes_palette("Zissou1", type = "continuous")) +
 #  scale_fill_gradientn(colors = lacroix_palette("PeachPear", type = "continuous"))+
   theme_minimal() + theme(axis.text.x = element_text(angle = 45,
