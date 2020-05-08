@@ -129,7 +129,7 @@ TrainSpectralModel <- function(df,
   }
 
   # Create empty df to hold results
-  df.colnames <- c("RMSE", "Rsquared", "RPD", "RPIQ", "CCC", "Bias", "SE", "Spearman")
+  df.colnames <- c("RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SE", "RMSEcv", "R2cv", "Spearman")
   if(model.method == "pls"){
     # Add extra column for best number of components
     df.colnames <- append(df.colnames, "best.ncomp")
@@ -192,12 +192,17 @@ TrainSpectralModel <- function(df,
 
     train.ref.spectra <- data.train %>% dplyr::select(.data$reference, starts_with("X"))
     test.spectra <- data.test %>% dplyr::select(starts_with("X")) # exclude reference column from predictions
+    if(num.iterations > 5){
+      cv.seeds <- c(1:num.iterations)
+    } else{
+      cv.seeds <- c(1:6)
+    }
 
     # Train hyperparameters with training data "ncomps" with training data
     #     Example// for 'pls', train hyperparameter "ncomps", where tune.length is number of ncomps tried
     if(model.method != "rf"){
       # 5-fold cross validation on training set
-      cv.5 <- trainControl(method = "cv", number = 5, savePredictions = TRUE, seeds = 1:num.iterations)
+      cv.5 <- trainControl(method = "cv", number = 5, savePredictions = TRUE, seeds = cv.seeds)
       data.trained <- train(reference ~ ., data = train.ref.spectra, method = model.method,
                             tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
     }
@@ -209,19 +214,25 @@ TrainSpectralModel <- function(df,
       predicted.values <- as.numeric(predict(data.trained$finalModel,
                                              newdata = as.matrix(test.spectra), # exclude reference column
                                              ncomp = best.hyper))
+      R2cv <- pls::R2(data.trained$finalModel, ncomp = best.hyper)[["val"]][2]
+      RMSEcv <- pls::RMSEP(data.trained$finalModel, ncomp = best.hyper)[["val"]][2]
 
     } else if(model.method == "svmLinear"){
       best.hyper <- NA
       predicted.values <- as.numeric(predict(data.trained$finalModel,
                                              newdata = as.matrix(test.spectra)))
+      R2cv <- NA
+      RMSEcv <- NA
 
     } else if(model.method == "svmRadial"){
       best.hyper <- NA
       predicted.values <- as.numeric(predict(data.trained$finalModel,
                                              newdata = as.matrix(test.spectra)))
+      R2cv <- NA
+      RMSEcv <- NA
 
     } else if(model.method == "rf"){
-      cv.oob <- trainControl(method = "oob", number = 5, savePredictions = TRUE, seeds = 1:num.iterations)
+      cv.oob <- trainControl(method = "oob", number = 5, savePredictions = TRUE, seeds = cv.seeds)
       data.trained <- train(reference ~ ., data = train.ref.spectra, method = model.method,
                             tuneLength = tune.length, trControl = cv.5, metric = best.model.metric,
                             importance = TRUE)
@@ -231,6 +242,8 @@ TrainSpectralModel <- function(df,
                                              newdata = as.matrix(test.spectra),
                                              ntree = best.hyper[1],
                                              mtry = best.hyper[2]))
+      R2cv <- NA
+      RMSEcv <- NA
       if(rf.variable.importance){
         rf.importance.df[i,] <- t(importance(data.trained$finalModel, type=1))
       }
@@ -239,9 +252,9 @@ TrainSpectralModel <- function(df,
     reference.values <- data.test$reference
 
     Spearman <- cor(predicted.values, reference.values, method = "spearman")
-    results.i <- cbind(t(postResampleSpectro(predicted.values, reference.values)), Spearman)
+    results.i <- cbind(t(postResampleSpectro(predicted.values, reference.values)), RMSEcv, R2cv, Spearman)
 
-    if(model.method == "pls" | model.method == "rf"){
+    if(model.method != "svmLinear"){
       results.df[i,] <- cbind(results.i, best.hyper)
     } else{
       results.df[i,] <- results.i
@@ -265,8 +278,7 @@ TrainSpectralModel <- function(df,
   summary.df <- rbind(summarize_all(results.df, .funs = mean),
                       summarize_all(results.df, sd, na.rm = TRUE))
   summary.df$Summary_type = c("mean", "sd")
-  summary.df %<>%
-    dplyr::select(.data$Summary_type, .data$RMSE:.data$Spearman)
+  summary.df %<>% dplyr::select(.data$Summary_type, .data$RMSEp:.data$Spearman)
   if(model.method == "pls"){
     # Report the mode of number of components, no standard deviation
     # This keeps the number of components as an integer and represents the value chosen most often
@@ -304,7 +316,7 @@ TrainSpectralModel <- function(df,
     }
     # If model and variable importance not desired as output, return results only
     # (either in summary or in full format)
-    # Output has 9 columns if model.method is "pls" or "svmRadial", 10 if "rf", and 8 if "svmLinear"
+    # Output has 11 columns if model.method is "pls" or "svmRadial", 12 if "rf", and 10 if "svmLinear"
     ifelse(output.summary, return(summary.df), return(results.df))
   }
 

@@ -98,13 +98,13 @@ TestModelPerformance <- function(train.data,
     # Format empty data frame for results
     nrow.results <- ifelse(output.summary, 13, 13 * num.iterations)
     # Set column names
-    results.colnames <- c("Pretreatment", "RMSE", "Rsquared", "RPD", "RPIQ", "CCC", "Bias", "SE", "Spearman")
+    results.colnames <- c("Pretreatment", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SE", "RMSEcv", "R2cv", "Spearman")
     # Add standard deviation columns if outputting a summary data frame
     if(output.summary){
-      results.colnames <- append(results.colnames, c("RMSE.sd", "Rsquared.sd", "RPD.sd", "RPIQ.sd", "CCC.sd", "Bias.sd", "SE.sd", "Spearman.sd"))
+      results.colnames <- append(results.colnames, c("RMSEp.sd", "R2p.sd", "RPD.sd", "RPIQ.sd", "CCC.sd", "Bias.sd", "SE.sd", "RMSEcv.sd", "R2cv.sd", "Spearman.sd"))
     } else{
       # Add iteration column
-      results.colnames <- c("Pretreatment", "Iteration", "RMSE", "Rsquared", "RPD", "RPIQ", "CCC", "Bias", "SE", "Spearman")
+      results.colnames <- c("Pretreatment", "Iteration", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SE", "RMSEcv", "R2cv", "Spearman")
     }
     # Add hyperparameter columns
     # svmLinear requires no extra columns for tuned hyperparameter results, pls and svmRadial require 1, and rf requires 2
@@ -164,7 +164,7 @@ TestModelPerformance <- function(train.data,
       if(output.summary){
         # Put pretreatment name in first column followed by means and standard deviations for each statistic
         results.df$Pretreatment[i] <- methods.list[i]
-        spectacle.results <- training.results %>% dplyr::select(.data$RMSE:.data$Spearman)
+        spectacle.results <- training.results %>% dplyr::select(.data$RMSEp:.data$Spearman)
         hyperparameter.results <- training.results %>%
           dplyr::select(-(.data$Summary_type:.data$Spearman)) # works even if no hyperparameter columns
         results.df[i, 2:ncol(results.df)] <- data.frame(spectacle.results[1,], # row 1 is means
