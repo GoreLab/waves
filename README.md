@@ -109,7 +109,7 @@ test_results <- TestModelPerformance(train.data = C16Mcal,
                                      summary = F,
                                      wavelengths = 350:2500)
 ```
-###`waves` prediction model performance
+### `waves` prediction model performance
 ![Pretreatment performance with example data](./man/figures/testplot_all_R2.png)
 
 Distributions of R<sub>p</sub><sup>2</sup>, the squared Pearson’s correlation between predicted and observed for the test set, for partial least squares regression (PLSR) models of two root quality traits trained on samples from the C16Mcal dataset and tested on samples from the C16Mval dataset from [Ikeogu et *al.* (2017) *PLoS ONE*](https://doi.org/10.1371/journal.pone.0188918) with raw data or after pretreatment. 
