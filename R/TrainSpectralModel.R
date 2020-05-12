@@ -64,6 +64,7 @@
 #' @importFrom spectacles postResampleSpectro
 #' @importFrom randomForest importance
 #' @importFrom rlang .data
+#' @importFrom pls R2 RMSEP mvrValstats MSEP
 #'
 #' @export
 #'

@@ -80,7 +80,7 @@ ikeogu.2017 %>% dplyr::select(-starts_with("X")) %>%
   theme_bw()
 ```
 
-## Example dataset reference distributions:
+### Example dataset reference distributions:
 ![Reference distributions](./man/figures/example_ref_dists_h.png)
 
 A. Root dry matter content as measured by the oven method for the four studies included in the example dataset
@@ -95,7 +95,7 @@ C16Mcal <- ikeogu.2017 %>% filter(study.name == "C16Mcal") %>%
   rename(unique.id = sample.id) %>%
   dplyr::select(unique.id, reference, starts_with("X")) %>% 
   na.omit()
-C16Mval <- ikeogu.2017 %>% filter(study.name == "C16Mcal") %>% 
+C16Mval <- ikeogu.2017 %>% filter(study.name == "C16Mval") %>% 
   rename(reference = DMC.oven) %>%
   rename(unique.id = sample.id) %>%
   dplyr::select(unique.id, reference, starts_with("X")) %>% 
@@ -109,9 +109,13 @@ test_results <- TestModelPerformance(train.data = C16Mcal,
                                      summary = F,
                                      wavelengths = 350:2500)
 ```
-![Pretreatment performance with example data](./man/figures/testplot1.png)
+###`waves` prediction model performance
+![Pretreatment performance with example data](./man/figures/testplot_all_R2.png)
 
-Root dry matter content prediction model RMSE of prediction distributions for models trained on samples from the C16Mcal study and tested on samples from C16Mval using PLSR
+Distributions of R<sub>p</sub><sup>2</sup>, the squared Pearson’s correlation between predicted and observed for the test set, for partial least squares regression (PLSR) models of two root quality traits trained on samples from the C16Mcal dataset and tested on samples from the C16Mval dataset from [Ikeogu et *al.* (2017) *PLoS ONE*](https://doi.org/10.1371/journal.pone.0188918) with raw data or after pretreatment. 
+
+*SNV: standard normal variate, SNV1D: standard normal variate and first derivative, SNV2D: standard normal variate and second derivative, D1: first derivative, D2: second derivative, SG: Savitzky-Golay with window size = 11, SNVSG: standard normal variate and Savitzky-Golay, SGD1: gap segment derivative with window size = 11, SG.D1W5: Savitzky-Golay with window size = 5 and first derivative, SG.D1W11: Savitzky-Golay with window size = 11 and first derivative, SG.D2W5: Savitzky-Golay with window size = 5 and second derivative, SG.D2W11: Savitzky-Golay with window size = 11 and second derivative. 
+
 
 
 
