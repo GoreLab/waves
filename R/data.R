@@ -8,7 +8,6 @@
 #' `ikeogu.2017` is a `data.frame` that contains the following columns:
 #' \itemize{
 #'   \item study.name = Name of the study as described in Ikeogu et al. (2017).
-#'   \item prep.method = Method used for sample preparation. Either "intact" for sliced roots or "mashed" for those blended in a food processor before scanning.
 #'   \item sample.id = Unique identifier for each individual root sample
 #'   \item DMC.oven = Cassava root dry matter content, the percentage of dry weight relative to fresh weight of a sample after oven drying.
 #'   \item TCC = Total carotenoid content (ug/g, unknown whether on a fresh or dry weight basis) as measured by

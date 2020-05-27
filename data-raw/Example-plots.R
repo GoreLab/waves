@@ -25,11 +25,16 @@ load("./data/ikeogu.2017.rda")
 #   theme_bw() +
 #   theme(legend.position = "none")
 
+my.palette.dists <- lacroix_palette("Lemon", n = 7, type = "continuous")[c(2,5)]
+#lacroix_palette("PeachPear", n = 7, type = "continuous")[c(3,5)]
+lacroix_palette("Lemon", n = 6, type = "continuous")[c(2,5)]
+#rev(lacroix_palettes$Lemon[1,])
+
 dmc.plot <- ikeogu.2017 %>%
   dplyr::select(-starts_with("X")) %>%
   group_by(study.name) %>%
   ggplot(aes(x= study.name, fill = study.name, y = DMC.oven)) +
-  scale_fill_manual(values = lacroix_palette("PeachPear", n = 7, type = "continuous"))+
+  scale_fill_manual(values = my.palette.dists)+#lacroix_palette("PeachPear", n = 7, type = "continuous"))+
   theme_bw() +
   geom_violin() + geom_boxplot(width = 0.15)
 
@@ -45,7 +50,7 @@ tcc.plot <- ikeogu.2017 %>%
   dplyr::select(-starts_with("X")) %>%
   group_by(study.name) %>%
   ggplot(aes(x= study.name, y = TCC, fill = study.name)) +
-  scale_fill_manual(values = lacroix_palette("PeachPear", n = 7, type = "continuous"))+
+  scale_fill_manual(values = my.palette.dists)+#values = lacroix_palette("PeachPear", n = 3, type = "continuous"))+
   labs(y = expression(paste("Total carotenoid content (", mu, "g/g)")), x = "Study") +
   geom_violin() + geom_boxplot(width = 0.15) +
   theme_bw() +
@@ -193,15 +198,11 @@ testplot.all.R2 <- testplot.joined %>%
                           legend.position="bottom")
 ggsave(testplot.all.R2, filename = "./man/figures/testplot_all_R2.png", width = 7, height = 6, units = "in", bg = "transparent")
 
+# summary table
+test.C16M.TCC.summary$Phenotype <- "TCC"
+test.C16M.DMC.summary$Phenotype <- "DMC"
+test.C16M.summary <- rbind(test.C16M.TCC.summary, test.C16M.DMC.summary) %>%
+  dplyr::select(Phenotype, Pretreatment)
 
-# manuscript.plot <- ggarrange(testplot.DMC,
-#                              testplot.TCC,
-#                              # ggarrange(dmc.plot.h, tcc.plot,
-#                              #           labels = c("B", "C"),
-#                              #           ncol = 2, nrow = 1),
-#                              nrow = 2,
-#                              labels = c("A", "B"))
-#
-# manuscript.plot
 
 
