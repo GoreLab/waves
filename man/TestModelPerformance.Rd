@@ -90,12 +90,6 @@ of a third and test on the remaining samples (30\%)  of the third. If \code{FALS
 test set \code{test.data} will remain as a testing set or if none is provided, 30\% of the provided
 \code{train.data} will be used for testing. Default is \code{FALSE}.}
 }
-\value{
-\code{data.frame} with model performance statistics (RMSE, Rsquared, RPD, RPIQ, CCC, Bias, SE, K)
-in summary format (2 rows, one with mean and one with standard deviation of all training iterations)
-or in long format (number of rows = num.iterations). *Note* if \code{preprocessing = TRUE}, only the first
-mean of summary statistics for all iterations of training are provided for each technique.
-}
 \description{
 Wrapper that trains models based spectral data to predict reference values and reports
 }

@@ -44,9 +44,9 @@ AggregateSpectra <- function(df,
 
   # Set aggregation function to match input
   if(agg.function == "median"){
-    agg.function <- function(x) median(as.numeric(as.character(x)))
+    agg.function <- function(x) suppressWarnings(median(as.numeric(as.character(x))))
   } else{
-    agg.function <- function(x) mean(as.numeric(as.character(x)), na.rm= T)
+    agg.function <- function(x) suppressWarnings(mean(as.numeric(as.character(x)), na.rm= T))
   }
 
   # Aggregate data.frame

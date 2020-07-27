@@ -51,10 +51,29 @@
 #' test set \code{test.data} will remain as a testing set or if none is provided, 30\% of the provided
 #' \code{train.data} will be used for testing. Default is \code{FALSE}.
 #'
-#' @return \code{data.frame} with model performance statistics (RMSE, Rsquared, RPD, RPIQ, CCC, Bias, SE, K)
-#' either in summary format (2 rows, one with mean and one with standard deviation of all training iterations)
+#' @return \code{data.frame} with model performance statistics either in summary format (2 rows, one with
+#' mean and one with standard deviation of all training iterations)
 #' or in long format (number of rows = \code{num.iterations}).
-#' Also returns trained model if \code{return.model} is \code{TRUE}.
+#' Also returns trained model if \code{return.model} is \code{TRUE}. If \code{FALSE}, returns results
+#' \code{data.frame} without model. Default is \code{FALSE}.
+#' Included summary statistics:
+#' \itemize{
+#'   \item Tuned parameters depending on the model algorithm:
+#'   \begin{itemize}
+#'     \item *Best.n.comp*, the best number of components
+#'     \item *Best.ntree*, the best number of trees in an RF model
+#'     \item *Best.mtry*, the best number of variables to include at every decision point in an RF model
+#'     \end{itemize}
+#'   \item *RMSECV*, the root mean squared error of cross-validation
+#'   \item *R2cv*, the coefficient of multiple determination of cross-validation for PLSR models
+#'   \item *RMSEP*, the root mean squared error of prediction
+#'   \item *R2p*, the squared Pearson’s correlation between predicted and observed test set values
+#'   \item *RPD*, the ratio of standard deviation of observed test set values to RMSEP
+#'   \item *RPIQ*, the ratio of performance to interquartile difference
+#'   \item *CCC*, the concordance correlation coefficient
+#'   \item *Bias*, the average difference between the predicted and observed values
+#'   \item *SEP*, the standard error of prediction
+#'   \item *R2sp*, the squared Spearman’s rank correlation between predicted and observed test set values
 #'
 #' @importFrom caret createDataPartition trainControl train
 #' @importFrom dplyr select mutate summarize_all
@@ -130,7 +149,7 @@ TrainSpectralModel <- function(df,
   }
 
   # Create empty df to hold results
-  df.colnames <- c("RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SE", "RMSEcv", "R2cv", "Spearman")
+  df.colnames <- c("RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SEP", "RMSEcv", "R2cv", "R2sp")
   if(model.method == "pls"){
     # Add extra column for best number of components
     df.colnames <- append(df.colnames, "best.ncomp")
@@ -204,7 +223,7 @@ TrainSpectralModel <- function(df,
     if(model.method != "rf"){
       # 5-fold cross validation on training set
       cv.5 <- trainControl(method = "cv", number = 5, savePredictions = TRUE, seeds = cv.seeds)
-      data.trained <- train(reference ~ ., data = train.ref.spectra, method = model.method,
+      data.trained <- train(.data$reference ~ ., data = train.ref.spectra, method = model.method,
                             tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
     }
 
@@ -234,7 +253,7 @@ TrainSpectralModel <- function(df,
 
     } else if(model.method == "rf"){
       cv.oob <- trainControl(method = "oob", number = 5, savePredictions = TRUE, seeds = cv.seeds)
-      data.trained <- train(reference ~ ., data = train.ref.spectra, method = model.method,
+      data.trained <- train(.data$reference ~ ., data = train.ref.spectra, method = model.method,
                             tuneLength = tune.length, trControl = cv.5, metric = best.model.metric,
                             importance = TRUE)
       best.hyper <- t(as.data.frame(c(data.trained$finalModel$ntree, data.trained$finalModel$mtry)))
@@ -252,8 +271,8 @@ TrainSpectralModel <- function(df,
     # Get model performance statistics
     reference.values <- data.test$reference
 
-    Spearman <- cor(predicted.values, reference.values, method = "spearman")
-    results.i <- cbind(t(postResampleSpectro(predicted.values, reference.values)), RMSEcv, R2cv, Spearman)
+    R2sp <- cor(predicted.values, reference.values, method = "spearman") # Spearman's rank correlation
+    results.i <- cbind(t(postResampleSpectro(predicted.values, reference.values)), RMSEcv, R2cv, R2sp)
 
     if(model.method != "svmLinear"){
       results.df[i,] <- cbind(results.i, best.hyper)
@@ -279,7 +298,7 @@ TrainSpectralModel <- function(df,
   summary.df <- rbind(summarize_all(results.df, .funs = mean),
                       summarize_all(results.df, sd, na.rm = TRUE))
   summary.df$Summary_type = c("mean", "sd")
-  summary.df %<>% dplyr::select(.data$Summary_type, .data$RMSEp:.data$Spearman)
+  summary.df %<>% dplyr::select(.data$Summary_type, .data$RMSEp:.data$R2sp)
   if(model.method == "pls"){
     # Report the mode of number of components, no standard deviation
     # This keeps the number of components as an integer and represents the value chosen most often
@@ -298,18 +317,25 @@ TrainSpectralModel <- function(df,
     # If model desired as output (return.model is TRUE), return list of c(trained model, results).
     # Create model with all input data (not just 70%). Results will give an idea of this model's performance,
     #     but they will have been generated with only subsets of the data.
-    full.model <- train(reference ~ ., data = df, method = model.method,
-                        tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
-    if(output.summary){
-      ifelse(rf.variable.importance,
-             return(list(full.model, summary.df, rf.importance.df)),
-             return(list(full.model, summary.df)))
-    } else{
-      ifelse(rf.variable.importance,
-             return(list(full.model, results.df, rf.importance.df)),
-             return(list(full.model, results.df)))
+    cat("\nReturning model...\n")
+    if(model.method == "pls"){
+      # Format df for plsr() function
+      df.plsr <- as.data.frame(df[, 1:2])
+      df.plsr$spectra <- as.matrix(df[3:ncol(df)])
+      print(colnames(df.plsr))
+      full.model <- pls::plsr(.data$reference ~ spectra, ncomp = tune.length, data = df.plsr)
     }
-  } else{
+    if(model.method == "rf"){
+      df.rf <- df %>% dplyr::select(.data$reference, starts_with("X"))
+      full.model <- randomForest::randomForest(.data$reference ~ ., data = df.rf, importance = FALSE,
+                                  ntree = tune.length)
+    }
+    if(model.method == "svmLinear" | model.method == "svmRadial"){
+      full.model <- train(.data$reference ~ ., data = df, method = model.method,
+                          tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
+    }
+    ifelse(output.summary,return(list(full.model, summary.df)), return(list(full.model, results.df)))
+  } else{ # !(return.model)
     if(rf.variable.importance){
       ifelse(output.summary,
              return(list(summary.df, rf.importance.df)),

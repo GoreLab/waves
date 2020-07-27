@@ -38,7 +38,7 @@ PredictFromSavedModel <- function(input.data,
   # Load model and model statistics
   model.stats <- read.csv(model.stats.location)
   model.object <- readRDS(model.location)
-  final.model <- model.object$finalModel
+  final.model <- model.object
   # Match best preprocessing method with index number
   best.preprocessing.num <- match(model.stats$Pretreatment[1],
                                   c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
@@ -48,14 +48,15 @@ PredictFromSavedModel <- function(input.data,
   preprocessed <- DoPreprocessing(df = input.data, test.data = NULL,
                                   preprocessing.method = best.preprocessing.num,
                                   wavelengths = wavelengths)
+  #print(colnames(preprocessed))
 
   # Predict values using imported model, preprocessed/formatted input data, and method of choice
   if(model.method == "pls"){
     # Extract best number of components
-    best.ncomp <- model.object$bestTune$ncomp
+    best.ncomp <- model.stats$best.ncomp[1]
     # Get predictions
     predicted.values <- as.numeric(predict(final.model,
-                                           newdata = preprocessed,
+                                           newdata = as.matrix(preprocessed[3:ncol(preprocessed)]),
                                            ncomp = best.ncomp))
   } else if(model.method == "svmLinear"){
     predicted.values <- as.numeric(predict(final.model, newdata = preprocessed))

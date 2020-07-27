@@ -4,7 +4,7 @@
 \alias{PlotSpectra}
 \title{Plot spectral data, highlighting outliers as identified using Mahalanobis distance}
 \usage{
-PlotSpectra(input.df, wavelengths, num.col.before.spectra)
+PlotSpectra(input.df, wavelengths, num.col.before.spectra, window.size)
 }
 \arguments{
 \item{input.df}{`data.frame` object containing columns of spectra. Spectral columns must be labeled
@@ -15,6 +15,9 @@ any missing values}
 \item{wavelengths}{List of wavelengths (numerical format) represented by each spectral column in `input.df`}
 
 \item{num.col.before.spectra}{Number of columns to the left of the spectral matrix (including unique ID).}
+
+\item{window.size}{number defining the size of window to use when calculating the covariance of the
+spectra (required to calculate Mahalanobis distance). Default is 10.}
 }
 \value{
 Prints unique ID and metadata for rows identified as outliers. Returns plot of spectral

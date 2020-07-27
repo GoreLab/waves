@@ -99,7 +99,8 @@ SaveModel <- function(df,
                                            model.method = model.method, output.summary = TRUE,
                                            return.model = TRUE, stratified.sampling = stratified.sampling,
                                            best.model.metric = best.model.metric, cv.scheme = cv.scheme,
-                                           trial1 = trial1, trial2 = trial2, trial3 = trial3)
+                                           trial1 = trial1, trial2 = trial2, trial3 = trial3,
+                                           rf.variable.importance = FALSE)
     best.model <- training.results[[1]]
     best.model.stats <- training.results[[2]]
     best.model.stats <- best.model.stats %>%
@@ -133,16 +134,16 @@ SaveModel <- function(df,
       # Format output
       # Put pretreatment name in first column followed by means and standard deviations for each statistic
       results.df$Pretreatment[i] <- methods.list[i]
-      spectacle.results.i <- training.results.i[[2]] %>% dplyr::select(.data$RMSE:.data$Spearman)
+      spectacle.results.i <- training.results.i[[2]] %>% dplyr::select(.data$RMSE:.data$R2sp)
       hyperparameter.results.i <- training.results.i[[2]] %>%
-        dplyr::select(-(.data$Summary_type:.data$Spearman)) # works even if no hyperparameter columns
+        dplyr::select(-(.data$Summary_type:.data$R2sp)) # works even if no hyperparameter columns
       results.df[i, 2:ncol(results.df)] <- data.frame(spectacle.results.i[1,], # row 1 is means
                                                       spectacle.results.i[2,], # row 2 is standard deviations
                                                       hyperparameter.results.i[1,]) # first row is values, second is just NA
     } # End loop of pretreatments
 
-    colnames(results.df) <- c("Pretreatment", "RMSE", "Rsquared", "RPD", "RPIQ", "CCC", "Bias", "SE", "Spearman",
-                              "RMSE.sd", "Rsquared.sd", "RPD.sd", "RPIQ.sd", "CCC.sd", "Bias.sd", "SE.sd", "Spearman.sd")
+    colnames(results.df) <- c("Pretreatment", "RMSE", "Rsquared", "RPD", "RPIQ", "CCC", "Bias", "SEP", "R2sp",
+                              "RMSE.sd", "Rsquared.sd", "RPD.sd", "RPIQ.sd", "CCC.sd", "Bias.sd", "SEP.sd", "R2sp.sd")
     cat("\nTraining Summary:\n")
     print(results.df)
 

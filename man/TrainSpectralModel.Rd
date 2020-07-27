@@ -96,11 +96,6 @@ test set \code{test.data} will remain as a testing set or if none is provided, 3
 \item{vector.input}{The mode of this vector of numbers will be calculated by this function}
 }
 \value{
-\code{data.frame} with model performance statistics (RMSE, Rsquared, RPD, RPIQ, CCC, Bias, SE, K)
-either in summary format (2 rows, one with mean and one with standard deviation of all training iterations)
-or in long format (number of rows = \code{num.iterations}).
-Also returns trained model if \code{return.model} is \code{TRUE}.
-
 mode of the numbers in `vector.input`
 }
 \description{

@@ -11,6 +11,8 @@
 #' any missing values
 #' @param wavelengths List of wavelengths (numerical format) represented by each spectral column in `input.df`
 #' @param num.col.before.spectra Number of columns to the left of the spectral matrix (including unique ID).
+#' @param window.size number defining the size of window to use when calculating the covariance of the
+#' spectra (required to calculate Mahalanobis distance). Default is 10.
 #'
 #' @importFrom dplyr mutate distinct
 #' @importFrom ggplot2 ggplot aes geom_line theme_minimal labs scale_color_manual
@@ -33,7 +35,7 @@
 #'              wavelengths = 350:2500,
 #'              num.col.before.spectra = 5)
 #' }
-PlotSpectra <- function(input.df, wavelengths, num.col.before.spectra){
+PlotSpectra <- function(input.df, wavelengths, num.col.before.spectra, window.size){
   # Error handling
   # Mahalanobis function does not allow missing values or non-numeric data
   if(nrow(input.df) != nrow(na.omit(input.df))){
@@ -51,7 +53,7 @@ PlotSpectra <- function(input.df, wavelengths, num.col.before.spectra){
   # Calculate Mahalanobis distribution for each scan and identify outliers
   filtered.df <- FilterSpectra(df = input.df, filter = F, return.distances = T,
                                num.col.before.spectra = num.col.before.spectra,
-                               window.size = 10) %>%
+                               window.size = window.size) %>%
     mutate(Outlier = ifelse(.data$h.distances > chisq95, T, F))
 
   # Prepare data frame for plotting

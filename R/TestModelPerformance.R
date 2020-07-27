@@ -18,10 +18,30 @@
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
 #'
-#' @return \code{data.frame} with model performance statistics (RMSE, Rsquared, RPD, RPIQ, CCC, Bias, SE, K)
+#' @return \code{data.frame} with model performance statistics
 #' in summary format (2 rows, one with mean and one with standard deviation of all training iterations)
 #' or in long format (number of rows = num.iterations). *Note* if \code{preprocessing = TRUE}, only the first
 #' mean of summary statistics for all iterations of training are provided for each technique.
+#' Included summary statistics:
+#' \itemize{
+#'   \item Tuned parameters depending on the model algorithm:
+#'   \begin{itemize}
+#'     \item *Best.n.comp*, the best number of components
+#'     \item *Best.ntree*, the best number of trees in an RF model
+#'     \item *Best.mtry*, the best number of variables to include at every decision point in an RF model
+#'     \end{itemize}
+#'   \item *RMSECV*, the root mean squared error of cross-validation
+#'   \item *R2cv*, the coefficient of multiple determination of cross-validation for PLSR models
+#'   \item *RMSEP*, the root mean squared error of prediction
+#'   \item *R2p*, the squared Pearson’s correlation between predicted and observed test set values
+#'   \item *RPD*, the ratio of standard deviation of observed test set values to RMSEP
+#'   \item *RPIQ*, the ratio of performance to interquartile difference
+#'   \item *CCC*, the concordance correlation coefficient
+#'   \item *Bias*, the average difference between the predicted and observed values
+#'   \item *SEP*, the standard error of prediction
+#'   \item *R2sp*, the squared Spearman’s rank correlation between predicted and observed test set values
+#'
+#'
 #' @export
 #'
 #' @examples
@@ -98,13 +118,13 @@ TestModelPerformance <- function(train.data,
     # Format empty data frame for results
     nrow.results <- ifelse(output.summary, 13, 13 * num.iterations)
     # Set column names
-    results.colnames <- c("Pretreatment", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SE", "RMSEcv", "R2cv", "Spearman")
+    results.colnames <- c("Pretreatment", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SEP", "RMSEcv", "R2cv", "R2sp")
     # Add standard deviation columns if outputting a summary data frame
     if(output.summary){
-      results.colnames <- append(results.colnames, c("RMSEp.sd", "R2p.sd", "RPD.sd", "RPIQ.sd", "CCC.sd", "Bias.sd", "SE.sd", "RMSEcv.sd", "R2cv.sd", "Spearman.sd"))
+      results.colnames <- append(results.colnames, c("RMSEp.sd", "R2p.sd", "RPD.sd", "RPIQ.sd", "CCC.sd", "Bias.sd", "SEP.sd", "RMSEcv.sd", "R2cv.sd", "R2sp.sd"))
     } else{
       # Add iteration column
-      results.colnames <- c("Pretreatment", "Iteration", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SE", "RMSEcv", "R2cv", "Spearman")
+      results.colnames <- c("Pretreatment", "Iteration", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SEP", "RMSEcv", "R2cv", "R2sp")
     }
     # Add hyperparameter columns
     # svmLinear requires no extra columns for tuned hyperparameter results, pls and svmRadial require 1, and rf requires 2
@@ -164,9 +184,9 @@ TestModelPerformance <- function(train.data,
       if(output.summary){
         # Put pretreatment name in first column followed by means and standard deviations for each statistic
         results.df$Pretreatment[i] <- methods.list[i]
-        spectacle.results <- training.results %>% dplyr::select(.data$RMSEp:.data$Spearman)
+        spectacle.results <- training.results %>% dplyr::select(.data$RMSEp:.data$R2sp)
         hyperparameter.results <- training.results %>%
-          dplyr::select(-(.data$Summary_type:.data$Spearman)) # works even if no hyperparameter columns
+          dplyr::select(-(.data$Summary_type:.data$R2sp)) # works even if no hyperparameter columns
         results.df[i, 2:ncol(results.df)] <- data.frame(spectacle.results[1,], # row 1 is means
                                                         spectacle.results[2,], # row 2 is standard deviations
                                                         hyperparameter.results[1,]) # first row is values, second is just NA
