@@ -28,8 +28,8 @@
 #' @importFrom utils write.csv
 #'
 #' @return List of model stats (in \code{data.frame}) and trained model object. Saves both to
-#' \code{model.save.folder} as well. To use optimally trained model for predictions, extract
-#' \code{$finalModel} and use tuned parameters from \code{$bestTune}
+#' \code{model.save.folder} as well. To use optimally trained model for predictions, use tuned
+#' parameters from \code{$bestTune}
 #' @export
 #'
 #' @examples

@@ -212,18 +212,18 @@ TrainSpectralModel <- function(df,
 
     train.ref.spectra <- data.train %>% dplyr::select(.data$reference, starts_with("X"))
     test.spectra <- data.test %>% dplyr::select(starts_with("X")) # exclude reference column from predictions
-    if(num.iterations > 5){
+    if(num.iterations > 9){
       cv.seeds <- c(1:num.iterations)
     } else{
-      cv.seeds <- c(1:6)
+      cv.seeds <- c(1:10)
     }
 
     # Train hyperparameters with training data "ncomps" with training data
     #     Example// for 'pls', train hyperparameter "ncomps", where tune.length is number of ncomps tried
     if(model.method != "rf"){
       # 5-fold cross validation on training set
-      cv.5 <- trainControl(method = "cv", number = 5, savePredictions = TRUE, seeds = cv.seeds)
-      data.trained <- train(.data$reference ~ ., data = train.ref.spectra, method = model.method,
+      cv.5 <- caret::trainControl(method = "cv", number = 5, savePredictions = TRUE, seeds = cv.seeds)
+      data.trained <- caret::train(reference ~ ., data = train.ref.spectra, method = model.method,
                             tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
     }
 
@@ -252,9 +252,9 @@ TrainSpectralModel <- function(df,
       RMSEcv <- NA
 
     } else if(model.method == "rf"){
-      cv.oob <- trainControl(method = "oob", number = 5, savePredictions = TRUE, seeds = cv.seeds)
-      data.trained <- train(.data$reference ~ ., data = train.ref.spectra, method = model.method,
-                            tuneLength = tune.length, trControl = cv.5, metric = best.model.metric,
+      cv.oob <- caret::trainControl(method = "oob", number = 5, savePredictions = TRUE, seeds = list(cv.seeds, cv.seeds))
+      data.trained <- caret::train(reference ~ ., data = train.ref.spectra, method = model.method,
+                            tuneLength = tune.length, trControl = cv.oob, metric = best.model.metric,
                             importance = TRUE)
       best.hyper <- t(as.data.frame(c(data.trained$finalModel$ntree, data.trained$finalModel$mtry)))
       colnames(best.hyper) = c("ntree", "mtry")
@@ -272,7 +272,7 @@ TrainSpectralModel <- function(df,
     reference.values <- data.test$reference
 
     R2sp <- cor(predicted.values, reference.values, method = "spearman") # Spearman's rank correlation
-    results.i <- cbind(t(postResampleSpectro(predicted.values, reference.values)), RMSEcv, R2cv, R2sp)
+    results.i <- cbind(t(spectacles::postResampleSpectro(predicted.values, reference.values)), RMSEcv, R2cv, R2sp)
 
     if(model.method != "svmLinear"){
       results.df[i,] <- cbind(results.i, best.hyper)
@@ -323,15 +323,15 @@ TrainSpectralModel <- function(df,
       df.plsr <- as.data.frame(df[, 1:2])
       df.plsr$spectra <- as.matrix(df[3:ncol(df)])
       print(colnames(df.plsr))
-      full.model <- pls::plsr(.data$reference ~ spectra, ncomp = tune.length, data = df.plsr)
+      full.model <- pls::plsr(reference ~ spectra, ncomp = tune.length, data = df.plsr)
     }
     if(model.method == "rf"){
       df.rf <- df %>% dplyr::select(.data$reference, starts_with("X"))
-      full.model <- randomForest::randomForest(.data$reference ~ ., data = df.rf, importance = FALSE,
+      full.model <- randomForest::randomForest(reference ~ ., data = df.rf, importance = FALSE,
                                   ntree = tune.length)
     }
     if(model.method == "svmLinear" | model.method == "svmRadial"){
-      full.model <- train(.data$reference ~ ., data = df, method = model.method,
+      full.model <- caret::train(reference ~ ., data = df, method = model.method,
                           tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
     }
     ifelse(output.summary,return(list(full.model, summary.df)), return(list(full.model, results.df)))
