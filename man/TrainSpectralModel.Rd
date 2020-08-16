@@ -22,7 +22,7 @@ Column names of spectra must start with "X" and reference column must be named "
 desired for hyperparameter tuning. If \code{NULL}, function will automatically train with a
 stratified sample of 70\%. Default is \code{NULL}.}
 
-\item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter \code{ncomp}.
+\item{tune.length}{Number delineating search space for tuning of the PLSR hyperparameter \code{ncomp}.
 Default is 50.}
 
 \item{model.method}{Model type to use for training. Valid options include:

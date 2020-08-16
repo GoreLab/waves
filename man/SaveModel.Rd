@@ -50,7 +50,7 @@ will save to working directory.}
 
 \item{best.model.metric}{Metric used to decide which model is best. Must be either "RMSE" or "Rsquared"}
 
-\item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter \code{ncomp}.
+\item{tune.length}{Number delineating search space for tuning of the PLSR hyperparameter \code{ncomp}.
 Default is 50.}
 
 \item{model.method}{Model type to use for training. Valid options include:

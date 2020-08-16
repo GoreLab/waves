@@ -2,7 +2,7 @@
 % Please edit documentation in R/DoPreprocessing.R
 \name{DoPreprocessing}
 \alias{DoPreprocessing}
-\title{Preproccess spectral data according to user-designated method}
+\title{Preprocess spectral data according to user-designated method}
 \usage{
 DoPreprocessing(df, test.data = NULL, preprocessing.method = 1,
   wavelengths = 740:1070)

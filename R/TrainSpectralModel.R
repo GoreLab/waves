@@ -12,7 +12,7 @@
 #' @param test.data \code{data.frame} with same specifications as \code{df}. Use if specific test set is
 #' desired for hyperparameter tuning. If \code{NULL}, function will automatically train with a
 #' stratified sample of 70\%. Default is \code{NULL}.
-#' @param tune.length Number deliniating search space for tuning of the PLSR hyperparameter \code{ncomp}.
+#' @param tune.length Number delineating search space for tuning of the PLSR hyperparameter \code{ncomp}.
 #' Default is 50.
 #' @param model.method Model type to use for training. Valid options include:
 #' \itemize{

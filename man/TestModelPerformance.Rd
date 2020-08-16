@@ -28,7 +28,7 @@ analyzed. If \code{FALSE}, input data is analyzed as is (raw). Default is \code{
 
 \item{wavelengths}{List of wavelengths represented by each column in \code{train.data}}
 
-\item{tune.length}{Number deliniating search space for tuning of the PLSR hyperparameter \code{ncomp}.
+\item{tune.length}{Number delineating search space for tuning of the PLSR hyperparameter \code{ncomp}.
 Default is 50.}
 
 \item{model.method}{Model type to use for training. Valid options include:

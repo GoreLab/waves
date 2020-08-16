@@ -1,4 +1,4 @@
-#' @title Preproccess spectral data according to user-designated method
+#' @title Preprocess spectral data according to user-designated method
 #' @name DoPreprocessing
 #' @description Preprocessing, also known as pretreatment, is often used to increase the signal to
 #' noise ratio in vis-NIR datasets. The waves function DoPreprocessing() applies common spectral

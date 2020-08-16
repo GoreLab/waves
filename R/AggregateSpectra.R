@@ -9,7 +9,7 @@
 #' @usage AggregateSpectra(df, grouping.colnames, reference.value.colname, agg.function)
 #'
 #' @param df `data.frame` object containing one or multiple columns of grouping variables
-#' (must be consistant for each group), column of reference values (optional),
+#' (must be consistent within each group), column of reference values (optional),
 #' and columns of spectra. Spectral column names must start with "X".
 #' @param grouping.colnames Names of columns to be used as grouping variables.
 #' Minimum 2 variables required. Default is c("trial", "plot").
