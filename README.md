@@ -6,7 +6,7 @@
 [![Travis build status](https://travis-ci.org/GoreLab/waves.svg?branch=master)](https://travis-ci.org/GoreLab/waves)
 <!-- badges: end -->
 
-`waves` enables streamlined filtering, preprocessing, model training, and trait prediction for visible and near-infrared (vis-NIR) spectral data within a cross-validation framework that is tailored to plant breeding use cases.
+Originally designed application in the context of resource-limited plant research and breeding programs, `waves` provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, preprocessing, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data. 
 
 ## Use
 
