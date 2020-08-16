@@ -95,8 +95,8 @@ Formatting must be consistent with `trial1`.}
 }
 \value{
 List of model stats (in \code{data.frame}) and trained model object. Saves both to
-\code{model.save.folder} as well. To use optimally trained model for predictions, extract
-\code{$finalModel} and use tuned parameters from \code{$bestTune}
+\code{model.save.folder} as well. To use optimally trained model for predictions, use tuned
+parameters from \code{$bestTune}
 }
 \description{
 Saves spectral prediction model and model statistics to \code{model.save.folder}
@@ -118,5 +118,5 @@ ikeogu.2017 \%>\%
 }
 }
 \author{
-Jenna Hershberger \url{jmh579@cornell.edu}
+Jenna Hershberger \email{jmh579@cornell.edu}
 }

@@ -37,5 +37,5 @@ ikeogu.2017 \%>\%
 }
 }
 \author{
-Jenna Hershberger
+Jenna Hershberger \email{jmh579@cornell.edu}
 }

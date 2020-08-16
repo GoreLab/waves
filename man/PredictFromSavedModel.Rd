@@ -46,3 +46,6 @@ ikeogu.2017 \%>\%
                         wavelengths = 350:2500)
 }
 }
+\author{
+Jenna Hershberger \email{jmh579@cornell.edu}
+}

@@ -3,7 +3,7 @@
 #' @description Preprocessing, also known as pretreatment, is often used to increase the signal to
 #' noise ratio in vis-NIR datasets. The waves function DoPreprocessing() applies common spectral
 #' preprocessing methods such as standard normal variate and the Savitzky-Golay filter.
-#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
+#' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @param df \code{data.frame} object containing spectral data. First column(s) (optional)
 #' include metadata (with or without reference value column) followed by spectral columns.
 #' Spectral column names must be formatted as "X" followed by wavelength

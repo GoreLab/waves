@@ -2,7 +2,7 @@
 #' @name PredictFromSavedModel
 #' @description Loads an existing model and cross-validation performance statistics
 #' (created with [SaveModel()]) and makes predictions based on new spectra.
-#'
+#' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @inheritParams TestModelPerformance
 #' @param input.data `data.frame` object of spectral data for input into a spectral prediction model.
 #' First column contains unique identifiers followed by spectral columns. Include no other columns to

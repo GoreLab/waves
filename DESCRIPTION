@@ -1,6 +1,6 @@
 Package: waves
 Title: Vis-NIR Spectral Analysis Wrapper
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
               person(given = "Jenna", family = "Hershberger", role = c("aut", "cre"),
                 email = "jmh579@cornell.edu",
@@ -8,8 +8,10 @@ Authors@R: c(
               person(given = "Michael", family = "Gore", role = "ths"),
               person("NSF BREAD IOS-1543958", role = "fnd")
               )
-Description: Originally designed application in the context of resource-limited plant research and breeding programs, waves provides an open-source solution to spectral data processing and model devleopment by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes plotting, filtering, aggregation, preprocessing, model training, and prediction functions to enable open-source association of spectral and reference data. 
+Description: Originally designed application in the context of resource-limited plant research and breeding programs, waves provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, preprocessing, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data. 
 URL: https://github.com/GoreLab/waves 
+Maintainer: Jenna Hershberger <jmh579@cornell.edu>
+BugReports: https://github.com/GoreLab/waves/issues 
 Depends: R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8

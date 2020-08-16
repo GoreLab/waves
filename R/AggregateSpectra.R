@@ -2,7 +2,7 @@
 #' @name AggregateSpectra
 #' @description Use grouping variables to collapse spectral `data.frame` by mean or median.
 #' Recommended for use after `FilterSpectra`
-#' @author Jenna Hershberger
+#' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @importFrom stats aggregate median
 #' @importFrom magrittr %>%
 #' @importFrom tidyselect starts_with

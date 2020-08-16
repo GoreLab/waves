@@ -5,7 +5,7 @@
 #' @details  This function uses a chi-square distribution with 95% cutoff where degrees of
 #' freedom = number of wavelengths (columns) in the input `data.frame`.
 #' @references Johnson, R.A., and D.W. Wichern. 2007. Applied Multivariate Statistical Analysis (6th Edition). pg 189
-#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
+#' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @usage FilterSpectra(df, filter, return.distances, num.col.before.spectra, window.size)
 #' @importFrom stats cov mahalanobis na.omit qchisq
 #' @param df obj a \code{data.frame} object containing columns of spectra and rows of observations. May also contain columns of metadata to the left of the spectra.

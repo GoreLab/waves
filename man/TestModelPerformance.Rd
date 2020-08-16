@@ -90,6 +90,31 @@ of a third and test on the remaining samples (30\%)  of the third. If \code{FALS
 test set \code{test.data} will remain as a testing set or if none is provided, 30\% of the provided
 \code{train.data} will be used for testing. Default is \code{FALSE}.}
 }
+\value{
+\code{data.frame} with model performance statistics
+in summary format (2 rows, one with mean and one with standard deviation of all training iterations)
+or in long format (number of rows = num.iterations). *Note* if \code{preprocessing = TRUE}, only the first
+mean of summary statistics for all iterations of training are provided for each technique.
+Included summary statistics:
+\itemize{
+  \item Tuned parameters depending on the model algorithm:
+  \itemize{
+    \item *Best.n.comp*, the best number of components
+    \item *Best.ntree*, the best number of trees in an RF model
+    \item *Best.mtry*, the best number of variables to include at every decision point in an RF model
+    }
+  \item *RMSECV*, the root mean squared error of cross-validation
+  \item *R2cv*, the coefficient of multiple determination of cross-validation for PLSR models
+  \item *RMSEP*, the root mean squared error of prediction
+  \item *R2p*, the squared Pearson’s correlation between predicted and observed test set values
+  \item *RPD*, the ratio of standard deviation of observed test set values to RMSEP
+  \item *RPIQ*, the ratio of performance to interquartile difference
+  \item *CCC*, the concordance correlation coefficient
+  \item *Bias*, the average difference between the predicted and observed values
+  \item *SEP*, the standard error of prediction
+  \item *R2sp*, the squared Spearman’s rank correlation between predicted and observed test set values
+}
+}
 \description{
 Wrapper that trains models based spectral data to predict reference values and reports
 }
@@ -110,5 +135,5 @@ ikeogu.2017 \%>\%
 }
 }
 \author{
-Jenna Hershberger \url{jmh579@cornell.edu}
+Jenna Hershberger \email{jmh579@cornell.edu}
 }

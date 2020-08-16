@@ -48,5 +48,5 @@ ikeogu.2017 \%>\% DoPreprocessing(wavelengths = 350:2500)
 }
 }
 \author{
-Jenna Hershberger \url{jmh579@cornell.edu}
+Jenna Hershberger \email{jmh579@cornell.edu}
 }

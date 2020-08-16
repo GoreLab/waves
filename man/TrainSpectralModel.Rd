@@ -96,6 +96,31 @@ test set \code{test.data} will remain as a testing set or if none is provided, 3
 \item{vector.input}{The mode of this vector of numbers will be calculated by this function}
 }
 \value{
+\code{data.frame} with model performance statistics either in summary format (2 rows, one with
+mean and one with standard deviation of all training iterations)
+or in long format (number of rows = \code{num.iterations}).
+Also returns trained model if \code{return.model} is \code{TRUE}. If \code{FALSE}, returns results
+\code{data.frame} without model. Default is \code{FALSE}.
+Included summary statistics:
+\itemize{
+  \item Tuned parameters depending on the model algorithm:
+  \itemize{
+    \item *Best.n.comp*, the best number of components
+    \item *Best.ntree*, the best number of trees in an RF model
+    \item *Best.mtry*, the best number of variables to include at every decision point in an RF model
+    }
+  \item *RMSECV*, the root mean squared error of cross-validation
+  \item *R2cv*, the coefficient of multiple determination of cross-validation for PLSR models
+  \item *RMSEP*, the root mean squared error of prediction
+  \item *R2p*, the squared Pearson’s correlation between predicted and observed test set values
+  \item *RPD*, the ratio of standard deviation of observed test set values to RMSEP
+  \item *RPIQ*, the ratio of performance to interquartile difference
+  \item *CCC*, the concordance correlation coefficient
+  \item *Bias*, the average difference between the predicted and observed values
+  \item *SEP*, the standard error of prediction
+  \item *R2sp*, the squared Spearman’s rank correlation between predicted and observed test set values
+}
+
 mode of the numbers in `vector.input`
 }
 \description{
@@ -121,6 +146,6 @@ filter(study.name == "C16Mcal") \%>\%
 }
 }
 \author{
-Jenna Hershberger \url{jmh579@cornell.edu}
+Jenna Hershberger \email{jmh579@cornell.edu}
 }
 \keyword{internal}

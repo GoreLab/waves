@@ -1,6 +1,6 @@
 #' @title Example vis-NIRS and reference dataset
 #' @name ikeogu.2017
-#' @author Original authors:
+#' @author Formatted by Jenna Hershberger. Original authors: Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, J.-L. Jannink
 #' @description The `ikeogu.2017` data set contains raw vis-NIRS scans, total carotenoid content,
 #' and cassava root dry matter content (using the oven method) from the 2017 PLoS One paper by Ikeogu et al.
 #' This dataset contains a subset of the original scans and reference values from the supplementary

@@ -53,5 +53,5 @@ ikeogu.2017 \%>\%
 Johnson, R.A., and D.W. Wichern. 2007. Applied Multivariate Statistical Analysis (6th Edition). pg 189
 }
 \author{
-Jenna Hershberger \url{jmh579@cornell.edu}
+Jenna Hershberger \email{jmh579@cornell.edu}
 }

@@ -2,7 +2,7 @@
 #' @name TrainSpectralModel
 #' @description Trains spectral prediction models using one of several algorithms and sampling
 #' procedures.
-#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
+#' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
 #' @inheritParams FormatCV
 #' @param df \code{data.frame} object. First column contains unique identifiers, second contains
@@ -59,11 +59,11 @@
 #' Included summary statistics:
 #' \itemize{
 #'   \item Tuned parameters depending on the model algorithm:
-#'   \begin{itemize}
+#'   \itemize{
 #'     \item *Best.n.comp*, the best number of components
 #'     \item *Best.ntree*, the best number of trees in an RF model
 #'     \item *Best.mtry*, the best number of variables to include at every decision point in an RF model
-#'     \end{itemize}
+#'     }
 #'   \item *RMSECV*, the root mean squared error of cross-validation
 #'   \item *R2cv*, the coefficient of multiple determination of cross-validation for PLSR models
 #'   \item *RMSEP*, the root mean squared error of prediction
@@ -74,6 +74,7 @@
 #'   \item *Bias*, the average difference between the predicted and observed values
 #'   \item *SEP*, the standard error of prediction
 #'   \item *R2sp*, the squared Spearman’s rank correlation between predicted and observed test set values
+#'}
 #'
 #' @importFrom caret createDataPartition trainControl train
 #' @importFrom dplyr select mutate summarize_all

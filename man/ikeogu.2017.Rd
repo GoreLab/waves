@@ -47,7 +47,7 @@ visible and near infrared spectrometer (Vis/NIRS). PLoS One 12(12): 1–17.
 doi: 10.1371/journal.pone.0188918.
 }
 \author{
-Original authors:
+Formatted by Jenna Hershberger. Original authors: Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, J.-L. Jannink
 
 Original authors: Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, and J. Jannink.
 Curated by Jenna Hershberger

@@ -2,23 +2,21 @@
 
 <!-- badges: start -->
 ![language: R](https://img.shields.io/badge/language-R-blue.svg)
-![status: beta](https://img.shields.io/badge/status-beta-yellow.svg)
+![CRAN/METACRAN](https://img.shields.io/cran/v/waves?label=CRAN)
+[![Travis build status](https://travis-ci.org/GoreLab/waves.svg?branch=master)](https://travis-ci.org/GoreLab/waves)
 <!-- badges: end -->
 
 `waves` enables streamlined filtering, preprocessing, model training, and trait prediction for visible and near-infrared (vis-NIR) spectral data within a cross-validation framework that is tailored to plant breeding use cases.
 
-## Testing
+## Use
 
 Follow the installation instructions below, and then go wild! Use `waves` to analyze your own data. Please report any bugs or feature requests by opening issues in this repository.
 
 ## Installation
-
-First, create a GitHub authorization token and add it to your `.Renviron` file. [This tutorial](https://usethis.r-lib.org/articles/articles/usethis-setup.html#get-and-store-a-github-personal-access-token) gives comprehensive instructions if needed.
-
 ``` r
 install.packages(devtools)
 library(devtools)
-install_github("GoreLab/waves", auth_token = github_pat())
+install_github("GoreLab/waves")
 library(waves)
 ```
 

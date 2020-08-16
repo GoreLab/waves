@@ -1,6 +1,7 @@
 #' @title Format multiple trials with or without overlapping genotypes into training and test sets
 #' according to user-provided cross validation scheme
 #' @name FormatCV
+#' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @description Standalone function that is also used within [TrainSpectralModel()] to divide
 #' trials or studies into training and test sets based on overlap in trial environments and
 #' genotype entries

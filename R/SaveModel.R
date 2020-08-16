@@ -3,7 +3,7 @@
 #' @description Saves spectral prediction model and model statistics to \code{model.save.folder}
 #' as \code{model.name.Rds} and \code{model.name_stats.csv} respectively
 #' @details Wrapper that uses [DoPreprocessing()], [FormatCV()] and [TrainSpectralModel()] functions.
-#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
+#' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
 #' @inheritParams TestModelPerformance
 #' @inheritParams TrainSpectralModel

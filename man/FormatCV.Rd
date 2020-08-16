@@ -80,3 +80,6 @@ S. Battenfield, and J. Crossa. 2017. Increasing Genomic-Enabled Prediction Accur
 Genotype × Environment Interactions in Kansas Wheat. Plant Genome 10.2
 doi:10.3835/plantgenome2016.12.0130
 }
+\author{
+Jenna Hershberger \email{jmh579@cornell.edu}
+}
