@@ -10,7 +10,7 @@ ikeogu.2017
 }
 \description{
 The `ikeogu.2017` data set contains raw vis-NIRS scans, total carotenoid content,
-and cassava root dry matter content (using the oven method) from the 2017 PLoS One paper by Ikeogu et al.
+and cassava root dry matter content (using the oven method) from the 2017 PLOS One paper by Ikeogu et al.
 This dataset contains a subset of the original scans and reference values from the supplementary
 files of the paper.
 `ikeogu.2017` is a `data.frame` that contains the following columns:
@@ -18,7 +18,7 @@ files of the paper.
   \item study.name = Name of the study as described in Ikeogu et al. (2017).
   \item sample.id = Unique identifier for each individual root sample
   \item DMC.oven = Cassava root dry matter content, the percentage of dry weight relative to fresh weight of a sample after oven drying.
-  \item TCC = Total carotenoid content (ug/g, unknown whether on a fresh or dry weight basis) as measured by
+  \item TCC = Total carotenoid content (\eqn{\mu g/g}, unknown whether on a fresh or dry weight basis) as measured by
   high performance liquid chromatography
   \item X350:X2500 = spectral reflectance measured with the QualitySpec Trek: S-10016 vis-NIR spectrometer.
 Each cell represents the mean of 150 scans on a single root at a single wavelength.
@@ -41,15 +41,13 @@ theme_bw()
 }
 }
 \references{
-Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, et al. 2017.
-Rapid analyses of dry matter content and carotenoids in fresh cassava roots using a portable
-visible and near infrared spectrometer (Vis/NIRS). PLoS One 12(12): 1–17.
-doi: 10.1371/journal.pone.0188918.
+Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, et
+  al. 2017. Rapid analyses of dry matter content and carotenoids in fresh
+  cassava roots using a portable visible and near infrared spectrometer
+  (Vis/NIRS). PLOS One 12(12): 1–17. doi: 10.1371/journal.pone.0188918.
 }
 \author{
-Formatted by Jenna Hershberger. Original authors: Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, J.-L. Jannink
-
-Original authors: Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, and J. Jannink.
-Curated by Jenna Hershberger
+Original authors: Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos,
+  C.N. Egesi, and J. Jannink. Reformatted by Jenna Hershberger.
 }
 \keyword{datasets}

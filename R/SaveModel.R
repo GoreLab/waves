@@ -1,25 +1,31 @@
 #' @title Save spectral prediction model and model performance statistics
 #' @name SaveModel
-#' @description Saves spectral prediction model and model statistics to \code{model.save.folder}
-#' as \code{model.name.Rds} and \code{model.name_stats.csv} respectively
-#' @details Wrapper that uses [DoPreprocessing()], [FormatCV()] and [TrainSpectralModel()] functions.
+#' @description Saves spectral prediction model and model statistics to
+#'   \code{model.save.folder} as \code{model.name.Rds} and
+#'   \code{model.name_stats.csv} respectively
+#' @details Wrapper that uses \code{\link{DoPreprocessing}},
+#'   \code{\link{FormatCV}}, and \code{\link{TrainSpectralModel}} functions.
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
 #' @inheritParams TestModelPerformance
 #' @inheritParams TrainSpectralModel
 #' @inheritParams DoPreprocessing
-#' @param save.model If \code{TRUE}, the trained model will be saved in .Rds format to the
-#' location specified by \code{model.save.folder}. If \code{FALSE}, model will be output by function
-#' but will not save to file. Default is \code{TRUE}.
+#' @param save.model If \code{TRUE}, the trained model will be saved in .Rds
+#'   format to the location specified by \code{model.save.folder}. If
+#'   \code{FALSE}, model will be output by function but will not save to file.
+#'   Default is \code{TRUE}.
 #' @param autoselect.preprocessing Boolean that, if \code{TRUE}, will choose the
-#' preprocessing method for the saved model using the \code{best.model.metric}. If
-#' \code{FALSE}, the user must supply the preprocessing method (1-12, see
-#' [DoPreprocessing()] documentation for more information) of the saved model. Default
-#' is \code{TRUE}.
-#' @param model.save.folder Path to folder where model will be saved. If not provided,
-#' will save to working directory.
-#' @param model.name Name that model will be saved as in \code{model.save.folder}. Default is "PredictionModel".
-#' @param wavelengths List of wavelengths represented by each column in \code{df}
+#'   preprocessing method for the saved model using the
+#'   \code{best.model.metric}. If \code{FALSE}, the user must supply the
+#'   preprocessing method (1-12, see \code{\link{DoPreprocessing}()}
+#'   documentation for more information) of the saved model. Default is
+#'   \code{TRUE}.
+#' @param model.save.folder Path to folder where model will be saved. If not
+#'   provided, will save to working directory.
+#' @param model.name Name that model will be saved as in
+#'   \code{model.save.folder}. Default is "PredictionModel".
+#' @param wavelengths List of wavelengths represented by each column in
+#'   \code{df}
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate select
@@ -27,9 +33,9 @@
 #' @importFrom rlang .data
 #' @importFrom utils write.csv
 #'
-#' @return List of model stats (in \code{data.frame}) and trained model object. Saves both to
-#' \code{model.save.folder} as well. To use optimally trained model for predictions, use tuned
-#' parameters from \code{$bestTune}
+#' @return List of model stats (in \code{data.frame}) and trained model object.
+#'   Saves both to \code{model.save.folder} as well. To use optimally trained
+#'   model for predictions, use tuned parameters from \code{$bestTune}
 #' @export
 #'
 #' @examples

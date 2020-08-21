@@ -1,22 +1,28 @@
 #' @title Use provided model object to predict trait values with input dataset
 #' @name PredictFromSavedModel
-#' @description Loads an existing model and cross-validation performance statistics
-#' (created with [SaveModel()]) and makes predictions based on new spectra.
+#' @description Loads an existing model and cross-validation performance
+#'   statistics (created with \code{\link{SaveModel}}) and makes predictions
+#'   based on new spectra.
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @inheritParams TestModelPerformance
-#' @param input.data `data.frame` object of spectral data for input into a spectral prediction model.
-#' First column contains unique identifiers followed by spectral columns. Include no other columns to
-#' right of spectra! Column names of spectra must start with "X".
-#' @param model.stats.location String containing file path (including file name) to save location
-#' of "(model.name)_stats.csv" as output from the SaveModel function.
-#' @param model.location String containing file path (including file name) to location where the
-#' trained model ("(model.name).Rds") was saved as output by the [SaveModel()] function.
-#' @param wavelengths List of wavelengths represented by each column in `input.data`
+#' @param input.data \code{data.frame} object of spectral data for input into a
+#'   spectral prediction model. First column contains unique identifiers
+#'   followed by spectral columns. Include no other columns to right of spectra!
+#'   Column names of spectra must start with "X".
+#' @param model.stats.location String containing file path (including file name)
+#'   to save location of "(model.name)_stats.csv" as output from the SaveModel
+#'   function.
+#' @param model.location String containing file path (including file name) to
+#'   location where the trained model ("(model.name).Rds") was saved as output
+#'   by the \code{\link{SaveModel}} function.
+#' @param wavelengths List of wavelengths represented by each column in
+#'   \code{input.data}
 #' @importFrom stats predict
 #' @importFrom utils read.csv
 #'
-#' @return `data.frame` object of predictions for each sample (row). First column is unique identifier
-#' supplied by `input.data` and second is predicted values
+#' @return \code{data.frame} object of predictions for each sample (row). First
+#'   column is unique identifier supplied by \code{input.data} and second is
+#'   predicted values
 #' @export
 #'
 #' @examples
@@ -24,7 +30,8 @@
 #' ikeogu.2017 %>%
 #'   dplyr::select(sample.id, starts_with("X")) %>%
 #'   PredictFromSavedModel(input.data = .,
-#'                         model.stats.location = paste0(getwd(), "/my_model_stats.csv"),
+#'                         model.stats.location = paste0(getwd(),
+#'                                                       "/my_model_stats.csv"),
 #'                         model.location = paste0(getwd(), "/my_model.Rds"),
 #'                         wavelengths = 350:2500)
 #' }

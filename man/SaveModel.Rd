@@ -12,21 +12,25 @@ SaveModel(df, save.model = T, autoselect.preprocessing = T,
   trial1 = NULL, trial2 = NULL, trial3 = NULL)
 }
 \arguments{
-\item{df}{\code{data.frame} object. First column contains unique identifiers, second contains
-reference values, followed by spectral columns. Include no other columns to right of spectra!
-Column names of spectra must start with "X" and reference column must be named "reference"}
+\item{df}{\code{data.frame} object. First column contains unique identifiers,
+second contains reference values, followed by spectral columns. Include no
+other columns to right of spectra! Column names of spectra must start with
+"X" and reference column must be named "reference"}
 
-\item{save.model}{If \code{TRUE}, the trained model will be saved in .Rds format to the
-location specified by \code{model.save.folder}. If \code{FALSE}, model will be output by function
-but will not save to file. Default is \code{TRUE}.}
+\item{save.model}{If \code{TRUE}, the trained model will be saved in .Rds
+format to the location specified by \code{model.save.folder}. If
+\code{FALSE}, model will be output by function but will not save to file.
+Default is \code{TRUE}.}
 
 \item{autoselect.preprocessing}{Boolean that, if \code{TRUE}, will choose the
-preprocessing method for the saved model using the \code{best.model.metric}. If
-\code{FALSE}, the user must supply the preprocessing method (1-12, see
-[DoPreprocessing()] documentation for more information) of the saved model. Default
-is \code{TRUE}.}
+preprocessing method for the saved model using the
+\code{best.model.metric}. If \code{FALSE}, the user must supply the
+preprocessing method (1-12, see \code{\link{DoPreprocessing}()}
+documentation for more information) of the saved model. Default is
+\code{TRUE}.}
 
-\item{preprocessing.method}{Number or list of numbers 1:13 corresponding to desired pretreatment method(s):
+\item{preprocessing.method}{Number or list of numbers 1:13 corresponding to
+  desired pretreatment method(s):
 \itemize{
   \item 1 = raw data (default)
   \item 2 = standard normal variate (SNV)
@@ -43,67 +47,73 @@ is \code{TRUE}.}
   \item 13 = SG and second derivative (window size = 11)
 }}
 
-\item{model.save.folder}{Path to folder where model will be saved. If not provided,
-will save to working directory.}
+\item{model.save.folder}{Path to folder where model will be saved. If not
+provided, will save to working directory.}
 
-\item{model.name}{Name that model will be saved as in \code{model.save.folder}. Default is "PredictionModel".}
+\item{model.name}{Name that model will be saved as in
+\code{model.save.folder}. Default is "PredictionModel".}
 
-\item{best.model.metric}{Metric used to decide which model is best. Must be either "RMSE" or "Rsquared"}
+\item{best.model.metric}{Metric used to decide which model is best. Must be
+either "RMSE" or "Rsquared"}
 
-\item{tune.length}{Number delineating search space for tuning of the PLSR hyperparameter \code{ncomp}.
-Default is 50.}
+\item{tune.length}{Number delineating search space for tuning of the PLSR
+hyperparameter \code{ncomp}. Default is 50.}
 
 \item{model.method}{Model type to use for training. Valid options include:
-\itemize{
-  \item "pls": Partial least squares regression (Default)
-  \item "rf": Random forest
-  \item "svmLinear": Support vector machine with linear kernel
-  \item "svmRadial": Support vector machine with radial kernel
-}}
+\itemize{ \item "pls": Partial least squares regression (Default) \item
+"rf": Random forest \item "svmLinear": Support vector machine with linear
+kernel \item "svmRadial": Support vector machine with radial kernel }}
 
 \item{num.iterations}{Number of training iterations to perform}
 
-\item{wavelengths}{List of wavelengths represented by each column in \code{df}}
+\item{wavelengths}{List of wavelengths represented by each column in
+\code{df}}
 
-\item{stratified.sampling}{If \code{TRUE}, training and test sets will be selected using stratified
-random sampling. This term is only used if \code{test.data == NULL}. Default is \code{TRUE}.}
+\item{stratified.sampling}{If \code{TRUE}, training and test sets will be
+selected using stratified random sampling. This term is only used if
+\code{test.data == NULL}. Default is \code{TRUE}.}
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
 Options for cv.scheme include:
 \itemize{
-  \item "CV1": untested lines in tested environments
-  \item "CV2": tested lines in tested environments
-  \item "CV0": tested lines in untested environments
-  \item "CV00": untested lines in untested environments
+    \item "CV1": untested lines in tested environments
+    \item "CV2": tested lines in tested environments
+    \item "CV0": tested lines in untested environments
+    \item "CV00": untested lines in untested environments
 }}
 
-\item{trial1}{`data.frame` object that is for use only when `cv.scheme` is provided.
-Contains the trial to be tested in subsequent model training functions. The first column
-contains unique identifiers, second contains genotypes, third contains reference values,
-followed by spectral columns. Include no other columns to right of spectra! Column names
-of spectra must start with "X", reference column must be named "reference", and genotype column
-must be named "genotype".}
+\item{trial1}{\code{data.frame} object that is for use only when
+\code{cv.scheme} is provided. Contains the trial to be tested in subsequent
+model training functions. The first column contains unique identifiers,
+second contains genotypes, third contains reference values, followed by
+spectral columns. Include no other columns to right of spectra! Column
+names of spectra must start with "X", reference column must be named
+"reference", and genotype column must be named "genotype".}
 
-\item{trial2}{`data.frame` object that is for use only when `cv.scheme` is provided.
-This data.frame contains a trial that has overlapping genotypes with `trial1`
-but that were grown in a different site/year (different environment). Formatting must be
-consistent with `trial1`.}
+\item{trial2}{\code{data.frame} object that is for use only when
+\code{cv.scheme} is provided. This data.frame contains a trial that has
+overlapping genotypes with \code{trial1} but that were grown in a different
+site/year (different environment). Formatting must be consistent with
+\code{trial1}.}
 
-\item{trial3}{`data.frame` object that is for use only when `cv.scheme` is provided.
-This data.frame contains a trial that may or may not contain genotypes that overlap with `trial1`.
-Formatting must be consistent with `trial1`.}
+\item{trial3}{\code{data.frame} object that is for use only when
+\code{cv.scheme} is provided. This data.frame contains a trial that may or
+may not contain genotypes that overlap with \code{trial1}. Formatting must
+be consistent with \code{trial1}.}
 }
 \value{
-List of model stats (in \code{data.frame}) and trained model object. Saves both to
-\code{model.save.folder} as well. To use optimally trained model for predictions, use tuned
-parameters from \code{$bestTune}
+List of model stats (in \code{data.frame}) and trained model object.
+  Saves both to \code{model.save.folder} as well. To use optimally trained
+  model for predictions, use tuned parameters from \code{$bestTune}
 }
 \description{
-Saves spectral prediction model and model statistics to \code{model.save.folder}
-as \code{model.name.Rds} and \code{model.name_stats.csv} respectively
+Saves spectral prediction model and model statistics to
+  \code{model.save.folder} as \code{model.name.Rds} and
+  \code{model.name_stats.csv} respectively
 }
 \details{
-Wrapper that uses [DoPreprocessing()], [FormatCV()] and [TrainSpectralModel()] functions.
+Wrapper that uses \code{\link{DoPreprocessing}},
+  \code{\link{FormatCV}}, and \code{\link{TrainSpectralModel}} functions.
 }
 \examples{
 \dontrun{

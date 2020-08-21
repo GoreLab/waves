@@ -1,30 +1,43 @@
 #' @title Filter spectral data frame based on Mahalanobis distance
 #' @name FilterSpectra
-#' @description Determine Mahalanobis distances of observations (rows) within a given `data.frame`
-#' with spectral data. Option to filter out observations based on these distances.
-#' @details  This function uses a chi-square distribution with 95% cutoff where degrees of
-#' freedom = number of wavelengths (columns) in the input `data.frame`.
-#' @references Johnson, R.A., and D.W. Wichern. 2007. Applied Multivariate Statistical Analysis (6th Edition). pg 189
+#' @description Determine Mahalanobis distances of observations (rows) within a
+#'   given \code{data.frame} with spectral data. Option to filter out observations
+#'   based on these distances.
+#' @details  This function uses a chi-square distribution with 95\% cutoff where
+#'   degrees of freedom = number of wavelengths (columns) in the input
+#'   \code{data.frame}.
+#' @references Johnson, R.A., and D.W. Wichern. 2007. Applied Multivariate
+#'   Statistical Analysis (6th Edition). pg 189
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
-#' @usage FilterSpectra(df, filter, return.distances, num.col.before.spectra, window.size)
+#' @usage FilterSpectra(df, filter, return.distances, num.col.before.spectra,
+#'   window.size)
 #' @importFrom stats cov mahalanobis na.omit qchisq
-#' @param df obj a \code{data.frame} object containing columns of spectra and rows of observations. May also contain columns of metadata to the left of the spectra.
-#' @param filter boolean that determines whether or not the input \code{data.frame} will be filtered.
-#' If \code{TRUE}, \code{df} will be filtered according to squared Mahalanobis distance with a 95% cutoff from a chi-square
-#' distribution with degrees of freedom = number of spectral columns. If \code{FALSE}, a column of squared Mahalanobis
-#' distances \code{h.distance} will be added to the right side of df and all rows will be returned. Default is `TRUE`.
-#' @param return.distances boolean that determines whether a column of squared Mahalanobis distances will be included
-#' in output \code{data.frame}. If \code{TRUE}, a column of Mahalanobis distances for each row will be added to the right
-#' side of \code{df}. Default is \code{FALSE}.
-#' @param num.col.before.spectra number of columns to the left of the spectral matrix in \code{df}. Default is 4.
-#' @param window.size number defining the size of window to use when calculating the covariance of the
-#' spectra (required to calculate Mahalanobis distance). Default is 10.
+#' @param df a \code{data.frame} object containing columns of spectra and
+#'   rows of observations. May also contain columns of metadata to the left of
+#'   the spectra.
+#' @param filter boolean that determines whether or not the input
+#'   \code{data.frame} will be filtered. If \code{TRUE}, \code{df} will be
+#'   filtered according to squared Mahalanobis distance with a 95\% cutoff from
+#'   a chi-square distribution with degrees of freedom = number of spectral
+#'   columns. If \code{FALSE}, a column of squared Mahalanobis distances
+#'   \code{h.distance} will be added to the right side of df and all rows will
+#'   be returned. Default is \code{TRUE}.
+#' @param return.distances boolean that determines whether a column of squared
+#'   Mahalanobis distances will be included in output \code{data.frame}. If
+#'   \code{TRUE}, a column of Mahalanobis distances for each row will be added
+#'   to the right side of \code{df}. Default is \code{FALSE}.
+#' @param num.col.before.spectra number of columns to the left of the spectral
+#'   matrix in \code{df}. Default is 4.
+#' @param window.size number defining the size of window to use when calculating
+#'   the covariance of the spectra (required to calculate Mahalanobis distance).
+#'   Default is 10.
 #'
-#' @return If 'filter' is TRUE, returns filtered data frame 'df' and reports the number of rows removed.
-#'       The Mahalanobis distance with a cutoff of 95% of chi-square distribution
-#'       (degrees of freedom = number of wavelengths)is used as filtering criteria.
-#'       If 'filter' is FALSE, returns full input df with column 'h.distances' containing the Mahalanobis
-#'       distance for each row.
+#' @return If \code{filter} is \code{TRUE}, returns filtered data frame
+#'   \code{df} and reports the number of rows removed. The Mahalanobis distance
+#'   with a cutoff of 95\% of chi-square distribution (degrees of freedom =
+#'   number of wavelengths) is used as filtering criteria. If \code{filter} is
+#'   \code{FALSE}, returns full input df with column \code{h.distances}
+#'   containing the Mahalanobis distance for each row.
 #' @export
 #'
 #' @examples

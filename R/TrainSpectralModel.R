@@ -5,75 +5,76 @@
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
 #' @inheritParams FormatCV
-#' @param df \code{data.frame} object. First column contains unique identifiers, second contains
-#' reference values, followed by spectral columns. Include no other columns to right of spectra!
-#' Column names of spectra must start with "X" and reference column must be named "reference"
+#' @param df \code{data.frame} object. First column contains unique identifiers,
+#'   second contains reference values, followed by spectral columns. Include no
+#'   other columns to right of spectra! Column names of spectra must start with
+#'   "X" and reference column must be named "reference"
 #' @param num.iterations Number of training iterations to perform
-#' @param test.data \code{data.frame} with same specifications as \code{df}. Use if specific test set is
-#' desired for hyperparameter tuning. If \code{NULL}, function will automatically train with a
-#' stratified sample of 70\%. Default is \code{NULL}.
-#' @param tune.length Number delineating search space for tuning of the PLSR hyperparameter \code{ncomp}.
-#' Default is 50.
+#' @param test.data \code{data.frame} with same specifications as \code{df}. Use
+#'   if specific test set is desired for hyperparameter tuning. If \code{NULL},
+#'   function will automatically train with a stratified sample of 70\%. Default
+#'   is \code{NULL}.
+#' @param tune.length Number delineating search space for tuning of the PLSR
+#'   hyperparameter \code{ncomp}. Default is 50.
 #' @param model.method Model type to use for training. Valid options include:
-#' \itemize{
-#'   \item "pls": Partial least squares regression (Default)
-#'   \item "rf": Random forest
-#'   \item "svmLinear": Support vector machine with linear kernel
-#'   \item "svmRadial": Support vector machine with radial kernel
-#' }
-#' @param output.summary boolean that controls function output.
-#' \itemize{
-#'   \item If \code{TRUE}, a summary df will be output (1st row = means, 2nd row = standard
-#'   deviations). Default is \code{TRUE}.
-#'   \item If \code{FALSE}, entire results data frame will be output
-#' }
-#' @param return.model boolean that, if \code{TRUE}, causes the function to return the trained model
-#' in addition to the results data frame.
-#' \itemize{
+#'   \itemize{ \item "pls": Partial least squares regression (Default) \item
+#'   "rf": Random forest \item "svmLinear": Support vector machine with linear
+#'   kernel \item "svmRadial": Support vector machine with radial kernel }
+#' @param output.summary boolean that controls function output. \itemize{ \item
+#'   If \code{TRUE}, a summary df will be output (1st row = means, 2nd row =
+#'   standard deviations). Default is \code{TRUE}. \item If \code{FALSE}, entire
+#'   results data frame will be output }
+#' @param return.model boolean that, if \code{TRUE}, causes the function to
+#'   return the trained model in addition to the results data frame. \itemize{
 #'   \item If \code{TRUE}, function return list of \code{[model, results]}.
-#'   \item If \code{FALSE}, returns results data frame without model. Default is \code{FALSE}.
-#' }
-#' @param best.model.metric Metric used to decide which model is best. Must be either "RMSE" or "Rsquared"
-#' @param rf.variable.importance boolean that:
-#' \itemize{
-#'   \item If \code{TRUE}, \code{model.method} must be set to "rf". Returns a list with a model performance
-#' \code{data.frame} and a second \code{data.frame} with variable importance values for each wavelength
-#' for each training iteration. If \code{return.model} is also \code{TRUE}, returns list of three elements
-#' with trained model first, model performance second, and variable importance last. Dimensions are
-#' \code{nrow = num.iterations}, \code{ncol = length(wavelengths)}.
-#'   \item If \code{FALSE}, no variable importance is returned. Default is \code{FALSE}.
-#' }
-#' @param stratified.sampling If \code{TRUE}, training and test sets will be selected using stratified
-#' random sampling. This term is only used if \code{test.data == NULL}. Default is \code{TRUE}.
-#' @param split.test boolean that allows for a fixed training set and a split test set.
-#' Example// train model on data from two breeding programs and a stratified subset (70\%)
-#' of a third and test on the remaining samples (30\%)  of the third. If \code{FALSE}, the entire provided
-#' test set \code{test.data} will remain as a testing set or if none is provided, 30\% of the provided
-#' \code{train.data} will be used for testing. Default is \code{FALSE}.
+#'   \item If \code{FALSE}, returns results data frame without model. Default is
+#'   \code{FALSE}. }
+#' @param best.model.metric Metric used to decide which model is best. Must be
+#'   either "RMSE" or "Rsquared"
+#' @param rf.variable.importance boolean that: \itemize{ \item If \code{TRUE},
+#'   \code{model.method} must be set to "rf". Returns a list with a model
+#'   performance \code{data.frame} and a second \code{data.frame} with variable
+#'   importance values for each wavelength for each training iteration. If
+#'   \code{return.model} is also \code{TRUE}, returns list of three elements
+#'   with trained model first, model performance second, and variable importance
+#'   last. Dimensions are \code{nrow = num.iterations}, \code{ncol =
+#'   length(wavelengths)}. \item If \code{FALSE}, no variable importance is
+#'   returned. Default is \code{FALSE}. }
+#' @param stratified.sampling If \code{TRUE}, training and test sets will be
+#'   selected using stratified random sampling. This term is only used if
+#'   \code{test.data == NULL}. Default is \code{TRUE}.
+#' @param split.test boolean that allows for a fixed training set and a split
+#'   test set. Example// train model on data from two breeding programs and a
+#'   stratified subset (70\%) of a third and test on the remaining samples
+#'   (30\%)  of the third. If \code{FALSE}, the entire provided test set
+#'   \code{test.data} will remain as a testing set or if none is provided, 30\%
+#'   of the provided \code{train.data} will be used for testing. Default is
+#'   \code{FALSE}.
 #'
-#' @return \code{data.frame} with model performance statistics either in summary format (2 rows, one with
-#' mean and one with standard deviation of all training iterations)
-#' or in long format (number of rows = \code{num.iterations}).
-#' Also returns trained model if \code{return.model} is \code{TRUE}. If \code{FALSE}, returns results
-#' \code{data.frame} without model. Default is \code{FALSE}.
+#' @return \code{data.frame} with model performance statistics either in summary
+#'   format (2 rows, one with mean and one with standard deviation of all
+#'   training iterations) or in long format (number of rows =
+#'   \code{num.iterations}). Also returns trained model if \code{return.model}
+#'   is \code{TRUE}. If \code{FALSE}, returns results \code{data.frame} without
+#'   model. Default is \code{FALSE}.
 #' Included summary statistics:
 #' \itemize{
 #'   \item Tuned parameters depending on the model algorithm:
 #'   \itemize{
-#'     \item *Best.n.comp*, the best number of components
-#'     \item *Best.ntree*, the best number of trees in an RF model
-#'     \item *Best.mtry*, the best number of variables to include at every decision point in an RF model
+#'     \item \strong{Best.n.comp}, the best number of components
+#'     \item \strong{Best.ntree}, the best number of trees in an RF model
+#'     \item \strong{Best.mtry}, the best number of variables to include at every decision point in an RF model
 #'     }
-#'   \item *RMSECV*, the root mean squared error of cross-validation
-#'   \item *R2cv*, the coefficient of multiple determination of cross-validation for PLSR models
-#'   \item *RMSEP*, the root mean squared error of prediction
-#'   \item *R2p*, the squared Pearson’s correlation between predicted and observed test set values
-#'   \item *RPD*, the ratio of standard deviation of observed test set values to RMSEP
-#'   \item *RPIQ*, the ratio of performance to interquartile difference
-#'   \item *CCC*, the concordance correlation coefficient
-#'   \item *Bias*, the average difference between the predicted and observed values
-#'   \item *SEP*, the standard error of prediction
-#'   \item *R2sp*, the squared Spearman’s rank correlation between predicted and observed test set values
+#'   \item \strong{RMSECV}, the root mean squared error of cross-validation
+#'   \item \strong{R2cv}, the coefficient of multiple determination of cross-validation for PLSR models
+#'   \item \strong{RMSEP}, the root mean squared error of prediction
+#'   \item \strong{R2p}, the squared Pearson’s correlation between predicted and observed test set values
+#'   \item \strong{RPD}, the ratio of standard deviation of observed test set values to RMSEP
+#'   \item \strong{RPIQ}, the ratio of performance to interquartile difference
+#'   \item \strong{CCC}, the concordance correlation coefficient
+#'   \item \strong{Bias}, the average difference between the predicted and observed values
+#'   \item \strong{SEP}, the standard error of prediction
+#'   \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted and observed test set values
 #'}
 #'
 #' @importFrom caret createDataPartition trainControl train
@@ -86,7 +87,7 @@
 #' @importFrom rlang .data
 #' @importFrom pls R2 RMSEP mvrValstats MSEP
 #'
-#' @export
+#' @export TrainSpectralModel
 #'
 #' @examples
 #' \dontrun{

@@ -1,72 +1,79 @@
-#' @title Format multiple trials with or without overlapping genotypes into training and test sets
-#' according to user-provided cross validation scheme
+#' @title Format multiple trials with or without overlapping genotypes into
+#'   training and test sets according to user-provided cross validation scheme
 #' @name FormatCV
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
-#' @description Standalone function that is also used within [TrainSpectralModel()] to divide
-#' trials or studies into training and test sets based on overlap in trial environments and
-#' genotype entries
-#' @details Use of a cross-validation scheme requires a column in the input `data.frame` named
-#' "genotype" to ensure proper sorting of training and test sets. Variables `trial1` and `trial2`
-#' are required, while `trial 3` is optional.
+#' @description Standalone function that is also used within
+#'   \code{\link{TrainSpectralModel}} to divide trials or studies into training and test
+#'   sets based on overlap in trial environments and genotype entries
+#' @details Use of a cross-validation scheme requires a column in the input
+#'   \code{data.frame} named "genotype" to ensure proper sorting of training and
+#'   test sets. Variables \code{trial1} and \code{trial2} are required, while
+#'   \code{trial 3} is optional.
 #'
-#' @param trial1 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' Contains the trial to be tested in subsequent model training functions. The first column
-#' contains unique identifiers, second contains genotypes, third contains reference values,
-#' followed by spectral columns. Include no other columns to right of spectra! Column names
-#' of spectra must start with "X", reference column must be named "reference", and genotype column
-#' must be named "genotype".
-#' @param trial2 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' This data.frame contains a trial that has overlapping genotypes with `trial1`
-#' but that were grown in a different site/year (different environment). Formatting must be
-#' consistent with `trial1`.
-#' @param trial3 `data.frame` object that is for use only when `cv.scheme` is provided.
-#' This data.frame contains a trial that may or may not contain genotypes that overlap with `trial1`.
-#' Formatting must be consistent with `trial1`.
+#' @param trial1 \code{data.frame} object that is for use only when
+#'   \code{cv.scheme} is provided. Contains the trial to be tested in subsequent
+#'   model training functions. The first column contains unique identifiers,
+#'   second contains genotypes, third contains reference values, followed by
+#'   spectral columns. Include no other columns to right of spectra! Column
+#'   names of spectra must start with "X", reference column must be named
+#'   "reference", and genotype column must be named "genotype".
+#' @param trial2 \code{data.frame} object that is for use only when
+#'   \code{cv.scheme} is provided. This data.frame contains a trial that has
+#'   overlapping genotypes with \code{trial1} but that were grown in a different
+#'   site/year (different environment). Formatting must be consistent with
+#'   \code{trial1}.
+#' @param trial3 \code{data.frame} object that is for use only when
+#'   \code{cv.scheme} is provided. This data.frame contains a trial that may or
+#'   may not contain genotypes that overlap with \code{trial1}. Formatting must
+#'   be consistent with \code{trial1}.
 #' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
-#' Options for cv.scheme include:
-#' \itemize{
-#'   \item "CV1": untested lines in tested environments
-#'   \item "CV2": tested lines in tested environments
-#'   \item "CV0": tested lines in untested environments
-#'   \item "CV00": untested lines in untested environments
-#' }
-#' @param seed Number used in the function `set.seed()` for reproducible randomization.
-#' If `NULL`, no seed is set. Default is `NULL`.
-#' @param remove.genotype boolean that, if `TRUE`, removes the "genotype" column is removed from
-#' the output `data.frame`. Default is `FALSE`.
+#'   Options for cv.scheme include:
+#'   \itemize{
+#'       \item "CV1": untested lines in tested environments
+#'       \item "CV2": tested lines in tested environments
+#'       \item "CV0": tested lines in untested environments
+#'       \item "CV00": untested lines in untested environments
+#'   }
+#' @param seed Number used in the function \code{set.seed()} for reproducible
+#'   randomization. If \code{NULL}, no seed is set. Default is \code{NULL}.
+#' @param remove.genotype boolean that, if \code{TRUE}, removes the "genotype"
+#'   column is removed from the output \code{data.frame}. Default is
+#'   \code{FALSE}.
 #'
-#' @references Jarquín, D., C. Lemes da Silva, R. C. Gaynor, J. Poland, A. Fritz, R. Howard,
-#' S. Battenfield, and J. Crossa. 2017. Increasing Genomic-Enabled Prediction Accuracy by Modeling
-#' Genotype × Environment Interactions in Kansas Wheat. Plant Genome 10.2
-#' doi:10.3835/plantgenome2016.12.0130
+#' @references Jarquín, D., C. Lemes da Silva, R. C. Gaynor, J. Poland, A.
+#'   Fritz, R. Howard, S. Battenfield, and J. Crossa. 2017. Increasing
+#'   genomic-enabled prediction accuracy by modeling genotype × environment
+#'   interactions in Kansas wheat. Plant Genome 10(2): plantgenome2016.12.0130.
+#'   doi:10.3835/plantgenome2016.12.0130
 #'
 #' @importFrom dplyr group_by ungroup filter
 #' @importFrom tidyr nest unnest
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #'
-#' @return List of data.frames (training set, test set) compiled according to user-provided
-#' cross validation scheme.
+#' @return List of data.frames (training set, test set) compiled according to
+#'   user-provided cross validation scheme.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' # Must have a column called "genotype", so we'll create a fake one for now
-#' # We will use CV00, which does not require any overlap in genotypes
-#' # In real scenarios, CV schemes that rely on genotypes should not be applied when
-#' # genotypes are unknown, as in this case
-#' trials <- ikeogu.2017 %>%
-#'   mutate(genotype = 1:nrow(ikeogu.2017)) %>% # these are fake for this example
-#'   rename(reference = DMC.oven) %>%
-#'   dplyr::select(study.name, sample.id, genotype, reference, starts_with("X")) %>%
-#'   na.omit()
+#' # Must have a column called "genotype", so we'll create a fake one for now #
+#' We will use CV00, which does not require any overlap in genotypes # In real
+#' scenarios, CV schemes that rely on genotypes should not be applied when #
+#' genotypes are unknown, as in this case trials <- ikeogu.2017 %>%
+#'     mutate(genotype = 1:nrow(ikeogu.2017)) %>% # these are fake for this example
+#'     rename(reference = DMC.oven) %>%
+#'     dplyr::select(study.name, sample.id, genotype, reference,
+#'                   starts_with("X")) %>%
+#'     na.omit()
 #' trial1 <- trials %>%
 #'   filter(study.name == "C16Mcal") %>%
 #'   dplyr::select(-study.name)
 #' trial2 <- trials %>%
 #'   filter(study.name == "C16Mval") %>%
 #'   dplyr::select(-study.name)
-#' FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00", remove.genotype = T)
+#' FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
+#'          remove.genotype = T)
 #' }
 FormatCV <- function(trial1,
                      trial2,

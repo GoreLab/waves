@@ -8,14 +8,18 @@ DoPreprocessing(df, test.data = NULL, preprocessing.method = 1,
   wavelengths = 740:1070)
 }
 \arguments{
-\item{df}{\code{data.frame} object containing spectral data. First column(s) (optional)
-include metadata (with or without reference value column) followed by spectral columns.
-Spectral column names must be formatted as "X" followed by wavelength
-Include no other columns to right of spectra! No missing values permitted.}
+\item{df}{\code{data.frame} object containing spectral data. First column(s)
+(optional) include metadata (with or without reference value column)
+followed by spectral columns. Spectral column names must be formatted as
+"X" followed by wavelength Include no other columns to right of spectra! No
+missing values permitted.}
 
-\item{test.data}{\code{data.frame} object with same format as train.data. Will be appended to df}
+\item{test.data}{\code{data.frame} object with same format as train.data.
+Will be appended to \code{df} during preprocessing so that the same
+transformations are applied to each row. Default is \code{NULL}.}
 
-\item{preprocessing.method}{Number or list of numbers 1:13 corresponding to desired pretreatment method(s):
+\item{preprocessing.method}{Number or list of numbers 1:13 corresponding to
+  desired pretreatment method(s):
 \itemize{
   \item 1 = raw data (default)
   \item 2 = standard normal variate (SNV)
@@ -32,15 +36,18 @@ Include no other columns to right of spectra! No missing values permitted.}
   \item 13 = SG and second derivative (window size = 11)
 }}
 
-\item{wavelengths}{List of wavelengths represented by each column in \code{df}. Default is 740:1070.}
+\item{wavelengths}{List of wavelengths represented by each column in
+\code{df}. Default is 740:1070.}
 }
 \value{
-Preprocessed \code{df}` (or list of \code{data.frame}s) with reference column intact
+Preprocessed \code{df}` (or list of \code{data.frame}s) with
+  reference column intact
 }
 \description{
-Preprocessing, also known as pretreatment, is often used to increase the signal to
-noise ratio in vis-NIR datasets. The waves function DoPreprocessing() applies common spectral
-preprocessing methods such as standard normal variate and the Savitzky-Golay filter.
+Preprocessing, also known as pretreatment, is often used to
+  increase the signal to noise ratio in vis-NIR datasets. The \emph{waves}
+  function \code{DoPreprocessing} applies common spectral preprocessing
+  methods such as standard normal variate and the Savitzky-Golay filter.
 }
 \examples{
 \dontrun{

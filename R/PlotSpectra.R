@@ -1,29 +1,36 @@
-#' @title Plot spectral data, highlighting outliers as identified using Mahalanobis distance
-#' @description Generates a ggplot object of given spectra, with wavelength on the x axis and
-#' given spectral values on the y. Mahalanobis distance is used to calculate outliers, which are
-#' both identified on the plot. Rows from the original dataframe are printed to the console for each
-#' outlier that is identified.
-#' @author Jenna Hershberger \url{jmh579@@cornell.edu}
+#'@title Plot spectral data, highlighting outliers as identified using
+#'  Mahalanobis distance
+#'@description Generates a \code{\link[ggplot2]{ggplot}} object of given
+#'  spectra, with wavelength on the x axis and given spectral values on the y.
+#'  Mahalanobis distance is used to calculate outliers, which are both
+#'  identified on the plot. Rows from the original dataframe are printed to the
+#'  console for each outlier that is identified.
+#'@author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
-#' @param input.df `data.frame` object containing columns of spectra. Spectral columns must be labeled
-#' with an "X" and then the wavelength (example: "X740" = 740nm). Left-most column must be unique ID.
-#' May also contain columns of metadata between the unique ID and spectral columns. Cannot contain
-#' any missing values
-#' @param wavelengths List of wavelengths (numerical format) represented by each spectral column in `input.df`
-#' @param num.col.before.spectra Number of columns to the left of the spectral matrix (including unique ID).
-#' @param window.size number defining the size of window to use when calculating the covariance of the
-#' spectra (required to calculate Mahalanobis distance). Default is 10.
+#'@param input.df \code{data.frame} object containing columns of spectra.
+#'  Spectral columns must be labeled with an "X" and then the wavelength
+#'  (example: "X740" = 740nm). Left-most column must be unique ID. May also
+#'  contain columns of metadata between the unique ID and spectral columns.
+#'  Cannot contain any missing values
+#'@param wavelengths List of wavelengths (numerical format) represented by each
+#'  spectral column in \code{input.df}
+#'@param num.col.before.spectra Number of columns to the left of the spectral
+#'  matrix (including unique ID).
+#'@param window.size number defining the size of window to use when calculating
+#'  the covariance of the spectra (required to calculate Mahalanobis distance).
+#'  Default is 10.
 #'
-#' @importFrom dplyr mutate distinct
-#' @importFrom ggplot2 ggplot aes geom_line theme_minimal labs scale_color_manual
-#' @importFrom wesanderson wes_palette
-#' @importFrom tidyr gather
-#' @importFrom stringr str_extract
-#' @importFrom rlang .data
+#'@importFrom dplyr mutate distinct
+#'@importFrom ggplot2 ggplot aes geom_line theme_minimal labs scale_color_manual
+#'@importFrom wesanderson wes_palette
+#'@importFrom tidyr gather
+#'@importFrom stringr str_extract
+#'@importFrom rlang .data
 #'
-#' @return Prints unique ID and metadata for rows identified as outliers. Returns plot of spectral
-#' data with non-outliers in blue and outliers in red. X-axis is wavelengths and y-axis is spectral values.
-#' @export
+#'@return Prints unique ID and metadata for rows identified as outliers. Returns
+#'  plot of spectral data with non-outliers in blue and outliers in red. X-axis
+#'  is wavelengths and y-axis is spectral values.
+#'@export
 #'
 #' @examples
 #' \dontrun{

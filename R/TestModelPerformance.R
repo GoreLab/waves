@@ -1,45 +1,53 @@
 #' @title Test the performance of spectral models
 #' @name TestModelPerformance
-#' @description Wrapper that trains models based spectral data to predict reference values and reports
-#     model performance statistics
-#' @details Calls [DoPreprocessing()], [FormatCV()], and [TrainSpectralModel()] functions.
+#' @description Wrapper that trains models based spectral data to predict
+#'   reference values and reports model performance statistics
+#'
+#' @details Calls \code{\link{DoPreprocessing}}, \code{\link{FormatCV}},
+#' and \code{\link{TrainSpectralModel}} functions.
+#'
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
 #' @inheritParams FormatCV
 #' @inheritParams TrainSpectralModel
-#' @param train.data \code{data.frame} object of spectral data for input into a spectral prediction model.
-#' First column contains unique identifiers, second contains reference values, followed by spectral
-#' columns. Include no other columns to right of spectra! Column names of spectra must start with "X"
-#' and reference column must be named "reference".
-#' @param preprocessing If \code{TRUE}, 12 preprocessing methods will be applied and their performance
-#' analyzed. If \code{FALSE}, input data is analyzed as is (raw). Default is \code{FALSE}.
-#' @param wavelengths List of wavelengths represented by each column in \code{train.data}
+#' @param train.data \code{data.frame} object of spectral data for input into a
+#'   spectral prediction model. First column contains unique identifiers, second
+#'   contains reference values, followed by spectral columns. Include no other
+#'   columns to right of spectra! Column names of spectra must start with "X"
+#'   and reference column must be named "reference".
+#' @param preprocessing If \code{TRUE}, 12 preprocessing methods will be applied
+#'   and their performance analyzed. If \code{FALSE}, input data is analyzed as
+#'   is (raw). Default is \code{FALSE}.
+#' @param wavelengths List of wavelengths represented by each column in
+#'   \code{train.data}
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
 #'
-#' @return \code{data.frame} with model performance statistics
-#' in summary format (2 rows, one with mean and one with standard deviation of all training iterations)
-#' or in long format (number of rows = num.iterations). *Note* if \code{preprocessing = TRUE}, only the first
-#' mean of summary statistics for all iterations of training are provided for each technique.
+#' @return \code{data.frame} with model performance statistics in summary format
+#'   (2 rows, one with mean and one with standard deviation of all training
+#'   iterations) or in long format (number of rows = num.iterations).
+#'   \strong{Note} if \code{preprocessing = TRUE}, only the first mean of
+#'   summary statistics for all iterations of training are provided for each
+#'   technique.
 #' Included summary statistics:
 #' \itemize{
 #'   \item Tuned parameters depending on the model algorithm:
 #'   \itemize{
-#'     \item *Best.n.comp*, the best number of components
-#'     \item *Best.ntree*, the best number of trees in an RF model
-#'     \item *Best.mtry*, the best number of variables to include at every decision point in an RF model
+#'     \item \strong{Best.n.comp}, the best number of components
+#'     \item \strong{Best.ntree}, the best number of trees in an RF model
+#'     \item \strong{Best.mtry}, the best number of variables to include at every decision point in an RF model
 #'     }
-#'   \item *RMSECV*, the root mean squared error of cross-validation
-#'   \item *R2cv*, the coefficient of multiple determination of cross-validation for PLSR models
-#'   \item *RMSEP*, the root mean squared error of prediction
-#'   \item *R2p*, the squared Pearson’s correlation between predicted and observed test set values
-#'   \item *RPD*, the ratio of standard deviation of observed test set values to RMSEP
-#'   \item *RPIQ*, the ratio of performance to interquartile difference
-#'   \item *CCC*, the concordance correlation coefficient
-#'   \item *Bias*, the average difference between the predicted and observed values
-#'   \item *SEP*, the standard error of prediction
-#'   \item *R2sp*, the squared Spearman’s rank correlation between predicted and observed test set values
+#'   \item \strong{RMSECV}, the root mean squared error of cross-validation
+#'   \item \strong{R2cv}, the coefficient of multiple determination of cross-validation for PLSR models
+#'   \item \strong{RMSEP}, the root mean squared error of prediction
+#'   \item \strong{R2p}, the squared Pearson’s correlation between predicted and observed test set values
+#'   \item \strong{RPD}, the ratio of standard deviation of observed test set values to RMSEP
+#'   \item \strong{RPIQ}, the ratio of performance to interquartile difference
+#'   \item \strong{CCC}, the concordance correlation coefficient
+#'   \item \strong{Bias}, the average difference between the predicted and observed values
+#'   \item \strong{SEP}, the standard error of prediction
+#'   \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted and observed test set values
 #'}
 #'
 #' @export
