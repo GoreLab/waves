@@ -63,7 +63,7 @@ PredictFromSavedModel <- function(input.data,
     best.ncomp <- model.stats$best.ncomp[1]
     # Get predictions
     predicted.values <- as.numeric(predict(final.model,
-                                           newdata = as.matrix(preprocessed[3:ncol(preprocessed)]),
+                                           newdata = as.matrix(preprocessed[2:ncol(preprocessed)]),
                                            ncomp = best.ncomp))
   } else if(model.method == "svmLinear"){
     predicted.values <- as.numeric(predict(final.model, newdata = preprocessed))
