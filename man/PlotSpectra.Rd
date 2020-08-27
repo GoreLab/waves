@@ -5,7 +5,8 @@
 \title{Plot spectral data, highlighting outliers as identified using
  Mahalanobis distance}
 \usage{
-PlotSpectra(input.df, wavelengths, num.col.before.spectra, window.size)
+PlotSpectra(input.df, wavelengths, num.col.before.spectra = 1,
+  window.size = 10, verbose = TRUE)
 }
 \arguments{
 \item{input.df}{\code{data.frame} object containing columns of spectra.
@@ -18,16 +19,19 @@ Cannot contain any missing values}
 spectral column in \code{input.df}}
 
 \item{num.col.before.spectra}{Number of columns to the left of the spectral
-matrix (including unique ID).}
+matrix (including unique ID). Default is 1.}
 
 \item{window.size}{number defining the size of window to use when calculating
 the covariance of the spectra (required to calculate Mahalanobis distance).
 Default is 10.}
+
+\item{verbose}{If \code{TRUE}, the number of rows removed through filtering
+will be printed to the console. Default is \code{TRUE}.}
 }
 \value{
-Prints unique ID and metadata for rows identified as outliers. Returns
- plot of spectral data with non-outliers in blue and outliers in red. X-axis
- is wavelengths and y-axis is spectral values.
+If verbose, prints unique ID and metadata for rows identified as outliers.
+ Returns plot of spectral data with non-outliers in blue and outliers in red.
+ X-axis is wavelengths and y-axis is spectral values.
 }
 \description{
 Generates a \code{\link[ggplot2]{ggplot}} object of given
@@ -37,7 +41,8 @@ Generates a \code{\link[ggplot2]{ggplot}} object of given
  console for each outlier that is identified.
 }
 \examples{
-\dontrun{
+library(magrittr)
+library(dplyr)
 ikeogu.2017 \%>\%
  rename(unique.id = sample.id) \%>\%
  dplyr::select(unique.id, everything(), -TCC) \%>\%
@@ -45,7 +50,6 @@ ikeogu.2017 \%>\%
  PlotSpectra(input.df = .,
              wavelengths = 350:2500,
              num.col.before.spectra = 5)
-}
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

@@ -4,12 +4,13 @@
 \alias{SaveModel}
 \title{Save spectral prediction model and model performance statistics}
 \usage{
-SaveModel(df, save.model = T, autoselect.preprocessing = T,
+SaveModel(df, save.model = TRUE, autoselect.preprocessing = TRUE,
   preprocessing.method = NULL, model.save.folder = NULL,
   model.name = "PredictionModel", best.model.metric = "RMSE",
   tune.length = 50, model.method = "pls", num.iterations = 10,
-  wavelengths = 740:1070, stratified.sampling = T, cv.scheme = NULL,
-  trial1 = NULL, trial2 = NULL, trial3 = NULL)
+  wavelengths = 740:1070, stratified.sampling = TRUE,
+  cv.scheme = NULL, trial1 = NULL, trial2 = NULL, trial3 = NULL,
+  verbose = TRUE)
 }
 \arguments{
 \item{df}{\code{data.frame} object. First column contains unique identifiers,
@@ -100,6 +101,9 @@ site/year (different environment). Formatting must be consistent with
 \code{cv.scheme} is provided. This data.frame contains a trial that may or
 may not contain genotypes that overlap with \code{trial1}. Formatting must
 be consistent with \code{trial1}.}
+
+\item{verbose}{If \code{TRUE}, the number of rows removed through filtering
+will be printed to the console. Default is \code{TRUE}.}
 }
 \value{
 List of model stats (in \code{data.frame}) and trained model object.
@@ -116,16 +120,17 @@ Wrapper that uses \code{\link{DoPreprocessing}},
   \code{\link{FormatCV}}, and \code{\link{TrainSpectralModel}} functions.
 }
 \examples{
-\dontrun{
+library(magrittr)
 ikeogu.2017 \%>\%
-  filter(study.name == "C16Mcal") \%>\%
-  rename(reference = DMC.oven) \%>\%
+  dplyr::filter(study.name == "C16Mcal") \%>\%
+  dplyr::rename(reference = DMC.oven) \%>\%
   dplyr::select(sample.id, reference, starts_with("X")) \%>\%
   na.omit() \%>\%
-  SaveModel(df = .,
+  SaveModel(df = ., save.model = FALSE,
+            autoselect.preprocessing = TRUE,
             model.name = "my_prediction_model",
+            tune.length = 3, num.iterations = 3,
             wavelengths = 350:2500)
-}
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

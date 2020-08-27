@@ -9,10 +9,11 @@
 ikeogu.2017
 }
 \description{
-The `ikeogu.2017` data set contains raw vis-NIRS scans, total carotenoid content,
-and cassava root dry matter content (using the oven method) from the 2017 PLOS One paper by Ikeogu et al.
-This dataset contains a subset of the original scans and reference values from the supplementary
-files of the paper.
+The `ikeogu.2017` data set contains raw vis-NIRS scans, total
+  carotenoid content, and cassava root dry matter content (using the oven
+  method) from the 2017 PLOS One paper by Ikeogu et al. This dataset contains
+  a subset of the original scans and reference values from the supplementary
+  files of the paper.
 `ikeogu.2017` is a `data.frame` that contains the following columns:
 \itemize{
   \item study.name = Name of the study as described in Ikeogu et al. (2017).
@@ -25,20 +26,17 @@ Each cell represents the mean of 150 scans on a single root at a single waveleng
 }
 }
 \examples{
-\dontrun{
+library(magrittr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
 data(ikeogu.2017)
-
 ikeogu.2017[1:10,1:10]
-
-ikeogu.2017 \%>\% group_by(study.name) \%>\% nest() \%>\% mutate(n.obs = map_dbl(data, ~nrow(.)))
-
-ikeogu.2017 \%>\% dplyr::select(-starts_with("X")) \%>\% group_by(study.name) \%>\%
-gather(trait, value, c(DMC.oven:TCC), na.rm = T) \%>\%
-ggplot(aes(x= study.name, y = value, fill = study.name)) +
-facet_wrap(~ trait, scales='free_y', nrow=2) +
-geom_boxplot() +
-theme_bw()
-}
+ikeogu.2017 \%>\% dplyr::select(-starts_with("X")) \%>\% dplyr::group_by(study.name) \%>\%
+    tidyr::gather(trait, value, c(DMC.oven:TCC), na.rm = TRUE) \%>\%
+    ggplot2::ggplot(aes(x = study.name, y = value, fill = study.name)) +
+        facet_wrap(~ trait, scales = 'free_y', nrow = 2) +
+        geom_boxplot()
 }
 \references{
 Ikeogu, U.N., F. Davrieux, D. Dufour, H. Ceballos, C.N. Egesi, et

@@ -32,14 +32,14 @@ Use grouping variables to collapse spectral \code{data.frame} by
   mean or median. Recommended for use after \code{\link{FilterSpectra}}
 }
 \examples{
-\dontrun{
+library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::select(-TCC) \%>\%
   na.omit() \%>\%
   AggregateSpectra(grouping.colnames = c("study.name"),
                    reference.value.colname = "DMC.oven",
                    agg.function = "mean")
-}
+
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

@@ -5,11 +5,11 @@
 \title{Test the performance of spectral models}
 \usage{
 TestModelPerformance(train.data, num.iterations, test.data = NULL,
-  preprocessing = T, wavelengths = 740:1070, tune.length = 50,
-  model.method = "pls", output.summary = T,
-  rf.variable.importance = F, stratified.sampling = T,
+  preprocessing = TRUE, wavelengths = 740:1070, tune.length = 50,
+  model.method = "pls", output.summary = TRUE,
+  rf.variable.importance = FALSE, stratified.sampling = TRUE,
   cv.scheme = NULL, trial1 = NULL, trial2 = NULL, trial3 = NULL,
-  split.test = F)
+  split.test = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{train.data}{\code{data.frame} object of spectral data for input into a
@@ -94,6 +94,9 @@ stratified subset (70\%) of a third and test on the remaining samples
 \code{test.data} will remain as a testing set or if none is provided, 30\%
 of the provided \code{train.data} will be used for testing. Default is
 \code{FALSE}.}
+
+\item{verbose}{If \code{TRUE}, the number of rows removed through filtering
+will be printed to the console. Default is \code{TRUE}.}
 }
 \value{
 \code{data.frame} with model performance statistics in summary format
@@ -131,17 +134,17 @@ Calls \code{\link{DoPreprocessing}}, \code{\link{FormatCV}},
 and \code{\link{TrainSpectralModel}} functions.
 }
 \examples{
-\dontrun{
+library(magrittr)
 ikeogu.2017 \%>\%
-  rename(reference = DMC.oven) \%>\%
-  rename(unique.id = sample.id) \%>\%
+  dplyr::rename(reference = DMC.oven) \%>\%
+  dplyr::rename(unique.id = sample.id) \%>\%
   dplyr::select(unique.id, reference, starts_with("X")) \%>\%
   na.omit() \%>\%
-  TestModelPerformance(.,
-                       num.iterations = 10,
-                       preprocessing = F,
+  TestModelPerformance(train.data = .,
+                       tune.length = 3,
+                       num.iterations = 3,
+                       preprocessing = FALSE,
                        wavelengths = 350:2500)
-}
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

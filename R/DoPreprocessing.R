@@ -40,15 +40,13 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' ikeogu.2017 %>% DoPreprocessing(wavelengths = 350:2500)
-#' }
+#' DoPreprocessing(df = ikeogu.2017, wavelengths = 350:2500)
 DoPreprocessing <- function(df,
                             test.data = NULL,
                             preprocessing.method = 1,
                             wavelengths = 740:1070) {
-  # Format input data frames for processing
-  # Combine training.data and test.data so that the same transformations are applied to all samples
+  # Format input data frames for processing. Combine training.data and test.data
+  # so that the same transformations are applied to all samples
   if (!is.null(test.data)) {
     # bind training to test for preprocessing
     df <- rbind(df, test.data)
@@ -68,13 +66,9 @@ DoPreprocessing <- function(df,
     # Scatter correction (to remove noise)
     standardNormalVariate(spc),
     # 2. Standard normal variate (SNV)
-    t(diff(
-      t(standardNormalVariate(spc)), differences = 1
-    )),
+    t(diff(t(standardNormalVariate(spc)), differences = 1)),
     # 3. SNV + 1st derivative
-    t(diff(
-      t(standardNormalVariate(spc)), differences = 2
-    )),
+    t(diff(t(standardNormalVariate(spc)), differences = 2)),
     # 4. SNV + 2nd derivative
     t(diff(t(spc), differences = 1)),
     # 5. First derivative
@@ -83,12 +77,7 @@ DoPreprocessing <- function(df,
     # Smoothing filters
     savitzkyGolay(spc, p = 2, w = 11, m = 0),
     # 7. Savitzky-Golay
-    savitzkyGolay(
-      standardNormalVariate(spc),
-      p = 2,
-      w = 11,
-      m = 0
-    ),
+    savitzkyGolay(standardNormalVariate(spc), p = 2, w = 11, m = 0),
     # 8. SNV + Savitzky-Golay
     gapDer(spc, m = 1, w = 11, s = 10),
     # 9. Savitzky-Golay + Gap-segment derivative (gapDer) algorithms

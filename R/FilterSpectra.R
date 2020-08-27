@@ -1,8 +1,8 @@
 #' @title Filter spectral data frame based on Mahalanobis distance
 #' @name FilterSpectra
 #' @description Determine Mahalanobis distances of observations (rows) within a
-#'   given \code{data.frame} with spectral data. Option to filter out observations
-#'   based on these distances.
+#'   given \code{data.frame} with spectral data. Option to filter out
+#'   observations based on these distances.
 #' @details  This function uses a chi-square distribution with 95\% cutoff where
 #'   degrees of freedom = number of wavelengths (columns) in the input
 #'   \code{data.frame}.
@@ -10,11 +10,11 @@
 #'   Statistical Analysis (6th Edition). pg 189
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @usage FilterSpectra(df, filter, return.distances, num.col.before.spectra,
-#'   window.size)
+#'   window.size, verbose)
 #' @importFrom stats cov mahalanobis na.omit qchisq
-#' @param df a \code{data.frame} object containing columns of spectra and
-#'   rows of observations. May also contain columns of metadata to the left of
-#'   the spectra.
+#' @param df a \code{data.frame} object containing columns of spectra and rows
+#'   of observations. May also contain columns of metadata to the left of the
+#'   spectra.
 #' @param filter boolean that determines whether or not the input
 #'   \code{data.frame} will be filtered. If \code{TRUE}, \code{df} will be
 #'   filtered according to squared Mahalanobis distance with a 95\% cutoff from
@@ -31,6 +31,8 @@
 #' @param window.size number defining the size of window to use when calculating
 #'   the covariance of the spectra (required to calculate Mahalanobis distance).
 #'   Default is 10.
+#' @param verbose If \code{TRUE}, the number of rows removed through filtering
+#'   will be printed to the console. Default is \code{TRUE}.
 #'
 #' @return If \code{filter} is \code{TRUE}, returns filtered data frame
 #'   \code{df} and reports the number of rows removed. The Mahalanobis distance
@@ -41,20 +43,20 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' library(magrittr)
 #' ikeogu.2017 %>%
 #'   dplyr::select(-TCC) %>%
 #'   na.omit() %>%
 #'   FilterSpectra(df = .,
-#'                 filter = T,
-#'                 return.distances = F,
+#'                 filter = TRUE,
+#'                 return.distances = FALSE,
 #'                 num.col.before.spectra = 5)
-#' }
 FilterSpectra <- function(df,
-                          filter = T,
-                          return.distances = F,
+                          filter = TRUE,
+                          return.distances = FALSE,
                           num.col.before.spectra = 4,
-                          window.size = 10
+                          window.size = 10,
+                          verbose = TRUE
                           ){
 
   # Error handling
@@ -76,7 +78,7 @@ FilterSpectra <- function(df,
 
   # Create list of Mahalanobis distances for each sample and bind to input df
   h.distances <- mahalanobis(x = spectra.subset, center = colMeans(spectra.subset),
-                             cov = spectra.cov, tol=1e-22)
+                             cov = spectra.cov, tol = 1e-22)
   if(sum(h.distances <= 0) > 0){
     stop("Please increase window size.")
   }
@@ -88,10 +90,12 @@ FilterSpectra <- function(df,
     df.filtered <- df.distances[which(h.distances < chisq95),]
 
     # How many samples were removed?
-    if( nrow(df) - nrow(df.filtered) != 1){
-      cat(paste("\nRemoved", nrow(df) - nrow(df.filtered), "rows.\n"))
-    } else{
-      cat(paste("\nRemoved 1 row.\n"))
+    if (verbose) {
+      if (nrow(df) - nrow(df.filtered) != 1) {
+        cat(paste("\nRemoved", nrow(df) - nrow(df.filtered), "rows.\n"))
+      } else{
+        cat(paste("\nRemoved 1 row.\n"))
+      }
     }
 
     if(return.distances){

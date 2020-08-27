@@ -53,33 +53,34 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' library(magrittr)
 #' ikeogu.2017 %>%
-#'   rename(reference = DMC.oven) %>%
-#'   rename(unique.id = sample.id) %>%
+#'   dplyr::rename(reference = DMC.oven) %>%
+#'   dplyr::rename(unique.id = sample.id) %>%
 #'   dplyr::select(unique.id, reference, starts_with("X")) %>%
 #'   na.omit() %>%
-#'   TestModelPerformance(.,
-#'                        num.iterations = 10,
-#'                        preprocessing = F,
+#'   TestModelPerformance(train.data = .,
+#'                        tune.length = 3,
+#'                        num.iterations = 3,
+#'                        preprocessing = FALSE,
 #'                        wavelengths = 350:2500)
-#' }
 TestModelPerformance <- function(train.data,
                                  num.iterations,
                                  test.data = NULL,
-                                 preprocessing = T,
+                                 preprocessing = TRUE,
                                  wavelengths = 740:1070,
                                  tune.length = 50,
                                  model.method = "pls",
-                                 output.summary = T,
-                                 rf.variable.importance = F,
-                                 stratified.sampling = T,
+                                 output.summary = TRUE,
+                                 rf.variable.importance = FALSE,
+                                 stratified.sampling = TRUE,
                                  cv.scheme = NULL,
                                  trial1 = NULL,
                                  trial2 = NULL,
                                  trial3 = NULL,
-                                 split.test = F
-) {
+                                 split.test = FALSE,
+                                 verbose = TRUE
+                                 ) {
   # Error handling
   if(!is.null(cv.scheme)){
     if(is.null(trial1)){
@@ -88,10 +89,10 @@ TestModelPerformance <- function(train.data,
     if(is.null(trial2)){
       stop("trial2 must be provided if using cv.scheme")
     }
-    if(sum(colnames(trial1) != colnames(trial2))>0){
+    if(sum(colnames(trial1) != colnames(trial2)) > 0){
       stop("Column names must match for trial1 and trial2 if using cv.scheme")
     }
-    if(!is.null(trial3) & sum(colnames(trial1) != colnames(trial3))>0){
+    if(!is.null(trial3) & sum(colnames(trial1) != colnames(trial3)) > 0){
       stop("Column names must match for trial1, trial2, and trial3 if using cv.scheme and including trial3")
     }
     train.data <- trial1
@@ -126,13 +127,20 @@ TestModelPerformance <- function(train.data,
     # Format empty data frame for results
     nrow.results <- ifelse(output.summary, 13, 13 * num.iterations)
     # Set column names
-    results.colnames <- c("Pretreatment", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SEP", "RMSEcv", "R2cv", "R2sp")
+    results.colnames <- c("Pretreatment", "RMSEp", "R2p", "RPD", "RPIQ", "CCC",
+                          "Bias", "SEP", "RMSEcv", "R2cv", "R2sp")
     # Add standard deviation columns if outputting a summary data frame
     if(output.summary){
-      results.colnames <- append(results.colnames, c("RMSEp.sd", "R2p.sd", "RPD.sd", "RPIQ.sd", "CCC.sd", "Bias.sd", "SEP.sd", "RMSEcv.sd", "R2cv.sd", "R2sp.sd"))
+      results.colnames <- append(results.colnames, c("RMSEp.sd", "R2p.sd",
+                                                     "RPD.sd", "RPIQ.sd",
+                                                     "CCC.sd", "Bias.sd",
+                                                     "SEP.sd", "RMSEcv.sd",
+                                                     "R2cv.sd", "R2sp.sd"))
     } else{
       # Add iteration column
-      results.colnames <- c("Pretreatment", "Iteration", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SEP", "RMSEcv", "R2cv", "R2sp")
+      results.colnames <- c("Pretreatment", "Iteration", "RMSEp", "R2p", "RPD",
+                            "RPIQ", "CCC", "Bias", "SEP", "RMSEcv", "R2cv",
+                            "R2sp")
     }
     # Add hyperparameter columns
     # svmLinear requires no extra columns for tuned hyperparameter results, pls and svmRadial require 1, and rf requires 2
@@ -142,23 +150,34 @@ TestModelPerformance <- function(train.data,
       results.colnames <- append(results.colnames, c("Best.ntree", "Best.mtry"))
     }
     # Put it together
-    results.df <- as.data.frame(matrix(ncol = length(results.colnames), nrow = nrow.results, NA))
+    results.df <- as.data.frame(matrix(ncol = length(results.colnames),
+                                       nrow = nrow.results, NA))
     colnames(results.df) <- results.colnames
 
     # Then do preprocessing on everything
-    cat("Preprocessing initiated.\n")
+    if(verbose){
+      cat("Preprocessing initiated.\n")
+    }
     if(!is.null(cv.scheme)){
       train.data <- rbind(trial1, trial2, trial3)
     }
-    df.list <- DoPreprocessing(df = train.data, test.data = test.data, preprocessing.method = 1:13,
+    df.list <- DoPreprocessing(df = train.data, test.data = test.data,
+                               preprocessing.method = 1:13,
                                wavelengths = wavelengths)
 
     # Training loop
-    cat("Training models...\n")
+    if(verbose){
+      cat("Training models...\n")
+    }
+
     for (i in c(1:13)) {
-      methods.list <- c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG", "SNVSG", "SGD1", "SG.D1W5",
+      methods.list <- c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
+                        "SNVSG", "SGD1", "SG.D1W5",
                         "SG.D1W11", "SG.D2W5", "SG.D2W11")
-      cat(paste("Working on method", i, "of 13:", methods.list[i], "\n", sep = " "))
+      if(verbose){
+        cat(paste("Working on method", i, "of 13:", methods.list[i], "\n",
+                  sep = " "))
+      }
       # To access a specfic pretreatment, use df.list[[i]] where i is the number of the pretreatment in methods.list above
       # Extract test dataset from full processed data frame
       processed.train.data <- df.list[[i]][1:n.train,]
@@ -170,18 +189,23 @@ TestModelPerformance <- function(train.data,
 
       if(!is.null(cv.scheme)){
         processed.trial1 <- df.list[[i]][1:nrow(trial1),]
-        processed.trial2 <- df.list[[i]][(nrow(trial1)+1):(nrow(trial1)+nrow(trial2)),]
-        processed.trial3 <- df.list[[i]][(nrow(trial1)+nrow(trial2)+1):nrow(train.data),]
+        processed.trial2 <- df.list[[i]][(nrow(trial1) + 1):(nrow(trial1) + nrow(trial2)),]
+        processed.trial3 <- df.list[[i]][(nrow(trial1) + nrow(trial2) + 1):nrow(train.data),]
       }
       # Fit models for each pretreatment and output results
-      training.results <- TrainSpectralModel(df = processed.train.data, num.iterations = num.iterations,
-                                             test.data = processed.test.data, output.summary = output.summary,
-                                             tune.length = tune.length, model.method = model.method,
-                                             rf.variable.importance = rf.variable.importance,
+      training.results <- TrainSpectralModel(df = processed.train.data,
+                                             num.iterations = num.iterations,
+                                             test.data = processed.test.data,
+                                             output.summary = output.summary,
+                                             tune.length = tune.length,
+                                             model.method = model.method,
                                              stratified.sampling = stratified.sampling,
                                              return.model = F, trial1 = processed.trial1,
-                                             trial2 = processed.trial2, trial3 = processed.trial3,
-                                             split.test = split.test)
+                                             trial2 = processed.trial2,
+                                             trial3 = processed.trial3,
+                                             rf.variable.importance = rf.variable.importance,
+                                             split.test = split.test,
+                                             verbose = verbose)
       # Format output
       if(rf.variable.importance){
         # Separate variable importance from model performance results
@@ -192,7 +216,8 @@ TestModelPerformance <- function(train.data,
       if(output.summary){
         # Put pretreatment name in first column followed by means and standard deviations for each statistic
         results.df$Pretreatment[i] <- methods.list[i]
-        spectacle.results <- training.results %>% dplyr::select(.data$RMSEp:.data$R2sp)
+        spectacle.results <- training.results %>%
+          dplyr::select(.data$RMSEp:.data$R2sp)
         hyperparameter.results <- training.results %>%
           dplyr::select(-(.data$Summary_type:.data$R2sp)) # works even if no hyperparameter columns
         results.df[i, 2:ncol(results.df)] <- data.frame(spectacle.results[1,], # row 1 is means
@@ -211,25 +236,33 @@ TestModelPerformance <- function(train.data,
 
 
   } else{ # No preprocessing techniques applied
-    cat("Preprocessing skipped.\n")
+    if(verbose){
+      cat("Preprocessing skipped.\n")
 
-    # Fit models for each pretreatment and output results
-    cat("Training model...\n")
+      # Fit models for each pretreatment and output results
+      cat("Training model...\n")
+    }
     results.df <- TrainSpectralModel(df = train.data,
                                      num.iterations = num.iterations,
                                      test.data = test.data,
                                      output.summary = output.summary,
                                      tune.length = tune.length,
                                      model.method = model.method,
-                                     rf.variable.importance = rf.variable.importance,
                                      stratified.sampling = stratified.sampling,
                                      return.model = F, cv.scheme = cv.scheme,
-                                     trial1 = trial1, trial2 = trial2, trial3 = trial3)
+                                     trial1 = trial1, trial2 = trial2,
+                                     trial3 = trial3,
+                                     rf.variable.importance = rf.variable.importance,
+                                     split.test = split.test,
+                                     verbose = verbose
+                                     )
     if(rf.variable.importance){
       rf.importance.df <- results.df[2]
       results.df <- results.df[1]
     }
     results.df <- as.data.frame(results.df)
   }
-  ifelse(rf.variable.importance, return(list(results.df, rf.importance.df)), return(results.df))
+  ifelse(rf.variable.importance,
+         return(list(results.df, rf.importance.df)),
+         return(results.df))
   }

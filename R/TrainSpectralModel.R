@@ -50,6 +50,8 @@
 #'   \code{test.data} will remain as a testing set or if none is provided, 30\%
 #'   of the provided \code{train.data} will be used for testing. Default is
 #'   \code{FALSE}.
+#' @param verbose If \code{TRUE}, the number of rows removed through filtering
+#'   will be printed to the console. Default is \code{TRUE}.
 #'
 #' @return \code{data.frame} with model performance statistics either in summary
 #'   format (2 rows, one with mean and one with standard deviation of all
@@ -90,34 +92,35 @@
 #' @export TrainSpectralModel
 #'
 #' @examples
-#' \dontrun{
+#' library(magrittr)
 #' ikeogu.2017 %>%
-#' filter(study.name == "C16Mcal") %>%
-#'   rename(reference = DMC.oven) %>%
+#'   dplyr::filter(study.name == "C16Mcal") %>%
+#'   dplyr::rename(reference = DMC.oven) %>%
 #'   dplyr::select(sample.id, reference, starts_with("X")) %>%
 #'   na.omit() %>%
 #'   TrainSpectralModel(df = .,
-#'                      num.iterations = 10,
-#'                      output.summary = T,
-#'                      return.model = F,
+#'                      tune.length = 3,
+#'                      num.iterations = 3,
+#'                      output.summary = TRUE,
+#'                      return.model = FALSE,
 #'                      best.model.metric = "RMSE",
-#'                      stratified.sampling = T)
-#' }
+#'                      stratified.sampling = TRUE)
 TrainSpectralModel <- function(df,
                                num.iterations,
                                test.data = NULL,
                                tune.length = 50,
                                model.method = "pls",
                                output.summary = TRUE,
-                               return.model = F,
+                               return.model = FALSE,
                                best.model.metric = "RMSE",
-                               rf.variable.importance = F,
-                               stratified.sampling = T,
+                               rf.variable.importance = FALSE,
+                               stratified.sampling = TRUE,
                                cv.scheme = NULL,
                                trial1 = NULL,
                                trial2 = NULL,
                                trial3 = NULL,
-                               split.test = F) {
+                               split.test = FALSE,
+                               verbose = TRUE) {
   # Error handling
   if(!(best.model.metric %in% c("RMSE", "Rsquared"))){
     stop('best.model.metric must be either "RMSE" or "Rsquared"')
@@ -151,7 +154,8 @@ TrainSpectralModel <- function(df,
   }
 
   # Create empty df to hold results
-  df.colnames <- c("RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SEP", "RMSEcv", "R2cv", "R2sp")
+  df.colnames <- c("RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias", "SEP",
+                   "RMSEcv", "R2cv", "R2sp")
   if(model.method == "pls"){
     # Add extra column for best number of components
     df.colnames <- append(df.colnames, "best.ncomp")
@@ -159,11 +163,14 @@ TrainSpectralModel <- function(df,
     # Add two extra columns for best ntree and best mtry
     df.colnames <- append(df.colnames, c("best.ntree", "best.mtry"))
     if(rf.variable.importance){
-      rf.importance.df <- as.data.frame(matrix(data = NA, nrow = num.iterations, ncol = (ncol(df)-1)))
+      rf.importance.df <- as.data.frame(matrix(data = NA,
+                                               nrow = num.iterations,
+                                               ncol = (ncol(df)-1)))
       colnames(rf.importance.df) <- colnames(df)[2:ncol(df)] # only wavelength columns
     }
   }
-  results.df <- as.data.frame(matrix(data = NA, nrow = num.iterations, ncol = length(df.colnames)))
+  results.df <- as.data.frame(matrix(data = NA, nrow = num.iterations,
+                                     ncol = length(df.colnames)))
   colnames(results.df) <- df.colnames
 
   # Train model
@@ -180,7 +187,7 @@ TrainSpectralModel <- function(df,
           # Random sample option (!stratified.sampling)
           train.index <- sort(sample(x = seq(from = 1, to = nrow(df), by = 1),
                                      size = 0.7 * nrow(df),
-                                     replace = F, prob = NULL))
+                                     replace = FALSE, prob = NULL))
         }
         # Whether stratified or random sampling, use the train.index to select training and test sets
         data.train <- df[train.index, ]
@@ -190,7 +197,8 @@ TrainSpectralModel <- function(df,
         if(split.test){
           # If split.test = T
           # Fixed training set + add 70% of samples from test set pool to training set
-          train.index <- unlist(caret::createDataPartition(test.data$reference, p=0.7))
+          train.index <- unlist(caret::createDataPartition(test.data$reference,
+                                                           p = 0.7))
           data.train <- rbind(df, test.data[train.index, ])
           data.test <- test.data[-train.index, ]
         } else if(!split.test){
@@ -212,7 +220,8 @@ TrainSpectralModel <- function(df,
       data.test <- formatted.lists[[2]]
     }
 
-    train.ref.spectra <- data.train %>% dplyr::select(.data$reference, starts_with("X"))
+    train.ref.spectra <- data.train %>% dplyr::select(.data$reference,
+                                                      starts_with("X"))
     test.spectra <- data.test %>% dplyr::select(starts_with("X")) # exclude reference column from predictions
     if(num.iterations > 9){
       cv.seeds <- c(1:num.iterations)
@@ -224,9 +233,12 @@ TrainSpectralModel <- function(df,
     #     Example// for 'pls', train hyperparameter "ncomps", where tune.length is number of ncomps tried
     if(model.method != "rf"){
       # 5-fold cross validation on training set
-      cv.5 <- caret::trainControl(method = "cv", number = 5, savePredictions = TRUE, seeds = cv.seeds)
-      data.trained <- caret::train(reference ~ ., data = train.ref.spectra, method = model.method,
-                            tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
+      cv.5 <- caret::trainControl(method = "cv", number = 5,
+                                  savePredictions = TRUE, seeds = cv.seeds)
+      data.trained <- caret::train(reference ~ ., data = train.ref.spectra,
+                                   method = model.method,
+                                   tuneLength = tune.length, trControl = cv.5,
+                                   metric = best.model.metric)
     }
 
     if(model.method == "pls"){
@@ -237,7 +249,8 @@ TrainSpectralModel <- function(df,
                                              newdata = as.matrix(test.spectra), # exclude reference column
                                              ncomp = best.hyper))
       R2cv <- pls::R2(data.trained$finalModel, ncomp = best.hyper)[["val"]][2]
-      RMSEcv <- pls::RMSEP(data.trained$finalModel, ncomp = best.hyper)[["val"]][2]
+      RMSEcv <- pls::RMSEP(data.trained$finalModel,
+                           ncomp = best.hyper)[["val"]][2]
 
     } else if(model.method == "svmLinear"){
       best.hyper <- NA
@@ -254,11 +267,16 @@ TrainSpectralModel <- function(df,
       RMSEcv <- NA
 
     } else if(model.method == "rf"){
-      cv.oob <- caret::trainControl(method = "oob", number = 5, savePredictions = TRUE, seeds = list(cv.seeds, cv.seeds))
-      data.trained <- caret::train(reference ~ ., data = train.ref.spectra, method = model.method,
-                            tuneLength = tune.length, trControl = cv.oob, metric = best.model.metric,
-                            importance = TRUE)
-      best.hyper <- t(as.data.frame(c(data.trained$finalModel$ntree, data.trained$finalModel$mtry)))
+      cv.oob <- caret::trainControl(method = "oob", number = 5,
+                                    savePredictions = TRUE,
+                                    seeds = list(cv.seeds, cv.seeds))
+      data.trained <- caret::train(reference ~ ., data = train.ref.spectra,
+                                   method = model.method,
+                                   tuneLength = tune.length, trControl = cv.oob,
+                                   metric = best.model.metric,
+                                   importance = TRUE)
+      best.hyper <- t(as.data.frame(c(data.trained$finalModel$ntree,
+                                      data.trained$finalModel$mtry)))
       colnames(best.hyper) = c("ntree", "mtry")
       predicted.values <- as.numeric(predict(data.trained$finalModel,
                                              newdata = as.matrix(test.spectra),
@@ -274,7 +292,9 @@ TrainSpectralModel <- function(df,
     reference.values <- data.test$reference
 
     R2sp <- cor(predicted.values, reference.values, method = "spearman") # Spearman's rank correlation
-    results.i <- cbind(t(spectacles::postResampleSpectro(predicted.values, reference.values)), RMSEcv, R2cv, R2sp)
+    results.i <- cbind(t(spectacles::postResampleSpectro(predicted.values,
+                                                         reference.values)),
+                       RMSEcv, R2cv, R2sp)
 
     if(model.method != "svmLinear"){
       results.df[i,] <- cbind(results.i, best.hyper)
@@ -319,24 +339,29 @@ TrainSpectralModel <- function(df,
     # If model desired as output (return.model is TRUE), return list of c(trained model, results).
     # Create model with all input data (not just 70%). Results will give an idea of this model's performance,
     #     but they will have been generated with only subsets of the data.
-    cat("\nReturning model...\n")
+    if (verbose) cat("\nReturning model...\n")
     if(model.method == "pls"){
       # Format df for plsr() function
       df.plsr <- as.data.frame(df[, 1:2])
       df.plsr$spectra <- as.matrix(df[3:ncol(df)])
-      print(colnames(df.plsr))
-      full.model <- pls::plsr(reference ~ spectra, ncomp = tune.length, data = df.plsr)
+      full.model <- pls::plsr(reference ~ spectra, ncomp = tune.length,
+                              data = df.plsr)
     }
     if(model.method == "rf"){
       df.rf <- df %>% dplyr::select(.data$reference, starts_with("X"))
-      full.model <- randomForest::randomForest(reference ~ ., data = df.rf, importance = FALSE,
+      full.model <- randomForest::randomForest(reference ~ ., data = df.rf,
+                                               importance = FALSE,
                                   ntree = tune.length)
     }
     if(model.method == "svmLinear" | model.method == "svmRadial"){
-      full.model <- caret::train(reference ~ ., data = df, method = model.method,
-                          tuneLength = tune.length, trControl = cv.5, metric = best.model.metric)
+      full.model <- caret::train(reference ~ ., data = df,
+                                 method = model.method,
+                          tuneLength = tune.length, trControl = cv.5,
+                          metric = best.model.metric)
     }
-    ifelse(output.summary,return(list(full.model, summary.df)), return(list(full.model, results.df)))
+
+    ifelse(output.summary,return(list(full.model, summary.df)),
+           return(list(full.model, results.df)))
   } else{ # !(return.model)
     if(rf.variable.importance){
       ifelse(output.summary,

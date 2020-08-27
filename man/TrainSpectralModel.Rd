@@ -6,10 +6,10 @@
 \usage{
 TrainSpectralModel(df, num.iterations, test.data = NULL,
   tune.length = 50, model.method = "pls", output.summary = TRUE,
-  return.model = F, best.model.metric = "RMSE",
-  rf.variable.importance = F, stratified.sampling = T,
+  return.model = FALSE, best.model.metric = "RMSE",
+  rf.variable.importance = FALSE, stratified.sampling = TRUE,
   cv.scheme = NULL, trial1 = NULL, trial2 = NULL, trial3 = NULL,
-  split.test = F)
+  split.test = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{df}{\code{data.frame} object. First column contains unique identifiers,
@@ -96,6 +96,9 @@ stratified subset (70\%) of a third and test on the remaining samples
 of the provided \code{train.data} will be used for testing. Default is
 \code{FALSE}.}
 
+\item{verbose}{If \code{TRUE}, the number of rows removed through filtering
+will be printed to the console. Default is \code{TRUE}.}
+
 \item{vector.input}{The mode of this vector of numbers will be calculated by this function}
 }
 \value{
@@ -135,19 +138,19 @@ Get the mode of a set of numbers. Used in getting summary of results
 within [TrainSpectralModel()]
 }
 \examples{
-\dontrun{
+library(magrittr)
 ikeogu.2017 \%>\%
-filter(study.name == "C16Mcal") \%>\%
-  rename(reference = DMC.oven) \%>\%
+  dplyr::filter(study.name == "C16Mcal") \%>\%
+  dplyr::rename(reference = DMC.oven) \%>\%
   dplyr::select(sample.id, reference, starts_with("X")) \%>\%
   na.omit() \%>\%
   TrainSpectralModel(df = .,
-                     num.iterations = 10,
-                     output.summary = T,
-                     return.model = F,
+                     tune.length = 3,
+                     num.iterations = 3,
+                     output.summary = TRUE,
+                     return.model = FALSE,
                      best.model.metric = "RMSE",
-                     stratified.sampling = T)
-}
+                     stratified.sampling = TRUE)
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

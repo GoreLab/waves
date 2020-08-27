@@ -60,12 +60,14 @@ Use of a cross-validation scheme requires a column in the input
   \code{trial 3} is optional.
 }
 \examples{
-\dontrun{
-# Must have a column called "genotype", so we'll create a fake one for now #
-We will use CV00, which does not require any overlap in genotypes # In real
-scenarios, CV schemes that rely on genotypes should not be applied when #
-genotypes are unknown, as in this case trials <- ikeogu.2017 \%>\%
-    mutate(genotype = 1:nrow(ikeogu.2017)) \%>\% # these are fake for this example
+# Must have a column called "genotype", so we'll create a fake one for now
+# We will use CV00, which does not require any overlap in genotypes
+# In real scenarios, CV schemes that rely on genotypes should not be applied when
+# genotypes are unknown, as in this case.
+library(magrittr)
+library(dplyr)
+trials <- ikeogu.2017 \%>\%
+    mutate(genotype = 1:nrow(ikeogu.2017)) \%>\% # fake for this example
     rename(reference = DMC.oven) \%>\%
     dplyr::select(study.name, sample.id, genotype, reference,
                   starts_with("X")) \%>\%
@@ -77,15 +79,14 @@ trial2 <- trials \%>\%
   filter(study.name == "C16Mval") \%>\%
   dplyr::select(-study.name)
 FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
-         remove.genotype = T)
-}
+         remove.genotype = TRUE)
 }
 \references{
 Jarquín, D., C. Lemes da Silva, R. C. Gaynor, J. Poland, A.
   Fritz, R. Howard, S. Battenfield, and J. Crossa. 2017. Increasing
   genomic-enabled prediction accuracy by modeling genotype × environment
-  interactions in Kansas wheat. Plant Genome 10(2): plantgenome2016.12.0130.
-  doi:10.3835/plantgenome2016.12.0130
+  interactions in Kansas wheat. Plant Genome 10(2):1-15.
+  <doi:10.3835/plantgenome2016.12.0130>
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

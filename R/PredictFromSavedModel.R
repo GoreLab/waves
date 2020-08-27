@@ -48,14 +48,14 @@ PredictFromSavedModel <- function(input.data,
   final.model <- model.object
   # Match best preprocessing method with index number
   best.preprocessing.num <- match(model.stats$Pretreatment[1],
-                                  c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
-                                    "SNVSG", "SGD1", "SG.D1W5", "SG.D1W11", "SG.D2W5", "SG.D2W11"))
+                                  c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1",
+                                    "D2", "SG", "SNVSG", "SGD1", "SG.D1W5",
+                                    "SG.D1W11", "SG.D2W5", "SG.D2W11"))
 
   # Use DoPreprocessing function to format input.data and preprocess if needed
   preprocessed <- DoPreprocessing(df = input.data, test.data = NULL,
                                   preprocessing.method = best.preprocessing.num,
                                   wavelengths = wavelengths)
-  #print(colnames(preprocessed))
 
   # Predict values using imported model, preprocessed/formatted input data, and method of choice
   if(model.method == "pls"){

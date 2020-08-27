@@ -43,8 +43,8 @@
 #' @references Jarquín, D., C. Lemes da Silva, R. C. Gaynor, J. Poland, A.
 #'   Fritz, R. Howard, S. Battenfield, and J. Crossa. 2017. Increasing
 #'   genomic-enabled prediction accuracy by modeling genotype × environment
-#'   interactions in Kansas wheat. Plant Genome 10(2): plantgenome2016.12.0130.
-#'   doi:10.3835/plantgenome2016.12.0130
+#'   interactions in Kansas wheat. Plant Genome 10(2):1-15.
+#'   <doi:10.3835/plantgenome2016.12.0130>
 #'
 #' @importFrom dplyr group_by ungroup filter
 #' @importFrom tidyr nest unnest
@@ -56,12 +56,14 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' # Must have a column called "genotype", so we'll create a fake one for now #
-#' We will use CV00, which does not require any overlap in genotypes # In real
-#' scenarios, CV schemes that rely on genotypes should not be applied when #
-#' genotypes are unknown, as in this case trials <- ikeogu.2017 %>%
-#'     mutate(genotype = 1:nrow(ikeogu.2017)) %>% # these are fake for this example
+#' # Must have a column called "genotype", so we'll create a fake one for now
+#' # We will use CV00, which does not require any overlap in genotypes
+#' # In real scenarios, CV schemes that rely on genotypes should not be applied when
+#' # genotypes are unknown, as in this case.
+#' library(magrittr)
+#' library(dplyr)
+#' trials <- ikeogu.2017 %>%
+#'     mutate(genotype = 1:nrow(ikeogu.2017)) %>% # fake for this example
 #'     rename(reference = DMC.oven) %>%
 #'     dplyr::select(study.name, sample.id, genotype, reference,
 #'                   starts_with("X")) %>%
@@ -73,8 +75,7 @@
 #'   filter(study.name == "C16Mval") %>%
 #'   dplyr::select(-study.name)
 #' FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
-#'          remove.genotype = T)
-#' }
+#'          remove.genotype = TRUE)
 FormatCV <- function(trial1,
                      trial2,
                      trial3 = NULL,
@@ -95,7 +96,7 @@ FormatCV <- function(trial1,
   # Random sampling
   train.index <- sort(sample(x = seq(from = 1, to = nrow(t1), by = 1),
                              size = 0.7 * nrow(t1),
-                             replace = F, prob = NULL))
+                             replace = FALSE, prob = NULL))
   # t1.a is always the test set
   t1.a <- t1[-train.index,] %>% tidyr::unnest(c(-.data$genotype)) %>% dplyr::ungroup()
   t1.b <- t1[train.index,] %>% tidyr::unnest(c(-.data$genotype)) %>% dplyr::ungroup()

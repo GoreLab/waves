@@ -5,12 +5,12 @@
 \title{Filter spectral data frame based on Mahalanobis distance}
 \usage{
 FilterSpectra(df, filter, return.distances, num.col.before.spectra,
-  window.size)
+  window.size, verbose)
 }
 \arguments{
-\item{df}{a \code{data.frame} object containing columns of spectra and
-rows of observations. May also contain columns of metadata to the left of
-the spectra.}
+\item{df}{a \code{data.frame} object containing columns of spectra and rows
+of observations. May also contain columns of metadata to the left of the
+spectra.}
 
 \item{filter}{boolean that determines whether or not the input
 \code{data.frame} will be filtered. If \code{TRUE}, \code{df} will be
@@ -31,6 +31,9 @@ matrix in \code{df}. Default is 4.}
 \item{window.size}{number defining the size of window to use when calculating
 the covariance of the spectra (required to calculate Mahalanobis distance).
 Default is 10.}
+
+\item{verbose}{If \code{TRUE}, the number of rows removed through filtering
+will be printed to the console. Default is \code{TRUE}.}
 }
 \value{
 If \code{filter} is \code{TRUE}, returns filtered data frame
@@ -42,8 +45,8 @@ If \code{filter} is \code{TRUE}, returns filtered data frame
 }
 \description{
 Determine Mahalanobis distances of observations (rows) within a
-  given \code{data.frame} with spectral data. Option to filter out observations
-  based on these distances.
+  given \code{data.frame} with spectral data. Option to filter out
+  observations based on these distances.
 }
 \details{
 This function uses a chi-square distribution with 95\% cutoff where
@@ -51,15 +54,14 @@ This function uses a chi-square distribution with 95\% cutoff where
   \code{data.frame}.
 }
 \examples{
-\dontrun{
+library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::select(-TCC) \%>\%
   na.omit() \%>\%
   FilterSpectra(df = .,
-                filter = T,
-                return.distances = F,
+                filter = TRUE,
+                return.distances = FALSE,
                 num.col.before.spectra = 5)
-}
 }
 \references{
 Johnson, R.A., and D.W. Wichern. 2007. Applied Multivariate
