@@ -44,13 +44,15 @@
 #'
 #' @examples
 #' library(magrittr)
-#' ikeogu.2017 %>%
+#' filtered.test <- ikeogu.2017 %>%
 #'   dplyr::select(-TCC) %>%
 #'   na.omit() %>%
 #'   FilterSpectra(df = .,
 #'                 filter = TRUE,
-#'                 return.distances = FALSE,
-#'                 num.col.before.spectra = 5)
+#'                 return.distances = TRUE,
+#'                 num.col.before.spectra = 5,
+#'                 window.size = 15)
+#' filtered.test[1:5, c(1:5, (ncol(filtered.test)-5):ncol(filtered.test))]
 FilterSpectra <- function(df,
                           filter = TRUE,
                           return.distances = FALSE,

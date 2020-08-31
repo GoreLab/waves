@@ -28,7 +28,7 @@
 #' @examples
 #' \dontrun{
 #' ikeogu.2017 %>%
-#'   dplyr::select(sample.id, starts_with("X")) %>%
+#'   dplyr::select(sample.id, dplyr::starts_with("X")) %>%
 #'   PredictFromSavedModel(input.data = .,
 #'                         model.stats.location = paste0(getwd(),
 #'                                                       "/my_model_stats.csv"),

@@ -40,7 +40,7 @@
 #' @export
 #'
 #' @examples
-#' DoPreprocessing(df = ikeogu.2017, wavelengths = 350:2500)
+#' DoPreprocessing(df = ikeogu.2017, wavelengths = 350:2500)[1:5,1:5]
 DoPreprocessing <- function(df,
                             test.data = NULL,
                             preprocessing.method = 1,

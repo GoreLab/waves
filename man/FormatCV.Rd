@@ -65,21 +65,20 @@ Use of a cross-validation scheme requires a column in the input
 # In real scenarios, CV schemes that rely on genotypes should not be applied when
 # genotypes are unknown, as in this case.
 library(magrittr)
-library(dplyr)
 trials <- ikeogu.2017 \%>\%
-    mutate(genotype = 1:nrow(ikeogu.2017)) \%>\% # fake for this example
-    rename(reference = DMC.oven) \%>\%
+    dplyr::mutate(genotype = 1:nrow(ikeogu.2017)) \%>\% # fake for this example
+    dplyr::rename(reference = DMC.oven) \%>\%
     dplyr::select(study.name, sample.id, genotype, reference,
-                  starts_with("X")) \%>\%
-    na.omit()
+                  dplyr::starts_with("X"))
 trial1 <- trials \%>\%
-  filter(study.name == "C16Mcal") \%>\%
+  dplyr::filter(study.name == "C16Mcal") \%>\%
   dplyr::select(-study.name)
 trial2 <- trials \%>\%
-  filter(study.name == "C16Mval") \%>\%
+  dplyr::filter(study.name == "C16Mval") \%>\%
   dplyr::select(-study.name)
-FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
-         remove.genotype = TRUE)
+cv.list <- FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
+                    remove.genotype = TRUE)
+cv.list[[1]][1:5, 1:5]
 }
 \references{
 Jarquín, D., C. Lemes da Silva, R. C. Gaynor, J. Poland, A.

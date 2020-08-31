@@ -142,7 +142,7 @@ library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::filter(study.name == "C16Mcal") \%>\%
   dplyr::rename(reference = DMC.oven) \%>\%
-  dplyr::select(sample.id, reference, starts_with("X")) \%>\%
+  dplyr::select(sample.id, reference, dplyr::starts_with("X")) \%>\%
   na.omit() \%>\%
   TrainSpectralModel(df = .,
                      tune.length = 3,

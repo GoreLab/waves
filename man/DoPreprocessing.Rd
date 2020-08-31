@@ -50,7 +50,7 @@ Preprocessing, also known as pretreatment, is often used to
   methods such as standard normal variate and the Savitzky-Golay filter.
 }
 \examples{
-DoPreprocessing(df = ikeogu.2017, wavelengths = 350:2500)
+DoPreprocessing(df = ikeogu.2017, wavelengths = 350:2500)[1:5,1:5]
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

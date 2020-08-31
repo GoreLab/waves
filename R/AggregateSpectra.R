@@ -5,6 +5,7 @@
 #'   mean or median. Recommended for use after \code{\link{FilterSpectra}}
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @importFrom stats aggregate median
+#' @importFrom dplyr select
 #' @importFrom magrittr %>%
 #' @importFrom tidyselect starts_with
 #' @usage AggregateSpectra(df, grouping.colnames, reference.value.colname,
@@ -27,13 +28,13 @@
 #'
 #' @examples
 #' library(magrittr)
-#' ikeogu.2017 %>%
+#' aggregated.test <- ikeogu.2017 %>%
 #'   dplyr::select(-TCC) %>%
 #'   na.omit() %>%
 #'   AggregateSpectra(grouping.colnames = c("study.name"),
 #'                    reference.value.colname = "DMC.oven",
 #'                    agg.function = "mean")
-#'
+#' aggregated.test[1:5, 1:5]
 AggregateSpectra <- function(df,
                              grouping.colnames = c("trial", "plot"),
                              reference.value.colname = "reference",

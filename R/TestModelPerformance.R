@@ -57,7 +57,7 @@
 #' ikeogu.2017 %>%
 #'   dplyr::rename(reference = DMC.oven) %>%
 #'   dplyr::rename(unique.id = sample.id) %>%
-#'   dplyr::select(unique.id, reference, starts_with("X")) %>%
+#'   dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
 #'   na.omit() %>%
 #'   TestModelPerformance(train.data = .,
 #'                        tune.length = 3,

@@ -33,13 +33,13 @@ Use grouping variables to collapse spectral \code{data.frame} by
 }
 \examples{
 library(magrittr)
-ikeogu.2017 \%>\%
+aggregated.test <- ikeogu.2017 \%>\%
   dplyr::select(-TCC) \%>\%
   na.omit() \%>\%
   AggregateSpectra(grouping.colnames = c("study.name"),
                    reference.value.colname = "DMC.oven",
                    agg.function = "mean")
-
+aggregated.test[1:5, 1:5]
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

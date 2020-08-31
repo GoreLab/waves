@@ -121,16 +121,18 @@ Wrapper that uses \code{\link{DoPreprocessing}},
 }
 \examples{
 library(magrittr)
-ikeogu.2017 \%>\%
+test.model <- ikeogu.2017 \%>\%
   dplyr::filter(study.name == "C16Mcal") \%>\%
   dplyr::rename(reference = DMC.oven) \%>\%
-  dplyr::select(sample.id, reference, starts_with("X")) \%>\%
+  dplyr::select(sample.id, reference, dplyr::starts_with("X")) \%>\%
   na.omit() \%>\%
   SaveModel(df = ., save.model = FALSE,
             autoselect.preprocessing = TRUE,
             model.name = "my_prediction_model",
             tune.length = 3, num.iterations = 3,
             wavelengths = 350:2500)
+summary(test.model[1])
+test.model[2]
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

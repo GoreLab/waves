@@ -27,12 +27,12 @@ Each cell represents the mean of 150 scans on a single root at a single waveleng
 }
 \examples{
 library(magrittr)
-library(dplyr)
-library(tidyr)
 library(ggplot2)
 data(ikeogu.2017)
 ikeogu.2017[1:10,1:10]
-ikeogu.2017 \%>\% dplyr::select(-starts_with("X")) \%>\% dplyr::group_by(study.name) \%>\%
+ikeogu.2017 \%>\%
+    dplyr::select(-starts_with("X")) \%>\%
+    dplyr::group_by(study.name) \%>\%
     tidyr::gather(trait, value, c(DMC.oven:TCC), na.rm = TRUE) \%>\%
     ggplot2::ggplot(aes(x = study.name, y = value, fill = study.name)) +
         facet_wrap(~ trait, scales = 'free_y', nrow = 2) +

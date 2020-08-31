@@ -31,15 +31,15 @@
 #'@export
 #'
 #' @examples
-#'library(magrittr)
-#'library(dplyr)
-#'ikeogu.2017 %>%
-#'  rename(unique.id = sample.id) %>%
-#'  dplyr::select(unique.id, everything(), -TCC) %>%
-#'  na.omit() %>%
-#'  PlotSpectra(input.df = .,
-#'              wavelengths = 350:2500,
-#'              num.col.before.spectra = 5)
+#' library(magrittr)
+#' ikeogu.2017 %>%
+#'   dplyr::rename(unique.id = sample.id) %>%
+#'   dplyr::select(unique.id, dplyr::everything(), -TCC) %>%
+#'   na.omit() %>%
+#'   PlotSpectra(input.df = .,
+#'               wavelengths = 350:2500,
+#'               num.col.before.spectra = 5,
+#'               window.size = 15)
 PlotSpectra <- function(input.df,
                         wavelengths,
                         num.col.before.spectra = 1,
