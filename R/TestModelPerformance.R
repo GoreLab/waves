@@ -53,6 +53,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' library(magrittr)
 #' ikeogu.2017 %>%
 #'   dplyr::rename(reference = DMC.oven) %>%
@@ -64,6 +65,7 @@
 #'                        num.iterations = 3,
 #'                        preprocessing = FALSE,
 #'                        wavelengths = 350:2500)
+#' }
 TestModelPerformance <- function(train.data,
                                  num.iterations,
                                  test.data = NULL,

@@ -92,6 +92,7 @@
 #' @export TrainSpectralModel
 #'
 #' @examples
+#' \dontrun{
 #' library(magrittr)
 #' ikeogu.2017 %>%
 #'   dplyr::filter(study.name == "C16Mcal") %>%
@@ -105,6 +106,7 @@
 #'                      return.model = FALSE,
 #'                      best.model.metric = "RMSE",
 #'                      stratified.sampling = TRUE)
+#' }
 TrainSpectralModel <- function(df,
                                num.iterations,
                                test.data = NULL,

@@ -138,6 +138,7 @@ Get the mode of a set of numbers. Used in getting summary of results
 within [TrainSpectralModel()]
 }
 \examples{
+\dontrun{
 library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::filter(study.name == "C16Mcal") \%>\%
@@ -151,6 +152,7 @@ ikeogu.2017 \%>\%
                      return.model = FALSE,
                      best.model.metric = "RMSE",
                      stratified.sampling = TRUE)
+}
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

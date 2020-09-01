@@ -41,6 +41,7 @@ Generates a \code{\link[ggplot2]{ggplot}} object of given
  console for each outlier that is identified.
 }
 \examples{
+\dontrun{
 library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::rename(unique.id = sample.id) \%>\%
@@ -50,6 +51,7 @@ ikeogu.2017 \%>\%
               wavelengths = 350:2500,
               num.col.before.spectra = 5,
               window.size = 15)
+}
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

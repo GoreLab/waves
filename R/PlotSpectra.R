@@ -31,6 +31,7 @@
 #'@export
 #'
 #' @examples
+#' \dontrun{
 #' library(magrittr)
 #' ikeogu.2017 %>%
 #'   dplyr::rename(unique.id = sample.id) %>%
@@ -40,6 +41,7 @@
 #'               wavelengths = 350:2500,
 #'               num.col.before.spectra = 5,
 #'               window.size = 15)
+#' }
 PlotSpectra <- function(input.df,
                         wavelengths,
                         num.col.before.spectra = 1,

@@ -134,6 +134,7 @@ Calls \code{\link{DoPreprocessing}}, \code{\link{FormatCV}},
 and \code{\link{TrainSpectralModel}} functions.
 }
 \examples{
+\dontrun{
 library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::rename(reference = DMC.oven) \%>\%
@@ -145,6 +146,7 @@ ikeogu.2017 \%>\%
                        num.iterations = 3,
                        preprocessing = FALSE,
                        wavelengths = 350:2500)
+}
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}
