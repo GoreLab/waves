@@ -41,6 +41,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' library(magrittr)
 #' test.model <- ikeogu.2017 %>%
 #'   dplyr::filter(study.name == "C16Mcal") %>%
@@ -50,10 +51,11 @@
 #'   SaveModel(df = ., save.model = FALSE,
 #'             autoselect.preprocessing = TRUE,
 #'             model.name = "my_prediction_model",
-#'             tune.length = 3, num.iterations = 3,
+#'             tune.length = 50, num.iterations = 10,
 #'             wavelengths = 350:2500)
 #' summary(test.model[1])
 #' test.model[2]
+#' }
 SaveModel <- function(df,
                       save.model = TRUE,
                       autoselect.preprocessing = TRUE,

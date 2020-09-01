@@ -291,7 +291,7 @@ TrainSpectralModel <- function(df,
     # Get model performance statistics
     reference.values <- data.test$reference
 
-    R2sp <- cor(predicted.values, reference.values, method = "spearman") # Spearman's rank correlation
+    R2sp <- cor(predicted.values, reference.values, method = "spearman") ** 2 # Squared Spearman's rank correlation
     results.i <- cbind(t(spectacles::postResampleSpectro(predicted.values,
                                                          reference.values)),
                        RMSEcv, R2cv, R2sp)
