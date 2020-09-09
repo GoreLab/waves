@@ -41,7 +41,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(magrittr)
 #' test.model <- ikeogu.2017 %>%
 #'   dplyr::filter(study.name == "C16Mcal") %>%

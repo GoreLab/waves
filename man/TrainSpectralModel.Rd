@@ -138,7 +138,7 @@ Get the mode of a set of numbers. Used in getting summary of results
 within [TrainSpectralModel()]
 }
 \examples{
-\dontrun{
+\donttest{
 library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::filter(study.name == "C16Mcal") \%>\%

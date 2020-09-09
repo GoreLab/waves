@@ -31,7 +31,7 @@
 #'@export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(magrittr)
 #' ikeogu.2017 %>%
 #'   dplyr::rename(unique.id = sample.id) %>%

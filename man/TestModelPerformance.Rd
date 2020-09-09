@@ -134,7 +134,7 @@ Calls \code{\link{DoPreprocessing}}, \code{\link{FormatCV}},
 and \code{\link{TrainSpectralModel}} functions.
 }
 \examples{
-\dontrun{
+\donttest{
 library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::rename(reference = DMC.oven) \%>\%

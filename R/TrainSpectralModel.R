@@ -92,7 +92,7 @@
 #' @export TrainSpectralModel
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(magrittr)
 #' ikeogu.2017 %>%
 #'   dplyr::filter(study.name == "C16Mcal") %>%

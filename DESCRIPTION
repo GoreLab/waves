@@ -9,7 +9,7 @@ Authors@R: c(
               person("NSF BREAD IOS-1543958", role = "fnd")
               )
 Description: Originally designed application in the context of resource-limited plant research 
-    and breeding programs, waves provides an open-source solution to spectral data processing 
+    and breeding programs, 'waves' provides an open-source solution to spectral data processing 
     and model development by bringing useful packages together into a streamlined pipeline. 
     This package is wrapper for functions related to the analysis of point visible and 
     near-infrared reflectance measurements. It includes visualization, filtering, aggregation, 
