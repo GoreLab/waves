@@ -13,11 +13,14 @@ Originally designed application in the context of resource-limited plant researc
 Follow the installation instructions below, and then go wild! Use `waves` to analyze your own data. Please report any bugs or feature requests by opening issues in this repository.
 
 ## Installation
+Install the latest `waves` release directly from CRAN: 
 ``` r
-install.packages(devtools)
-library(devtools)
-install_github("GoreLab/waves")
-library(waves)
+install.packages("waves")
+```
+Alternatively, install the development version to get the most up-to-date (but not necessarily thoroughly tested) version:
+``` r
+# install.packages("devtools")
+devtools::install_github("GoreLab/waves")
 ```
 
 ## Overview
