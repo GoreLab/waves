@@ -4,12 +4,24 @@
 \alias{TestModelPerformance}
 \title{Test the performance of spectral models}
 \usage{
-TestModelPerformance(train.data, num.iterations, test.data = NULL,
-  preprocessing = TRUE, wavelengths = 740:1070, tune.length = 50,
-  model.method = "pls", output.summary = TRUE,
-  rf.variable.importance = FALSE, stratified.sampling = TRUE,
-  cv.scheme = NULL, trial1 = NULL, trial2 = NULL, trial3 = NULL,
-  split.test = FALSE, verbose = TRUE)
+TestModelPerformance(
+  train.data,
+  num.iterations,
+  test.data = NULL,
+  preprocessing = TRUE,
+  wavelengths = 740:1070,
+  tune.length = 50,
+  model.method = "pls",
+  output.summary = TRUE,
+  rf.variable.importance = FALSE,
+  stratified.sampling = TRUE,
+  cv.scheme = NULL,
+  trial1 = NULL,
+  trial2 = NULL,
+  trial3 = NULL,
+  split.test = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{train.data}{\code{data.frame} object of spectral data for input into a

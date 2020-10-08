@@ -4,8 +4,13 @@
 \alias{PredictFromSavedModel}
 \title{Use provided model object to predict trait values with input dataset}
 \usage{
-PredictFromSavedModel(input.data, model.stats.location, model.location,
-  wavelengths = 740:1070, model.method = "pls")
+PredictFromSavedModel(
+  input.data,
+  model.stats.location,
+  model.location,
+  wavelengths = 740:1070,
+  model.method = "pls"
+)
 }
 \arguments{
 \item{input.data}{\code{data.frame} object of spectral data for input into a

@@ -4,13 +4,25 @@
 \alias{SaveModel}
 \title{Save spectral prediction model and model performance statistics}
 \usage{
-SaveModel(df, save.model = TRUE, autoselect.preprocessing = TRUE,
-  preprocessing.method = NULL, model.save.folder = NULL,
-  model.name = "PredictionModel", best.model.metric = "RMSE",
-  tune.length = 50, model.method = "pls", num.iterations = 10,
-  wavelengths = 740:1070, stratified.sampling = TRUE,
-  cv.scheme = NULL, trial1 = NULL, trial2 = NULL, trial3 = NULL,
-  verbose = TRUE)
+SaveModel(
+  df,
+  save.model = TRUE,
+  autoselect.preprocessing = TRUE,
+  preprocessing.method = NULL,
+  model.save.folder = NULL,
+  model.name = "PredictionModel",
+  best.model.metric = "RMSE",
+  tune.length = 50,
+  model.method = "pls",
+  num.iterations = 10,
+  wavelengths = 740:1070,
+  stratified.sampling = TRUE,
+  cv.scheme = NULL,
+  trial1 = NULL,
+  trial2 = NULL,
+  trial3 = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{df}{\code{data.frame} object. First column contains unique identifiers,

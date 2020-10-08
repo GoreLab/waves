@@ -48,9 +48,13 @@ PlotSpectra <- function(input.df,
                         window.size = 10,
                         verbose = TRUE
                         ){
+
+    # Strip off non-spectral columns
+  spectra <- input.df[, (num.col.before.spectra + 1):ncol(input.df)]
+
   # Error handling
-  # Mahalanobis function does not allow missing values or non-numeric data
-  if(nrow(input.df) != nrow(na.omit(input.df))){
+  # mahalanobis function does not allow missing values or non-numeric data
+  if(nrow(spectra) != nrow(na.omit(spectra))){
     stop("Input data frame cannot contain missing values! Remove them and try again.")
   }
 

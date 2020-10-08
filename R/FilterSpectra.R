@@ -61,16 +61,14 @@ FilterSpectra <- function(df,
                           verbose = TRUE
                           ){
 
-  # Error handling
-  # mahalanobis function does not allow missing values or non-numeric data
-  if(nrow(df) != nrow(na.omit(df))){
-    stop("Input data frame cannot contain missing values! Remove them and try again.")
-  }
-  # Remove missing values (line above should stop them but this is just in case)
-  df <- na.omit(df)
-
   # Strip off non-spectral columns
   spectra <- df[, (num.col.before.spectra + 1):ncol(df)]
+
+  # Error handling
+  # mahalanobis function does not allow missing values or non-numeric data
+  if(nrow(spectra) != nrow(na.omit(spectra))){
+    stop("Input data frame cannot contain missing values! Remove them and try again.")
+  }
 
   # Make subset of spectra using provided window size (otherwise the system is computationally singular)
   spectra.subset <- spectra[, seq(1, ncol(spectra), window.size)]

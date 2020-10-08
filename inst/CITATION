@@ -4,15 +4,33 @@ year <- sub("-.*", "", meta$Date)
 note <- sprintf("R package version %s", meta$Version)
 
 citEntry(
+  entry = "Article",
+  title = "Making WAVES in Breedbase: An Integrated Spectral Data Storage and Analysis Pipeline for Plant Breeding Programs",
+  author = c(person(given = "Jenna", family = "Hershberger"),
+           person(given = "Nicolas", family = "Morales"),
+           person(given = "Christiano", middle = "C.", family = "Simoes"),
+           person(given = "Bryan", family = "Ellerbrock"),
+           person(given = "Guillaume", family = "Bauchet"),
+           person(given = "Lukas", middle = "A.", family = "Mueller"),
+           person(given = "Michael", middle = "A.", family = "Gore")),
+  year = "2020",
+  journal = "bioRxiv",
+  url = "https://www.biorxiv.org/content/early/2020/09/20/2020.09.18.278549",
+  doi = "10.1101/2020.09.18.278549",
+  textVersion = paste("Hershberger, J., Morales, N., Simoes, C. C., Ellerbrock, B., Bauchet, G., Mueller, L. A., & Gore, M. A. (2020). Making WAVES in Breedbase: An Integrated Spectral Data Storage and Analysis Pipeline for Plant Breeding Programs. bioRxiv, 2020.09.18.278549. https://doi.org/10.1101/2020.09.18.278549.")
+)
+
+
+citEntry(
   entry    = "Manual",
   title    = "waves: Vis-NIR Spectral Analysis Wrapper",
   author   = c(
-         person(given = "Jenna", middle = "M.", family = "Hershberger",
+         person(given = "Jenna", family = "Hershberger",
                 email="jmh579@cornell.edu",
-                role = c("aut", "cre"),
-         person(given = "Michael", middle = "A.", family = "Gore", role="ths"))),
+                role = c("aut", "cre")),
+         person(given = "Michael", middle = "A.", family = "Gore", role="ths")),
   year     = year,
   note     = note,
-  url      = "https://github.com/GoreLab/waves",
-  textVersion = paste0("Jenna M. Hershberger and Michael A. Gore (", year, "). waves: Vis-NIR           Spectral Analysis Wrapper. ", note, ".")
+  url      = "https://CRAN.R-project.org/package=waves",
+  textVersion = paste0("Jenna Hershberger and Michael A. Gore (", year, "). waves: Vis-NIR           Spectral Analysis Wrapper. ", note, "." https://CRAN.R-project.org/package=waves)
 )

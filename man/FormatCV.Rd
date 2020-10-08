@@ -5,8 +5,14 @@
 \title{Format multiple trials with or without overlapping genotypes into
   training and test sets according to user-provided cross validation scheme}
 \usage{
-FormatCV(trial1, trial2, trial3 = NULL, cv.scheme, seed = NULL,
-  remove.genotype = FALSE)
+FormatCV(
+  trial1,
+  trial2,
+  trial3 = NULL,
+  cv.scheme,
+  seed = NULL,
+  remove.genotype = FALSE
+)
 }
 \arguments{
 \item{trial1}{\code{data.frame} object that is for use only when

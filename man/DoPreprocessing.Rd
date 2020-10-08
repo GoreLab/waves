@@ -4,8 +4,12 @@
 \alias{DoPreprocessing}
 \title{Preprocess spectral data according to user-designated method}
 \usage{
-DoPreprocessing(df, test.data = NULL, preprocessing.method = 1,
-  wavelengths = 740:1070)
+DoPreprocessing(
+  df,
+  test.data = NULL,
+  preprocessing.method = 1,
+  wavelengths = 740:1070
+)
 }
 \arguments{
 \item{df}{\code{data.frame} object containing spectral data. First column(s)

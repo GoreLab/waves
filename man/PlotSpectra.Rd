@@ -5,8 +5,13 @@
 \title{Plot spectral data, highlighting outliers as identified using
  Mahalanobis distance}
 \usage{
-PlotSpectra(input.df, wavelengths, num.col.before.spectra = 1,
-  window.size = 10, verbose = TRUE)
+PlotSpectra(
+  input.df,
+  wavelengths,
+  num.col.before.spectra = 1,
+  window.size = 10,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{input.df}{\code{data.frame} object containing columns of spectra.

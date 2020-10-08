@@ -305,7 +305,6 @@ TrainSpectralModel <- function(df,
     }
   } # end loop
 
-  #' @name getmode
   #' @description Get the mode of a set of numbers. Used in getting summary of results
   #' within [TrainSpectralModel()]
   #' @param vector.input The mode of this vector of numbers will be calculated by this function

@@ -4,12 +4,24 @@
 \alias{TrainSpectralModel}
 \title{Train a model based predict reference values with spectral data}
 \usage{
-TrainSpectralModel(df, num.iterations, test.data = NULL,
-  tune.length = 50, model.method = "pls", output.summary = TRUE,
-  return.model = FALSE, best.model.metric = "RMSE",
-  rf.variable.importance = FALSE, stratified.sampling = TRUE,
-  cv.scheme = NULL, trial1 = NULL, trial2 = NULL, trial3 = NULL,
-  split.test = FALSE, verbose = TRUE)
+TrainSpectralModel(
+  df,
+  num.iterations,
+  test.data = NULL,
+  tune.length = 50,
+  model.method = "pls",
+  output.summary = TRUE,
+  return.model = FALSE,
+  best.model.metric = "RMSE",
+  rf.variable.importance = FALSE,
+  stratified.sampling = TRUE,
+  cv.scheme = NULL,
+  trial1 = NULL,
+  trial2 = NULL,
+  trial3 = NULL,
+  split.test = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{df}{\code{data.frame} object. First column contains unique identifiers,
