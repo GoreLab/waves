@@ -32,5 +32,5 @@ citEntry(
   year     = year,
   note     = note,
   url      = "https://CRAN.R-project.org/package=waves",
-  textVersion = paste0("Jenna Hershberger and Michael A. Gore (", year, "). waves: Vis-NIR           Spectral Analysis Wrapper. ", note, "." https://CRAN.R-project.org/package=waves)
+  textVersion = paste0("Jenna Hershberger and Michael A. Gore (", year, "). waves: Vis-NIR Spectral Analysis Wrapper. ", note, ".", https://CRAN.R-project.org/package=waves)
 )
