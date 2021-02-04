@@ -168,7 +168,8 @@ TrainSpectralModel <- function(df,
       rf.importance.df <- as.data.frame(matrix(data = NA,
                                                nrow = num.iterations,
                                                ncol = (ncol(df)-1)))
-      colnames(rf.importance.df) <- colnames(df)[2:ncol(df)] # only wavelength columns
+      # Results data from includes iteration and wavelength columns, no reference or ID
+      colnames(rf.importance.df) <- c("Iteration", colnames(df)[3:ncol(df)])
     }
   }
   results.df <- as.data.frame(matrix(data = NA, nrow = num.iterations,
@@ -287,7 +288,7 @@ TrainSpectralModel <- function(df,
       R2cv <- NA
       RMSEcv <- NA
       if(rf.variable.importance){
-        rf.importance.df[i,] <- t(importance(data.trained$finalModel, type=1))
+        rf.importance.df[i,] <- cbind(i, t(importance(data.trained$finalModel, type=1))) # Iteration number, wavelengths
       }
     }
     # Get model performance statistics
@@ -365,9 +366,14 @@ TrainSpectralModel <- function(df,
            return(list(full.model, results.df)))
   } else{ # !(return.model)
     if(rf.variable.importance){
-      ifelse(output.summary,
-             return(list(summary.df, rf.importance.df)),
-             return(list(results.df, rf.importance.df)))
+      rf.imp.out <- list()
+      if(output.summary){
+        rf.imp.out$model.performance <- summary.df
+      } else{
+        rf.imp.out$model.performance <- results.df
+      }
+      rf.imp.out$RF.variable.importance <- rf.importance.df
+      return(rf.imp.out)
     }
     # If model and variable importance not desired as output, return results only
     # (either in summary or in full format)

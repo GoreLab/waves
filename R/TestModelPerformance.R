@@ -211,8 +211,8 @@ TestModelPerformance <- function(train.data,
       # Format output
       if(rf.variable.importance){
         # Separate variable importance from model performance results
-        rf.importance.df <- training.results[2]
-        training.results <- training.results[1]
+        training.results.rf.importance.i <- training.results$RF.variable.importance
+        training.results <- training.results$model.performance
       }
 
       if(output.summary){
@@ -233,6 +233,21 @@ TestModelPerformance <- function(train.data,
         ending.row <- starting.row + num.iterations - 1
         results.df$Pretreatment[(starting.row:ending.row)] <- methods.list[i]
         results.df[(starting.row:ending.row), -1 ] <- training.results
+
+        if(rf.variable.importance){
+          training.results.rf.importance.i <- cbind(methods.list[i], training.results.rf.importance.i)
+          colnames(training.results.rf.importance.i)[1] <- "Pretreatment"
+          training.results.rf.importance.i %<>%
+            pivot_longer(., cols = starts_with("X"), names_to = "Wavelength", values_to = "RF.importance")
+          #print(training.results.rf.importance.i) #TODO
+          if(i == 1){
+            rf.importance.df <- training.results.rf.importance.i
+          } else{
+            rf.importance.df <- rbind(rf.importance.df, training.results.rf.importance.i)
+          }
+          #print(rf.importance.df) # TODO
+        }
+
       }
     } # End of loop
 
@@ -259,12 +274,19 @@ TestModelPerformance <- function(train.data,
                                      verbose = verbose
                                      )
     if(rf.variable.importance){
-      rf.importance.df <- results.df[2]
-      results.df <- results.df[1]
+      return(results.df)
     }
-    results.df <- as.data.frame(results.df)
+  } # End no preprocessing
+
+  results.df <- as.data.frame(results.df)
+
+  if(rf.variable.importance){
+    rf.importance.df %<>%
+      pivot_wider(id_cols = Pretreatment:Iteration, names_from = Wavelength, values_from = RF.importance)
+    return(list(model.performance = results.df,
+                RF.variable.importance = rf.importance.df))
+  } else{
+    return(results.df)
   }
-  ifelse(rf.variable.importance,
-         return(list(results.df, rf.importance.df)),
-         return(results.df))
+
   }
