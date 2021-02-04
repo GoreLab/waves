@@ -256,14 +256,14 @@ TrainSpectralModel <- function(df,
 
     } else if(model.method == "svmLinear"){
       best.hyper <- NA
-      predicted.values <- as.numeric(predict(data.trained$finalModel,
+      predicted.values <- as.numeric(predict(data.trained,
                                              newdata = as.matrix(test.spectra)))
       R2cv <- NA
       RMSEcv <- NA
 
     } else if(model.method == "svmRadial"){
       best.hyper <- NA
-      predicted.values <- as.numeric(predict(data.trained$finalModel,
+      predicted.values <- as.numeric(predict(data.trained,
                                              newdata = as.matrix(test.spectra)))
       R2cv <- NA
       RMSEcv <- NA
