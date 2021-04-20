@@ -11,7 +11,7 @@ Originally designed application in the context of resource-limited plant researc
 ## Cite
 This package is documented in a peer-reviewed manuscript in the Plant Phenome Journal. Please cite the manuscript if you have found this package to be useful! 
 
-> Hershberger, J, Morales, N, Simoes, CC, et al. Making waves in Breedbase: An integrated spectral data storage and analysis pipeline for plant breeding programs. Plant Phenome J. 2021; 4:e20012. https://doi.org/10.1002/ppj2.20012
+> Hershberger, J, Morales, N, Simoes, CC, Ellerbrock, B, Bauchet, G, Mueller, LA, Gore MA. Making waves in Breedbase: An integrated spectral data storage and analysis pipeline for plant breeding programs. Plant Phenome J. 2021; 4:e20012. https://doi.org/10.1002/ppj2.20012
 
 
 ## Use
