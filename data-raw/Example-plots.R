@@ -75,6 +75,8 @@ ggsave(reference.distributions.horizontal,
 #### Model performance figure for README.md ####
 load("./data/ikeogu.2017.rda")
 mypalette <- rev(lacroix_palettes$Lemon[1,])
+# mypalette <- my.palette.dists
+
 
 # C16M66.DMC <- ikeogu.2017 %>% filter(study.name == "C16M66") %>% rename(reference = DMC.oven) %>%
 #   rename(unique.id = sample.id) %>%
@@ -161,6 +163,9 @@ write.csv(test.C16M.TCC, "./data-raw/C16M_TCC_nonsummary.csv", row.names = F)
 #                                                      hjust = 0.7))
 # ggsave(testplot.TCC, filename = "./man/figures/testplot_TCC.png", width = 7, height = 4, units = "in", bg = "transparent")
 
+test.C16M.DMC <- read.csv("./data-raw/C16M_DMC_nonsummary.csv")
+test.C16M.TCC <- read.csv("./data-raw/C16M_TCC_nonsummary.csv")
+
 test.C16M.DMC$Pheno <- "DMC"
 test.C16M.TCC$Pheno <- "TCC"
 testplot.joined <- rbind(test.C16M.DMC, test.C16M.TCC) %>%
@@ -184,19 +189,24 @@ testplot.all.R2 <- testplot.joined %>%
                          "DMC" = "Root dry matter content",
                          "TCC" = "Total carotenoid content")) %>%
   group_by(Pretreatment, Pheno) %>%
-  ggplot(aes(y=R2p, x = Pretreatment, fill = Pheno))+
+  ggplot(aes(y=R2p, x = Pretreatment, fill = Pheno)) +
+  geom_hline(yintercept = 0.836, color = mypalette[2], linetype='dashed') +
+  geom_hline(yintercept = 0.859, color = mypalette[6],linetype='dashed') +
   geom_boxplot(position = "dodge") +
   labs(y = expression("R"["p"]^2),
        x = "Pretreatment*") +
        #title = "waves prediction model performance",
        #subtitle = "PLSR with C16M datasets from Ikeogu et al. (2017)",
-       #) +
+       #)
+  geom_vline(xintercept = seq(1, length(testplot.joined[,1]),1) + .5, color = "#E0E0E0") +
   scale_fill_manual(values=mypalette[c(2,6)], name = "Phenotype") +
-  theme_minimal() + theme(axis.text.x = element_text(angle = 45,
-                                                     size = 8,
-                                                     hjust = 0.7),
-                          legend.position="bottom")
-ggsave(testplot.all.R2, filename = "./man/figures/testplot_all_R2.png", width = 7, height = 6, units = "in", bg = "transparent")
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, size = 8, hjust = 1),
+        legend.position="bottom",
+        panel.grid.major.x = element_blank())
+testplot.all.R2
+
+ggsave(testplot.all.R2, filename = "./man/figures/testplot_all_R2_hlines.png", width = 7, height = 6, units = "in", bg = "transparent")
 
 # summary table
 test.C16M.TCC.summary$Phenotype <- "TCC"
