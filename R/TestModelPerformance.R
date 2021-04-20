@@ -23,6 +23,7 @@
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
+#' @importFrom tidyr pivot_longer pivot_wider
 #'
 #' @return \code{data.frame} with model performance statistics in summary format
 #'   (2 rows, one with mean and one with standard deviation of all training
@@ -239,7 +240,7 @@ TestModelPerformance <- function(train.data,
           training.results.rf.importance.i <- cbind(methods.list[i], training.results.rf.importance.i)
           colnames(training.results.rf.importance.i)[1] <- "Pretreatment"
           training.results.rf.importance.i %<>%
-            pivot_longer(., cols = starts_with("X"), names_to = "Wavelength", values_to = "RF.importance")
+            tidyr::pivot_longer(.data, cols = starts_with("X"), names_to = "Wavelength", values_to = "RF.importance")
           #print(training.results.rf.importance.i) #TODO
           if(i == 1){
             rf.importance.df <- training.results.rf.importance.i
@@ -283,7 +284,7 @@ TestModelPerformance <- function(train.data,
 
   if(rf.variable.importance){
     rf.importance.df %<>%
-      pivot_wider(id_cols = Pretreatment:Iteration, names_from = Wavelength, values_from = RF.importance)
+      tidyr::pivot_wider(id_cols = .data$Pretreatment:.data$Iteration, names_from = .data$Wavelength, values_from = .data$RF.importance)
     return(list(model.performance = results.df,
                 RF.variable.importance = rf.importance.df))
   } else{

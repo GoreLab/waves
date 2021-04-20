@@ -1,12 +1,12 @@
 citHeader("To cite the package 'waves' in publications, use:")
 
 bibentry(
-  entry = "Article",
+  bibtype = "Article",
   title = "Making WAVES in Breedbase: An Integrated Spectral Data Storage and Analysis Pipeline for Plant Breeding Programs",
-  author = "Jenna Hershberger, Nicolas Morales, Christiano C. Simoes, Bryan Ellerbrock, Guillaume Bauchet, Lukas A. Mueller, Michael A. Gore",
+  author = as.person("Jenna Hershberger [aut], Nicolas Morales [aut], Christiano C. Simoes [aut], Bryan Ellerbrock [aut], Guillaume Bauchet [aut], Lukas A. Mueller [aut], Michael A. Gore [aut"),
   year = 2021,
   journal = "The Plant Phenome Journal",
   doi = "10.1002/ppj2.20012",
-  url = "https://doi.org/10.1002/ppj2.20012"
+  url = "https://doi.org/10.1002/ppj2.20012",
   textVersion = paste("Hershberger, J, Morales, N, Simoes, CC, Ellerbrock, B, Bauchet, G, Mueller, LA, & Gore, MA. (2021). Making waves in Breedbase: An integrated spectral data storage and analysis pipeline for plant breeding programs. Plant Phenome J. 2021; 4:e20012. https://doi.org/10.1002/ppj2.20012")
 )
