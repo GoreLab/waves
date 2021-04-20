@@ -1,36 +1,12 @@
 citHeader("To cite the package 'waves' in publications, use:")
 
-year <- sub("-.*", "", meta$Date)
-note <- sprintf("R package version %s", meta$Version)
-
-citEntry(
+bibentry(
   entry = "Article",
   title = "Making WAVES in Breedbase: An Integrated Spectral Data Storage and Analysis Pipeline for Plant Breeding Programs",
-  author = c(person(given = "Jenna", family = "Hershberger"),
-           person(given = "Nicolas", family = "Morales"),
-           person(given = "Christiano", middle = "C.", family = "Simoes"),
-           person(given = "Bryan", family = "Ellerbrock"),
-           person(given = "Guillaume", family = "Bauchet"),
-           person(given = "Lukas", middle = "A.", family = "Mueller"),
-           person(given = "Michael", middle = "A.", family = "Gore")),
-  year = "2020",
-  journal = "bioRxiv",
-  url = "https://www.biorxiv.org/content/early/2020/09/20/2020.09.18.278549",
-  doi = "10.1101/2020.09.18.278549",
-  textVersion = paste("Hershberger, J., Morales, N., Simoes, C. C., Ellerbrock, B., Bauchet, G., Mueller, L. A., & Gore, M. A. (2020). Making WAVES in Breedbase: An Integrated Spectral Data Storage and Analysis Pipeline for Plant Breeding Programs. bioRxiv, 2020.09.18.278549. https://doi.org/10.1101/2020.09.18.278549.")
-)
-
-
-citEntry(
-  entry    = "Manual",
-  title    = "waves: Vis-NIR Spectral Analysis Wrapper",
-  author   = c(
-         person(given = "Jenna", family = "Hershberger",
-                email="jmh579@cornell.edu",
-                role = c("aut", "cre")),
-         person(given = "Michael", middle = "A.", family = "Gore", role="ths")),
-  year     = year,
-  note     = note,
-  url      = "https://CRAN.R-project.org/package=waves",
-  textVersion = paste0("Jenna Hershberger and Michael A. Gore (", year, "). waves: Vis-NIR Spectral Analysis Wrapper. ", note, ". https://CRAN.R-project.org/package=waves")
+  author = "Jenna Hershberger, Nicolas Morales, Christiano C. Simoes, Bryan Ellerbrock, Guillaume Bauchet, Lukas A. Mueller, Michael A. Gore",
+  year = 2021,
+  journal = "The Plant Phenome Journal",
+  doi = "10.1002/ppj2.20012",
+  url = "https://doi.org/10.1002/ppj2.20012"
+  textVersion = paste("Hershberger, J, Morales, N, Simoes, CC, Ellerbrock, B, Bauchet, G, Mueller, LA, & Gore, MA. (2021). Making waves in Breedbase: An integrated spectral data storage and analysis pipeline for plant breeding programs. Plant Phenome J. 2021; 4:e20012. https://doi.org/10.1002/ppj2.20012")
 )
