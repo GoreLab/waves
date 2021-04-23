@@ -15,7 +15,8 @@
 #'   function will automatically train with a stratified sample of 70\%. Default
 #'   is \code{NULL}.
 #' @param tune.length Number delineating search space for tuning of the PLSR
-#'   hyperparameter \code{ncomp}. Default is 50.
+#'   hyperparameter \code{ncomp}. Must be set to 5 when using the random forest
+#'   algorithm (\code{model.method == rf}). Default is 50.
 #' @param model.method Model type to use for training. Valid options include:
 #'   \itemize{ \item "pls": Partial least squares regression (Default) \item
 #'   "rf": Random forest \item "svmLinear": Support vector machine with linear

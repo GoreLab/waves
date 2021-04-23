@@ -123,6 +123,11 @@ TestModelPerformance <- function(train.data,
     stop('model.method must be "rf" if rf.variable.importance is TRUE')
   }
 
+  if(model.method == "rf" & tune.length > 5){
+    stop('The waves implementation of the random forest algorithm uses oob cross-validation for model training
+         and requires a tune length of 5.')
+  }
+
   n.train <- nrow(train.data)
   n.test <- ifelse(is.null(test.data), 0, nrow(test.data))
 
