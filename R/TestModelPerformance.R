@@ -289,7 +289,9 @@ TestModelPerformance <- function(train.data,
 
   if(rf.variable.importance){
     rf.importance.df %<>%
-      tidyr::pivot_wider(id_cols = .data$Pretreatment:.data$Iteration, names_from = .data$Wavelength, values_from = .data$RF.importance)
+      tidyr::pivot_wider(id_cols = .data$Pretreatment:.data$Iteration,
+                         names_from = .data$Wavelength,
+                         values_from = .data$RF.importance)
     return(list(model.performance = results.df,
                 RF.variable.importance = rf.importance.df))
   } else{

@@ -86,6 +86,10 @@ FormatCV <- function(trial1,
     stop("cv.scheme must be 'CV0', 'CV00', 'CV1', or 'CV2'")
   }
 
+  if(!"genotype" %in% colnames(trial1)| !"genotype" %in% colnames(trial2)){
+    stop("trial1 and trial2 must each have a column named 'genotype'")
+  }
+
   if(!is.null(seed)){
     set.seed(seed)
   }
