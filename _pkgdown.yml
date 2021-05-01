@@ -1,3 +1,7 @@
+template:
+  params:
+    bootswatch: solar
+
 navbar:
   structure:
     left:
@@ -21,10 +25,6 @@ navbar:
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/GoreLab/waves/
-
-template:
-  params:
-    bootswatch: solar
 
 development:
   mode: auto
