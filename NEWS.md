@@ -1,4 +1,4 @@
-# waves 0.1.2
+# waves 0.1.1.9000
 
 * Added more informative error message and documentation for random forest tune length (tune.length must be set to 5).
 

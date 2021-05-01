@@ -139,7 +139,7 @@ SaveModel <- function(df,
 
     # Set up empty list and data frame for training output
     model.list <- list()
-    results.df <- as.data.frame(matrix(nrow = 13, ncol = 17))
+    results.df <- as.data.frame(matrix(nrow = 13, ncol = 21))
     results.df[,1] <- methods.list
 
     for(i in 1:13){

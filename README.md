@@ -30,35 +30,35 @@ devtools::install_github("GoreLab/waves")
 ```
 
 ## Overview
-1. Format your data. Match spectra with reference values so that you have a dataframe with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with "X".
-![Example Format](./man/figures/formatted_data.png)
+### 1. Format your data. Match spectra with reference values so that you have a dataframe with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with "X".
+![Example Format](man/figures/formatted_data.png)
 
-2. Visualize and filter spectra using `PlotSpectra()` and `FilterSpectra()`.
-![Filter data](./man/figures/filter_data.png)
+### 2. Visualize and filter spectra using `PlotSpectra()` and `FilterSpectra()`.
+![Filter data](man/figures/filter_data.png)
 
-3. If you have more than one scan per unique identifier, aggregate the scans by mean or median with `AggregateSpectra()`.
-![Aggregate](./man/figures/aggregate.png)
+### 3. If you have more than one scan per unique identifier, aggregate the scans by mean or median with `AggregateSpectra()`.
+![Aggregate](man/figures/aggregate.png)
 
-4. Use `TestModelPerformance()` to perform preprocessing, cross-validation set formation, and model training functions over multiple iterations.
+### 4. Use `TestModelPerformance()` to perform preprocessing, cross-validation set formation, and model training functions over multiple iterations.
 
-  a. Applies any of 12 combinations of spectral preprocessing methods using `DoPreprocessing()`.
-![Preprocess](./man/figures/preprocess.png)
+#### a. Applies any of 12 combinations of spectral preprocessing methods using `DoPreprocessing()`.
+![Preprocess](man/figures/preprocess.png)
 
-  b. Determines cross-validation scheme with `FormatCV()`. Choose from random, stratified random, or a plant breeding-specific scheme from [Jarqu&iacute;n et *al.*, 2017. *The Plant Genome*](https://doi.org/10.3835/plantgenome2016.12.0130).
-![CV](./man/figures/cv_schemes.png)
+#### b. Determines cross-validation scheme with `FormatCV()`. Choose from random, stratified random, or a plant breeding-specific scheme from [Jarqu&iacute;n et *al.*, 2017. *The Plant Genome*](https://doi.org/10.3835/plantgenome2016.12.0130).
+![CV](man/figures/cv_schemes.png)
 
-  c. Trains spectral prediction models using `TrainSpectralModel()`.
+#### c. Trains spectral prediction models using `TrainSpectralModel()`.
    - Choose from partial least squares regression, random forest, and support vector machine algorithms
    - Uses 5-fold cross validation within the training set to tune model hyperparameters
    - Outputs model performance statistics (RMSE, R<sup>2</sup>, Bias, etc.) as assessed with test set
 
-5. Save trained prediction models with `SaveModel()`.
+### 5. Save trained prediction models with `SaveModel()`.
   - Intended for a production environment
   - Can evaluate preprocessing methods using the input dataset
   - Selects best model using the metric provided (RMSE or  R<sup>2</sup>)
   - Returns trained model with option to save as .Rds object
 
-6. Predict phenotypic values with new spectra and a saved model using `PredictFromSavedModel()`.
+### 6. Predict phenotypic values with new spectra and a saved model using `PredictFromSavedModel()`.
 
 
 ## Examples
@@ -87,7 +87,7 @@ ikeogu.2017 %>% dplyr::select(-starts_with("X")) %>%
 ```
 
 ### Example dataset reference distributions:
-![Reference distributions](./man/figures/example_ref_dists_h.png)
+![Reference distributions](man/figures/example_ref_dists_h.png)
 
 A. Root dry matter content as measured by the oven method for the four studies included in the example dataset
 
@@ -116,7 +116,7 @@ test_results <- TestModelPerformance(train.data = C16Mcal,
                                      wavelengths = 350:2500)
 ```
 ### `waves` prediction model performance
-![Pretreatment performance with example data](./man/figures/testplot_all_R2.png)
+![Pretreatment performance with example data](man/figures/testplot_all_R2.png)
 
 Distributions of R<sub>p</sub><sup>2</sup>, the squared Pearson’s correlation between predicted and observed for the test set, for partial least squares regression (PLSR) models of two root quality traits trained on samples from the C16Mcal dataset and tested on samples from the C16Mval dataset from [Ikeogu et *al.* (2017) *PLoS ONE*](https://doi.org/10.1371/journal.pone.0188918) with raw data or after pretreatment. 
 
