@@ -74,7 +74,13 @@ FilterSpectra <- function(df,
   spectra.subset <- spectra[, seq(1, ncol(spectra), window.size)]
 
   # Calculate covariance of spectral matrix
-  spectra.cov <- cov(as.matrix(spectra.subset))
+  spectra.cov <- tryCatch(
+    expr = cov(as.matrix(spectra.subset)),
+    error = function(err){
+      message("Error in covariance matrix calculation. Please increase 'window.size' and try again.")
+      print(err)
+      }
+    )
 
   # Create list of Mahalanobis distances for each sample and bind to input df
   h.distances <- mahalanobis(x = spectra.subset, center = colMeans(spectra.subset),

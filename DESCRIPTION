@@ -33,7 +33,7 @@ Imports:
     caret,
     pls,
     randomForest,
-    wesanderson,
+    scales,
     magrittr,
     tidyselect,
     ggplot2,

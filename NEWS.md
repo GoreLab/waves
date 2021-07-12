@@ -1,6 +1,7 @@
 # waves 0.1.1.9000
 
-* Added more informative error message and documentation for random forest tune length (tune.length must be set to 5).
+* Added more informative error message and documentation for random forest tune length (tune.length must be set to 5 when model.algorithm == "RF").
+* Additional flexibility for `PlotSpectra()` including color and title customization and the option to forgo filtering.
 
 # waves 0.1.1
 
