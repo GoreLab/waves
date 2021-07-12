@@ -70,7 +70,8 @@ provided, will save to working directory.}
 either "RMSE" or "Rsquared"}
 
 \item{tune.length}{Number delineating search space for tuning of the PLSR
-hyperparameter \code{ncomp}. Default is 50.}
+hyperparameter \code{ncomp}. Must be set to 5 when using the random forest
+algorithm (\code{model.method == rf}). Default is 50.}
 
 \item{model.method}{Model type to use for training. Valid options include:
 \itemize{ \item "pls": Partial least squares regression (Default) \item

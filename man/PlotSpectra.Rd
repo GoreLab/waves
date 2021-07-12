@@ -10,6 +10,9 @@ PlotSpectra(
   wavelengths,
   num.col.before.spectra = 1,
   window.size = 10,
+  detect.outliers = TRUE,
+  color = NULL,
+  alternate.title = NULL,
   verbose = TRUE
 )
 }
@@ -29,6 +32,17 @@ matrix (including unique ID). Default is 1.}
 \item{window.size}{number defining the size of window to use when calculating
 the covariance of the spectra (required to calculate Mahalanobis distance).
 Default is 10.}
+
+\item{detect.outliers}{Boolean indicating whether spectra should be filtered before plotting.
+If \code{TRUE}, outliers are indicated by color in the resulting plot. If
+\code{verbose} is also set to \code{TRUE}, outlier metadata will be printed to
+the console. Default is \code{TRUE}.}
+
+\item{color}{String or vector of strings indicating colors to be passed to
+\code{\link[ggplot2]{ggplot}}. Default is default \code{\link[ggplot2]{ggplot}} colors.}
+
+\item{alternate.title}{String to be used as plot title in place of the default title.
+Default is \code{NULL}, indicating that default titles will be used.}
 
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
@@ -55,7 +69,11 @@ ikeogu.2017 \%>\%
   PlotSpectra(input.df = .,
               wavelengths = 350:2500,
               num.col.before.spectra = 5,
-              window.size = 15)
+              window.size = 15,
+              detect.outliers = TRUE,
+              color = NULL,
+              alternate.title = NULL,
+              verbose = TRUE)
 }
 }
 \author{
