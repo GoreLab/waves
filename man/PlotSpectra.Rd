@@ -6,8 +6,7 @@
  Mahalanobis distance}
 \usage{
 PlotSpectra(
-  input.df,
-  wavelengths,
+  df,
   num.col.before.spectra = 1,
   window.size = 10,
   detect.outliers = TRUE,
@@ -17,14 +16,11 @@ PlotSpectra(
 )
 }
 \arguments{
-\item{input.df}{\code{data.frame} object containing columns of spectra.
+\item{df}{\code{data.frame} object containing columns of spectra.
 Spectral columns must be labeled with an "X" and then the wavelength
 (example: "X740" = 740nm). Left-most column must be unique ID. May also
 contain columns of metadata between the unique ID and spectral columns.
-Cannot contain any missing values}
-
-\item{wavelengths}{List of wavelengths (numerical format) represented by each
-spectral column in \code{input.df}}
+Cannot contain any missing values. Metadata column names may not start with "X".}
 
 \item{num.col.before.spectra}{Number of columns to the left of the spectral
 matrix (including unique ID). Default is 1.}
@@ -66,8 +62,7 @@ ikeogu.2017 \%>\%
   dplyr::rename(unique.id = sample.id) \%>\%
   dplyr::select(unique.id, dplyr::everything(), -TCC) \%>\%
   na.omit() \%>\%
-  PlotSpectra(input.df = .,
-              wavelengths = 350:2500,
+  PlotSpectra(df = .,
               num.col.before.spectra = 5,
               window.size = 15,
               detect.outliers = TRUE,

@@ -8,12 +8,11 @@ TestModelPerformance(
   train.data,
   num.iterations,
   test.data = NULL,
-  preprocessing = TRUE,
-  wavelengths = 740:1070,
+  pretreatment = 1,
+  k.folds = 5,
   tune.length = 50,
   model.method = "pls",
-  output.summary = TRUE,
-  rf.variable.importance = FALSE,
+  best.model.metric = "RMSE",
   stratified.sampling = TRUE,
   cv.scheme = NULL,
   trial1 = NULL,
@@ -37,12 +36,26 @@ if specific test set is desired for hyperparameter tuning. If \code{NULL},
 function will automatically train with a stratified sample of 70\%. Default
 is \code{NULL}.}
 
-\item{preprocessing}{If \code{TRUE}, 12 preprocessing methods will be applied
-and their performance analyzed. If \code{FALSE}, input data is analyzed as
-is (raw). Default is \code{FALSE}.}
+\item{pretreatment}{Number or list of numbers 1:13 corresponding to
+  desired pretreatment method(s):
+\enumerate{
+  \item Raw data (default)
+  \item Standard normal variate (SNV)
+  \item SNV and first derivative
+  \item SNV and second derivative
+  \item First derivative
+  \item Second derivative
+  \item Savitzky–Golay filter (SG)
+  \item SNV and SG
+  \item Gap segment derivative (window size = 11)
+  \item SG and first derivative (window size = 5)
+  \item SG and first derivative (window size = 11)
+  \item SG and second derivative (window size = 5)
+  \item SG and second derivative (window size = 11)
+}}
 
-\item{wavelengths}{List of wavelengths represented by each column in
-\code{train.data}}
+\item{k.folds}{Number indicating the number of folds for k-fold cross-validation
+during model training. Default is 5.}
 
 \item{tune.length}{Number delineating search space for tuning of the PLSR
 hyperparameter \code{ncomp}. Must be set to 5 when using the random forest
@@ -53,27 +66,15 @@ algorithm (\code{model.method == rf}). Default is 50.}
 "rf": Random forest \item "svmLinear": Support vector machine with linear
 kernel \item "svmRadial": Support vector machine with radial kernel }}
 
-\item{output.summary}{boolean that controls function output. \itemize{ \item
-If \code{TRUE}, a summary df will be output (1st row = means, 2nd row =
-standard deviations). Default is \code{TRUE}. \item If \code{FALSE}, entire
-results data frame will be output }}
-
-\item{rf.variable.importance}{boolean that: \itemize{ \item If \code{TRUE},
-\code{model.method} must be set to "rf". Returns a list with a model
-performance \code{data.frame} and a second \code{data.frame} with variable
-importance values for each wavelength for each training iteration. If
-\code{return.model} is also \code{TRUE}, returns list of three elements
-with trained model first, model performance second, and variable importance
-last. Dimensions are \code{nrow = num.iterations}, \code{ncol =
-length(wavelengths)}. \item If \code{FALSE}, no variable importance is
-returned. Default is \code{FALSE}. }}
+\item{best.model.metric}{Metric used to decide which model is best. Must be
+either "RMSE" or "Rsquared"}
 
 \item{stratified.sampling}{If \code{TRUE}, training and test sets will be
 selected using stratified random sampling. This term is only used if
 \code{test.data == NULL}. Default is \code{TRUE}.}
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
-Options for cv.scheme include:
+Options for \code{cv.scheme} include:
 \itemize{
     \item "CV1": untested lines in tested environments
     \item "CV2": tested lines in tested environments
@@ -112,6 +113,22 @@ of the provided \code{train.data} will be used for testing. Default is
 will be printed to the console. Default is \code{TRUE}.}
 }
 \value{
+\code{list} of 5 objects:
+  \enumerate{
+  \item model.list is a \code{list} of trained model objects, one for each pretreatment
+  method specified by the \code{pretreatment} argument. Each model is trained with all
+  rows of \code{df}.
+  \item summary.model.performance is a \code{data.frame} containing summary statistics
+  across all model training iterations and pretreatments.
+  \item model.performance is a \code{data.frame} containing performance statistics for
+  each iteration of model training separately.
+  \item predictions is a \code{data.frame} containing both reference and predicted
+  values for each test set entry in each iteration of model training.
+  \item importance is a \code{data.frame} containing variable importance results for
+  each wavelength at each iteration of model training. If \code{model.method} is not
+  "pls" or "rf", this list item is \code{NULL}.
+  }
+
 \code{data.frame} with model performance statistics in summary format
   (2 rows, one with mean and one with standard deviation of all training
   iterations) or in long format (number of rows = num.iterations).
@@ -124,18 +141,24 @@ Included summary statistics:
   \itemize{
     \item \strong{Best.n.comp}, the best number of components
     \item \strong{Best.ntree}, the best number of trees in an RF model
-    \item \strong{Best.mtry}, the best number of variables to include at every decision point in an RF model
+    \item \strong{Best.mtry}, the best number of variables to include at every
+    decision point in an RF model
     }
   \item \strong{RMSECV}, the root mean squared error of cross-validation
-  \item \strong{R2cv}, the coefficient of multiple determination of cross-validation for PLSR models
+  \item \strong{R2cv}, the coefficient of multiple determination of cross-validation
+  for PLSR models
   \item \strong{RMSEP}, the root mean squared error of prediction
-  \item \strong{R2p}, the squared Pearson’s correlation between predicted and observed test set values
-  \item \strong{RPD}, the ratio of standard deviation of observed test set values to RMSEP
+  \item \strong{R2p}, the squared Pearson’s correlation between predicted and
+  observed test set values
+  \item \strong{RPD}, the ratio of standard deviation of observed test set values
+  to RMSEP
   \item \strong{RPIQ}, the ratio of performance to interquartile difference
   \item \strong{CCC}, the concordance correlation coefficient
-  \item \strong{Bias}, the average difference between the predicted and observed values
+  \item \strong{Bias}, the average difference between the predicted and observed
+  values
   \item \strong{SEP}, the standard error of prediction
-  \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted and observed test set values
+  \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted
+  and observed test set values
 }
 }
 \description{
@@ -157,8 +180,7 @@ ikeogu.2017 \%>\%
   TestModelPerformance(train.data = .,
                        tune.length = 3,
                        num.iterations = 3,
-                       preprocessing = FALSE,
-                       wavelengths = 350:2500)
+                       pretreatment = 1)
 }
 }
 \author{

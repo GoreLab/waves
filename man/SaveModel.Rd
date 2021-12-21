@@ -7,15 +7,14 @@
 SaveModel(
   df,
   save.model = TRUE,
-  autoselect.preprocessing = TRUE,
-  preprocessing.method = NULL,
+  pretreatment = 1,
   model.save.folder = NULL,
   model.name = "PredictionModel",
   best.model.metric = "RMSE",
+  k.folds = 5,
   tune.length = 50,
   model.method = "pls",
   num.iterations = 10,
-  wavelengths = 740:1070,
   stratified.sampling = TRUE,
   cv.scheme = NULL,
   trial1 = NULL,
@@ -32,32 +31,25 @@ other columns to right of spectra! Column names of spectra must start with
 
 \item{save.model}{If \code{TRUE}, the trained model will be saved in .Rds
 format to the location specified by \code{model.save.folder}. If
-\code{FALSE}, model will be output by function but will not save to file.
-Default is \code{TRUE}.}
+\code{FALSE}, the best model will be output by the function but will not
+save to a file. Default is \code{TRUE}.}
 
-\item{autoselect.preprocessing}{Boolean that, if \code{TRUE}, will choose the
-preprocessing method for the saved model using the
-\code{best.model.metric}. If \code{FALSE}, the user must supply the
-preprocessing method (1-12, see \code{\link{DoPreprocessing}()}
-documentation for more information) of the saved model. Default is
-\code{TRUE}.}
-
-\item{preprocessing.method}{Number or list of numbers 1:13 corresponding to
+\item{pretreatment}{Number or list of numbers 1:13 corresponding to
   desired pretreatment method(s):
-\itemize{
-  \item 1 = raw data (default)
-  \item 2 = standard normal variate (SNV)
-  \item 3 = SNV and first derivative
-  \item 4 = SNV and second derivative
-  \item 5 = first derivative
-  \item 6 = second derivative
-  \item 7 = Savitzky–Golay filter (SG)
-  \item 8 = SNV and SG
-  \item 9 = gap segment derivative (window size = 11)
-  \item 10 = SG and first derivative (window size = 5)
-  \item 11 = SG and first derivative (window size = 11)
-  \item 12 = SG and second derivative (window size = 5)
-  \item 13 = SG and second derivative (window size = 11)
+\enumerate{
+  \item Raw data (default)
+  \item Standard normal variate (SNV)
+  \item SNV and first derivative
+  \item SNV and second derivative
+  \item First derivative
+  \item Second derivative
+  \item Savitzky–Golay filter (SG)
+  \item SNV and SG
+  \item Gap segment derivative (window size = 11)
+  \item SG and first derivative (window size = 5)
+  \item SG and first derivative (window size = 11)
+  \item SG and second derivative (window size = 5)
+  \item SG and second derivative (window size = 11)
 }}
 
 \item{model.save.folder}{Path to folder where model will be saved. If not
@@ -68,6 +60,9 @@ provided, will save to working directory.}
 
 \item{best.model.metric}{Metric used to decide which model is best. Must be
 either "RMSE" or "Rsquared"}
+
+\item{k.folds}{Number indicating the number of folds for k-fold cross-validation
+during model training. Default is 5.}
 
 \item{tune.length}{Number delineating search space for tuning of the PLSR
 hyperparameter \code{ncomp}. Must be set to 5 when using the random forest
@@ -80,15 +75,12 @@ kernel \item "svmRadial": Support vector machine with radial kernel }}
 
 \item{num.iterations}{Number of training iterations to perform}
 
-\item{wavelengths}{List of wavelengths represented by each column in
-\code{df}}
-
 \item{stratified.sampling}{If \code{TRUE}, training and test sets will be
 selected using stratified random sampling. This term is only used if
 \code{test.data == NULL}. Default is \code{TRUE}.}
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
-Options for cv.scheme include:
+Options for \code{cv.scheme} include:
 \itemize{
     \item "CV1": untested lines in tested environments
     \item "CV2": tested lines in tested environments
@@ -120,13 +112,15 @@ will be printed to the console. Default is \code{TRUE}.}
 }
 \value{
 List of model stats (in \code{data.frame}) and trained model object.
-  Saves both to \code{model.save.folder} as well. To use optimally trained
-  model for predictions, use tuned parameters from \code{$bestTune}
+  If the parameter \code{save.model} is TRUE, both objects are saved to
+  \code{model.save.folder}. To use the optimally trained model for
+  predictions, use tuned parameters from \code{$bestTune}.
 }
 \description{
-Saves spectral prediction model and model statistics to
-  \code{model.save.folder} as \code{model.name.Rds} and
-  \code{model.name_stats.csv} respectively
+Given a set of pretreatment methods, saves the best spectral
+prediction model and model statistics to \code{model.save.folder} as
+\code{model.name.Rds} and \code{model.name_stats.csv} respectively. If only
+one pretreatment method is supplied, results from that method are stored.
 }
 \details{
 Wrapper that uses \code{\link{DoPreprocessing}},
@@ -140,13 +134,14 @@ test.model <- ikeogu.2017 \%>\%
   dplyr::rename(reference = DMC.oven) \%>\%
   dplyr::select(sample.id, reference, dplyr::starts_with("X")) \%>\%
   na.omit() \%>\%
-  SaveModel(df = ., save.model = FALSE,
-            autoselect.preprocessing = TRUE,
+  SaveModel(df = .,
+            save.model = FALSE,
+            pretreatment = 1:13,
             model.name = "my_prediction_model",
-            tune.length = 50, num.iterations = 10,
-            wavelengths = 350:2500)
-summary(test.model[1])
-test.model[2]
+            tune.length = 50,
+            num.iterations = 10)
+summary(test.model$best.model)
+test.model$best.model.stats
 }
 }
 \author{

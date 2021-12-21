@@ -10,6 +10,7 @@ FormatCV(
   trial2,
   trial3 = NULL,
   cv.scheme,
+  cv.method = "stratified",
   seed = NULL,
   remove.genotype = FALSE
 )
@@ -35,13 +36,22 @@ may not contain genotypes that overlap with \code{trial1}. Formatting must
 be consistent with \code{trial1}.}
 
 \item{cv.scheme}{A cross validation (CV) scheme from Jarquín et al., 2017.
-Options for cv.scheme include:
+Options for \code{cv.scheme} include:
 \itemize{
     \item "CV1": untested lines in tested environments
     \item "CV2": tested lines in tested environments
     \item "CV0": tested lines in untested environments
     \item "CV00": untested lines in untested environments
 }}
+
+\item{cv.method}{Cross-validation method used to subdivide into training
+and test sets. Options for \code{cv.method} include:
+\itemize{
+    \item "random": random cross-validation with 70% training and 30% test
+    \item "stratified": random cross-validation stratified by reference
+    values. 70% training and 30% test.
+}
+Default is \code{stratified}.}
 
 \item{seed}{Number used in the function \code{set.seed()} for reproducible
 randomization. If \code{NULL}, no seed is set. Default is \code{NULL}.}
@@ -51,7 +61,7 @@ column is removed from the output \code{data.frame}. Default is
 \code{FALSE}.}
 }
 \value{
-List of data.frames (training set, test set) compiled according to
+List of data.frames ($train.set, $test.set) compiled according to
   user-provided cross validation scheme.
 }
 \description{
@@ -83,8 +93,9 @@ trial2 <- trials \%>\%
   dplyr::filter(study.name == "C16Mval") \%>\%
   dplyr::select(-study.name)
 cv.list <- FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
-                    remove.genotype = TRUE)
-cv.list[[1]][1:5, 1:5]
+                    cv.method = "random", remove.genotype = TRUE)
+cv.list$train.set[1:5, 1:5]
+cv.list$test.set[1:5, 1:5]
 }
 \references{
 Jarquín, D., C. Lemes da Silva, R. C. Gaynor, J. Poland, A.
