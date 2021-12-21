@@ -27,13 +27,21 @@
 #'   may not contain genotypes that overlap with \code{trial1}. Formatting must
 #'   be consistent with \code{trial1}.
 #' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
-#'   Options for cv.scheme include:
+#'   Options for \code{cv.scheme} include:
 #'   \itemize{
 #'       \item "CV1": untested lines in tested environments
 #'       \item "CV2": tested lines in tested environments
 #'       \item "CV0": tested lines in untested environments
 #'       \item "CV00": untested lines in untested environments
 #'   }
+#' @param cv.method Cross-validation method used to subdivide into training
+#'   and test sets. Options for \code{cv.method} include:
+#'   \itemize{
+#'       \item "random": random cross-validation with 70% training and 30% test
+#'       \item "stratified": random cross-validation stratified by reference
+#'       values. 70% training and 30% test.
+#'   }
+#'   Default is \code{stratified}.
 #' @param seed Number used in the function \code{set.seed()} for reproducible
 #'   randomization. If \code{NULL}, no seed is set. Default is \code{NULL}.
 #' @param remove.genotype boolean that, if \code{TRUE}, removes the "genotype"
@@ -50,8 +58,9 @@
 #' @importFrom tidyr nest unnest
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @importFrom caret createDataPartition createResample
 #'
-#' @return List of data.frames (training set, test set) compiled according to
+#' @return List of data.frames ($train.set, $test.set) compiled according to
 #'   user-provided cross validation scheme.
 #' @export
 #'
@@ -73,17 +82,23 @@
 #'   dplyr::filter(study.name == "C16Mval") %>%
 #'   dplyr::select(-study.name)
 #' cv.list <- FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
-#'                     remove.genotype = TRUE)
-#' cv.list[[1]][1:5, 1:5]
+#'                     cv.method = "random", remove.genotype = TRUE)
+#' cv.list$train.set[1:5, 1:5]
+#' cv.list$test.set[1:5, 1:5]
 FormatCV <- function(trial1,
                      trial2,
                      trial3 = NULL,
                      cv.scheme,
+                     cv.method = "stratified",
                      seed = NULL,
                      remove.genotype = FALSE){
   # Error handling
   if(!cv.scheme %in% c("CV0", "CV00", "CV1", "CV2")){
     stop("cv.scheme must be 'CV0', 'CV00', 'CV1', or 'CV2'")
+  }
+
+  if(!cv.method %in% c("random", "stratified")){
+    stop("cv.method must be 'random', or 'stratified'")
   }
 
   if(!"genotype" %in% colnames(trial1)| !"genotype" %in% colnames(trial2)){
@@ -97,9 +112,12 @@ FormatCV <- function(trial1,
   t1 <- trial1 %>% dplyr::group_by(.data$genotype) %>% tidyr::nest(data = c(-.data$genotype))
   t2 <- trial2 %>% dplyr::group_by(.data$genotype) %>% tidyr::nest(data = c(-.data$genotype))
   # Random sampling
-  train.index <- sort(sample(x = seq(from = 1, to = nrow(t1), by = 1),
-                             size = 0.7 * nrow(t1),
-                             replace = FALSE, prob = NULL))
+  if(cv.method == "random"){
+    train.index <- caret::createResample(t1, p = 0.7)
+  } else if (cv.method == "stratified"){
+    train.index <- caret::createDataPartition(t1$reference, p = 0.7)
+  }
+
   # t1.a is always the test set
   t1.a <- t1[-train.index,] %>% tidyr::unnest(c(-.data$genotype)) %>% dplyr::ungroup()
   t1.b <- t1[train.index,] %>% tidyr::unnest(c(-.data$genotype)) %>% dplyr::ungroup()
@@ -145,5 +163,6 @@ FormatCV <- function(trial1,
     test.set <- test.set %>% dplyr::select(-.data$genotype)
   }
 
-  return(list(train.set, test.set))
+  return(list(train.set = train.set,
+              test.set = test.set))
 }

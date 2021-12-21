@@ -1,7 +1,14 @@
 # waves 0.1.1.9000
 
-* Added more informative error message and documentation for random forest tune length (tune.length must be set to 5 when model.algorithm == "RF").
+* Added more informative error message and documentation for random forest tune length (tune.length must be set to 5 when model.algorithm == "rf").
 * Additional flexibility for `PlotSpectra()` including color and title customization and the option to forgo filtering.
+* Named list output for all functions to enable easier access to individual elements.
+* Always return model and variable importance results with `TrainSpectralModel()` and `TestModelPerformance()`.
+* Add variable importance for PLSR (#9).
+* Enable selection of k for k-fold cross-validation within the training set. Previously, k was fixed at 5 (#10).
+* "Preprocessing" has been renamed "Pretreatment" to minimize confusion with physical preprocessing of samples prior to scanning. Arguments have been renamed to reflect these changes ("preprocessing" is now "pretreatment", "auto.preprocessing" is now "auto.pretreatment").
+* Code simplified and streamlined to facilitate future updates.
+* Export predicted values as well as performance statistics for each training iteration (#11).
 
 # waves 0.1.1
 

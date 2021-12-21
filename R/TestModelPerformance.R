@@ -10,14 +10,12 @@
 #'
 #' @inheritParams FormatCV
 #' @inheritParams TrainSpectralModel
+#' @inheritParams DoPreprocessing
 #' @param train.data \code{data.frame} object of spectral data for input into a
 #'   spectral prediction model. First column contains unique identifiers, second
 #'   contains reference values, followed by spectral columns. Include no other
 #'   columns to right of spectra! Column names of spectra must start with "X"
 #'   and reference column must be named "reference".
-#' @param preprocessing If \code{TRUE}, 12 preprocessing methods will be applied
-#'   and their performance analyzed. If \code{FALSE}, input data is analyzed as
-#'   is (raw). Default is \code{FALSE}.
 #' @param wavelengths List of wavelengths represented by each column in
 #'   \code{train.data}
 #'
@@ -25,7 +23,23 @@
 #' @importFrom dplyr select
 #' @importFrom tidyr pivot_longer pivot_wider
 #'
-#' @return \code{data.frame} with model performance statistics in summary format
+#' @return \code{list} of 5 objects:
+#'   \enumerate{
+#'   \item model.list is a \code{list} of trained model objects, one for each pretreatment
+#'   method specified by the \code{pretreatment} argument. Each model is trained with all
+#'   rows of \code{df}.
+#'   \item summary.model.performance is a \code{data.frame} containing summary statistics
+#'   across all model training iterations and pretreatments.
+#'   \item model.performance is a \code{data.frame} containing performance statistics for
+#'   each iteration of model training separately.
+#'   \item predictions is a \code{data.frame} containing both reference and predicted
+#'   values for each test set entry in each iteration of model training.
+#'   \item importance is a \code{data.frame} containing variable importance results for
+#'   each wavelength at each iteration of model training. If \code{model.method} is not
+#'   "pls" or "rf", this list item is \code{NULL}.
+#'   }
+#'
+#' \code{data.frame} with model performance statistics in summary format
 #'   (2 rows, one with mean and one with standard deviation of all training
 #'   iterations) or in long format (number of rows = num.iterations).
 #'   \strong{Note} if \code{preprocessing = TRUE}, only the first mean of
@@ -37,18 +51,24 @@
 #'   \itemize{
 #'     \item \strong{Best.n.comp}, the best number of components
 #'     \item \strong{Best.ntree}, the best number of trees in an RF model
-#'     \item \strong{Best.mtry}, the best number of variables to include at every decision point in an RF model
+#'     \item \strong{Best.mtry}, the best number of variables to include at every
+#'     decision point in an RF model
 #'     }
 #'   \item \strong{RMSECV}, the root mean squared error of cross-validation
-#'   \item \strong{R2cv}, the coefficient of multiple determination of cross-validation for PLSR models
+#'   \item \strong{R2cv}, the coefficient of multiple determination of cross-validation
+#'   for PLSR models
 #'   \item \strong{RMSEP}, the root mean squared error of prediction
-#'   \item \strong{R2p}, the squared Pearson’s correlation between predicted and observed test set values
-#'   \item \strong{RPD}, the ratio of standard deviation of observed test set values to RMSEP
+#'   \item \strong{R2p}, the squared Pearson’s correlation between predicted and
+#'   observed test set values
+#'   \item \strong{RPD}, the ratio of standard deviation of observed test set values
+#'   to RMSEP
 #'   \item \strong{RPIQ}, the ratio of performance to interquartile difference
 #'   \item \strong{CCC}, the concordance correlation coefficient
-#'   \item \strong{Bias}, the average difference between the predicted and observed values
+#'   \item \strong{Bias}, the average difference between the predicted and observed
+#'   values
 #'   \item \strong{SEP}, the standard error of prediction
-#'   \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted and observed test set values
+#'   \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted
+#'   and observed test set values
 #'}
 #'
 #' @export
@@ -64,18 +84,17 @@
 #'   TestModelPerformance(train.data = .,
 #'                        tune.length = 3,
 #'                        num.iterations = 3,
-#'                        preprocessing = FALSE,
+#'                        pretreatment = 1,
 #'                        wavelengths = 350:2500)
 #' }
 TestModelPerformance <- function(train.data,
                                  num.iterations,
                                  test.data = NULL,
-                                 preprocessing = TRUE,
+                                 pretreatment = 1,
                                  wavelengths = 740:1070,
+                                 k.folds = 5,
                                  tune.length = 50,
                                  model.method = "pls",
-                                 output.summary = TRUE,
-                                 rf.variable.importance = FALSE,
                                  stratified.sampling = TRUE,
                                  cv.scheme = NULL,
                                  trial1 = NULL,
@@ -84,7 +103,7 @@ TestModelPerformance <- function(train.data,
                                  split.test = FALSE,
                                  verbose = TRUE
                                  ) {
-  # Error handling
+  #### ERROR HANDLING ####
   if(!is.null(cv.scheme)){
     if(is.null(trial1)){
       stop("trial1 must be provided if using cv.scheme")
@@ -119,8 +138,8 @@ TestModelPerformance <- function(train.data,
          set as NULL).")
   }
 
-  if((rf.variable.importance & model.method != "rf")){
-    stop('model.method must be "rf" if rf.variable.importance is TRUE')
+  if(variable.importance & !model.method %in% c("pls", "rf")){
+    stop('model.method must be "rf" or "pls" if variable.importance is TRUE')
   }
 
   if(model.method == "rf" & tune.length > 5){
@@ -128,174 +147,116 @@ TestModelPerformance <- function(train.data,
          and requires a tune length of 5.')
   }
 
+  #### END ERROR HANDLING ####
+
   n.train <- nrow(train.data)
   n.test <- ifelse(is.null(test.data), 0, nrow(test.data))
 
-  if(preprocessing){
-    # Format empty data frame for results
-    nrow.results <- ifelse(output.summary, 13, 13 * num.iterations)
-    # Set column names
-    results.colnames <- c("Pretreatment", "RMSEp", "R2p", "RPD", "RPIQ", "CCC",
-                          "Bias", "SEP", "RMSEcv", "R2cv", "R2sp")
-    # Add standard deviation columns if outputting a summary data frame
-    if(output.summary){
-      results.colnames <- append(results.colnames, c("RMSEp.sd", "R2p.sd",
-                                                     "RPD.sd", "RPIQ.sd",
-                                                     "CCC.sd", "Bias.sd",
-                                                     "SEP.sd", "RMSEcv.sd",
-                                                     "R2cv.sd", "R2sp.sd"))
+  # Perform pretreatments on everything.
+  # Returns a list of data frames, one for each transformation specified by pretreatment argument
+  if(verbose){
+    cat("Preprocessing initiated.\n")
+  }
+  if(!is.null(cv.scheme)){
+    train.data <- rbind(trial1, trial2, trial3)
+  }
+  df.list <- DoPreprocessing(df = train.data, test.data = test.data,
+                             pretreatment = pretreatment,
+                             wavelengths = wavelengths)
+
+  # Training loop
+  if(verbose){
+    cat("Training models...\n")
+  }
+
+  methods.list <- c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
+                    "SNVSG", "SGD1", "SG.D1W5", "SG.D1W11", "SG.D2W5", "SG.D2W11")
+
+  counter = 0
+  for (i in pretreatment) {
+    # This implementation allows for any combination of pretreatments
+    # ex// pretreatment = c(1,4,8)
+    counter = counter + 1
+
+    if(verbose){
+      cat(paste("Working on", methods.list[i], "\n", sep = " "))
+    }
+
+    # Extract preprocessed data.
+    # df.list contains named data.frames transformed by the requested methods (only).
+    # To access a specific method, use df.list[[methods.list[i]]].
+    # This will call the preprocessed data.frame by name from the transformed list.
+    # Then extract the test dataset from full processed data frame
+    processed.train.data <- df.list[[methods.list[i]]][1:n.train,]
+    if(n.test == 0){
+      processed.test.data <- NULL
     } else{
-      # Add iteration column
-      results.colnames <- c("Pretreatment", "Iteration", "RMSEp", "R2p", "RPD",
-                            "RPIQ", "CCC", "Bias", "SEP", "RMSEcv", "R2cv",
-                            "R2sp")
+      processed.test.data <- df.list[[methods.list[i]]][(n.train + 1):(n.train + n.test),]
     }
-    # Add hyperparameter columns
-    # svmLinear requires no extra columns for tuned hyperparameter results, pls and svmRadial require 1, and rf requires 2
-    if(model.method == "pls" | model.method == "svmRadial"){
-      results.colnames <- append(results.colnames, "Best.ncomp")
-    } else if(model.method == "rf"){
-      results.colnames <- append(results.colnames, c("Best.ntree", "Best.mtry"))
-    }
-    # Put it together
-    results.df <- as.data.frame(matrix(ncol = length(results.colnames),
-                                       nrow = nrow.results, NA))
-    colnames(results.df) <- results.colnames
 
-    # Then do preprocessing on everything
-    if(verbose){
-      cat("Preprocessing initiated.\n")
-    }
     if(!is.null(cv.scheme)){
-      train.data <- rbind(trial1, trial2, trial3)
-    }
-    df.list <- DoPreprocessing(df = train.data, test.data = test.data,
-                               preprocessing.method = 1:13,
-                               wavelengths = wavelengths)
-
-    # Training loop
-    if(verbose){
-      cat("Training models...\n")
+      processed.trial1 <- df.list[[methods.list[i]]][1:nrow(trial1),]
+      processed.trial2 <- df.list[[methods.list[i]]][(nrow(trial1) + 1):(nrow(trial1) + nrow(trial2)),]
+      processed.trial3 <- df.list[[methods.list[i]]][(nrow(trial1) + nrow(trial2) + 1):nrow(train.data),]
     }
 
-    for (i in c(1:13)) {
-      methods.list <- c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
-                        "SNVSG", "SGD1", "SG.D1W5",
-                        "SG.D1W11", "SG.D2W5", "SG.D2W11")
-      if(verbose){
-        cat(paste("Working on method", i, "of 13:", methods.list[i], "\n",
-                  sep = " "))
-      }
-      # To access a specfic pretreatment, use df.list[[i]] where i is the number of the pretreatment in methods.list above
-      # Extract test dataset from full processed data frame
-      processed.train.data <- df.list[[i]][1:n.train,]
-      if(n.test == 0){
-        processed.test.data <- NULL
-      } else{
-        processed.test.data <- df.list[[i]][(n.train + 1):(n.train + n.test),]
-      }
-
-      if(!is.null(cv.scheme)){
-        processed.trial1 <- df.list[[i]][1:nrow(trial1),]
-        processed.trial2 <- df.list[[i]][(nrow(trial1) + 1):(nrow(trial1) + nrow(trial2)),]
-        processed.trial3 <- df.list[[i]][(nrow(trial1) + nrow(trial2) + 1):nrow(train.data),]
-      }
-      # Fit models for each pretreatment and output results
-      training.results <- TrainSpectralModel(df = processed.train.data,
+    # Fit models for each pretreatment and output results
+    training.results.i <- TrainSpectralModel(df = processed.train.data,
                                              num.iterations = num.iterations,
                                              test.data = processed.test.data,
-                                             output.summary = output.summary,
+                                             k.folds = k.folds,
                                              tune.length = tune.length,
                                              model.method = model.method,
                                              stratified.sampling = stratified.sampling,
-                                             return.model = F,
                                              trial1 = processed.trial1,
                                              trial2 = processed.trial2,
                                              trial3 = processed.trial3,
-                                             rf.variable.importance = rf.variable.importance,
                                              split.test = split.test,
                                              verbose = verbose)
-      # Format output
-      if(rf.variable.importance){
-        # Separate variable importance from model performance results
-        training.results.rf.importance.i <- training.results$RF.variable.importance
-        training.results <- training.results$model.performance
-      }
 
-      if(output.summary){
-        # Put pretreatment name in first column followed by means and standard deviations for each statistic
-        results.df$Pretreatment[i] <- methods.list[i]
-        spectacle.results <- training.results %>%
-          dplyr::select(.data$RMSEp:.data$R2sp)
-        hyperparameter.results <- training.results %>%
-          dplyr::select(-(.data$Summary_type:.data$R2sp)) # works even if no hyperparameter columns
-        results.df[i, 2:ncol(results.df)] <- data.frame(spectacle.results[1,], # row 1 is means
-                                                        spectacle.results[2,], # row 2 is standard deviations
-                                                        hyperparameter.results[1,]) # first row is values, second is just NA
-      } else{ # output each iteration
-        # Starting row = Pretreatment number - 1 * number of iterations
-        # Raw data example// ((1-1) * 50) + 1 = (0*50) +1 = 1
-        # SNV example// ((2-1*50)+1) = 51
-        starting.row <- ((i-1) * num.iterations) + 1
-        ending.row <- starting.row + num.iterations - 1
-        results.df$Pretreatment[(starting.row:ending.row)] <- methods.list[i]
-        results.df[(starting.row:ending.row), -1 ] <- training.results
-
-        if(rf.variable.importance){
-          training.results.rf.importance.i <- cbind(methods.list[i], training.results.rf.importance.i)
-          colnames(training.results.rf.importance.i)[1] <- "Pretreatment"
-          training.results.rf.importance.i %<>%
-            tidyr::pivot_longer(.data, cols = starts_with("X"), names_to = "Wavelength", values_to = "RF.importance")
-          #print(training.results.rf.importance.i) #TODO
-          if(i == 1){
-            rf.importance.df <- training.results.rf.importance.i
-          } else{
-            rf.importance.df <- rbind(rf.importance.df, training.results.rf.importance.i)
-          }
-          #print(rf.importance.df) # TODO
-        }
-
-      }
-    } # End of loop
-
-
-  } else{ # No preprocessing techniques applied
-    if(verbose){
-      cat("Preprocessing skipped.\n")
-
-      # Fit models for each pretreatment and output results
-      cat("Training model...\n")
+    if (length(pretreatment > 1)){
+      # Reformat summary statistics data.frame so multiple pretreatments can be stacked
+      # Put pretreatment name in first column followed by performance statistics
+      # Append Summary_type (mean, sd, mode) to statistic name to flatten into a single row
+      summary.i <- training.results.i$summary.model.performance %>%
+        tidyr::pivot_longer(cols = .data$RMSEp:.data$best.mtry) %>%
+        pivot_wider(id_cols = .data$Summary_type,
+                    names_from = c(.data$name, .data$Summary_type), names_sep = ".")
+    } else {
+      summary.i <- training.results.i$summary.model.performance
     }
-    results.df <- TrainSpectralModel(df = train.data,
-                                     num.iterations = num.iterations,
-                                     test.data = test.data,
-                                     output.summary = output.summary,
-                                     tune.length = tune.length,
-                                     model.method = model.method,
-                                     stratified.sampling = stratified.sampling,
-                                     return.model = F, cv.scheme = cv.scheme,
-                                     trial1 = trial1, trial2 = trial2,
-                                     trial3 = trial3,
-                                     rf.variable.importance = rf.variable.importance,
-                                     split.test = split.test,
-                                     verbose = verbose
-                                     )
-    if(rf.variable.importance){
-      return(results.df)
+
+    if(counter == 1){
+      # Set up results compilations in first iteration
+      model.list <- ifelse(length(pretreatment) > 1,
+                           list(training.results.i$model),
+                           training.results.i$model)
+      summary.df <- c(Pretreatment = methods.list[i], summary.i)
+      results.df <- c(Pretreatment = methods.list[i], training.results.i$model.performance)
+      predictions.df <- c(Pretreatment = methods.list[i], training.results.i$predictions)
+      importance.df <- c(Pretreatment = methods.list[i], training.results.i$importance)
+    } else{
+      # Add new results to existing objects
+      model.list <- append(model.list, list(training.results.i$model))
+      summary.df <- rbind(summary.df, c(Pretreatment = methods.list[i], summary.i))
+      results.df <- rbind(results.df,
+                          c(Pretreatment = methods.list[i], training.results.i$model.performance))
+      predictions.df <- rbind(predictions.df,
+                              c(Pretreatment = methods.list[i], training.results.i$predictions))
+      importance.df <- rbind(importance.df,
+                             c(Pretreatment = methods.list[i], training.results.i$importance))
     }
-  } # End no preprocessing
 
-  results.df <- as.data.frame(results.df)
+  } # End of loop
 
-  if(rf.variable.importance){
-    rf.importance.df %<>%
-      tidyr::pivot_wider(id_cols = .data$Pretreatment:.data$Iteration,
-                         names_from = .data$Wavelength,
-                         values_from = .data$RF.importance)
-    return(list(model.performance = results.df,
-                RF.variable.importance = rf.importance.df))
-  } else{
-    return(results.df)
-  }
+  results.list <- list(
+    model = model.list,
+    summary.model.performance = summary.df,
+    model.performance = results.df,
+    predictions = predictions.df,
+    importance = importance.df
+  )
+
+  return(results.list)
 
   }
