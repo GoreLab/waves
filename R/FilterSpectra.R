@@ -12,9 +12,11 @@
 #' @usage FilterSpectra(df, filter, return.distances, num.col.before.spectra,
 #'   window.size, verbose)
 #' @importFrom stats cov mahalanobis na.omit qchisq
-#' @param df a \code{data.frame} object containing columns of spectra and rows
-#'   of observations. May also contain columns of metadata to the left of the
-#'   spectra.
+#' @param df \code{data.frame} object containing columns of spectra and rows of
+#'   observations. Spectral columns must be labeled with an "X" and then the
+#'   wavelength (example: "X740" = 740nm). Left-most column must be unique ID. May
+#'   also contain columns of metadata between the unique ID and spectral columns.
+#'   Cannot contain any missing values. Metadata column names may not start with "X".
 #' @param filter boolean that determines whether or not the input
 #'   \code{data.frame} will be filtered. If \code{TRUE}, \code{df} will be
 #'   filtered according to squared Mahalanobis distance with a 95\% cutoff from
@@ -92,7 +94,7 @@ FilterSpectra <- function(df,
 
   if(filter){
     # Filter input data based on square of Mahalanobis distance
-    chisq95 <- qchisq(.95, df = ncol(spectra))
+    chisq95 <- qchisq(p = .95, df = ncol(spectra))
     df.filtered <- df.distances[which(h.distances < chisq95),]
 
     # How many samples were removed?

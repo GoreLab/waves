@@ -19,13 +19,7 @@
 #'   provided, will save to working directory.
 #' @param model.name Name that model will be saved as in
 #'   \code{model.save.folder}. Default is "PredictionModel".
-#' @param verbose If \code{TRUE}, the number of rows removed through filtering
-#'   will be printed to the console. Default is \code{TRUE}.
 #'
-#' @importFrom magrittr %>%
-#' @importFrom dplyr mutate select
-#' @importFrom tidyselect everything
-#' @importFrom rlang .data
 #' @importFrom utils write.csv
 #'
 #' @return List of model stats (in \code{data.frame}) and trained model object.
@@ -43,14 +37,13 @@
 #'   dplyr::select(sample.id, reference, dplyr::starts_with("X")) %>%
 #'   na.omit() %>%
 #'   SaveModel(df = .,
-#'   save.model = FALSE,
+#'             save.model = FALSE,
 #'             pretreatment = 1:13,
 #'             model.name = "my_prediction_model",
 #'             tune.length = 50,
-#'             num.iterations = 10,
-#'             wavelengths = 350:2500)
-#' summary(test.model[1])
-#' test.model[2]
+#'             num.iterations = 10)
+#' summary(test.model$best.model)
+#' test.model$best.model.stats
 #' }
 SaveModel <- function(df,
                       save.model = TRUE,
@@ -62,7 +55,6 @@ SaveModel <- function(df,
                       tune.length = 50,
                       model.method = "pls",
                       num.iterations = 10,
-                      wavelengths = 740:1070,
                       stratified.sampling = TRUE,
                       cv.scheme = NULL,
                       trial1 = NULL,
@@ -73,10 +65,6 @@ SaveModel <- function(df,
   # Error handling
   if(!(best.model.metric %in% c("RMSE", "Rsquared"))){
     stop('best.model.metric must be either "RMSE" or "Rsquared"')
-  }
-
-  if(length(wavelengths) != ncol(df) - 2) {
-    stop("Number of spectral columns in train.data (ncol(train.data) - 2) must match number of wavelengths")
   }
 
   if(nrow(df) != nrow(na.omit(df))) {
@@ -108,7 +96,6 @@ SaveModel <- function(df,
                                            num.iterations = num.iterations,
                                            test.data = NULL,
                                            pretreatment = pretreatment,
-                                           wavelengths = wavelengths,
                                            k.folds = k.folds,
                                            tune.length = tune.length,
                                            model.method = model.method,
@@ -121,26 +108,27 @@ SaveModel <- function(df,
                                            split.test = FALSE,
                                            verbose = verbose)
 
-  best.model <- training.results$model
-  best.model.stats <- training.results$summary.model.performance
-  # Create "Pretreatment" column
-  best.model.stats <- cbind("Pretreatment" = methods.list[pretreatment], best.model.stats)
-  if(verbose) print(best.model.stats)
+  if(length(pretreatment) == 1){
+    best.model <- training.results$model
+    best.model.stats <- training.results$summary.model.performance
+    if(verbose) print(best.model.stats)
+  }
 
   if(length(pretreatment) > 1){
     # Use results data frame to determine best pretreatment technique
+    results.df <- training.results$summary.model.performance
     best.type.num <- ifelse(best.model.metric == "RMSE",
                             which.min(results.df$RMSE),
                             which.max(results.df$R2p))
     # Set chosen model as best.model for export
     best.model <- training.results$model[[best.type.num]]
-    best.model.stats <- training.results$summary.model.performance[best.type.num,]
+    best.model.stats <- results.df[best.type.num,]
 
     if (verbose) {
       cat("\nTraining Summary:\n")
-      print(training.results$summary.model.performance)
+      print(results.df)
       cat(paste0("\nBest pretreatment technique: ",
-                 training.results$summary.model.performance[best.type.num, "Pretreatment"], "\n"))
+                 results.df$Pretreatment[best.type.num], "\n"))
     }
 
   } # End multiple pretreatments if statement

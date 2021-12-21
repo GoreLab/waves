@@ -6,9 +6,11 @@
 * Always return model and variable importance results with `TrainSpectralModel()` and `TestModelPerformance()`.
 * Add variable importance for PLSR (#9).
 * Enable selection of k for k-fold cross-validation within the training set. Previously, k was fixed at 5 (#10).
-* "Preprocessing" has been renamed "Pretreatment" to minimize confusion with physical preprocessing of samples prior to scanning. Arguments have been renamed to reflect these changes ("preprocessing" is now "pretreatment", "auto.preprocessing" is now "auto.pretreatment").
+* "Preprocessing" has been renamed "Pretreatment" to minimize confusion with physical preprocessing of samples prior to scanning. Arguments have been renamed to reflect these changes (`preprocessing` is now `pretreatment`).
+* `SaveModel()` now automatically selects the best model if provided with multiple pretreatments.
 * Code simplified and streamlined to facilitate future updates.
 * Export predicted values as well as performance statistics for each training iteration (#11).
+* `wavelengths` is no longer a required argument for any of the *waves* functions.
 
 # waves 0.1.1
 

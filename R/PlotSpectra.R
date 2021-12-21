@@ -8,13 +8,11 @@
 #'@author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
 #' @inheritParams FilterSpectra
-#'@param input.df \code{data.frame} object containing columns of spectra.
+#'@param df \code{data.frame} object containing columns of spectra.
 #'  Spectral columns must be labeled with an "X" and then the wavelength
 #'  (example: "X740" = 740nm). Left-most column must be unique ID. May also
 #'  contain columns of metadata between the unique ID and spectral columns.
-#'  Cannot contain any missing values
-#'@param wavelengths List of wavelengths (numerical format) represented by each
-#'  spectral column in \code{input.df}
+#'  Cannot contain any missing values. Metadata column names may not start with "X".
 #'@param num.col.before.spectra Number of columns to the left of the spectral
 #'  matrix (including unique ID). Default is 1.
 #'@param detect.outliers Boolean indicating whether spectra should be filtered before plotting.
@@ -27,6 +25,8 @@
 #'  Default is \code{NULL}, indicating that default titles will be used.
 #'
 #'@importFrom dplyr mutate distinct
+#'@importFrom tidyselect starts_with
+#'@importFrom readr parse_number
 #'@importFrom ggplot2 ggplot aes geom_line theme_minimal labs scale_color_manual
 #'@importFrom scales hue_pal
 #'@importFrom tidyr gather
@@ -45,8 +45,7 @@
 #'   dplyr::rename(unique.id = sample.id) %>%
 #'   dplyr::select(unique.id, dplyr::everything(), -TCC) %>%
 #'   na.omit() %>%
-#'   PlotSpectra(input.df = .,
-#'               wavelengths = 350:2500,
+#'   PlotSpectra(df = .,
 #'               num.col.before.spectra = 5,
 #'               window.size = 15,
 #'               detect.outliers = TRUE,
@@ -54,8 +53,7 @@
 #'               alternate.title = NULL,
 #'               verbose = TRUE)
 #' }
-PlotSpectra <- function(input.df,
-                        wavelengths,
+PlotSpectra <- function(df,
                         num.col.before.spectra = 1,
                         window.size = 10,
                         detect.outliers = TRUE,
@@ -65,17 +63,12 @@ PlotSpectra <- function(input.df,
                         ){
 
     # Strip off non-spectral columns
-  spectra <- input.df[, (num.col.before.spectra + 1):ncol(input.df)]
+  spectra <- df[, (num.col.before.spectra + 1):ncol(df)]
 
   # Error handling
   # mahalanobis function does not allow missing values or non-numeric data
   if(nrow(spectra) != nrow(na.omit(spectra))){
     stop("Input data frame cannot contain missing values! Remove them and try again.")
-  }
-
-  # Make sure spectral columns start with X and match number of wavelengths provided
-  if(input.df %>% dplyr::select(starts_with("X")) %>% ncol() != length(wavelengths)){
-    stop("Spectral column names must start with an 'X' and must match the number of wavelengths provided.")
   }
 
   if(detect.outliers){ # Outlier detection
@@ -94,6 +87,8 @@ PlotSpectra <- function(input.df,
       color <- scales::hue_pal()(2)
     }
 
+    wavelengths <- readr::parse_number(tidyselect::starts_with("X", vars = colnames(df)))
+
     # Plot title
     if(is.null(alternate.title)){
       plot.title <- paste0("Chi-Square (", length(wavelengths)," df) 95% cutoff for Mahalanobis distance")
@@ -105,23 +100,23 @@ PlotSpectra <- function(input.df,
     chisq95 <- qchisq(.95, df = length(wavelengths))
 
     # Calculate Mahalanobis distribution for each scan and identify outliers
-    filtered.df <- FilterSpectra(df = input.df, filter = FALSE, return.distances = TRUE,
+    filtered.df <- FilterSpectra(df = df, filter = FALSE, return.distances = TRUE,
                                  num.col.before.spectra = num.col.before.spectra,
                                  window.size = window.size, verbose = FALSE) %>%
       mutate(Outlier = ifelse(.data$h.distances > chisq95, TRUE, FALSE))
 
     # Prepare data frame for plotting
     hdists.df <- filtered.df %>%
-      dplyr::select(1, .data$h.distances, .data$Outlier, starts_with("X")) %>%
-      gather(key = "wl", value = "s.value", starts_with("X")) %>%
-      mutate(wl = as.numeric(str_extract(.data$wl, "\\-*\\d+\\.*\\d*")))
+      dplyr::select(1, .data$h.distances, .data$Outlier, tidyselect::starts_with("X")) %>%
+      tidyr::gather(key = "wl", value = "s.value", tidyselect::starts_with("X")) %>%
+      dplyr::mutate(wl = as.numeric(stringr::str_extract(.data$wl, "\\-*\\d+\\.*\\d*")))
 
     # Create plot
-    spectral.plot <- ggplot(data = hdists.df,
-                                 aes(x = .data$wl,
-                                     y = .data$s.value,
-                                     group = .data$unique.id,
-                                     color = .data$Outlier)) +
+    spectral.plot <- ggplot2::ggplot(data = hdists.df,
+                                     aes(x = .data$wl,
+                                         y = .data$s.value,
+                                         group = .data$unique.id,
+                                         color = .data$Outlier)) +
       geom_line(alpha = .5) +
       geom_line(data = subset(.data$hdists.df, .data$Outlier == T), alpha = .7) +
       scale_color_manual(values = color, name = "Outlier?") +
@@ -137,7 +132,7 @@ PlotSpectra <- function(input.df,
         cat("Outliers:\n")
         print(
           filtered.df %>% dplyr::filter(.data$h.distances > chisq95) %>%
-            dplyr::select(-starts_with("X")) %>% distinct()
+            dplyr::select(-tidyselect::starts_with("X")) %>% distinct()
         )
       } else{
         cat("No outliers detected.\n")
@@ -163,10 +158,10 @@ PlotSpectra <- function(input.df,
     }
 
     # Prepare data frame for plotting
-    prepped.df <- input.df %>%
-      dplyr::select(1, starts_with("X")) %>%
-      gather(key = "wl", value = "s.value", starts_with("X")) %>%
-      mutate(wl = as.numeric(str_extract(.data$wl, "\\-*\\d+\\.*\\d*")))
+    prepped.df <- df %>%
+      dplyr::select(1, tidyselect::starts_with("X")) %>%
+      tidyr::gather(key = "wl", value = "s.value", tidyselect::starts_with("X")) %>%
+      dplyr::mutate(wl = as.numeric(stringr::str_extract(.data$wl, "\\-*\\d+\\.*\\d*")))
 
     spectral.plot <- ggplot(data = prepped.df,
                             aes(x = .data$wl,

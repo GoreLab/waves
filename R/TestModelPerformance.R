@@ -16,8 +16,6 @@
 #'   contains reference values, followed by spectral columns. Include no other
 #'   columns to right of spectra! Column names of spectra must start with "X"
 #'   and reference column must be named "reference".
-#' @param wavelengths List of wavelengths represented by each column in
-#'   \code{train.data}
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
@@ -84,17 +82,16 @@
 #'   TestModelPerformance(train.data = .,
 #'                        tune.length = 3,
 #'                        num.iterations = 3,
-#'                        pretreatment = 1,
-#'                        wavelengths = 350:2500)
+#'                        pretreatment = 1)
 #' }
 TestModelPerformance <- function(train.data,
                                  num.iterations,
                                  test.data = NULL,
                                  pretreatment = 1,
-                                 wavelengths = 740:1070,
                                  k.folds = 5,
                                  tune.length = 50,
                                  model.method = "pls",
+                                 best.model.metric = "RMSE",
                                  stratified.sampling = TRUE,
                                  cv.scheme = NULL,
                                  trial1 = NULL,
@@ -121,13 +118,6 @@ TestModelPerformance <- function(train.data,
   }
 
   num.col.before.reference <- ifelse(!is.null(cv.scheme), 2, 1)
-  if(length(wavelengths) != ncol(train.data) - (num.col.before.reference + 1)) {
-    if(!is.null(cv.scheme)){
-      stop("Number of spectral columns in train.data (ncol(train.data) - 3) must match number of wavelengths")
-    } else{
-      stop("Number of spectral columns in train.data (ncol(train.data) - 2) must match number of wavelengths")
-    }
-  }
 
   if(nrow(train.data) != nrow(na.omit(train.data))) {
     stop("Training data cannot contain missing values.")
@@ -161,8 +151,7 @@ TestModelPerformance <- function(train.data,
     train.data <- rbind(trial1, trial2, trial3)
   }
   df.list <- DoPreprocessing(df = train.data, test.data = test.data,
-                             pretreatment = pretreatment,
-                             wavelengths = wavelengths)
+                             pretreatment = pretreatment)
 
   # Training loop
   if(verbose){

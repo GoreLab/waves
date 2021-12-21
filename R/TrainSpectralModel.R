@@ -39,7 +39,7 @@
 #'   will be printed to the console. Default is \code{TRUE}.
 #'
 #' @return list of the following:
-#' \itemize{
+#' \enumerate{
 #'   \item \code{model} is a model object trained with all rows of \code{df}.
 #'   \item \code{summary.model.performance} is a \code{data.frame} with model performance
 #'   statistics in summary format (2 rows, one with mean and one with standard deviation of
@@ -236,17 +236,16 @@ TrainSpectralModel <- function(df,
       # Put results as row in data frame
       predicted.values <- as.numeric(predict(data.trained$finalModel,
                                              newdata = as.matrix(test.spectra), # exclude reference column
-                                             ncomp = best.hyper))
+                                             ncomp = best.ncomp))
       # Extract best number of components
       best.ncomp <- data.trained$bestTune$ncomp
       best.ntree <- NA
       best.mtry <- NA
-      R2cv <- pls::R2(data.trained$finalModel, ncomp = best.hyper)[["val"]][2]
+      R2cv <- pls::R2(data.trained$finalModel, ncomp = best.ncomp)[["val"]][2]
       RMSEcv <- pls::RMSEP(data.trained$finalModel,
                            ncomp = best.ncomp)[["val"]][2]
 
     } else if(model.method == "svmLinear"){
-      best.hyper <- NA
       predicted.values <- as.numeric(predict(data.trained,
                                              newdata = as.matrix(test.spectra)))
       best.ncomp <- NA
@@ -256,7 +255,6 @@ TrainSpectralModel <- function(df,
       RMSEcv <- NA
 
     } else if(model.method == "svmRadial"){
-      best.hyper <- NA
       predicted.values <- as.numeric(predict(data.trained,
                                              newdata = as.matrix(test.spectra)))
       best.ncomp <- NA
@@ -279,8 +277,8 @@ TrainSpectralModel <- function(df,
                                    importance = TRUE)
       predicted.values <- as.numeric(predict(data.trained$finalModel,
                                              newdata = as.matrix(test.spectra),
-                                             ntree = best.hyper[1],
-                                             mtry = best.hyper[2]))
+                                             ntree = best.ntree,
+                                             mtry = best.mtry))
 
       best.ncomp <- NA
       best.ntree <- data.trained$finalModel$ntree

@@ -30,21 +30,22 @@
 #'   \item SG and second derivative (window size = 5)
 #'   \item SG and second derivative (window size = 11)
 #' }
-#' @param wavelengths List of wavelengths represented by each column in
-#'   \code{df}. Default is 740:1070.
 #'
 #' @importFrom prospectr standardNormalVariate savitzkyGolay gapDer
+#' @importFrom tidyselect starts_with
+#' @importFrom dplyr select
+#' @importFrom tidyr drop_na
+#' @importFrom magrittr %>%
 #'
 #' @return Preprocessed \code{df}` (or list of \code{data.frame}s) with
 #'   reference column intact
 #' @export
 #'
 #' @examples
-#' DoPreprocessing(df = ikeogu.2017, wavelengths = 350:2500)[1:5,1:5]
+#' DoPreprocessing(df = ikeogu.2017)[1:5,1:5]
 DoPreprocessing <- function(df,
                             test.data = NULL,
-                            pretreatment = 1,
-                            wavelengths = 740:1070) {
+                            pretreatment = 1) {
   # Format input data frames for processing. Combine training.data and test.data
   # so that the same transformations are applied to all samples
   if (!is.null(test.data)) {
@@ -53,11 +54,11 @@ DoPreprocessing <- function(df,
   }
 
   # Remove rows with missing spectral data (shouldn't be any, but this is just in case)
-  df <- df %>% drop_na(starts_with("X"))
+  df <- df %>% tidyr::drop_na(tidyselect::starts_with("X"))
 
   # Split spectra from metadata turn spectra into matrix (spc)
-  spc <- df %>% dplyr::select(starts_with("X")) %>% data.matrix()
-  metadata <- df %>% dplyr::select(-starts_with("X"))
+  spc <- df %>% dplyr::select(tidyselect::starts_with("X")) %>% data.matrix()
+  metadata <- df %>% dplyr::select(-tidyselect::starts_with("X"))
 
   # Add preprocessed spectral data to list
   processed.list <- list(
