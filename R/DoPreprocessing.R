@@ -42,7 +42,7 @@
 #' @export
 #'
 #' @examples
-#' DoPreprocessing(df = ikeogu.2017)[1:5,1:5]
+#' DoPreprocessing(df = ikeogu.2017)[1:5, 1:5]
 DoPreprocessing <- function(df,
                             test.data = NULL,
                             pretreatment = 1) {
@@ -57,7 +57,9 @@ DoPreprocessing <- function(df,
   df <- df %>% tidyr::drop_na(tidyselect::starts_with("X"))
 
   # Split spectra from metadata turn spectra into matrix (spc)
-  spc <- df %>% dplyr::select(tidyselect::starts_with("X")) %>% data.matrix()
+  spc <- df %>%
+    dplyr::select(tidyselect::starts_with("X")) %>%
+    data.matrix()
   metadata <- df %>% dplyr::select(-tidyselect::starts_with("X"))
 
   # Add preprocessed spectral data to list
@@ -90,18 +92,19 @@ DoPreprocessing <- function(df,
     SG.D2W5 = savitzkyGolay(spc, p = 2, w = 5, m = 2),
     # 13. Savitzky-Golay filter + 2nd derivative - window size = 11
     SG.D2W11 = savitzkyGolay(spc, p = 2, w = 11, m = 2)
-
   )
 
   # Make each matrix in list into a data frame and add back metadata and reference column if present
-  processed.list <- lapply(seq_along(processed.list),
-                           function(x) cbind(metadata, processed.list[[x]]))
+  processed.list <- lapply(
+    seq_along(processed.list),
+    function(x) cbind(metadata, processed.list[[x]])
+  )
 
   # Choose which to return
   if (length(pretreatment) == 1) {
     # Return a single processed data frame if only one pretreatment was chosen.
     processed <- processed.list[[pretreatment]]
-  } else{
+  } else {
     # Return a list of processed data frames if more than one pretreatment was chosen.
     processed <- processed.list[c(pretreatment)]
   }

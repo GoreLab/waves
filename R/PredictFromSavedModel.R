@@ -15,8 +15,6 @@
 #' @param model.location String containing file path (including file name) to
 #'   location where the trained model ("(model.name).Rds") was saved as output
 #'   by the \code{\link{SaveModel}} function.
-#' @param wavelengths List of wavelengths represented by each column in
-#'   \code{input.data}
 #' @importFrom stats predict
 #' @importFrom utils read.csv
 #'
@@ -29,17 +27,19 @@
 #' \dontrun{
 #' ikeogu.2017 %>%
 #'   dplyr::select(sample.id, dplyr::starts_with("X")) %>%
-#'   PredictFromSavedModel(input.data = .,
-#'                         model.stats.location = paste0(getwd(),
-#'                                                       "/my_model_stats.csv"),
-#'                         model.location = paste0(getwd(), "/my_model.Rds"),
-#'                         wavelengths = 350:2500)
+#'   PredictFromSavedModel(
+#'     input.data = .,
+#'     model.stats.location = paste0(
+#'       getwd(),
+#'       "/my_model_stats.csv"
+#'     ),
+#'     model.location = paste0(getwd(), "/my_model.Rds")
+#'   )
 #' }
-
+#'
 PredictFromSavedModel <- function(input.data,
                                   model.stats.location,
                                   model.location,
-                                  wavelengths = 740:1070,
                                   model.method = "pls") {
 
   # Load model and model statistics
@@ -47,40 +47,46 @@ PredictFromSavedModel <- function(input.data,
   model.object <- readRDS(model.location)
   final.model <- model.object
   # Match best preprocessing method with index number
-  best.preprocessing.num <- match(model.stats$Pretreatment[1],
-                                  c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1",
-                                    "D2", "SG", "SNVSG", "SGD1", "SG.D1W5",
-                                    "SG.D1W11", "SG.D2W5", "SG.D2W11"))
+  best.preprocessing.num <- match(
+    model.stats$Pretreatment[1],
+    c(
+      "Raw_data", "SNV", "SNV1D", "SNV2D", "D1",
+      "D2", "SG", "SNVSG", "SGD1", "SG.D1W5",
+      "SG.D1W11", "SG.D2W5", "SG.D2W11"
+    )
+  )
 
   # Use DoPreprocessing function to format input.data and preprocess if needed
-  preprocessed <- DoPreprocessing(df = input.data, test.data = NULL,
-                                  preprocessing.method = best.preprocessing.num,
-                                  wavelengths = wavelengths)
+  preprocessed <- DoPreprocessing(
+    df = input.data, test.data = NULL,
+    preprocessing.method = best.preprocessing.num
+  )
 
   # Predict values using imported model, preprocessed/formatted input data, and method of choice
-  if(model.method == "pls"){
+  if (model.method == "pls") {
     # Extract best number of components
     best.ncomp <- model.stats$best.ncomp[1]
     # Get predictions
     predicted.values <- as.numeric(predict(final.model,
-                                           newdata = as.matrix(preprocessed[2:ncol(preprocessed)]),
-                                           ncomp = best.ncomp))
-  } else if(model.method == "svmLinear"){
+      newdata = as.matrix(preprocessed[2:ncol(preprocessed)]),
+      ncomp = best.ncomp
+    ))
+  } else if (model.method == "svmLinear") {
     predicted.values <- as.numeric(predict(final.model, newdata = preprocessed))
-
-  } else if(model.method == "svmRadial"){
+  } else if (model.method == "svmRadial") {
     predicted.values <- as.numeric(predict(final.model, newdata = preprocessed))
-
-  } else if(model.method == "rf"){
+  } else if (model.method == "rf") {
     best.ntree <- final.model$ntree
     best.mtry <- final.model$mtry
-    predicted.values <- as.numeric(predict(final.model, newdata = preprocessed,
-                                           ntree = best.ntree,
-                                           mtry = best.mtry))
+    predicted.values <- as.numeric(predict(final.model,
+      newdata = preprocessed,
+      ntree = best.ntree,
+      mtry = best.mtry
+    ))
   }
 
   # Bind unique identifiers from the input data to the predicted values
-  predicted.df <- cbind(input.data[,1], data.frame(predicted.values))
+  predicted.df <- cbind(input.data[, 1], data.frame(predicted.values))
   colnames(predicted.df) <- c(colnames(input.data)[1], "predicted.values")
 
   return(predicted.df)

@@ -11,6 +11,7 @@
 * Code simplified and streamlined to facilitate future updates.
 * Export predicted values as well as performance statistics for each training iteration (#11).
 * `wavelengths` is no longer a required argument for any of the *waves* functions.
+* Update all files to conform to the tidyverse style guide
 
 # waves 0.1.1
 

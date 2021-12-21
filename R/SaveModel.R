@@ -36,12 +36,14 @@
 #'   dplyr::rename(reference = DMC.oven) %>%
 #'   dplyr::select(sample.id, reference, dplyr::starts_with("X")) %>%
 #'   na.omit() %>%
-#'   SaveModel(df = .,
-#'             save.model = FALSE,
-#'             pretreatment = 1:13,
-#'             model.name = "my_prediction_model",
-#'             tune.length = 50,
-#'             num.iterations = 10)
+#'   SaveModel(
+#'     df = .,
+#'     save.model = FALSE,
+#'     pretreatment = 1:13,
+#'     model.name = "my_prediction_model",
+#'     tune.length = 50,
+#'     num.iterations = 10
+#'   )
 #' summary(test.model$best.model)
 #' test.model$best.model.stats
 #' }
@@ -60,96 +62,110 @@ SaveModel <- function(df,
                       trial1 = NULL,
                       trial2 = NULL,
                       trial3 = NULL,
-                      verbose = TRUE
-                      ) {
+                      verbose = TRUE) {
   # Error handling
-  if(!(best.model.metric %in% c("RMSE", "Rsquared"))){
+  if (!(best.model.metric %in% c("RMSE", "Rsquared"))) {
     stop('best.model.metric must be either "RMSE" or "Rsquared"')
   }
 
-  if(nrow(df) != nrow(na.omit(df))) {
+  if (nrow(df) != nrow(na.omit(df))) {
     stop("Training data cannot contain missing values.")
   }
 
-  if(!is.character(model.name)){
+  if (!is.character(model.name)) {
     stop("model.name must be a string!")
   }
 
-  if(!autoselect.pretreatment & is.null(pretreatment)){
+  if (!autoselect.pretreatment & is.null(pretreatment)) {
     stop("Please select a pretreatment method (1-13) if not using autoselect.")
   }
 
-  if(!autoselect.pretreatment & length(pretreatment) > 1){
+  if (!autoselect.pretreatment & length(pretreatment) > 1) {
     stop("Only one pretreatment method is allowed if not using autoselect.")
   }
 
-  if(is.null(model.save.folder)){
-    model.save.folder = getwd()
+  if (is.null(model.save.folder)) {
+    model.save.folder <- getwd()
   }
 
   # Choose best pretreatment method and set up training set
-  methods.list <- c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
-                    "SNVSG", "SGD1", "SG.D1W5", "SG.D1W11", "SG.D2W5",
-                    "SG.D2W11")
+  methods.list <- c(
+    "Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
+    "SNVSG", "SGD1", "SG.D1W5", "SG.D1W11", "SG.D2W5",
+    "SG.D2W11"
+  )
 
-  training.results <- TestModelPerformance(train.data = df,
-                                           num.iterations = num.iterations,
-                                           test.data = NULL,
-                                           pretreatment = pretreatment,
-                                           k.folds = k.folds,
-                                           tune.length = tune.length,
-                                           model.method = model.method,
-                                           stratified.sampling = stratified.sampling,
-                                           best.model.metric = best.model.metric,
-                                           cv.scheme = cv.scheme,
-                                           trial1 = trial1,
-                                           trial2 = trial2,
-                                           trial3 = trial3,
-                                           split.test = FALSE,
-                                           verbose = verbose)
+  training.results <- TestModelPerformance(
+    train.data = df,
+    num.iterations = num.iterations,
+    test.data = NULL,
+    pretreatment = pretreatment,
+    k.folds = k.folds,
+    tune.length = tune.length,
+    model.method = model.method,
+    stratified.sampling = stratified.sampling,
+    best.model.metric = best.model.metric,
+    cv.scheme = cv.scheme,
+    trial1 = trial1,
+    trial2 = trial2,
+    trial3 = trial3,
+    split.test = FALSE,
+    verbose = verbose
+  )
 
-  if(length(pretreatment) == 1){
+  if (length(pretreatment) == 1) {
     best.model <- training.results$model
     best.model.stats <- training.results$summary.model.performance
-    if(verbose) print(best.model.stats)
+    if (verbose) print(best.model.stats)
   }
 
-  if(length(pretreatment) > 1){
+  if (length(pretreatment) > 1) {
     # Use results data frame to determine best pretreatment technique
     results.df <- training.results$summary.model.performance
     best.type.num <- ifelse(best.model.metric == "RMSE",
-                            which.min(results.df$RMSE),
-                            which.max(results.df$R2p))
+      which.min(results.df$RMSE),
+      which.max(results.df$R2p)
+    )
     # Set chosen model as best.model for export
     best.model <- training.results$model[[best.type.num]]
-    best.model.stats <- results.df[best.type.num,]
+    best.model.stats <- results.df[best.type.num, ]
 
     if (verbose) {
       cat("\nTraining Summary:\n")
       print(results.df)
-      cat(paste0("\nBest pretreatment technique: ",
-                 results.df$Pretreatment[best.type.num], "\n"))
+      cat(paste0(
+        "\nBest pretreatment technique: ",
+        results.df$Pretreatment[best.type.num], "\n"
+      ))
     }
-
   } # End multiple pretreatments if statement
 
 
-  if(save.model){
-    if(verbose){
-      cat(paste0("\nSaving model and model statistics to ",
-                 model.save.folder, ".\n"))
+  if (save.model) {
+    if (verbose) {
+      cat(paste0(
+        "\nSaving model and model statistics to ",
+        model.save.folder, ".\n"
+      ))
     }
     # Output stats to model.save.folder as 'model.name_stats.csv'
     write.csv(best.model.stats,
-              file = paste0(model.save.folder, '/', model.name,
-                            '_stats.csv'), row.names = FALSE)
+      file = paste0(
+        model.save.folder, "/", model.name,
+        "_stats.csv"
+      ), row.names = FALSE
+    )
     # Save model in save location as 'model.name.Rds'
-    saveRDS(best.model, file = paste0(model.save.folder, '/',
-                                      model.name, ".Rds"))
+    saveRDS(best.model, file = paste0(
+      model.save.folder, "/",
+      model.name, ".Rds"
+    ))
   }
 
   # Output list of model stats data frame and model
-  output.list <- list(best.model = best.model,
-                      best.model.stats = best.model.stats)
+  output.list <- list(
+    best.model = best.model,
+    best.model.stats = best.model.stats
+  )
   return(output.list)
 }

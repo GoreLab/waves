@@ -45,28 +45,32 @@ library(tidyverse)
 C16Mcal <- read_excel("./data-raw/Ikeogu_et_al_2017/C16Mcal.xlsx") %>%
   rename_at(vars(`350`:`2500`), ~ paste0("X", 350:2500)) %>%
   mutate(study.name = "C16Mcal") %>%
-#  mutate(location = "CIAT") %>%
-#  mutate(year = 2016) %>%
-#  mutate(prep.method = "mashed") %>%
+  #  mutate(location = "CIAT") %>%
+  #  mutate(year = 2016) %>%
+  #  mutate(prep.method = "mashed") %>%
   rename(sample.id = Sampleid) %>%
   rename(DMC.oven = DMLAB) %>%
   rename(TCC = TCCLAB) %>%
-  dplyr::select(study.name,
-                #location, year, prep.method,
-                sample.id, DMC.oven, TCC, X350:X2500)
+  dplyr::select(
+    study.name,
+    # location, year, prep.method,
+    sample.id, DMC.oven, TCC, X350:X2500
+  )
 
 C16Mval <- read_excel("./data-raw/Ikeogu_et_al_2017/C16Mval.xlsx") %>%
   rename_at(vars(`350`:`2500`), ~ paste0("X", 350:2500)) %>%
   mutate(study.name = "C16Mval") %>%
-#  mutate(location = "CIAT") %>%
-#  mutate(year = 2016) %>%
-#  mutate(prep.method = "mashed") %>%
+  #  mutate(location = "CIAT") %>%
+  #  mutate(year = 2016) %>%
+  #  mutate(prep.method = "mashed") %>%
   rename(sample.id = Sampleid) %>%
   rename(DMC.oven = DMLAB) %>%
   rename(TCC = TCCLAB) %>%
-  dplyr::select(study.name,
-                #location, year, prep.method,
-                sample.id, DMC.oven, TCC, X350:X2500)
+  dplyr::select(
+    study.name,
+    # location, year, prep.method,
+    sample.id, DMC.oven, TCC, X350:X2500
+  )
 
 # U15I <- read_excel("./data-raw/Ikeogu_et_al_2017/U15I.xlsx") %>%
 #   rename_at(vars(`350`:`2500`), ~ paste0("X", 350:2500)) %>%
@@ -111,8 +115,3 @@ ikeogu.2017$TCC <- as.numeric(ikeogu.2017$TCC)
 
 # At this point, ikeogu.2017 is ready for export
 usethis::use_data(ikeogu.2017, overwrite = TRUE)
-
-
-
-
-

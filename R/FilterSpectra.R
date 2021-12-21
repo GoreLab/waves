@@ -49,26 +49,27 @@
 #' filtered.test <- ikeogu.2017 %>%
 #'   dplyr::select(-TCC) %>%
 #'   na.omit() %>%
-#'   FilterSpectra(df = .,
-#'                 filter = TRUE,
-#'                 return.distances = TRUE,
-#'                 num.col.before.spectra = 5,
-#'                 window.size = 15)
-#' filtered.test[1:5, c(1:5, (ncol(filtered.test)-5):ncol(filtered.test))]
+#'   FilterSpectra(
+#'     df = .,
+#'     filter = TRUE,
+#'     return.distances = TRUE,
+#'     num.col.before.spectra = 5,
+#'     window.size = 15
+#'   )
+#' filtered.test[1:5, c(1:5, (ncol(filtered.test) - 5):ncol(filtered.test))]
 FilterSpectra <- function(df,
                           filter = TRUE,
                           return.distances = FALSE,
                           num.col.before.spectra = 4,
                           window.size = 10,
-                          verbose = TRUE
-                          ){
+                          verbose = TRUE) {
 
   # Strip off non-spectral columns
   spectra <- df[, (num.col.before.spectra + 1):ncol(df)]
 
   # Error handling
   # mahalanobis function does not allow missing values or non-numeric data
-  if(nrow(spectra) != nrow(na.omit(spectra))){
+  if (nrow(spectra) != nrow(na.omit(spectra))) {
     stop("Input data frame cannot contain missing values! Remove them and try again.")
   }
 
@@ -78,45 +79,46 @@ FilterSpectra <- function(df,
   # Calculate covariance of spectral matrix
   spectra.cov <- tryCatch(
     expr = cov(as.matrix(spectra.subset)),
-    error = function(err){
+    error = function(err) {
       message("Error in covariance matrix calculation. Please increase 'window.size' and try again.")
       print(err)
-      }
-    )
+    }
+  )
 
   # Create list of Mahalanobis distances for each sample and bind to input df
-  h.distances <- mahalanobis(x = spectra.subset, center = colMeans(spectra.subset),
-                             cov = spectra.cov, tol = 1e-22)
-  if(sum(h.distances <= 0) > 0){
+  h.distances <- mahalanobis(
+    x = spectra.subset, center = colMeans(spectra.subset),
+    cov = spectra.cov, tol = 1e-22
+  )
+  if (sum(h.distances <= 0) > 0) {
     stop("Please increase window size.")
   }
   df.distances <- cbind(df, h.distances)
 
-  if(filter){
+  if (filter) {
     # Filter input data based on square of Mahalanobis distance
     chisq95 <- qchisq(p = .95, df = ncol(spectra))
-    df.filtered <- df.distances[which(h.distances < chisq95),]
+    df.filtered <- df.distances[which(h.distances < chisq95), ]
 
     # How many samples were removed?
     if (verbose) {
       if (nrow(df) - nrow(df.filtered) != 1) {
         cat(paste("\nRemoved", nrow(df) - nrow(df.filtered), "rows.\n"))
-      } else{
+      } else {
         cat(paste("\nRemoved 1 row.\n"))
       }
     }
 
-    if(return.distances){
+    if (return.distances) {
       return(df.filtered)
-    } else{
+    } else {
       return(dplyr::select(df.filtered, -h.distances))
     }
-
-  } else{
+  } else {
     # Don't filter, just return input df with or without distances as rightmost column
-    if(return.distances){
+    if (return.distances) {
       return(df.distances)
-    } else{
+    } else {
       return(dplyr::select(df.distances, -h.distances))
     }
   }

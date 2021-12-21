@@ -31,9 +31,11 @@
 #' aggregated.test <- ikeogu.2017 %>%
 #'   dplyr::select(-TCC) %>%
 #'   na.omit() %>%
-#'   AggregateSpectra(grouping.colnames = c("study.name"),
-#'                    reference.value.colname = "DMC.oven",
-#'                    agg.function = "mean")
+#'   AggregateSpectra(
+#'     grouping.colnames = c("study.name"),
+#'     reference.value.colname = "DMC.oven",
+#'     agg.function = "mean"
+#'   )
 #' aggregated.test[1:5, 1:5]
 AggregateSpectra <- function(df,
                              grouping.colnames = c("trial", "plot"),
@@ -51,24 +53,28 @@ AggregateSpectra <- function(df,
   # Set aggregation function to match input
   if (agg.function == "median") {
     agg.function <-
-      function(x)
+      function(x) {
         suppressWarnings(median(as.numeric(as.character(x))))
-  } else{
+      }
+  } else {
     agg.function <-
-      function(x)
+      function(x) {
         suppressWarnings(mean(as.numeric(as.character(x)), na.rm = T))
+      }
   }
 
   # Aggregate data.frame
   df.aggregated <- df %>%
-    dplyr::select(grouping.colnames,
-                  reference.value.colname,
-                  tidyselect::starts_with("X")) %>%
+    dplyr::select(
+      grouping.colnames,
+      reference.value.colname,
+      tidyselect::starts_with("X")
+    ) %>%
     aggregate(by = df[, grouping.colnames], FUN = agg.function)
   # remove duplicated columns
   cols.to.remove <-
     (length(grouping.colnames) + 1):((length(grouping.colnames)) + length(grouping.colnames))
-  df.aggregated <- df.aggregated[,-cols.to.remove]
+  df.aggregated <- df.aggregated[, -cols.to.remove]
 
   return(df.aggregated)
 }
