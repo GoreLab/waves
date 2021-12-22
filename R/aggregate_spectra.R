@@ -1,14 +1,14 @@
 #' @title Aggregate data based on grouping variables and a user-provided
 #'   function
-#' @name AggregateSpectra
+#' @name aggregate_spectra
 #' @description Use grouping variables to collapse spectral \code{data.frame} by
-#'   mean or median. Recommended for use after \code{\link{FilterSpectra}}
+#'   mean or median. Recommended for use after \code{\link{filter_spectra}}
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @importFrom stats aggregate median
 #' @importFrom dplyr select
 #' @importFrom magrittr %>%
 #' @importFrom tidyselect starts_with
-#' @usage AggregateSpectra(df, grouping.colnames, reference.value.colname,
+#' @usage aggregate_spectra(df, grouping.colnames, reference.value.colname,
 #'   agg.function)
 #'
 #' @param df \code{data.frame} object containing one or multiple columns of
@@ -31,24 +31,23 @@
 #' aggregated.test <- ikeogu.2017 %>%
 #'   dplyr::select(-TCC) %>%
 #'   na.omit() %>%
-#'   AggregateSpectra(
-#'     df = .,
+#'   aggregate_spectra(
 #'     grouping.colnames = c("study.name"),
 #'     reference.value.colname = "DMC.oven",
 #'     agg.function = "mean"
 #'   )
 #' aggregated.test[1:5, 1:5]
-AggregateSpectra <- function(df,
+aggregate_spectra <- function(df,
                              grouping.colnames = c("trial", "plot"),
                              reference.value.colname = "reference",
                              agg.function = "mean") {
   # Error handling
   if (!(agg.function %in% c("mean", "median"))) {
-    stop('agg.function must be either "mean" or "median"')
+    rlang::abort('agg.function must be either "mean" or "median"')
   }
 
   if (nrow(df) != nrow(na.omit(df))) {
-    stop("df cannot contain missing values. Omit rows with missing values and try again.")
+    rlang::abort("df cannot contain missing values. Omit rows with missing values and try again.")
   }
 
   # Set aggregation function to match input

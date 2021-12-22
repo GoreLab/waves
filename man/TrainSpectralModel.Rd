@@ -95,7 +95,38 @@ will be printed to the console. Default is \code{TRUE}.}
 \item{vector.input}{The mode of this vector of numbers will be calculated by this function}
 }
 \value{
-
+list of the following:
+\enumerate{
+  \item \code{model} is a model object trained with all rows of \code{df}.
+  \item \code{summary.model.performance} is a \code{data.frame} with model performance
+  statistics in summary format (2 rows, one with mean and one with standard deviation of
+  all training iterations).
+  \item \code{full.model.performance} is a \code{data.frame} with model performance
+  statistics in long format (number of rows = \code{num.iterations})
+  \item \code{predictions} is a \code{data.frame} containing predicted values for each
+  test set entry at each iteration of model training.
+  \item \code{importance} is a \code{data.frame} that contains variable importance for
+  each wavelength. Only available for \code{model.method} options "rf" and "pls".
+  }
+Included summary statistics:
+\itemize{
+  \item Tuned parameters depending on the model algorithm:
+  \itemize{
+    \item \strong{Best.n.comp}, the best number of components
+    \item \strong{Best.ntree}, the best number of trees in an RF model
+    \item \strong{Best.mtry}, the best number of variables to include at every decision point in an RF model
+    }
+  \item \strong{RMSECV}, the root mean squared error of cross-validation
+  \item \strong{R2cv}, the coefficient of multiple determination of cross-validation for PLSR models
+  \item \strong{RMSEP}, the root mean squared error of prediction
+  \item \strong{R2p}, the squared Pearson’s correlation between predicted and observed test set values
+  \item \strong{RPD}, the ratio of standard deviation of observed test set values to RMSEP
+  \item \strong{RPIQ}, the ratio of performance to interquartile difference
+  \item \strong{CCC}, the concordance correlation coefficient
+  \item \strong{Bias}, the average difference between the predicted and observed values
+  \item \strong{SEP}, the standard error of prediction
+  \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted and observed test set values
+}
 
 mode of the numbers in `vector.input`
 }
@@ -114,11 +145,13 @@ ikeogu.2017 \%>\%
   dplyr::rename(reference = DMC.oven) \%>\%
   dplyr::select(sample.id, reference, dplyr::starts_with("X")) \%>\%
   na.omit() \%>\%
-  TrainSpectralModel(df = .,
-                     tune.length = 3,
-                     num.iterations = 3,
-                     best.model.metric = "RMSE",
-                     stratified.sampling = TRUE)
+  TrainSpectralModel(
+    df = .,
+    tune.length = 3,
+    num.iterations = 3,
+    best.model.metric = "RMSE",
+    stratified.sampling = TRUE
+  )
 }
 }
 \author{
