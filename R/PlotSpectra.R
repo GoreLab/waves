@@ -66,7 +66,7 @@ PlotSpectra <- function(df,
   # Strip off non-spectral columns
   spectra <- df[, (num.col.before.spectra + 1):ncol(df)]
 
-  # Error handling
+  # Error handling ---------------------------
   # mahalanobis function does not allow missing values or non-numeric data
   if (nrow(spectra) != nrow(na.omit(spectra))) {
     stop("Input data frame cannot contain missing values! Remove them and try again.")
@@ -74,7 +74,7 @@ PlotSpectra <- function(df,
 
   if (detect.outliers) { # Outlier detection
 
-    # Color-related handling
+    # Color-related handling ---------------------------
     if (!is.null(color) & length(color) == 1) {
       stop("Two colors are required but only one was supplied. Please add another value or set 'color' to 'NULL'")
     }
@@ -90,17 +90,17 @@ PlotSpectra <- function(df,
 
     wavelengths <- readr::parse_number(tidyselect::starts_with("X", vars = colnames(df)))
 
-    # Plot title
+    # Plot title ---------------------------
     if (is.null(alternate.title)) {
       plot.title <- paste0("Chi-Square (", length(wavelengths), " df) 95% cutoff for Mahalanobis distance")
     } else {
       plot.title <- alternate.title
     }
 
-    # Calculate outlier cutoff
+    # Calculate outlier cutoff ---------------------------
     chisq95 <- qchisq(.95, df = length(wavelengths))
 
-    # Calculate Mahalanobis distribution for each scan and identify outliers
+    # Calculate Mahalanobis distribution for each scan and identify outliers ---------------------------
     filtered.df <- FilterSpectra(
       df = df, filter = FALSE, return.distances = TRUE,
       num.col.before.spectra = num.col.before.spectra,
@@ -108,13 +108,13 @@ PlotSpectra <- function(df,
     ) %>%
       mutate(Outlier = ifelse(.data$h.distances > chisq95, TRUE, FALSE))
 
-    # Prepare data frame for plotting
+    # Prepare data frame for plotting ---------------------------
     hdists.df <- filtered.df %>%
       dplyr::select(1, .data$h.distances, .data$Outlier, tidyselect::starts_with("X")) %>%
       tidyr::gather(key = "wl", value = "s.value", tidyselect::starts_with("X")) %>%
       dplyr::mutate(wl = as.numeric(stringr::str_extract(.data$wl, "\\-*\\d+\\.*\\d*")))
 
-    # Create plot
+    # Create plot ---------------------------
     spectral.plot <- ggplot2::ggplot(
       data = hdists.df,
       aes(
@@ -135,7 +135,7 @@ PlotSpectra <- function(df,
         y = "Spectral Value"
       )
 
-    # Print metadata for each outlier
+    # Print metadata for each outlier ---------------------------
     if (verbose) {
       if (sum(hdists.df$Outlier > 0)) {
         cat("Outliers:\n")
@@ -149,7 +149,7 @@ PlotSpectra <- function(df,
     }
   } else { # No outlier detection
 
-    # Color handling
+    # Color handling ---------------------------
     if (!is.null(color) & length(color) > 1) {
       warning("Only one color is required but more than one were supplied. Only the first value will be used")
       color <- color[1]
@@ -166,7 +166,7 @@ PlotSpectra <- function(df,
       plot.title <- alternate.title
     }
 
-    # Prepare data frame for plotting
+    # Prepare data frame for plotting ---------------------------
     prepped.df <- df %>%
       dplyr::select(1, tidyselect::starts_with("X")) %>%
       tidyr::gather(key = "wl", value = "s.value", tidyselect::starts_with("X")) %>%

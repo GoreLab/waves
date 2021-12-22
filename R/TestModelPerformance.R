@@ -16,6 +16,10 @@
 #'   contains reference values, followed by spectral columns. Include no other
 #'   columns to right of spectra! Column names of spectra must start with "X"
 #'   and reference column must be named "reference".
+#' @param preprocessing `r lifecycle::badge("deprecated")` please use
+#'   \code{pretreatment} to specify the specific pretreatment to test. For behavior
+#'   identical to that of \code{preprocessing = TRUE}, set
+#'   \code{pretreatment = 1:13}`.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
@@ -101,7 +105,7 @@ TestModelPerformance <- function(train.data,
                                  trial3 = NULL,
                                  split.test = FALSE,
                                  verbose = TRUE) {
-  #### ERROR HANDLING ####
+  # Error handling ---------------------------
   if (!is.null(cv.scheme)) {
     if (is.null(trial1)) {
       stop("trial1 must be provided if using cv.scheme")
@@ -138,12 +142,12 @@ TestModelPerformance <- function(train.data,
          and requires a tune length of 5.")
   }
 
-  #### END ERROR HANDLING ####
+  # End error handling ---------------------------
 
   n.train <- nrow(train.data)
   n.test <- ifelse(is.null(test.data), 0, nrow(test.data))
 
-  # Perform pretreatments on everything.
+  # Perform pretreatments on everything ---------------------------
   # Returns a list of data frames, one for each transformation specified by pretreatment argument
   if (verbose) {
     cat("Preprocessing initiated.\n")
@@ -156,7 +160,7 @@ TestModelPerformance <- function(train.data,
     pretreatment = pretreatment
   )
 
-  # Training loop
+  # Training loop ---------------------------
   if (verbose) {
     cat("Training models...\n")
   }
@@ -176,7 +180,7 @@ TestModelPerformance <- function(train.data,
       cat(paste("Working on", methods.list[i], "\n", sep = " "))
     }
 
-    # Extract preprocessed data.
+    # Extract preprocessed data ---------------------------
     # df.list contains named data.frames transformed by the requested methods (only).
     # To access a specific method, use df.list[[methods.list[i]]].
     # This will call the preprocessed data.frame by name from the transformed list.
@@ -194,7 +198,7 @@ TestModelPerformance <- function(train.data,
       processed.trial3 <- df.list[[methods.list[i]]][(nrow(trial1) + nrow(trial2) + 1):nrow(train.data), ]
     }
 
-    # Fit models for each pretreatment and output results
+    # Fit models for each pretreatment and output results ---------------------------
     training.results.i <- TrainSpectralModel(
       df = processed.train.data,
       num.iterations = num.iterations,
@@ -251,7 +255,7 @@ TestModelPerformance <- function(train.data,
         c(Pretreatment = methods.list[i], training.results.i$importance)
       )
     }
-  } # End of loop
+  } # End of loop ---------------------------
 
   results.list <- list(
     model = model.list,

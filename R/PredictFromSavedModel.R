@@ -42,11 +42,11 @@ PredictFromSavedModel <- function(input.data,
                                   model.location,
                                   model.method = "pls") {
 
-  # Load model and model statistics
+  # Load model and model statistics ---------------------------
   model.stats <- read.csv(model.stats.location)
   model.object <- readRDS(model.location)
   final.model <- model.object
-  # Match best preprocessing method with index number
+  # Match best preprocessing method with index number ---------------------------
   best.preprocessing.num <- match(
     model.stats$Pretreatment[1],
     c(
@@ -56,13 +56,13 @@ PredictFromSavedModel <- function(input.data,
     )
   )
 
-  # Use DoPreprocessing function to format input.data and preprocess if needed
+  # Use DoPreprocessing function to format input.data and preprocess if needed ---------------------------
   preprocessed <- DoPreprocessing(
     df = input.data, test.data = NULL,
     preprocessing.method = best.preprocessing.num
   )
 
-  # Predict values using imported model, preprocessed/formatted input data, and method of choice
+  # Predict values using imported model, preprocessed/formatted input data, and method of choice ---------------------------
   if (model.method == "pls") {
     # Extract best number of components
     best.ncomp <- model.stats$best.ncomp[1]
@@ -85,7 +85,7 @@ PredictFromSavedModel <- function(input.data,
     ))
   }
 
-  # Bind unique identifiers from the input data to the predicted values
+  # Bind unique identifiers from the input data to the predicted values ---------------------------
   predicted.df <- cbind(input.data[, 1], data.frame(predicted.values))
   colnames(predicted.df) <- c(colnames(input.data)[1], "predicted.values")
 

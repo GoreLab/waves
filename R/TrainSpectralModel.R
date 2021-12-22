@@ -50,6 +50,7 @@
 #'   test set entry at each iteration of model training.
 #'   \item \code{importance} is a \code{data.frame} that contains variable importance for
 #'   each wavelength. Only available for \code{model.method} options "rf" and "pls".
+#'   }
 #' Included summary statistics:
 #' \itemize{
 #'   \item Tuned parameters depending on the model algorithm:
@@ -112,7 +113,7 @@ TrainSpectralModel <- function(df,
                                trial3 = NULL,
                                split.test = FALSE,
                                verbose = TRUE) {
-  #### Error handling ####
+  # Error handling ---------------------------
   if (!(best.model.metric %in% c("RMSE", "Rsquared"))) {
     stop('best.model.metric must be either "RMSE" or "Rsquared"')
   }
@@ -149,7 +150,7 @@ TrainSpectralModel <- function(df,
     "SEP", "RMSEcv", "R2cv", "R2sp", "best.ncomp", "best.ntree", "best.mtry"
   )
 
-  # Train model
+  # Train model ---------------------------
 
   # Partition training and test sets
   if (is.null(test.data)) {
@@ -301,14 +302,14 @@ TrainSpectralModel <- function(df,
         RMSEcv <- NA
       }
 
-
-      # Variable importance can only be performed for pls and rf model types.
+      # Variable importance ---------------------------
+      # Can only be performed for pls and rf model types
       # Each row contains iteration number followed by importance value of each wavelength.
       if (model.method %in% c("pls", "rf")) {
         importance.df.i <- cbind(i, t(importance(data.trained$finalModel, type = 1)))
       }
 
-      # Get model performance statistics
+      # Get model performance statistics ---------------------------
       reference.values <- data.test$reference
       R2sp <- cor(predicted.values, reference.values, method = "spearman")**2 # Squared Spearman's rank correlation
       results.df.i <- cbind(
@@ -317,7 +318,7 @@ TrainSpectralModel <- function(df,
       )
       colnames(results.df.i) <- df.colnames
 
-      # Compile predictions
+      # Compile predictions ---------------------------
       predictions.df.i <- cbind(i, model.method, data.test$unique.id, reference.values, predicted.values)
       colnames(predictions.df.i) <- c("Iteration", "ModelType", "unique.id", "reference", "predicted")
 
@@ -334,7 +335,7 @@ TrainSpectralModel <- function(df,
         )
       }
     }
-  } # end loop
+  } # End of loop
 
   #' @description Get the mode of a set of numbers. Used in getting summary of results
   #' within [TrainSpectralModel()]
@@ -348,7 +349,7 @@ TrainSpectralModel <- function(df,
     return(unique.vector[which.max(tabulate(match(vector.input, unique.vector)))])
   }
 
-  # Create summary data.frame
+  # Create summary data.frame ---------------------------
   summary.df <- rbind(
     summarize_all(results.df, .funs = mean),
     summarize_all(results.df, .funs = sd, na.rm = TRUE),
