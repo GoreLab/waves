@@ -40,7 +40,7 @@
 #' @importFrom dplyr select
 #' @importFrom tidyr drop_na
 #' @importFrom magrittr %>%
-#' @importFrom lifecycle is_present deprecate_warn
+#' @importFrom lifecycle is_present deprecate_warn deprecated
 #'
 #' @return Preprocessed \code{df}` (or list of \code{data.frame}s) with
 #'   reference column intact
@@ -51,8 +51,8 @@
 pretreat_spectra <- function(df,
                             test.data = NULL,
                             pretreatment = 1,
-                            preprocessing.method = depreciated(),
-                            wavelengths = depreciated()) {
+                            preprocessing.method = deprecated(),
+                            wavelengths = deprecated()) {
   # Format input data frames for processing. Combine training.data and test.data
   # so that the same transformations are applied to all samples
   if (!is.null(test.data)) {

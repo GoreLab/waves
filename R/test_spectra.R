@@ -25,6 +25,7 @@
 #' @importFrom dplyr select
 #' @importFrom tidyr pivot_longer pivot_wider
 #' @importFrom rlang abort
+#' @importFrom lifecycle deprecated
 #'
 #' @return \code{list} of 5 objects:
 #'   \enumerate{
@@ -175,10 +176,6 @@ test_spectra <- function(train.data,
   if (!is.null(test.data) && (nrow(test.data) != nrow(na.omit(test.data)))) {
     rlang::abort("Test data cannot contain missing values. \nEither omit missing values or exclude training data (
          set as NULL).")
-  }
-
-  if (variable.importance & !model.method %in% c("pls", "rf")) {
-    rlang::abort('model.method must be "rf" or "pls" if variable.importance is TRUE')
   }
 
   if (model.method == "rf" & tune.length > 5) {

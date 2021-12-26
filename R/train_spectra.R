@@ -81,13 +81,14 @@
 #'
 #' @importFrom caret createDataPartition trainControl train createResample
 #' @importFrom dplyr select mutate summarize_all
-#' @importFrom tidyselect starts_with everything
+#' @importFrom tidyselect starts_with everything all_of
 #' @importFrom magrittr %>% %<>%
 #' @importFrom stats cor predict sd
 #' @importFrom spectacles postResampleSpectro
 #' @importFrom randomForest importance
 #' @importFrom rlang .data abort
 #' @importFrom pls R2 RMSEP mvrValstats MSEP
+#' @importFrom lifecycle deprecated
 #'
 #' @export train_spectra
 #'
@@ -347,7 +348,7 @@ train_spectra <- function(df,
       reference.values <- data.test$reference
       R2sp <- cor(predicted.values, reference.values, method = "spearman")**2 # Squared Spearman's rank correlation
       results.df.i <- cbind(
-        t(i, spectacles::postResampleSpectro(predicted.values, reference.values)),
+        t(c(i, spectacles::postResampleSpectro(pred = predicted.values, obs = reference.values))),
         RMSEcv, R2cv, R2sp, best.ncomp, best.ntree, best.mtry
       )
       colnames(results.df.i) <- df.colnames

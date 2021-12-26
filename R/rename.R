@@ -49,7 +49,7 @@ FilterSpectra <- function(df,
                           window.size = 10,
                           verbose = TRUE) {
   lifecycle::deprecate_warn("0.2.0", "FilterSpectra()", "filter_spectra()")
-  spectra_filter(df = df, ...)
+  filter_spectra(df = df, ...)
 }
 
 #' @export
@@ -128,7 +128,7 @@ TestModelPerformance <- function(train.data,
                                  split.test = FALSE,
                                  verbose = TRUE) {
   lifecycle::deprecate_warn("0.2.0", "TestModelPerformance()", "test_spectra()")
-  test_spectra(df = df, ...)
+  test_spectra(train.data = train.data, ...)
 }
 
 #' @export

@@ -122,9 +122,9 @@ format_cv <- function(trial1,
     tidyr::nest(data = c(-.data$genotype))
   # Random sampling
   if (cv.method == "random") {
-    train.index <- caret::createResample(t1, p = 0.7)
+    train.index <- caret::createResample(y = t1, p = 0.7) # TODO error here. no p argument
   } else if (cv.method == "stratified") {
-    train.index <- caret::createDataPartition(t1$reference, p = 0.7)
+    train.index <- caret::createDataPartition(y = t1$reference, p = 0.7)
   }
 
   # t1.a is always the test set

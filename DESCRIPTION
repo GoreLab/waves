@@ -39,7 +39,9 @@ Imports:
     ggplot2,
     tidyr (>= 1.0),
     stringr,
-    rlang
+    rlang,
+    lifecycle,
+    readr
 RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 2.1.0)

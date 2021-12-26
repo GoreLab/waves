@@ -26,6 +26,7 @@
 #'
 #' @importFrom utils write.csv
 #' @importFrom rlang abort
+#' @importFrom lifecycle deprecated
 #'
 #' @return List of model stats (in \code{data.frame}) and trained model object.
 #'   If the parameter \code{save.model} is TRUE, both objects are saved to

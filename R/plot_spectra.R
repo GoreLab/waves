@@ -34,6 +34,7 @@
 #' @importFrom tidyr gather
 #' @importFrom stringr str_extract
 #' @importFrom rlang .data abort
+#' @importFrom lifecycle deprecated
 #'
 #' @return If verbose, prints unique ID and metadata for rows identified as outliers.
 #'  Returns plot of spectral data with non-outliers in blue and outliers in red.
@@ -64,7 +65,7 @@ plot_spectra <- function(df,
                         color = NULL,
                         alternate.title = NULL,
                         verbose = TRUE,
-                        wavelengths = depreciated()) {
+                        wavelengths = deprecated()) {
 
   # Strip off non-spectral columns
   spectra <- df[, (num.col.before.spectra + 1):ncol(df)]

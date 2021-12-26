@@ -21,6 +21,7 @@
 #'
 #' @importFrom stats predict
 #' @importFrom utils read.csv
+#' @importFrom lifecycle deprecated
 #'
 #' @return \code{data.frame} object of predictions for each sample (row). First
 #'   column is unique identifier supplied by \code{input.data} and second is
@@ -45,7 +46,7 @@ predict_spectra <- function(input.data,
                             model.stats.location,
                             model.location,
                             model.method = "pls",
-                            wavelengths = depreciated()) {
+                            wavelengths = deprecated()) {
 
   if(lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_warn(
