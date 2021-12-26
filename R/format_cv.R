@@ -42,6 +42,8 @@
 #'       values. 70% training and 30% test.
 #'   }
 #'   Default is \code{stratified}.
+#' @param proportion.train Fraction of samples to include in the training set.
+#'   Default is 0.7.
 #' @param seed Number used in the function \code{set.seed()} for reproducible
 #'   randomization. If \code{NULL}, no seed is set. Default is \code{NULL}.
 #' @param remove.genotype boolean that, if \code{TRUE}, removes the "genotype"
@@ -95,6 +97,7 @@ format_cv <- function(trial1,
                      trial3 = NULL,
                      cv.scheme,
                      cv.method = "stratified",
+                     proportion.train = 0.7,
                      seed = NULL,
                      remove.genotype = FALSE) {
   # Error handling
@@ -110,6 +113,10 @@ format_cv <- function(trial1,
     rlang::abort("trial1 and trial2 must each have a column named 'genotype'")
   }
 
+  if (proportion.train > 1 | proportion.train < 0) {
+    rlang::abort("'proportion.train' must be a number between 0 and 1")
+  }
+
   if (!is.null(seed)) {
     set.seed(seed)
   }
@@ -122,9 +129,11 @@ format_cv <- function(trial1,
     tidyr::nest(data = c(-.data$genotype))
   # Random sampling
   if (cv.method == "random") {
-    train.index <- caret::createResample(y = t1, p = 0.7) # TODO error here. no p argument
+    train.index <- sort(sample(x = 1:nrow(t1),
+                               size = proportion.train * nrow(t1),
+                               replace = FALSE, prob = NULL))
   } else if (cv.method == "stratified") {
-    train.index <- caret::createDataPartition(y = t1$reference, p = 0.7)
+    train.index <- caret::createDataPartition(y = t1$reference, p = proportion.train)
   }
 
   # t1.a is always the test set

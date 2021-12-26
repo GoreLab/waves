@@ -12,6 +12,7 @@ save_model(
   model.name = "PredictionModel",
   best.model.metric = "RMSE",
   k.folds = 5,
+  proportion.train = 0.7,
   tune.length = 50,
   model.method = "pls",
   num.iterations = 10,
@@ -66,6 +67,9 @@ either "RMSE" or "Rsquared"}
 
 \item{k.folds}{Number indicating the number of folds for k-fold cross-validation
 during model training. Default is 5.}
+
+\item{proportion.train}{Fraction of samples to include in the training set.
+Default is 0.7.}
 
 \item{tune.length}{Number delineating search space for tuning of the PLSR
 hyperparameter \code{ncomp}. Must be set to 5 when using the random forest

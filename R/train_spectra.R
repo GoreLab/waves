@@ -112,6 +112,7 @@ train_spectra <- function(df,
                           num.iterations,
                           test.data = NULL,
                           k.folds = 5,
+                          proportion.train = 0.7,
                           tune.length = 50,
                           model.method = "pls",
                           best.model.metric = "RMSE",
@@ -180,6 +181,10 @@ train_spectra <- function(df,
     } # else use provided number of iterations
   }
 
+  if (proportion.train > 1 | proportion.train < 0) {
+    rlang::abort("'proportion.train' must be a number between 0 and 1")
+  }
+
   df.colnames <- c(
     "Iteration", "ModelType", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias",
     "SEP", "RMSEcv", "R2cv", "R2sp", "best.ncomp", "best.ntree", "best.mtry"
@@ -193,17 +198,19 @@ train_spectra <- function(df,
     if (stratified.sampling) {
       # Stratified sampling to get representative sample of ground truth (reference column) values
       # Outputs list with n = num.iterations
-      train.index <- caret::createDataPartition(df$reference, p = 0.7, times = num.iterations)
+      train.index <- caret::createDataPartition(df$reference, p = proportion.train, times = num.iterations)
     } else if (!stratified.sampling) {
       # Random sample (not stratified)
-      train.index <- caret::createResample(df, p = 0.7, times = num.iterations)
+      train.index <- sort(sample(x = 1:nrow(df),
+                                 size = proportion.train * nrow(df),
+                                 replace = FALSE, prob = NULL))
     }
   } else if (!is.null(test.data)) {
     # If fixed training and test sets provided
     if (split.test) {
       # Fixed training set + add 70% of samples from test set pool to training set
       train.index <- caret::createDataPartition(test.data$reference,
-                                                p = 0.7, times = num.iterations
+                                                p = proportion.train, times = num.iterations
       )
     } else if (!split.test) {
       # If fixed training and test sets provided but split.test = F
