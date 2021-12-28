@@ -114,41 +114,46 @@ test_spectra <- function(train.data,
                          rf.variable.importance = deprecated()) {
 
   # Deprecate warnings ---------------------------
-  if(lifecycle::is_present(wavelengths)) {
+  if (lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(wavelengths)",
-      details = "Wavelength specification is now inferred from column names.")
+      details = "Wavelength specification is now inferred from column names."
+    )
   }
 
-  if(isTRUE(preprocessing)) {
+  if (isTRUE(preprocessing)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(preprocessing)",
-      details = "To test all pretreatment methods, use 'pretreatment = 1:13'.")
+      details = "To test all pretreatment methods, use 'pretreatment = 1:13'."
+    )
     pretreatment <- 1:13
   }
 
-  if(!isTRUE(preprocessing)) {
+  if (!isTRUE(preprocessing)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(preprocessing)",
-      details = "To test only raw data, use 'pretreatment = 1'.")
+      details = "To test only raw data, use 'pretreatment = 1'."
+    )
     pretreatment <- 1
   }
 
-  if(lifecycle::is_present(rf.variable.importance)) {
+  if (lifecycle::is_present(rf.variable.importance)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(rf.variable importance)",
-      details = "Variable importance is now output by default when `model.method` is set to `pls` or `rf`.")
+      details = "Variable importance is now output by default when `model.method` is set to `pls` or `rf`."
+    )
   }
 
-  if(lifecycle::is_present(output.summary)) {
+  if (lifecycle::is_present(output.summary)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(output.summary)",
-      details = "Summary is now default output alongside full results.")
+      details = "Summary is now default output alongside full results."
+    )
   }
 
   # Error handling ---------------------------
@@ -274,8 +279,8 @@ test_spectra <- function(train.data,
     if (counter == 1) {
       # Set up results compilations in first iteration
       model.list <- ifelse(length(pretreatment) > 1,
-                           list(training.results.i$model),
-                           training.results.i$model
+        list(training.results.i$model),
+        training.results.i$model
       )
       summary.df <- c(Pretreatment = methods.list[i], summary.i)
       results.df <- c(Pretreatment = methods.list[i], training.results.i$model.performance)

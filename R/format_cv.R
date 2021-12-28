@@ -93,13 +93,13 @@
 #' cv.list$train.set[1:5, 1:5]
 #' cv.list$test.set[1:5, 1:5]
 format_cv <- function(trial1,
-                     trial2,
-                     trial3 = NULL,
-                     cv.scheme,
-                     cv.method = "stratified",
-                     proportion.train = 0.7,
-                     seed = NULL,
-                     remove.genotype = FALSE) {
+                      trial2,
+                      trial3 = NULL,
+                      cv.scheme,
+                      cv.method = "stratified",
+                      proportion.train = 0.7,
+                      seed = NULL,
+                      remove.genotype = FALSE) {
   # Error handling
   if (!cv.scheme %in% c("CV0", "CV00", "CV1", "CV2")) {
     rlang::abort("cv.scheme must be 'CV0', 'CV00', 'CV1', or 'CV2'")
@@ -129,9 +129,11 @@ format_cv <- function(trial1,
     tidyr::nest(data = c(-.data$genotype))
   # Random sampling
   if (cv.method == "random") {
-    train.index <- sort(sample(x = 1:nrow(t1),
-                               size = proportion.train * nrow(t1),
-                               replace = FALSE, prob = NULL))
+    train.index <- sort(sample(
+      x = 1:nrow(t1),
+      size = proportion.train * nrow(t1),
+      replace = FALSE, prob = NULL
+    ))
   } else if (cv.method == "stratified") {
     train.index <- caret::createDataPartition(y = t1$reference, p = proportion.train)
   }

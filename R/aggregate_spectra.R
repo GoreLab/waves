@@ -38,9 +38,9 @@
 #'   )
 #' aggregated.test[1:5, 1:5]
 aggregate_spectra <- function(df,
-                             grouping.colnames = c("trial", "plot"),
-                             reference.value.colname = "reference",
-                             agg.function = "mean") {
+                              grouping.colnames = c("trial", "plot"),
+                              reference.value.colname = "reference",
+                              agg.function = "mean") {
   # Error handling
   if (!(agg.function %in% c("mean", "median"))) {
     rlang::abort('agg.function must be either "mean" or "median"')

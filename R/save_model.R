@@ -54,46 +54,49 @@
 #' test.model$best.model.stats
 #' }
 save_model <- function(df,
-                      save.model = TRUE,
-                      pretreatment = 1,
-                      model.save.folder = NULL,
-                      model.name = "PredictionModel",
-                      best.model.metric = "RMSE",
-                      k.folds = 5,
-                      proportion.train = 0.7,
-                      tune.length = 50,
-                      model.method = "pls",
-                      num.iterations = 10,
-                      stratified.sampling = TRUE,
-                      cv.scheme = NULL,
-                      trial1 = NULL,
-                      trial2 = NULL,
-                      trial3 = NULL,
-                      verbose = TRUE,
-                      wavelengths = deprecated(),
-                      autoselect.preprocessing = deprecated(),
-                      preprocessing.method = deprecated()) {
+                       save.model = TRUE,
+                       pretreatment = 1,
+                       model.save.folder = NULL,
+                       model.name = "PredictionModel",
+                       best.model.metric = "RMSE",
+                       k.folds = 5,
+                       proportion.train = 0.7,
+                       tune.length = 50,
+                       model.method = "pls",
+                       num.iterations = 10,
+                       stratified.sampling = TRUE,
+                       cv.scheme = NULL,
+                       trial1 = NULL,
+                       trial2 = NULL,
+                       trial3 = NULL,
+                       verbose = TRUE,
+                       wavelengths = deprecated(),
+                       autoselect.preprocessing = deprecated(),
+                       preprocessing.method = deprecated()) {
 
   # Deprecate warnings
-  if(lifecycle::is_present(wavelengths)) {
+  if (lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "save_model(wavelengths)",
-      details = "Wavelength specification is now inferred from column names.")
+      details = "Wavelength specification is now inferred from column names."
+    )
   }
 
-  if(lifecycle::is_present(autoselect.preprocessing)) {
+  if (lifecycle::is_present(autoselect.preprocessing)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "save_model(autoselect.preprocessing)",
-      details = "If multiple pretreatment methods are supplied, the best will be selected automatically.")
+      details = "If multiple pretreatment methods are supplied, the best will be selected automatically."
+    )
   }
 
-  if(lifecycle::is_present(preprocessing.method)) {
+  if (lifecycle::is_present(preprocessing.method)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "save_model(preprocessing.method)",
-      with = "save_model(pretreatment)")
+      with = "save_model(pretreatment)"
+    )
   }
 
   # Error handling
@@ -149,8 +152,8 @@ save_model <- function(df,
     # Use results data frame to determine best pretreatment technique
     results.df <- training.results$summary.model.performance
     best.type.num <- ifelse(best.model.metric == "RMSE",
-                            which.min(results.df$RMSE),
-                            which.max(results.df$R2p)
+      which.min(results.df$RMSE),
+      which.max(results.df$R2p)
     )
     # Set chosen model as best.model for export
     best.model <- training.results$model[[best.type.num]]
@@ -176,10 +179,10 @@ save_model <- function(df,
     }
     # Output stats to model.save.folder as 'model.name_stats.csv'
     write.csv(best.model.stats,
-              file = paste0(
-                model.save.folder, "/", model.name,
-                "_stats.csv"
-              ), row.names = FALSE
+      file = paste0(
+        model.save.folder, "/", model.name,
+        "_stats.csv"
+      ), row.names = FALSE
     )
     # Save model in save location as 'model.name.Rds'
     saveRDS(best.model, file = paste0(

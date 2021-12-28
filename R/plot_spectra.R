@@ -59,13 +59,13 @@
 #'   )
 #' }
 plot_spectra <- function(df,
-                        num.col.before.spectra = 1,
-                        window.size = 10,
-                        detect.outliers = TRUE,
-                        color = NULL,
-                        alternate.title = NULL,
-                        verbose = TRUE,
-                        wavelengths = deprecated()) {
+                         num.col.before.spectra = 1,
+                         window.size = 10,
+                         detect.outliers = TRUE,
+                         color = NULL,
+                         alternate.title = NULL,
+                         verbose = TRUE,
+                         wavelengths = deprecated()) {
 
   # Strip off non-spectral columns
   spectra <- df[, (num.col.before.spectra + 1):ncol(df)]
@@ -92,11 +92,12 @@ plot_spectra <- function(df,
       color <- scales::hue_pal()(2)
     }
 
-    if(lifecycle::is_present(wavelengths)) {
+    if (lifecycle::is_present(wavelengths)) {
       lifecycle::deprecate_warn(
         when = "0.2.0",
         what = "plot_spectra(wavelengths)",
-        details = "Wavelength specification is now inferred from column names.")
+        details = "Wavelength specification is now inferred from column names."
+      )
     }
 
     wavelengths <- readr::parse_number(tidyselect::starts_with("X", vars = colnames(df)))
