@@ -5,9 +5,9 @@
 #'   mean or median. Recommended for use after \code{\link{filter_spectra}}
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @importFrom stats aggregate median
-#' @importFrom dplyr select
+#' @importFrom dplyr select group_by_at summarize across
 #' @importFrom magrittr %>%
-#' @importFrom tidyselect starts_with
+#' @importFrom tidyselect starts_with all_of everything
 #' @usage aggregate_spectra(df, grouping.colnames, reference.value.colname,
 #'   agg.function)
 #'
@@ -38,7 +38,7 @@
 #'   )
 #' aggregated.test[1:5, 1:5]
 aggregate_spectra <- function(df,
-                              grouping.colnames = c("trial", "plot"),
+                              grouping.colnames = c("unique.id"),
                               reference.value.colname = "reference",
                               agg.function = "mean") {
   # Error handling
@@ -66,15 +66,13 @@ aggregate_spectra <- function(df,
   # Aggregate data.frame
   df.aggregated <- df %>%
     dplyr::select(
-      grouping.colnames,
-      reference.value.colname,
+      tidyselect::all_of(grouping.colnames),
+      tidyselect::all_of(reference.value.colname),
       tidyselect::starts_with("X")
     ) %>%
-    aggregate(by = df[, grouping.colnames], FUN = agg.function)
-  # remove duplicated columns
-  cols.to.remove <-
-    (length(grouping.colnames) + 1):((length(grouping.colnames)) + length(grouping.colnames))
-  df.aggregated <- df.aggregated[, -cols.to.remove]
+    dplyr::group_by_at(grouping.colnames) %>%
+    dplyr::summarize(dplyr::across(.cols = tidyselect::everything(),
+                                   .fns = agg.function))
 
   return(df.aggregated)
 }

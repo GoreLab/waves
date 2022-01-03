@@ -26,12 +26,12 @@ NULL
 #' @export
 AggregateSpectra <- function(
                              df,
-                             grouping.colnames = c("trial", "plot"),
+                             grouping.colnames = c("unique.id"),
                              reference.value.colname = "reference",
                              agg.function = "mean") {
   lifecycle::deprecate_warn("0.2.0", "AggregateSpectra()", "aggregate_spectra()")
   aggregate_spectra(df,
-    grouping.colnames = c("trial", "plot"),
+    grouping.colnames = c("unique.id"),
     reference.value.colname = "reference",
     agg.function = "mean"
   )

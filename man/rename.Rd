@@ -14,7 +14,7 @@
 \usage{
 AggregateSpectra(
   df,
-  grouping.colnames = c("trial", "plot"),
+  grouping.colnames = c("unique.id"),
   reference.value.colname = "reference",
   agg.function = "mean"
 )
