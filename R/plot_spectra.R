@@ -26,7 +26,7 @@
 #' @param wavelengths `r lifecycle::badge("deprecated")` \code{wavelengths} is no
 #'   longer supported; this information is now inferred from \code{df} column names
 #'
-#' @importFrom dplyr mutate distinct
+#' @importFrom dplyr select mutate distinct
 #' @importFrom tidyselect starts_with
 #' @importFrom readr parse_number
 #' @importFrom ggplot2 ggplot aes geom_line theme_minimal labs scale_color_manual
@@ -100,7 +100,10 @@ plot_spectra <- function(df,
       )
     }
 
-    wavelengths <- readr::parse_number(tidyselect::starts_with("X", vars = colnames(df)))
+    wavelengths <- df %>%
+      dplyr::select(tidyselect::starts_with("X")) %>%
+      colnames() %>%
+      readr::parse_number()
 
     # Plot title ---------------------------
     if (is.null(alternate.title)) {
