@@ -14,7 +14,7 @@
 \usage{
 AggregateSpectra(
   df,
-  grouping.colnames = c("trial", "plot"),
+  grouping.colnames = c("unique.id"),
   reference.value.colname = "reference",
   agg.function = "mean"
 )
@@ -36,6 +36,7 @@ FormatCV(
   trial3 = NULL,
   cv.scheme,
   cv.method = "stratified",
+  proportion.train = 0.7,
   seed = NULL,
   remove.genotype = FALSE
 )
@@ -65,6 +66,7 @@ SaveModel(
   model.name = "PredictionModel",
   best.model.metric = "RMSE",
   k.folds = 5,
+  proportion.train = 0.7,
   tune.length = 50,
   model.method = "pls",
   num.iterations = 10,
@@ -82,6 +84,7 @@ TestModelPerformance(
   test.data = NULL,
   pretreatment = 1,
   k.folds = 5,
+  proportion.train = 0.7,
   tune.length = 50,
   model.method = "pls",
   best.model.metric = "RMSE",
@@ -99,6 +102,7 @@ TrainSpectralModel(
   num.iterations,
   test.data = NULL,
   k.folds = 5,
+  proportion.train = 0.7,
   tune.length = 50,
   model.method = "pls",
   best.model.metric = "RMSE",

@@ -1,17 +1,29 @@
-# waves 0.1.1.9000
+# waves 0.2.0
 
-* Added more informative error message and documentation for random forest tune length (tune.length must be set to 5 when model.algorithm == "rf").
-* Additional flexibility for `PlotSpectra()` including color and title customization and the option to forgo filtering.
+* Update all files to conform to the tidyverse style guide (#6).
+* All functions renamed to match tidystyle. Old functions names work will be dropped after this version: 
+    - `AggregateSpectra` -> `aggregate_spectra()`
+    - `DoPreprocessing` -> `pretreat_spectra()`
+    - `FilterSpectra` -> `filter_spectra()`
+    - `FormatCV`-> `format_cv()`
+    - `PlotSpectra()`-> `plot_spectra()`
+    - `SaveModel()`-> `save_model()`
+    - `TestModelPerformance()`-> `test_spectra()`
+    - `TrainSpectralModel()`-> `train_spectra()`
+* "Preprocessing" has been renamed "Pretreatment" to minimize confusion with physical preprocessing of samples prior to scanning. Arguments have been renamed to reflect these changes (`preprocessing` is now `pretreatment`).
+* Added more informative error message and documentation for random forest tune length (`tune.length` must be set to 5 when `model.algorithm == "rf"`).
+* Additional flexibility for `plot_spectra()` including color and title customization and the option to forgo filtering (#5).
 * Named list output for all functions to enable easier access to individual elements.
-* Always return model and variable importance results with `TrainSpectralModel()` and `TestModelPerformance()`.
+* Always return model and variable importance results with `train_spectra()` and `test_spectra()`.
 * Add variable importance for PLSR (#9).
 * Enable selection of k for k-fold cross-validation within the training set. Previously, k was fixed at 5 (#10).
-* "Preprocessing" has been renamed "Pretreatment" to minimize confusion with physical preprocessing of samples prior to scanning. Arguments have been renamed to reflect these changes (`preprocessing` is now `pretreatment`).
-* `SaveModel()` now automatically selects the best model if provided with multiple pretreatments.
+* `save_model()` now automatically selects the best model if provided with multiple pretreatments.
 * Code simplified and streamlined to facilitate future updates.
 * Export predicted values as well as performance statistics for each training iteration (#11).
 * `wavelengths` is no longer a required argument for any of the *waves* functions.
-* Update all files to conform to the tidyverse style guide
+* The proportion of samples to include in the training set can now be selected with the argument `proportion.train`. Previously, this proportion was fixed at 0.7 (#13).
+* Bug fix: `aggregate_spectra()` now allows for aggregation by a single grouping column (#14).
+
 
 # waves 0.1.1
 

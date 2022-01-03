@@ -9,7 +9,7 @@ predict_spectra(
   model.stats.location,
   model.location,
   model.method = "pls",
-  wavelengths = depreciated()
+  wavelengths = deprecated()
 )
 }
 \arguments{

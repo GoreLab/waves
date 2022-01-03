@@ -40,7 +40,7 @@
 #' @importFrom dplyr select
 #' @importFrom tidyr drop_na
 #' @importFrom magrittr %>%
-#' @importFrom lifecycle is_present deprecate_warn
+#' @importFrom lifecycle is_present deprecate_warn deprecated
 #'
 #' @return Preprocessed \code{df}` (or list of \code{data.frame}s) with
 #'   reference column intact
@@ -49,10 +49,10 @@
 #' @examples
 #' pretreat_spectra(df = ikeogu.2017)[1:5, 1:5]
 pretreat_spectra <- function(df,
-                            test.data = NULL,
-                            pretreatment = 1,
-                            preprocessing.method = depreciated(),
-                            wavelengths = depreciated()) {
+                             test.data = NULL,
+                             pretreatment = 1,
+                             preprocessing.method = deprecated(),
+                             wavelengths = deprecated()) {
   # Format input data frames for processing. Combine training.data and test.data
   # so that the same transformations are applied to all samples
   if (!is.null(test.data)) {
@@ -64,15 +64,17 @@ pretreat_spectra <- function(df,
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "pretreat_spectra(preprocessing.method)",
-      with = "pretreat_spectra(pretreatment)")
+      with = "pretreat_spectra(pretreatment)"
+    )
     pretreatment <- preprocessing.method
   }
 
-  if(lifecycle::is_present(wavelengths)) {
+  if (lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "pretreat_spectra(wavelengths)",
-      details = "Wavelength specification is now inferred from column names.")
+      details = "Wavelength specification is now inferred from column names."
+    )
   }
 
   # Remove rows with missing spectral data (shouldn't be any, but this is just in case)

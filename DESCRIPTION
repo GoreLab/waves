@@ -1,45 +1,55 @@
 Package: waves
 Title: Vis-NIR Spectral Analysis Wrapper
 Version: 0.1.1.9000
-Authors@R: c(
-              person(given = "Jenna", family = "Hershberger", role = c("aut", "cre"),
-                email = "jmh579@cornell.edu",
-                comment = c(ORCID = "0000-0002-3147-6867")),
-              person(given = "Michael", family = "Gore", role = "ths"),
-              person("NSF BREAD IOS-1543958", role = "fnd")
-              )
-Description: Originally designed application in the context of resource-limited plant research 
-    and breeding programs, 'waves' provides an open-source solution to spectral data processing 
-    and model development by bringing useful packages together into a streamlined pipeline. 
-    This package is wrapper for functions related to the analysis of point visible and 
-    near-infrared reflectance measurements. It includes visualization, filtering, aggregation, 
-    preprocessing, cross-validation set formation, model training, and prediction functions to 
-    enable open-source association of spectral and reference data. This package is documented 
-    in a peer-reviewed manuscript in the Plant Phenome Journal <doi:10.1002/ppj2.20012>.
-    Specialized cross-validation schemes are described in detail in Jarquín et al. (2017) 
-    <doi:10.3835/plantgenome2016.12.0130>. Example data is from Ikeogu et al. (2017) 
-    <doi:10.1371/journal.pone.0188918>.
-URL: https://github.com/GoreLab/waves 
+Authors@R: 
+    c(person(given = "Jenna",
+             family = "Hershberger",
+             role = c("aut", "cre"),
+             email = "jmh579@cornell.edu",
+             comment = c(ORCID = "0000-0002-3147-6867")),
+      person(given = "Michael",
+             family = "Gore",
+             role = "ths"),
+      person(given = "NSF BREAD IOS-1543958",
+             role = "fnd"))
 Maintainer: Jenna Hershberger <jmh579@cornell.edu>
-BugReports: https://github.com/GoreLab/waves/issues 
-Depends: R (>= 3.5)
+Description: Originally designed application in the context of
+    resource-limited plant research and breeding programs, 'waves'
+    provides an open-source solution to spectral data processing and model
+    development by bringing useful packages together into a streamlined
+    pipeline.  This package is wrapper for functions related to the
+    analysis of point visible and near-infrared reflectance measurements.
+    It includes visualization, filtering, aggregation, preprocessing,
+    cross-validation set formation, model training, and prediction
+    functions to enable open-source association of spectral and reference
+    data. This package is documented in a peer-reviewed manuscript in the
+    Plant Phenome Journal <doi:10.1002/ppj2.20012>.  Specialized
+    cross-validation schemes are described in detail in Jarquín et al.
+    (2017) <doi:10.3835/plantgenome2016.12.0130>. Example data is from
+    Ikeogu et al. (2017) <doi:10.1371/journal.pone.0188918>.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
+URL: https://github.com/GoreLab/waves
+BugReports: https://github.com/GoreLab/waves/issues
+Depends: 
+    R (>= 3.5)
 Imports: 
-    dplyr,
-    prospectr,
-    spectacles,
     caret,
-    pls,
-    randomForest,
-    scales,
-    magrittr,
-    tidyselect,
+    dplyr,
     ggplot2,
-    tidyr (>= 1.0),
+    lifecycle,
+    magrittr,
+    pls,
+    prospectr,
+    randomForest,
+    readr,
+    rlang,
+    scales,
+    spectacles,
     stringr,
-    rlang
-RoxygenNote: 7.1.1
+    tidyr (>= 1.0),
+    tidyselect
 Suggests: 
     testthat (>= 2.1.0)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1

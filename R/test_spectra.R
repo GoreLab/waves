@@ -25,6 +25,7 @@
 #' @importFrom dplyr select
 #' @importFrom tidyr pivot_longer pivot_wider
 #' @importFrom rlang abort
+#' @importFrom lifecycle deprecated
 #'
 #' @return \code{list} of 5 objects:
 #'   \enumerate{
@@ -96,6 +97,7 @@ test_spectra <- function(train.data,
                          test.data = NULL,
                          pretreatment = 1,
                          k.folds = 5,
+                         proportion.train = 0.7,
                          tune.length = 50,
                          model.method = "pls",
                          best.model.metric = "RMSE",
@@ -112,41 +114,46 @@ test_spectra <- function(train.data,
                          rf.variable.importance = deprecated()) {
 
   # Deprecate warnings ---------------------------
-  if(lifecycle::is_present(wavelengths)) {
+  if (lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(wavelengths)",
-      details = "Wavelength specification is now inferred from column names.")
+      details = "Wavelength specification is now inferred from column names."
+    )
   }
 
-  if(isTRUE(preprocessing)) {
+  if (isTRUE(preprocessing)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(preprocessing)",
-      details = "To test all pretreatment methods, use 'pretreatment = 1:13'.")
+      details = "To test all pretreatment methods, use 'pretreatment = 1:13'."
+    )
     pretreatment <- 1:13
   }
 
-  if(!isTRUE(preprocessing)) {
+  if (!isTRUE(preprocessing)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(preprocessing)",
-      details = "To test only raw data, use 'pretreatment = 1'.")
+      details = "To test only raw data, use 'pretreatment = 1'."
+    )
     pretreatment <- 1
   }
 
-  if(lifecycle::is_present(rf.variable.importance)) {
+  if (lifecycle::is_present(rf.variable.importance)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(rf.variable importance)",
-      details = "Variable importance is now output by default when `model.method` is set to `pls` or `rf`.")
+      details = "Variable importance is now output by default when `model.method` is set to `pls` or `rf`."
+    )
   }
 
-  if(lifecycle::is_present(output.summary)) {
+  if (lifecycle::is_present(output.summary)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(output.summary)",
-      details = "Summary is now default output alongside full results.")
+      details = "Summary is now default output alongside full results."
+    )
   }
 
   # Error handling ---------------------------
@@ -175,10 +182,6 @@ test_spectra <- function(train.data,
   if (!is.null(test.data) && (nrow(test.data) != nrow(na.omit(test.data)))) {
     rlang::abort("Test data cannot contain missing values. \nEither omit missing values or exclude training data (
          set as NULL).")
-  }
-
-  if (variable.importance & !model.method %in% c("pls", "rf")) {
-    rlang::abort('model.method must be "rf" or "pls" if variable.importance is TRUE')
   }
 
   if (model.method == "rf" & tune.length > 5) {
@@ -248,6 +251,7 @@ test_spectra <- function(train.data,
       num.iterations = num.iterations,
       test.data = processed.test.data,
       k.folds = k.folds,
+      proportion.train = proportion.train,
       tune.length = tune.length,
       model.method = model.method,
       stratified.sampling = stratified.sampling,
@@ -275,8 +279,8 @@ test_spectra <- function(train.data,
     if (counter == 1) {
       # Set up results compilations in first iteration
       model.list <- ifelse(length(pretreatment) > 1,
-                           list(training.results.i$model),
-                           training.results.i$model
+        list(training.results.i$model),
+        training.results.i$model
       )
       summary.df <- c(Pretreatment = methods.list[i], summary.i)
       results.df <- c(Pretreatment = methods.list[i], training.results.i$model.performance)

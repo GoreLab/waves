@@ -21,6 +21,7 @@
 #'
 #' @importFrom stats predict
 #' @importFrom utils read.csv
+#' @importFrom lifecycle deprecated
 #'
 #' @return \code{data.frame} object of predictions for each sample (row). First
 #'   column is unique identifier supplied by \code{input.data} and second is
@@ -45,13 +46,13 @@ predict_spectra <- function(input.data,
                             model.stats.location,
                             model.location,
                             model.method = "pls",
-                            wavelengths = depreciated()) {
-
-  if(lifecycle::is_present(wavelengths)) {
+                            wavelengths = deprecated()) {
+  if (lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "predict_spectra(wavelengths)",
-      details = "Wavelength specification is now inferred from column names.")
+      details = "Wavelength specification is now inferred from column names."
+    )
   }
 
   # Load model and model statistics ---------------------------
@@ -80,8 +81,8 @@ predict_spectra <- function(input.data,
     best.ncomp <- model.stats$best.ncomp[1]
     # Get predictions
     predicted.values <- as.numeric(predict(final.model,
-                                           newdata = as.matrix(preprocessed[2:ncol(preprocessed)]),
-                                           ncomp = best.ncomp
+      newdata = as.matrix(preprocessed[2:ncol(preprocessed)]),
+      ncomp = best.ncomp
     ))
   } else if (model.method == "svmLinear") {
     predicted.values <- as.numeric(predict(final.model, newdata = preprocessed))
@@ -91,9 +92,9 @@ predict_spectra <- function(input.data,
     best.ntree <- final.model$ntree
     best.mtry <- final.model$mtry
     predicted.values <- as.numeric(predict(final.model,
-                                           newdata = preprocessed,
-                                           ntree = best.ntree,
-                                           mtry = best.mtry
+      newdata = preprocessed,
+      ntree = best.ntree,
+      mtry = best.mtry
     ))
   }
 

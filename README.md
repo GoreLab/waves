@@ -8,6 +8,8 @@
 
 Originally designed application in the context of resource-limited plant research and breeding programs, `waves` provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, preprocessing, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data. 
 
+*Please note: function names were updated as of version 0.2.0. Old function names still work in this version but will be retired in upcoming package versions.*
+
 ## Cite
 This package is documented in a peer-reviewed manuscript in the Plant Phenome Journal. Please cite the manuscript if you have found this package to be useful! 
 
@@ -33,32 +35,32 @@ devtools::install_github("GoreLab/waves")
 ### 1. Format your data. Match spectra with reference values so that you have a dataframe with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with "X".
 ![Example Format](man/figures/formatted_data.png)
 
-### 2. Visualize and filter spectra using `PlotSpectra()` and `FilterSpectra()`.
+### 2. Visualize and filter spectra using `plot_spectra()` and `filter_spectra()`.
 ![Filter data](man/figures/filter_data.png)
 
-### 3. If you have more than one scan per unique identifier, aggregate the scans by mean or median with `AggregateSpectra()`.
+### 3. If you have more than one scan per unique identifier, aggregate the scans by mean or median with `aggregate_spectra()`.
 ![Aggregate](man/figures/aggregate.png)
 
-### 4. Use `TestModelPerformance()` to perform preprocessing, cross-validation set formation, and model training functions over multiple iterations.
+### 4. Use `test_spectra()` to perform spectral pretreatment, cross-validation set formation, and model training functions over multiple iterations.
 
-#### a. Applies any of 12 combinations of spectral preprocessing methods using `DoPreprocessing()`.
+#### a. Applies any of 12 combinations of spectral pretreatment methods using `pretreat_spectra()`.
 ![Preprocess](man/figures/preprocess.png)
 
-#### b. Determines cross-validation scheme with `FormatCV()`. Choose from random, stratified random, or a plant breeding-specific scheme from [Jarqu&iacute;n et *al.*, 2017. *The Plant Genome*](https://doi.org/10.3835/plantgenome2016.12.0130).
+#### b. Determines cross-validation scheme with `format_cv()`. Choose from random, stratified random, or a plant breeding-specific scheme from [Jarqu&iacute;n et *al.*, 2017. *The Plant Genome*](https://doi.org/10.3835/plantgenome2016.12.0130).
 ![CV](man/figures/cv_schemes.png)
 
-#### c. Trains spectral prediction models using `TrainSpectralModel()`.
+#### c. Trains spectral prediction models using `train_spectra()`.
    - Choose from partial least squares regression, random forest, and support vector machine algorithms
    - Uses 5-fold cross validation within the training set to tune model hyperparameters
    - Outputs model performance statistics (RMSE, R<sup>2</sup>, Bias, etc.) as assessed with test set
 
-### 5. Save trained prediction models with `SaveModel()`.
+### 5. Save trained prediction models with `save_model()`.
   - Intended for a production environment
-  - Can evaluate preprocessing methods using the input dataset
+  - Can evaluate spectral pretreatment methods using the input dataset
   - Selects best model using the metric provided (RMSE or  R<sup>2</sup>)
   - Returns trained model with option to save as .Rds object
 
-### 6. Predict phenotypic values with new spectra and a saved model using `PredictFromSavedModel()`.
+### 6. Predict phenotypic values with new spectra and a saved model using `predict_spectra()`.
 
 
 ## Examples
@@ -107,16 +109,13 @@ C16Mval <- ikeogu.2017 %>% filter(study.name == "C16Mval") %>%
   dplyr::select(unique.id, reference, starts_with("X")) %>% 
   na.omit()
   
-# Then try out `TestModelPerformance()` to predict reference values from spectra
-test_results <- TestModelPerformance(train.data = C16Mcal, 
-                                     test.data = C16Mval,
-                                     num.iterations = 10, 
-                                     preprocessing = T, 
-                                     summary = F,
-                                     wavelengths = 350:2500)
+# Then try out `test_spectra()` to predict reference values from spectra
+test_results <- test_spectra(train.data = C16Mcal, 
+                             test.data = C16Mval,
+                             num.iterations = 10)
 ```
 ### `waves` prediction model performance
-![Pretreatment performance with example data](man/figures/testplot_all_R2.png)
+![Pretreatment performance with example data](man/figures/testplot_all_R2_hlines.png)
 
 Distributions of R<sub>p</sub><sup>2</sup>, the squared Pearson’s correlation between predicted and observed for the test set, for partial least squares regression (PLSR) models of two root quality traits trained on samples from the C16Mcal dataset and tested on samples from the C16Mval dataset from [Ikeogu et *al.* (2017) *PLoS ONE*](https://doi.org/10.1371/journal.pone.0188918) with raw data or after pretreatment. 
 

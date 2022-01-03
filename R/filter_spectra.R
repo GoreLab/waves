@@ -61,11 +61,11 @@
 #'   )
 #' filtered.test[1:5, c(1:5, (ncol(filtered.test) - 5):ncol(filtered.test))]
 filter_spectra <- function(df,
-                          filter = TRUE,
-                          return.distances = FALSE,
-                          num.col.before.spectra = 4,
-                          window.size = 10,
-                          verbose = TRUE) {
+                           filter = TRUE,
+                           return.distances = FALSE,
+                           num.col.before.spectra = 4,
+                           window.size = 10,
+                           verbose = TRUE) {
 
   # Strip off non-spectral columns
   spectra <- df[, (num.col.before.spectra + 1):ncol(df)]

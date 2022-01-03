@@ -11,6 +11,7 @@ format_cv(
   trial3 = NULL,
   cv.scheme,
   cv.method = "stratified",
+  proportion.train = 0.7,
   seed = NULL,
   remove.genotype = FALSE
 )
@@ -52,6 +53,9 @@ and test sets. Options for \code{cv.method} include:
     values. 70% training and 30% test.
 }
 Default is \code{stratified}.}
+
+\item{proportion.train}{Fraction of samples to include in the training set.
+Default is 0.7.}
 
 \item{seed}{Number used in the function \code{set.seed()} for reproducible
 randomization. If \code{NULL}, no seed is set. Default is \code{NULL}.}
