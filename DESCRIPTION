@@ -46,6 +46,7 @@ Imports:
     scales,
     spectacles,
     stringr,
+    tibble,
     tidyr (>= 1.0),
     tidyselect
 Suggests: 

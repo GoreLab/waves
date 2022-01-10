@@ -122,23 +122,23 @@ test_spectra <- function(train.data,
     )
   }
 
-  if (isTRUE(preprocessing)) {
+  if (is_present(preprocessing)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(preprocessing)",
-      details = "To test all pretreatment methods, use 'pretreatment = 1:13'."
+      details = "To test all pretreatment methods, use 'pretreatment = 1:13'. To test only raw data, use 'pretreatment = 1'."
     )
-    pretreatment <- 1:13
+    # pretreatment <- 1:13
   }
 
-  if (!isTRUE(preprocessing)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
-      what = "test_spectra(preprocessing)",
-      details = "To test only raw data, use 'pretreatment = 1'."
-    )
-    pretreatment <- 1
-  }
+  # if (!isTRUE(preprocessing)) {
+  #   lifecycle::deprecate_warn(
+  #     when = "0.2.0",
+  #     what = "test_spectra(preprocessing)",
+  #     details = "To test only raw data, use 'pretreatment = 1'."
+  #   )
+  #   pretreatment <- 1
+  # }
 
   if (lifecycle::is_present(rf.variable.importance)) {
     lifecycle::deprecate_warn(
@@ -173,8 +173,6 @@ test_spectra <- function(train.data,
     train.data <- trial1
   }
 
-  num.col.before.reference <- ifelse(!is.null(cv.scheme), 2, 1)
-
   if (nrow(train.data) != nrow(na.omit(train.data))) {
     rlang::abort("Training data cannot contain missing values.")
   }
@@ -202,8 +200,10 @@ test_spectra <- function(train.data,
   if (!is.null(cv.scheme)) {
     train.data <- rbind(trial1, trial2, trial3)
   }
+
   df.list <- pretreat_spectra(
-    df = train.data, test.data = test.data,
+    df = train.data,
+    test.data = test.data,
     pretreatment = pretreatment
   )
 
@@ -263,14 +263,20 @@ test_spectra <- function(train.data,
     )
 
     if (length(pretreatment > 1)) {
+      # Add Pretreatment column to each data.frame in the training results list
+      for (j in 2:length(training.results.i)) {
+        training.results.i[[j]] <- cbind("Pretreatment" = methods.list[i], training.results.i[[j]])
+        rownames(training.results.i[[j]]) <- NULL
+      }
+
       # Reformat summary statistics data.frame so multiple pretreatments can be stacked
       # Put pretreatment name in first column followed by performance statistics
-      # Append Summary_type (mean, sd, mode) to statistic name to flatten into a single row
+      # Append SummaryType (mean, sd, mode) to statistic name to flatten into a single row
       summary.i <- training.results.i$summary.model.performance %>%
         tidyr::pivot_longer(cols = .data$RMSEp:.data$best.mtry) %>%
         pivot_wider(
-          id_cols = .data$Summary_type,
-          names_from = c(.data$name, .data$Summary_type), names_sep = "."
+          id_cols = c(.data$Pretreatment, .data$SummaryType),
+          names_from = c(.data$name, .data$SummaryType), names_sep = "."
         )
     } else {
       summary.i <- training.results.i$summary.model.performance
@@ -279,31 +285,32 @@ test_spectra <- function(train.data,
     if (counter == 1) {
       # Set up results compilations in first iteration
       model.list <- ifelse(length(pretreatment) > 1,
-        list(training.results.i$model),
-        training.results.i$model
+        list(training.results.i$model), # if TRUE
+        training.results.i$model # if FALSE
       )
-      summary.df <- c(Pretreatment = methods.list[i], summary.i)
-      results.df <- c(Pretreatment = methods.list[i], training.results.i$model.performance)
-      predictions.df <- c(Pretreatment = methods.list[i], training.results.i$predictions)
-      importance.df <- c(Pretreatment = methods.list[i], training.results.i$importance)
+      summary.df <- summary.i
+      results.df <- training.results.i$model.performance
+      predictions.df <- training.results.i$predictions
+      importance.df <- training.results.i$importance
     } else {
       # Add new results to existing objects
       model.list <- append(model.list, list(training.results.i$model))
-      summary.df <- rbind(summary.df, c(Pretreatment = methods.list[i], summary.i))
-      results.df <- rbind(
-        results.df,
-        c(Pretreatment = methods.list[i], training.results.i$model.performance)
-      )
-      predictions.df <- rbind(
-        predictions.df,
-        c(Pretreatment = methods.list[i], training.results.i$predictions)
-      )
-      importance.df <- rbind(
-        importance.df,
-        c(Pretreatment = methods.list[i], training.results.i$importance)
-      )
+      summary.df <- rbind(summary.df, summary.i)
+      results.df <- rbind(results.df, training.results.i$model.performance)
+      predictions.df <- rbind(predictions.df, training.results.i$predictions)
+      importance.df <- rbind(importance.df, training.results.i$importance)
     }
   } # End of loop ---------------------------
+  rownames(summary.df) <- NULL
+  rownames(results.df) <- NULL
+  names(model.list) <- methods.list[pretreatment]
+
+  if (model.method %in% c("pls", "rf")) {
+    # Reformat importance.df
+    # Some pretreatments trim the wavelengths, so they do not return the full set of importance values.
+    # If pivot_wider is used with each pretreatment separately, the number of columns will not match.
+    importance.df <- tidyr::pivot_wider(importance.df, names_from = .data$wavelength, values_from = .data$Overall)
+  }
 
   results.list <- list(
     model = model.list,

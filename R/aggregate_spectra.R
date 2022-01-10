@@ -71,8 +71,10 @@ aggregate_spectra <- function(df,
       tidyselect::starts_with("X")
     ) %>%
     dplyr::group_by_at(grouping.colnames) %>%
-    dplyr::summarize(dplyr::across(.cols = tidyselect::everything(),
-                                   .fns = agg.function))
+    dplyr::summarize(dplyr::across(
+      .cols = tidyselect::everything(),
+      .fns = agg.function
+    ))
 
   return(df.aggregated)
 }

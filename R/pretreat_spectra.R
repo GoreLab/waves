@@ -47,7 +47,7 @@
 #' @export
 #'
 #' @examples
-#' pretreat_spectra(df = ikeogu.2017)[1:5, 1:5]
+#' pretreat_spectra(df = ikeogu.2017, pretreatment = 3)[1:5, 1:5]
 pretreat_spectra <- function(df,
                              test.data = NULL,
                              pretreatment = 1,
@@ -119,18 +119,19 @@ pretreat_spectra <- function(df,
   )
 
   # Make each matrix in list into a data frame and add back metadata and reference column if present
-  processed.list <- lapply(
+  processed.meta.list <- lapply(
     seq_along(processed.list),
     function(x) cbind(metadata, processed.list[[x]])
   )
+  names(processed.meta.list) <- names(processed.list)
 
   # Choose which to return
   if (length(pretreatment) == 1) {
     # Return a single processed data frame if only one pretreatment was chosen.
-    processed <- processed.list[[pretreatment]]
+    processed <- processed.meta.list[[pretreatment]]
   } else {
     # Return a list of processed data frames if more than one pretreatment was chosen.
-    processed <- processed.list[c(pretreatment)]
+    processed <- processed.meta.list[c(pretreatment)]
   }
 
   return(processed)

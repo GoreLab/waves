@@ -58,7 +58,7 @@ Pretreatment, also known as preprocessing, is often used to
   methods such as standard normal variate and the Savitzky-Golay filter.
 }
 \examples{
-pretreat_spectra(df = ikeogu.2017)[1:5, 1:5]
+pretreat_spectra(df = ikeogu.2017, pretreatment = 3)[1:5, 1:5]
 }
 \author{
 Jenna Hershberger \email{jmh579@cornell.edu}

@@ -79,10 +79,11 @@
 #'   \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted and observed test set values
 #' }
 #'
-#' @importFrom caret createDataPartition trainControl train createResample
+#' @importFrom caret createDataPartition trainControl train createResample varImp
 #' @importFrom dplyr select mutate summarize_all
 #' @importFrom tidyselect starts_with everything all_of
 #' @importFrom magrittr %>% %<>%
+#' @importFrom tibble rownames_to_column
 #' @importFrom stats cor predict sd
 #' @importFrom spectacles postResampleSpectro
 #' @importFrom randomForest importance
@@ -161,11 +162,6 @@ train_spectra <- function(df,
     rlang::abort('model.method must be "pls", "rf", "svmLinear", or "svmRadial"')
   }
 
-  if (rf.variable.importance & !model.method %in% c("rf", "pls")) {
-    rlang::abort('model.method must be "rf" or "pls" if variable.importance is TRUE.
-         This option is not available for SVM models at this time.')
-  }
-
   if (!("reference" %in% colnames(df))) {
     rlang::abort('The training dataset must include a column named "reference"')
   }
@@ -190,6 +186,11 @@ train_spectra <- function(df,
 
   df.colnames <- c(
     "Iteration", "ModelType", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias",
+    "SEP", "RMSEcv", "R2cv", "R2sp", "best.ncomp", "best.ntree", "best.mtry"
+  )
+
+  df.colnames.notype <- c(
+    "Iteration", "RMSEp", "R2p", "RPD", "RPIQ", "CCC", "Bias",
     "SEP", "RMSEcv", "R2cv", "R2sp", "best.ncomp", "best.ntree", "best.mtry"
   )
 
@@ -240,147 +241,157 @@ train_spectra <- function(df,
         data.train <- df[train.index[[i]], ]
         data.test <- df[-train.index[[i]], ]
       }
+    }
 
-      else if (!is.null(cv.scheme)) {
-        # cv.scheme present
-        # Use selected cross-validation scheme
-        formatted.lists <- FormatCV(
-          trial1 = trial1,
-          trial2 = trial2,
-          trial3 = trial3,
-          cv.scheme = cv.scheme,
-          seed = i,
-          remove.genotype = TRUE
-        )
-        data.train <- formatted.lists$train.set
-        data.test <- formatted.lists$test.set
-      }
-
-      train.ref.spectra <- data.train %>% dplyr::select(
-        .data$reference,
-        starts_with("X")
+    else if (!is.null(cv.scheme)) {
+      # cv.scheme present
+      # Use selected cross-validation scheme
+      formatted.lists <- FormatCV(
+        trial1 = trial1,
+        trial2 = trial2,
+        trial3 = trial3,
+        cv.scheme = cv.scheme,
+        seed = i,
+        remove.genotype = TRUE
       )
-      # Exclude reference column from test set
-      test.spectra <- data.test %>% dplyr::select(starts_with("X"))
+      data.train <- formatted.lists$train.set
+      data.test <- formatted.lists$test.set
+    }
 
-      if (num.iterations > 9) {
-        cv.seeds <- c(1:num.iterations)
-      } else {
-        cv.seeds <- c(1:10)
-      }
+    train.ref.spectra <- data.train %>% dplyr::select(
+      .data$reference,
+      starts_with("X")
+    )
+    # Exclude reference column from test set
+    test.spectra <- data.test %>% dplyr::select(starts_with("X"))
 
-      # Tune hyperparameters with training data
-      # Example// for 'pls', train hyperparameter "ncomps", where tune.length is number of ncomps tried
-      if (model.method != "rf") {
-        # 5-fold cross validation on training set
-        cv.kfold <- caret::trainControl(
-          method = "repeatedcv",
-          number = k.folds,
-          savePredictions = TRUE,
-          seeds = cv.seeds
-        )
+    if (num.iterations > 9) {
+      cv.seeds <- c(1:num.iterations)
+    } else {
+      cv.seeds <- c(1:10)
+    }
 
-        data.trained <- caret::train(reference ~ .,
-          data = train.ref.spectra,
-          method = model.method,
-          tuneLength = tune.length,
-          trControl = cv.kfold,
-          metric = best.model.metric
-        )
-      }
-
-      if (model.method == "pls") {
-        # Put results as row in data frame
-        predicted.values <- as.numeric(predict(data.trained$finalModel,
-          newdata = as.matrix(test.spectra), # exclude reference column
-          ncomp = best.ncomp
-        ))
-        # Extract best number of components
-        best.ncomp <- data.trained$bestTune$ncomp
-        best.ntree <- NA
-        best.mtry <- NA
-        R2cv <- pls::R2(data.trained$finalModel, ncomp = best.ncomp)[["val"]][2]
-        RMSEcv <- pls::RMSEP(data.trained$finalModel,
-          ncomp = best.ncomp
-        )[["val"]][2]
-      } else if (model.method == "svmLinear") {
-        predicted.values <- as.numeric(predict(data.trained,
-          newdata = as.matrix(test.spectra)
-        ))
-        best.ncomp <- NA
-        best.ntree <- NA
-        best.mtry <- NA
-        R2cv <- NA
-        RMSEcv <- NA
-      } else if (model.method == "svmRadial") {
-        predicted.values <- as.numeric(predict(data.trained,
-          newdata = as.matrix(test.spectra)
-        ))
-        best.ncomp <- NA
-        best.ntree <- NA
-        best.mtry <- NA
-        R2cv <- NA
-        RMSEcv <- NA
-      } else if (model.method == "rf") {
-        cv.oob <- caret::trainControl(
-          method = "oob",
-          number = 5,
-          savePredictions = TRUE,
-          seeds = list(cv.seeds, cv.seeds)
-        )
-        data.trained <- caret::train(reference ~ .,
-          data = train.ref.spectra,
-          method = model.method,
-          tuneLength = tune.length,
-          trControl = cv.oob,
-          metric = best.model.metric,
-          importance = TRUE
-        )
-        predicted.values <- as.numeric(predict(data.trained$finalModel,
-          newdata = as.matrix(test.spectra),
-          ntree = best.ntree,
-          mtry = best.mtry
-        ))
-
-        best.ncomp <- NA
-        best.ntree <- data.trained$finalModel$ntree
-        best.mtry <- data.trained$finalModel$mtry
-        R2cv <- NA
-        RMSEcv <- NA
-      }
-
-      # Variable importance ---------------------------
-      # Can only be performed for pls and rf model types
-      # Each row contains iteration number followed by importance value of each wavelength.
-      if (model.method %in% c("pls", "rf")) {
-        importance.df.i <- cbind(i, t(importance(data.trained$finalModel, type = 1)))
-      }
-
-      # Get model performance statistics ---------------------------
-      reference.values <- data.test$reference
-      R2sp <- cor(predicted.values, reference.values, method = "spearman")**2 # Squared Spearman's rank correlation
-      results.df.i <- cbind(
-        t(c(i, spectacles::postResampleSpectro(pred = predicted.values, obs = reference.values))),
-        RMSEcv, R2cv, R2sp, best.ncomp, best.ntree, best.mtry
+    # Tune hyperparameters with training data
+    # Example// for 'pls', train hyperparameter "ncomps", where tune.length is number of ncomps tried
+    if (model.method != "rf") {
+      # 5-fold cross validation on training set
+      cv.kfold <- caret::trainControl(
+        method = "repeatedcv",
+        number = k.folds,
+        savePredictions = TRUE,
+        seeds = cv.seeds
       )
-      colnames(results.df.i) <- df.colnames
 
-      # Compile predictions ---------------------------
-      predictions.df.i <- cbind(i, model.method, data.test$unique.id, reference.values, predicted.values)
-      colnames(predictions.df.i) <- c("Iteration", "ModelType", "unique.id", "reference", "predicted")
+      data.trained <- caret::train(reference ~ .,
+        data = train.ref.spectra,
+        method = model.method,
+        tuneLength = tune.length,
+        trControl = cv.kfold,
+        metric = best.model.metric
+      )
+    }
 
-      if (i == 1) {
-        predictions.df <- predictions.df.i
-        results.df <- results.df.i
-        importance.df <- ifelse(model.method %in% c("pls", "rf"), importance.df.i, NULL)
-      } else {
-        predictions.df <- rbind(predictions.df, predictions.df.i)
-        results.df <- rbind(results.df, results.df.i)
-        importance.df <- ifelse(model.method %in% c("pls", "rf"),
-          rbind(importance.df, importance.df.i),
-          NULL
-        )
-      }
+    if (model.method == "pls") {
+      # Extract best number of components
+      best.ncomp <- data.trained$bestTune$ncomp
+      best.ntree <- NA
+      best.mtry <- NA
+      # Put results as row in data frame
+      predicted.values <- as.numeric(predict(data.trained$finalModel,
+        newdata = as.matrix(test.spectra), # exclude reference column
+        ncomp = best.ncomp
+      ))
+      R2cv <- pls::R2(data.trained$finalModel, ncomp = best.ncomp)[["val"]][2]
+      RMSEcv <- pls::RMSEP(data.trained$finalModel,
+        ncomp = best.ncomp
+      )[["val"]][2]
+    } else if (model.method == "svmLinear") {
+      predicted.values <- as.numeric(predict(data.trained,
+        newdata = as.matrix(test.spectra)
+      ))
+      best.ncomp <- NA
+      best.ntree <- NA
+      best.mtry <- NA
+      R2cv <- NA
+      RMSEcv <- NA
+    } else if (model.method == "svmRadial") {
+      predicted.values <- as.numeric(predict(data.trained,
+        newdata = as.matrix(test.spectra)
+      ))
+      best.ncomp <- NA
+      best.ntree <- NA
+      best.mtry <- NA
+      R2cv <- NA
+      RMSEcv <- NA
+    } else if (model.method == "rf") {
+      cv.oob <- caret::trainControl(
+        method = "oob",
+        number = 5,
+        savePredictions = TRUE,
+        seeds = list(cv.seeds, cv.seeds)
+      )
+      data.trained <- caret::train(reference ~ .,
+        data = train.ref.spectra,
+        method = model.method,
+        tuneLength = tune.length,
+        trControl = cv.oob,
+        metric = best.model.metric,
+        importance = TRUE
+      )
+      # Extract best ntree and mtry
+      best.ncomp <- NA
+      best.ntree <- data.trained$finalModel$ntree
+      best.mtry <- data.trained$finalModel$mtry
+
+      predicted.values <- as.numeric(predict(data.trained$finalModel,
+        newdata = as.matrix(test.spectra),
+        ntree = best.ntree,
+        mtry = best.mtry
+      ))
+
+      R2cv <- NA
+      RMSEcv <- NA
+    }
+
+    # Variable importance ---------------------------
+    # Can only be performed for pls and rf model types
+    # Each row contains iteration number followed by model type and importance value of each wavelength.
+    if (model.method %in% c("pls", "rf")) {
+      importance.df.i <- cbind(
+        "Iteration" = i, "ModelType" = model.method,
+        caret::varImp(data.trained$finalModel)
+      ) %>%
+        tibble::rownames_to_column(var = "wavelength")
+      rownames(importance.df.i) <- NULL
+    }
+
+    # Get model performance statistics ---------------------------
+    reference.values <- data.test$reference
+    # Squared Spearman's rank correlation
+    R2sp <- cor(predicted.values, reference.values, method = "spearman")**2
+    spectacles.df.i <- as.data.frame(t(spectacles::postResampleSpectro(
+      pred = predicted.values,
+      obs = reference.values
+    )))
+    results.df.i <- cbind(
+      i, spectacles.df.i,
+      RMSEcv, R2cv, R2sp,
+      best.ncomp, best.ntree, best.mtry
+    )
+    colnames(results.df.i) <- df.colnames.notype
+
+    # Compile predictions ---------------------------
+    predictions.df.i <- cbind(i, model.method, data.test$unique.id, reference.values, predicted.values)
+    colnames(predictions.df.i) <- c("Iteration", "ModelType", "unique.id", "reference", "predicted")
+
+    if (i == 1) {
+      predictions.df <- predictions.df.i
+      results.df <- results.df.i
+      importance.df <- importance.df.i
+    } else {
+      predictions.df <- rbind(predictions.df, predictions.df.i)
+      results.df <- rbind(results.df, results.df.i)
+      importance.df <- rbind(importance.df, importance.df.i)
     }
   } # End of loop
 
@@ -403,23 +414,23 @@ train_spectra <- function(df,
     summarize_all(results.df, .funs = getmode)
   ) %>%
     mutate(
-      Model_type = model.method,
-      Summary_type = c("mean", "sd", "mode")
+      ModelType = model.method,
+      SummaryType = c("mean", "sd", "mode")
     ) %>%
     # Get rid of iteration column and reorder remaining
     dplyr::select(
-      .data$Summary_type, .data$ModelType, .data$RMSEp:.data$R2sp,
+      .data$SummaryType, .data$ModelType, .data$RMSEp:.data$R2sp,
       .data$best.ncomp, .data$best.ntree, .data$best.mtry
     )
 
-  # Stitch on Model_type column later so doesn't interfere with mean calculations for summary
-  results.df$Model_type <- model.method
+  # Stitch on ModelType column later so doesn't interfere with mean calculations for summary
+  results.df$ModelType <- model.method
   results.df %<>%
     dplyr::select(all_of(df.colnames))
 
   # Create model with all input data (not just 70%). Results will give an idea of this model's performance,
   #     but they will have been generated with only subsets of the data.
-  if (verbose) cat("\nReturning model...\n")
+  if (verbose) cat("Returning model...\n")
   if (model.method == "pls") {
     # Format df for plsr() function
     df.plsr <- df %>%
