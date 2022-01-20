@@ -170,6 +170,14 @@ train_spectra <- function(df,
     rlang::abort('The test dataset must include a column named "reference"')
   }
 
+  if (!("unique.id" %in% colnames(df))) {
+    rlang::abort('The training dataset must include a column named "unique.id"')
+  }
+
+  if (!is.null(test.data) & !("unique.id" %in% colnames(test.data))) {
+    rlang::abort('The test dataset must include a column named "unique.id"')
+  }
+
   if (!is.null(cv.scheme)) {
     if (!(cv.scheme %in% c("CV1", "CV2", "CV0", "CV00"))) {
       rlang::abort('cv.scheme must be NULL, "CV0", "CV00", "CV1", or "CV2"')

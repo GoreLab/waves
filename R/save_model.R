@@ -39,7 +39,8 @@
 #' library(magrittr)
 #' test.model <- ikeogu.2017 %>%
 #'   dplyr::filter(study.name == "C16Mcal") %>%
-#'   dplyr::rename(reference = DMC.oven) %>%
+#'   dplyr::rename(reference = DMC.oven,
+#'     unique.id = sample.id) %>%
 #'   dplyr::select(sample.id, reference, dplyr::starts_with("X")) %>%
 #'   na.omit() %>%
 #'   save_model(
