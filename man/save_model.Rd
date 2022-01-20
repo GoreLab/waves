@@ -6,7 +6,7 @@
 \usage{
 save_model(
   df,
-  save.model = TRUE,
+  write.model = TRUE,
   pretreatment = 1,
   model.save.folder = NULL,
   model.name = "PredictionModel",
@@ -22,6 +22,7 @@ save_model(
   trial2 = NULL,
   trial3 = NULL,
   verbose = TRUE,
+  save.model = deprecated(),
   wavelengths = deprecated(),
   autoselect.preprocessing = deprecated(),
   preprocessing.method = deprecated()
@@ -33,7 +34,7 @@ second contains reference values, followed by spectral columns. Include no
 other columns to right of spectra! Column names of spectra must start with
 "X" and reference column must be named "reference"}
 
-\item{save.model}{If \code{TRUE}, the trained model will be saved in .Rds
+\item{write.model}{If \code{TRUE}, the trained model will be saved in .Rds
 format to the location specified by \code{model.save.folder}. If
 \code{FALSE}, the best model will be output by the function but will not
 save to a file. Default is \code{TRUE}.}
@@ -117,6 +118,9 @@ be consistent with \code{trial1}.}
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
 
+\item{save.model}{`r lifecycle::badge("deprecated")` \code{save.model = FALSE} is no
+longer supported; this function will always return a saved model.}
+
 \item{wavelengths}{`r lifecycle::badge("deprecated")` \code{wavelengths} is no
 longer supported; this information is now inferred from \code{df} column names}
 
@@ -130,7 +134,7 @@ has been renamed "pretreatment"}
 }
 \value{
 List of model stats (in \code{data.frame}) and trained model object.
-  If the parameter \code{save.model} is TRUE, both objects are saved to
+  If the parameter \code{write.model} is TRUE, both objects are saved to
   \code{model.save.folder}. To use the optimally trained model for
   predictions, use tuned parameters from \code{$bestTune}.
 }
@@ -154,7 +158,7 @@ test.model <- ikeogu.2017 \%>\%
   na.omit() \%>\%
   save_model(
     df = .,
-    save.model = FALSE,
+    write.model = FALSE,
     pretreatment = 1:13,
     model.name = "my_prediction_model",
     tune.length = 50,
