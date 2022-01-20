@@ -11,7 +11,7 @@
 #' @inheritParams test_spectra
 #' @inheritParams train_spectra
 #' @inheritParams pretreat_spectra
-#' @param save.model If \code{TRUE}, the trained model will be saved in .Rds
+#' @param write.model If \code{TRUE}, the trained model will be saved in .Rds
 #'   format to the location specified by \code{model.save.folder}. If
 #'   \code{FALSE}, the best model will be output by the function but will not
 #'   save to a file. Default is \code{TRUE}.
@@ -29,7 +29,7 @@
 #' @importFrom lifecycle deprecated
 #'
 #' @return List of model stats (in \code{data.frame}) and trained model object.
-#'   If the parameter \code{save.model} is TRUE, both objects are saved to
+#'   If the parameter \code{write.model} is TRUE, both objects are saved to
 #'   \code{model.save.folder}. To use the optimally trained model for
 #'   predictions, use tuned parameters from \code{$bestTune}.
 #' @export
@@ -44,7 +44,7 @@
 #'   na.omit() %>%
 #'   save_model(
 #'     df = .,
-#'     save.model = FALSE,
+#'     write.model = FALSE,
 #'     pretreatment = 1:13,
 #'     model.name = "my_prediction_model",
 #'     tune.length = 50,
@@ -54,7 +54,7 @@
 #' test.model$best.model.stats
 #' }
 save_model <- function(df,
-                       save.model = TRUE,
+                       write.model = TRUE,
                        pretreatment = 1,
                        model.save.folder = NULL,
                        model.name = "PredictionModel",
@@ -70,11 +70,21 @@ save_model <- function(df,
                        trial2 = NULL,
                        trial3 = NULL,
                        verbose = TRUE,
+                       save.model = deprecated(),
                        wavelengths = deprecated(),
                        autoselect.preprocessing = deprecated(),
                        preprocessing.method = deprecated()) {
 
   # Deprecate warnings
+  if (lifecycle::is_present(save.model)) {
+    lifecycle::deprecate_warn(
+      when = "0.2.0",
+      what = "save_model(save.model)",
+      with = "save_model(write.model)"
+    )
+    write.model <- save.model
+  }
+
   if (lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
@@ -152,8 +162,8 @@ save_model <- function(df,
     # Use results data frame to determine best pretreatment technique
     results.df <- training.results$summary.model.performance
     best.type.num <- ifelse(best.model.metric == "RMSE",
-      which.min(results.df$RMSE),
-      which.max(results.df$R2p)
+      which.min(results.df$RMSEp.mean),
+      which.max(results.df$R2p.mean)
     )
     # Set chosen model as best.model for export
     best.model <- training.results$model[[best.type.num]]
@@ -170,7 +180,7 @@ save_model <- function(df,
   } # End multiple pretreatments if statement
 
 
-  if (save.model) {
+  if (write.model) {
     if (verbose) {
       cat(paste0(
         "\nSaving model and model statistics to ",

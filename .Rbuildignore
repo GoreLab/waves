@@ -9,4 +9,5 @@
 ^docs$
 ^pkgdown$
 ^logo.png$
+^test_waves\.R
 

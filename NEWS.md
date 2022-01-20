@@ -23,6 +23,7 @@
 * `wavelengths` is no longer a required argument for any of the *waves* functions.
 * The proportion of samples to include in the training set can now be selected with the argument `proportion.train`. Previously, this proportion was fixed at 0.7 (#13).
 * Bug fix: `aggregate_spectra()` now allows for aggregation by a single grouping column (#14).
+* The parameter `save.model` in the function `save_model()` has been renamed to `write.model` for clarity.
 
 
 # waves 0.1.1
