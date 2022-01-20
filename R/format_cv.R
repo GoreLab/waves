@@ -1,9 +1,9 @@
 #' @title Format multiple trials with or without overlapping genotypes into
 #'   training and test sets according to user-provided cross validation scheme
-#' @name FormatCV
+#' @name format_cv
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @description Standalone function that is also used within
-#'   \code{\link{TrainSpectralModel}} to divide trials or studies into training and test
+#'   \code{\link{train_spectra}} to divide trials or studies into training and test
 #'   sets based on overlap in trial environments and genotype entries
 #' @details Use of a cross-validation scheme requires a column in the input
 #'   \code{data.frame} named "genotype" to ensure proper sorting of training and
@@ -27,13 +27,23 @@
 #'   may not contain genotypes that overlap with \code{trial1}. Formatting must
 #'   be consistent with \code{trial1}.
 #' @param cv.scheme A cross validation (CV) scheme from Jarquín et al., 2017.
-#'   Options for cv.scheme include:
+#'   Options for \code{cv.scheme} include:
 #'   \itemize{
 #'       \item "CV1": untested lines in tested environments
 #'       \item "CV2": tested lines in tested environments
 #'       \item "CV0": tested lines in untested environments
 #'       \item "CV00": untested lines in untested environments
 #'   }
+#' @param cv.method Cross-validation method used to subdivide into training
+#'   and test sets. Options for \code{cv.method} include:
+#'   \itemize{
+#'       \item "random": random cross-validation with 70% training and 30% test
+#'       \item "stratified": random cross-validation stratified by reference
+#'       values. 70% training and 30% test.
+#'   }
+#'   Default is \code{stratified}.
+#' @param proportion.train Fraction of samples to include in the training set.
+#'   Default is 0.7.
 #' @param seed Number used in the function \code{set.seed()} for reproducible
 #'   randomization. If \code{NULL}, no seed is set. Default is \code{NULL}.
 #' @param remove.genotype boolean that, if \code{TRUE}, removes the "genotype"
@@ -49,9 +59,11 @@
 #' @importFrom dplyr group_by ungroup filter mutate rename select
 #' @importFrom tidyr nest unnest
 #' @importFrom magrittr %>%
-#' @importFrom rlang .data
+#' @importFrom rlang .data abort
+#' @importFrom caret createDataPartition createResample
+#' @importFrom tidyselect starts_with
 #'
-#' @return List of data.frames (training set, test set) compiled according to
+#' @return List of data.frames ($train.set, $test.set) compiled according to
 #'   user-provided cross validation scheme.
 #' @export
 #'
@@ -62,88 +74,123 @@
 #' # genotypes are unknown, as in this case.
 #' library(magrittr)
 #' trials <- ikeogu.2017 %>%
-#'     dplyr::mutate(genotype = 1:nrow(ikeogu.2017)) %>% # fake for this example
-#'     dplyr::rename(reference = DMC.oven) %>%
-#'     dplyr::select(study.name, sample.id, genotype, reference,
-#'                   dplyr::starts_with("X"))
+#'   dplyr::mutate(genotype = 1:nrow(ikeogu.2017)) %>% # fake for this example
+#'   dplyr::rename(reference = DMC.oven) %>%
+#'   dplyr::select(
+#'     study.name, sample.id, genotype, reference,
+#'     tidyselect::starts_with("X")
+#'   )
 #' trial1 <- trials %>%
 #'   dplyr::filter(study.name == "C16Mcal") %>%
 #'   dplyr::select(-study.name)
 #' trial2 <- trials %>%
 #'   dplyr::filter(study.name == "C16Mval") %>%
 #'   dplyr::select(-study.name)
-#' cv.list <- FormatCV(trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
-#'                     remove.genotype = TRUE)
-#' cv.list[[1]][1:5, 1:5]
-FormatCV <- function(trial1,
-                     trial2,
-                     trial3 = NULL,
-                     cv.scheme,
-                     seed = NULL,
-                     remove.genotype = FALSE){
+#' cv.list <- format_cv(
+#'   trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
+#'   cv.method = "random", remove.genotype = TRUE
+#' )
+#' cv.list$train.set[1:5, 1:5]
+#' cv.list$test.set[1:5, 1:5]
+format_cv <- function(trial1,
+                      trial2,
+                      trial3 = NULL,
+                      cv.scheme,
+                      cv.method = "stratified",
+                      proportion.train = 0.7,
+                      seed = NULL,
+                      remove.genotype = FALSE) {
   # Error handling
-  if(!cv.scheme %in% c("CV0", "CV00", "CV1", "CV2")){
-    stop("cv.scheme must be 'CV0', 'CV00', 'CV1', or 'CV2'")
+  if (!cv.scheme %in% c("CV0", "CV00", "CV1", "CV2")) {
+    rlang::abort("cv.scheme must be 'CV0', 'CV00', 'CV1', or 'CV2'")
   }
 
-  if(!"genotype" %in% colnames(trial1)| !"genotype" %in% colnames(trial2)){
-    stop("trial1 and trial2 must each have a column named 'genotype'")
+  if (!cv.method %in% c("random", "stratified")) {
+    rlang::abort("cv.method must be 'random', or 'stratified'")
   }
 
-  if(!is.null(seed)){
+  if (!"genotype" %in% colnames(trial1) | !"genotype" %in% colnames(trial2)) {
+    rlang::abort("trial1 and trial2 must each have a column named 'genotype'")
+  }
+
+  if (proportion.train > 1 | proportion.train < 0) {
+    rlang::abort("'proportion.train' must be a number between 0 and 1")
+  }
+
+  if (!is.null(seed)) {
     set.seed(seed)
   }
 
-  t1 <- trial1 %>% dplyr::group_by(.data$genotype) %>% tidyr::nest(data = c(-.data$genotype))
-  t2 <- trial2 %>% dplyr::group_by(.data$genotype) %>% tidyr::nest(data = c(-.data$genotype))
+  t1 <- trial1 %>%
+    dplyr::group_by(.data$genotype) %>%
+    tidyr::nest(data = c(-.data$genotype))
+  t2 <- trial2 %>%
+    dplyr::group_by(.data$genotype) %>%
+    tidyr::nest(data = c(-.data$genotype))
   # Random sampling
-  train.index <- sort(sample(x = seq(from = 1, to = nrow(t1), by = 1),
-                             size = 0.7 * nrow(t1),
-                             replace = FALSE, prob = NULL))
-  # t1.a is always the test set
-  t1.a <- t1[-train.index,] %>% tidyr::unnest(c(-.data$genotype)) %>% dplyr::ungroup()
-  t1.b <- t1[train.index,] %>% tidyr::unnest(c(-.data$genotype)) %>% dplyr::ungroup()
-  # we want t2.a to be the same genotypes as in t1.a and t2.b to be same as t1.b
-  t2.a <- t2[which(t2$genotype %in% t1.a$genotype),] %>%
-    tidyr::unnest(c(-.data$genotype)) %>% dplyr::ungroup()
-  t2.b <- t2[which(t2$genotype %in% t1.b$genotype),] %>%
-    tidyr::unnest(c(-.data$genotype)) %>% dplyr::ungroup()
+  if (cv.method == "random") {
+    train.index <- sort(sample(
+      x = 1:nrow(t1),
+      size = proportion.train * nrow(t1),
+      replace = FALSE, prob = NULL
+    ))
+  } else if (cv.method == "stratified") {
+    train.index <- caret::createDataPartition(y = t1$reference, p = proportion.train)
+  }
 
-  if(cv.scheme == "CV0"){
+  # t1.a is always the test set
+  t1.a <- t1[-train.index, ] %>%
+    tidyr::unnest(c(-.data$genotype)) %>%
+    dplyr::ungroup()
+  t1.b <- t1[train.index, ] %>%
+    tidyr::unnest(c(-.data$genotype)) %>%
+    dplyr::ungroup()
+  # we want t2.a to be the same genotypes as in t1.a and t2.b to be same as t1.b
+  t2.a <- t2[which(t2$genotype %in% t1.a$genotype), ] %>%
+    tidyr::unnest(c(-.data$genotype)) %>%
+    dplyr::ungroup()
+  t2.b <- t2[which(t2$genotype %in% t1.b$genotype), ] %>%
+    tidyr::unnest(c(-.data$genotype)) %>%
+    dplyr::ungroup()
+
+  if (cv.scheme == "CV0") {
     # Tested lines in untested environment
     test.set <- t1.a
     train.set <- rbind(trial2, trial3)
   }
 
-  if(cv.scheme == "CV00"){
+  if (cv.scheme == "CV00") {
     # Untested lines in untested environment
     # check for overlapping genotypes and remove from either training or test set
     trial2.no.overlap <- trial2 %>% dplyr::filter(!.data$genotype %in% t1.a$genotype)
-    if(!is.null(trial3)){
+    if (!is.null(trial3)) {
       trial3.no.overlap <- trial3 %>% dplyr::filter(!.data$genotype %in% t1.a$genotype)
-    } else{
+    } else {
       trial3.no.overlap <- NULL
     }
     test.set <- t1.a
     train.set <- rbind(trial2.no.overlap, trial3.no.overlap)
   }
 
-  if(cv.scheme == "CV1"){
+  if (cv.scheme == "CV1") {
     # Untested lines in tested environment
     test.set <- t1.a
     train.set <- rbind(t1.b, t2.b)
   }
 
-  if(cv.scheme == "CV2"){
+  if (cv.scheme == "CV2") {
     # Tested lines in tested environment
     test.set <- t1.a
     train.set <- rbind(t1.b, trial2)
   }
 
-  if(remove.genotype){
+  if (remove.genotype) {
     train.set <- train.set %>% dplyr::select(-.data$genotype)
     test.set <- test.set %>% dplyr::select(-.data$genotype)
   }
 
-  return(list(train.set, test.set))
+  return(list(
+    train.set = train.set,
+    test.set = test.set
+  ))
 }

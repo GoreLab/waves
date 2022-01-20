@@ -25,21 +25,22 @@ load("./data/ikeogu.2017.rda")
 #   theme_bw() +
 #   theme(legend.position = "none")
 
-my.palette.dists <- lacroix_palette("Lemon", n = 7, type = "continuous")[c(2,5)]
-#lacroix_palette("PeachPear", n = 7, type = "continuous")[c(3,5)]
-lacroix_palette("Lemon", n = 6, type = "continuous")[c(2,5)]
-#rev(lacroix_palettes$Lemon[1,])
+my.palette.dists <- lacroix_palette("Lemon", n = 7, type = "continuous")[c(2, 5)]
+# lacroix_palette("PeachPear", n = 7, type = "continuous")[c(3,5)]
+lacroix_palette("Lemon", n = 6, type = "continuous")[c(2, 5)]
+# rev(lacroix_palettes$Lemon[1,])
 
 dmc.plot <- ikeogu.2017 %>%
   dplyr::select(-starts_with("X")) %>%
   group_by(study.name) %>%
-  ggplot(aes(x= study.name, fill = study.name, y = DMC.oven)) +
-  scale_fill_manual(values = my.palette.dists)+#lacroix_palette("PeachPear", n = 7, type = "continuous"))+
+  ggplot(aes(x = study.name, fill = study.name, y = DMC.oven)) +
+  scale_fill_manual(values = my.palette.dists) + # lacroix_palette("PeachPear", n = 7, type = "continuous"))+
   theme_bw() +
-  geom_violin() + geom_boxplot(width = 0.15)
+  geom_violin() +
+  geom_boxplot(width = 0.15)
 
 dmc.plot.v <- dmc.plot +
-  theme(legend.position = "none", axis.title.x=element_blank(), axis.ticks.x = element_blank()) +
+  theme(legend.position = "none", axis.title.x = element_blank(), axis.ticks.x = element_blank()) +
   labs(y = "Root dry matter content (%)")
 
 dmc.plot.h <- dmc.plot +
@@ -49,23 +50,27 @@ dmc.plot.h <- dmc.plot +
 tcc.plot <- ikeogu.2017 %>%
   dplyr::select(-starts_with("X")) %>%
   group_by(study.name) %>%
-  ggplot(aes(x= study.name, y = TCC, fill = study.name)) +
-  scale_fill_manual(values = my.palette.dists)+#values = lacroix_palette("PeachPear", n = 3, type = "continuous"))+
+  ggplot(aes(x = study.name, y = TCC, fill = study.name)) +
+  scale_fill_manual(values = my.palette.dists) + # values = lacroix_palette("PeachPear", n = 3, type = "continuous"))+
   labs(y = expression(paste("Total carotenoid content (", mu, "g/g)")), x = "Study") +
-  geom_violin() + geom_boxplot(width = 0.15) +
+  geom_violin() +
+  geom_boxplot(width = 0.15) +
   theme_bw() +
   theme(legend.position = "none")
 
-reference.distributions.vertical <- ggarrange(dmc.plot.v + rremove("x.text"), tcc.plot ,
-                                     labels = c("A", "B"),
-                                     ncol = 1, nrow = 2)
+reference.distributions.vertical <- ggarrange(dmc.plot.v + rremove("x.text"), tcc.plot,
+  labels = c("A", "B"),
+  ncol = 1, nrow = 2
+)
 ggsave(reference.distributions.vertical,
-       filename = "./man/figures/example_ref_dists_v.png", width = 4, height = 7, units = "in", bg = "transparent")
+  filename = "./man/figures/example_ref_dists_v.png", width = 4, height = 7, units = "in", bg = "transparent"
+)
 
 reference.distributions.horizontal <- ggarrange(dmc.plot.h, tcc.plot, labels = c("A", "B"), ncol = 2, nrow = 1)
 
 ggsave(reference.distributions.horizontal,
-       filename = "./man/figures/example_ref_dists_h.png", width = 7, height = 3, units = "in", bg = "transparent")
+  filename = "./man/figures/example_ref_dists_h.png", width = 7, height = 3, units = "in", bg = "transparent"
+)
 
 
 
@@ -74,7 +79,7 @@ ggsave(reference.distributions.horizontal,
 
 #### Model performance figure for README.md ####
 load("./data/ikeogu.2017.rda")
-mypalette <- rev(lacroix_palettes$Lemon[1,])
+mypalette <- rev(lacroix_palettes$Lemon[1, ])
 # mypalette <- my.palette.dists
 
 
@@ -86,28 +91,41 @@ mypalette <- rev(lacroix_palettes$Lemon[1,])
 #                                wavelengths = 350:2500)
 # write.csv(test.C16M66.DMC, "./data-raw/C16M66_test.csv", row.names = F)
 
-C16Mcal.DMC <- ikeogu.2017 %>% filter(study.name == "C16Mcal") %>% rename(reference = DMC.oven) %>%
+C16Mcal.DMC <- ikeogu.2017 %>%
+  filter(study.name == "C16Mcal") %>%
+  rename(reference = DMC.oven) %>%
   rename(unique.id = sample.id) %>%
-  dplyr::select(unique.id, reference, starts_with("X")) %>% na.omit()
-C16Mval.DMC <- ikeogu.2017 %>% filter(study.name == "C16Mval") %>% rename(reference = DMC.oven) %>%
+  dplyr::select(unique.id, reference, starts_with("X")) %>%
+  na.omit()
+C16Mval.DMC <- ikeogu.2017 %>%
+  filter(study.name == "C16Mval") %>%
+  rename(reference = DMC.oven) %>%
   rename(unique.id = sample.id) %>%
-  dplyr::select(unique.id, reference, starts_with("X")) %>% na.omit()
+  dplyr::select(unique.id, reference, starts_with("X")) %>%
+  na.omit()
 
-test.C16M.DMC <- TestModelPerformance(train.data = C16Mcal.DMC, test.data = C16Mval.DMC,
-                               num.iterations = 50, preprocessing = T, output.summary = F,
-                               wavelengths = 350:2500)
+test.C16M.DMC <- TestModelPerformance(
+  train.data = C16Mcal.DMC, test.data = C16Mval.DMC,
+  num.iterations = 50, preprocessing = T, output.summary = F,
+  wavelengths = 350:2500
+)
 
-getmode <- function(vector.input){
+getmode <- function(vector.input) {
   as.matrix(vector.input)
   unique.vector <- unique(vector.input)
-  return(unique.vector[which.max(tabulate(match(vector.input,unique.vector)))])
+  return(unique.vector[which.max(tabulate(match(vector.input, unique.vector)))])
 }
 
 test.C16M.DMC$Pretreatment <- factor(test.C16M.DMC$Pretreatment,
-                                     levels = unique(test.C16M.DMC$Pretreatment))
-test.C16M.DMC.mode <- test.C16M.DMC %>% group_by(Pretreatment) %>% summarize_all(getmode)
-test.C16M.DMC.summary <- test.C16M.DMC %>% group_by(Pretreatment) %>%
-  summarize_all(mean) %>% dplyr::select(-Iteration)
+  levels = unique(test.C16M.DMC$Pretreatment)
+)
+test.C16M.DMC.mode <- test.C16M.DMC %>%
+  group_by(Pretreatment) %>%
+  summarize_all(getmode)
+test.C16M.DMC.summary <- test.C16M.DMC %>%
+  group_by(Pretreatment) %>%
+  summarize_all(mean) %>%
+  dplyr::select(-Iteration)
 test.C16M.DMC.summary$Best.ncomp <- test.C16M.DMC.mode$Best.ncomp
 write.csv(test.C16M.DMC.summary, "./data-raw/C16M_DMC.csv", row.names = F)
 write.csv(test.C16M.DMC, "./data-raw/C16M_DMC_nonsummary.csv", row.names = F)
@@ -129,22 +147,35 @@ write.csv(test.C16M.DMC, "./data-raw/C16M_DMC_nonsummary.csv", row.names = F)
 
 
 # TCC
-C16Mcal.TCC <- ikeogu.2017 %>% filter(study.name == "C16Mcal") %>% rename(reference = TCC) %>%
+C16Mcal.TCC <- ikeogu.2017 %>%
+  filter(study.name == "C16Mcal") %>%
+  rename(reference = TCC) %>%
   rename(unique.id = sample.id) %>%
-  dplyr::select(unique.id, reference, starts_with("X")) %>% na.omit()
-C16Mval.TCC <- ikeogu.2017 %>% filter(study.name == "C16Mval") %>% rename(reference = TCC) %>%
+  dplyr::select(unique.id, reference, starts_with("X")) %>%
+  na.omit()
+C16Mval.TCC <- ikeogu.2017 %>%
+  filter(study.name == "C16Mval") %>%
+  rename(reference = TCC) %>%
   rename(unique.id = sample.id) %>%
-  dplyr::select(unique.id, reference, starts_with("X")) %>% na.omit()
+  dplyr::select(unique.id, reference, starts_with("X")) %>%
+  na.omit()
 
-test.C16M.TCC <- TestModelPerformance(train.data = C16Mcal.TCC, test.data = C16Mval.TCC,
-                                      num.iterations = 50, preprocessing = T, output.summary = F,
-                                      wavelengths = 350:2500)
+test.C16M.TCC <- TestModelPerformance(
+  train.data = C16Mcal.TCC, test.data = C16Mval.TCC,
+  num.iterations = 50, preprocessing = T, output.summary = F,
+  wavelengths = 350:2500
+)
 
 test.C16M.TCC$Pretreatment <- factor(test.C16M.TCC$Pretreatment,
-                                     levels = unique(test.C16M.TCC$Pretreatment))
-test.C16M.TCC.mode <- test.C16M.TCC %>% group_by(Pretreatment) %>% summarize_all(getmode)
-test.C16M.TCC.summary <- test.C16M.TCC %>% group_by(Pretreatment) %>%
-  summarize_all(mean) %>% dplyr::select(-Iteration)
+  levels = unique(test.C16M.TCC$Pretreatment)
+)
+test.C16M.TCC.mode <- test.C16M.TCC %>%
+  group_by(Pretreatment) %>%
+  summarize_all(getmode)
+test.C16M.TCC.summary <- test.C16M.TCC %>%
+  group_by(Pretreatment) %>%
+  summarize_all(mean) %>%
+  dplyr::select(-Iteration)
 test.C16M.TCC.summary$Best.ncomp <- test.C16M.TCC.mode$Best.ncomp
 write.csv(test.C16M.TCC.summary, "./data-raw/C16M_TCC.csv", row.names = F)
 write.csv(test.C16M.TCC, "./data-raw/C16M_TCC_nonsummary.csv", row.names = F)
@@ -169,7 +200,7 @@ test.C16M.TCC <- read.csv("./data-raw/C16M_TCC_nonsummary.csv")
 test.C16M.DMC$Pheno <- "DMC"
 test.C16M.TCC$Pheno <- "TCC"
 testplot.joined <- rbind(test.C16M.DMC, test.C16M.TCC) %>%
-  mutate(Pretreatment = recode(Pretreatment,"Raw_data" = "Raw data"))
+  mutate(Pretreatment = recode(Pretreatment, "Raw_data" = "Raw data"))
 # testplot.all <- testplot.joined %>%
 #   group_by(Pretreatment, Pheno) %>%
 #   summarize(`Median RMSE` = median(RMSE)) %>%
@@ -186,24 +217,29 @@ testplot.joined <- rbind(test.C16M.DMC, test.C16M.TCC) %>%
 
 testplot.all.R2 <- testplot.joined %>%
   mutate(Pheno = recode(Pheno,
-                         "DMC" = "Root dry matter content",
-                         "TCC" = "Total carotenoid content")) %>%
+    "DMC" = "Root dry matter content",
+    "TCC" = "Total carotenoid content"
+  )) %>%
   group_by(Pretreatment, Pheno) %>%
-  ggplot(aes(y=R2p, x = Pretreatment, fill = Pheno)) +
-  geom_hline(yintercept = 0.836, color = mypalette[2], linetype='dashed') +
-  geom_hline(yintercept = 0.859, color = mypalette[6],linetype='dashed') +
+  ggplot(aes(y = R2p, x = Pretreatment, fill = Pheno)) +
+  geom_hline(yintercept = 0.836, color = mypalette[2], linetype = "dashed") +
+  geom_hline(yintercept = 0.859, color = mypalette[6], linetype = "dashed") +
   geom_boxplot(position = "dodge") +
-  labs(y = expression("R"["p"]^2),
-       x = "Pretreatment*") +
-       #title = "waves prediction model performance",
-       #subtitle = "PLSR with C16M datasets from Ikeogu et al. (2017)",
-       #)
-  geom_vline(xintercept = seq(1, length(testplot.joined[,1]),1) + .5, color = "#E0E0E0") +
-  scale_fill_manual(values=mypalette[c(2,6)], name = "Phenotype") +
+  labs(
+    y = expression("R"["p"]^2),
+    x = "Pretreatment*"
+  ) +
+  # title = "waves prediction model performance",
+  # subtitle = "PLSR with C16M datasets from Ikeogu et al. (2017)",
+  # )
+  geom_vline(xintercept = seq(1, length(testplot.joined[, 1]), 1) + .5, color = "#E0E0E0") +
+  scale_fill_manual(values = mypalette[c(2, 6)], name = "Phenotype") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, size = 8, hjust = 1),
-        legend.position="bottom",
-        panel.grid.major.x = element_blank())
+  theme(
+    axis.text.x = element_text(angle = 45, size = 8, hjust = 1),
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank()
+  )
 testplot.all.R2
 
 ggsave(testplot.all.R2, filename = "./man/figures/testplot_all_R2_hlines.png", width = 7, height = 6, units = "in", bg = "transparent")
@@ -213,6 +249,3 @@ test.C16M.TCC.summary$Phenotype <- "TCC"
 test.C16M.DMC.summary$Phenotype <- "DMC"
 test.C16M.summary <- rbind(test.C16M.TCC.summary, test.C16M.DMC.summary) %>%
   dplyr::select(Phenotype, Pretreatment)
-
-
-
