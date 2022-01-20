@@ -81,8 +81,8 @@
 #' \donttest{
 #' library(magrittr)
 #' ikeogu.2017 %>%
-#'   dplyr::rename(reference = DMC.oven) %>%
-#'   dplyr::rename(unique.id = sample.id) %>%
+#'   dplyr::rename(reference = DMC.oven,
+#'                 unique.id = sample.id) %>%
 #'   dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
 #'   na.omit() %>%
 #'   test_spectra(
