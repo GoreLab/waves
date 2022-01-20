@@ -201,21 +201,29 @@ test_spectra <- function(train.data,
     train.data <- rbind(trial1, trial2, trial3)
   }
 
+  # Pretreat spectra ---------------------------
+  methods.list <- c(
+    "Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
+    "SNVSG", "SGD1", "SG.D1W5", "SG.D1W11", "SG.D2W5", "SG.D2W11"
+  )
+
   df.list <- pretreat_spectra(
     df = train.data,
     test.data = test.data,
     pretreatment = pretreatment
   )
 
+  # If only one pretreatment, pretreat_spectra() outputs a data.frame, not a list.
+  # To simplify downstream use of pretreated spectra, make this data.frame into a list with one item.
+  if (length(pretreatment) == 1){
+    df.list <- list(df.list)
+    names(df.list) <- methods.list[pretreatment]
+  }
+
   # Training loop ---------------------------
   if (verbose) {
     cat("Training models...\n")
   }
-
-  methods.list <- c(
-    "Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
-    "SNVSG", "SGD1", "SG.D1W5", "SG.D1W11", "SG.D2W5", "SG.D2W11"
-  )
 
   counter <- 0
   for (i in pretreatment) {
