@@ -87,7 +87,7 @@
 #' @importFrom stats cor predict sd
 #' @importFrom spectacles postResampleSpectro
 #' @importFrom randomForest importance
-#' @importFrom rlang .data abort
+#' @importFrom rlang .data abort has_name
 #' @importFrom pls R2 RMSEP mvrValstats MSEP
 #' @importFrom lifecycle deprecated
 #'
@@ -163,19 +163,19 @@ train_spectra <- function(df,
     rlang::abort('model.method must be "pls", "rf", "svmLinear", or "svmRadial"')
   }
 
-  if (!("reference" %in% colnames(df))) {
+  if (!rlang::has_name(df, "reference")){
     rlang::abort('The training dataset must include a column named "reference"')
   }
 
-  if (!is.null(test.data) & !("reference" %in% colnames(test.data))) {
+  if (!is.null(test.data) & !(rlang::has_name(test.data, "reference"))) {
     rlang::abort('The test dataset must include a column named "reference"')
   }
 
-  if (!("unique.id" %in% colnames(df))) {
+  if (!(rlang::has_name(df, "unique.id"))) {
     rlang::abort('The training dataset must include a column named "unique.id"')
   }
 
-  if (!is.null(test.data) & !("unique.id" %in% colnames(test.data))) {
+  if (!is.null(test.data) & !(rlang::has_name(test.data, "unique.id"))) {
     rlang::abort('The test dataset must include a column named "unique.id"')
   }
 
