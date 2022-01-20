@@ -160,8 +160,9 @@ within [train_spectra()]
 library(magrittr)
 ikeogu.2017 \%>\%
   dplyr::filter(study.name == "C16Mcal") \%>\%
-  dplyr::rename(reference = DMC.oven) \%>\%
-  dplyr::select(sample.id, reference, dplyr::starts_with("X")) \%>\%
+  dplyr::rename(reference = DMC.oven,
+                unique.id = sample.id) \%>\%
+  dplyr::select(unique.id, reference, dplyr::starts_with("X")) \%>\%
   na.omit() \%>\%
   train_spectra(
     df = .,
