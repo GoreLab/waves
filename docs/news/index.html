@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/solar/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -122,12 +122,56 @@
       <small>Source: <a href='https://github.com/GoreLab/waves/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="waves-0119000" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.1.9000">
-<a href="#waves-0119000" class="anchor"></a>waves 0.1.1.9000<small> Unreleased </small>
+    <div id="waves-020" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0">
+<a href="#waves-020" class="anchor"></a>waves 0.2.0<small> Unreleased </small>
 </h1>
 <ul>
-<li>Added more informative error message and documentation for random forest tune length (tune.length must be set to 5).</li>
+<li>Update all files to conform to the tidyverse style guide (<a href='https://github.com/GoreLab/waves/issues/6'>#6</a>).</li>
+<li>All functions renamed to match tidystyle. Old functions names work will be dropped after this version:
+<ul>
+<li>
+<code>AggregateSpectra</code> -&gt; <code><a href="../reference/aggregate_spectra.html">aggregate_spectra()</a></code>
+</li>
+<li>
+<code>DoPreprocessing</code> -&gt; <code><a href="../reference/pretreat_spectra.html">pretreat_spectra()</a></code>
+</li>
+<li>
+<code>FilterSpectra</code> -&gt; <code><a href="../reference/filter_spectra.html">filter_spectra()</a></code>
+</li>
+<li>
+<code>FormatCV</code>-&gt; <code><a href="../reference/format_cv.html">format_cv()</a></code>
+</li>
+<li>
+<code><a href="../reference/rename.html">PlotSpectra()</a></code>-&gt; <code><a href="../reference/plot_spectra.html">plot_spectra()</a></code>
+</li>
+<li>
+<code><a href="../reference/rename.html">SaveModel()</a></code>-&gt; <code><a href="../reference/save_model.html">save_model()</a></code>
+</li>
+<li>
+<code><a href="../reference/rename.html">TestModelPerformance()</a></code>-&gt; <code><a href="../reference/test_spectra.html">test_spectra()</a></code>
+</li>
+<li>
+<code><a href="../reference/rename.html">TrainSpectralModel()</a></code>-&gt; <code><a href="../reference/train_spectra.html">train_spectra()</a></code>
+</li>
+</ul>
+</li>
+<li>“Preprocessing” has been renamed “Pretreatment” to minimize confusion with physical preprocessing of samples prior to scanning. Arguments have been renamed to reflect these changes (<code>preprocessing</code> is now <code>pretreatment</code>).</li>
+<li>Added more informative error message and documentation for random forest tune length (<code>tune.length</code> must be set to 5 when <code>model.algorithm == "rf"</code>).</li>
+<li>Additional flexibility for <code><a href="../reference/plot_spectra.html">plot_spectra()</a></code> including color and title customization and the option to forgo filtering (<a href='https://github.com/GoreLab/waves/issues/5'>#5</a>).</li>
+<li>Named list output for all functions to enable easier access to individual elements.</li>
+<li>Always return model and variable importance results with <code><a href="../reference/train_spectra.html">train_spectra()</a></code> and <code><a href="../reference/test_spectra.html">test_spectra()</a></code>.</li>
+<li>Add variable importance for PLSR (<a href='https://github.com/GoreLab/waves/issues/9'>#9</a>).</li>
+<li>Enable selection of k for k-fold cross-validation within the training set. Previously, k was fixed at 5 (<a href='https://github.com/GoreLab/waves/issues/10'>#10</a>).</li>
+<li>
+<code><a href="../reference/save_model.html">save_model()</a></code> now automatically selects the best model if provided with multiple pretreatments.</li>
+<li>Code simplified and streamlined to facilitate future updates.</li>
+<li>Export predicted values as well as performance statistics for each training iteration (<a href='https://github.com/GoreLab/waves/issues/11'>#11</a>).</li>
+<li>
+<code>wavelengths</code> is no longer a required argument for any of the <em>waves</em> functions.</li>
+<li>The proportion of samples to include in the training set can now be selected with the argument <code>proportion.train</code>. Previously, this proportion was fixed at 0.7 (<a href='https://github.com/GoreLab/waves/issues/13'>#13</a>).</li>
+<li>Bug fix: <code><a href="../reference/aggregate_spectra.html">aggregate_spectra()</a></code> now allows for aggregation by a single grouping column (<a href='https://github.com/GoreLab/waves/issues/14'>#14</a>).</li>
+<li>The parameter <code>save.model</code> in the function <code><a href="../reference/save_model.html">save_model()</a></code> has been renamed to <code>write.model</code> for clarity.</li>
 </ul>
 </div>
     <div id="waves-011" class="section level1">
@@ -135,11 +179,11 @@
 <a href="#waves-011" class="anchor"></a>waves 0.1.1<small> 2021-04-21 </small>
 </h1>
 <ul>
-<li>Bug fix: SVM Linear and SVM Radial algorithms no longer return errors in <code><a href="../reference/TrainSpectralModel.html">TrainSpectralModel()</a></code>.</li>
-<li>Bug fix: Random Forest variable importance no longer returns error in <code><a href="../reference/TrainSpectralModel.html">TrainSpectralModel()</a></code> or when <code>preprocessing = TRUE</code> in <code><a href="../reference/TestModelPerformance.html">TestModelPerformance()</a></code> (<a href='https://github.com/GoreLab/waves/issues/7'>#7</a>).</li>
+<li>Bug fix: SVM Linear and SVM Radial algorithms no longer return errors in <code><a href="../reference/rename.html">TrainSpectralModel()</a></code>.</li>
+<li>Bug fix: Random Forest variable importance no longer returns error in <code><a href="../reference/rename.html">TrainSpectralModel()</a></code> or when <code>preprocessing = TRUE</code> in <code><a href="../reference/rename.html">TestModelPerformance()</a></code> (<a href='https://github.com/GoreLab/waves/issues/7'>#7</a>).</li>
 <li>Output for random forest variable importance now includes “Pretreatment” and “Iteration” columns.</li>
 <li>
-<code><a href="../reference/PlotSpectra.html">PlotSpectra()</a></code> now allows for missing data in non-spectral columns of the input data frame.</li>
+<code><a href="../reference/rename.html">PlotSpectra()</a></code> now allows for missing data in non-spectral columns of the input data frame.</li>
 <li>
 <em>waves</em> now has an <a href="https://doi.org/10.1002/ppj2.20012">associated paper in the Plant Phenome Journal</a>! The citation for this paper should be used if <em>waves</em> is used in a paper - see citation(“waves”) for details.</li>
 </ul>
@@ -163,7 +207,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jenna Hershberger, NSF BREAD IOS-1543958.</p>
+  <p>Developed by <a href='https://jmh579.github.io'>Jenna Hershberger</a>, NSF BREAD IOS-1543958.</p>
 </div>
 
 <div class="pkgdown">

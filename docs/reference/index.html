@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/solar/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -144,60 +144,60 @@
       <tr>
         
         <td>
-          <p><code><a href="AggregateSpectra.html">AggregateSpectra()</a></code> </p>
+          <p><code><a href="aggregate_spectra.html">aggregate_spectra()</a></code> </p>
         </td>
         <td><p>Aggregate data based on grouping variables and a user-provided
   function</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="DoPreprocessing.html">DoPreprocessing()</a></code> </p>
-        </td>
-        <td><p>Preprocess spectral data according to user-designated method</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="FilterSpectra.html">FilterSpectra()</a></code> </p>
+          <p><code><a href="filter_spectra.html">filter_spectra()</a></code> </p>
         </td>
         <td><p>Filter spectral data frame based on Mahalanobis distance</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="FormatCV.html">FormatCV()</a></code> </p>
+          <p><code><a href="format_cv.html">format_cv()</a></code> </p>
         </td>
         <td><p>Format multiple trials with or without overlapping genotypes into
   training and test sets according to user-provided cross validation scheme</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="PlotSpectra.html">PlotSpectra()</a></code> </p>
+          <p><code><a href="ikeogu.2017.html">ikeogu.2017</a></code> </p>
+        </td>
+        <td><p>Example vis-NIRS and reference dataset</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_spectra.html">plot_spectra()</a></code> </p>
         </td>
         <td><p>Plot spectral data, highlighting outliers as identified using
  Mahalanobis distance</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="PredictFromSavedModel.html">PredictFromSavedModel()</a></code> </p>
+          <p><code><a href="predict_spectra.html">predict_spectra()</a></code> </p>
         </td>
         <td><p>Use provided model object to predict trait values with input dataset</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="SaveModel.html">SaveModel()</a></code> </p>
+          <p><code><a href="pretreat_spectra.html">pretreat_spectra()</a></code> </p>
+        </td>
+        <td><p>Pretreat spectral data according to user-designated method</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="save_model.html">save_model()</a></code> </p>
         </td>
         <td><p>Save spectral prediction model and model performance statistics</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="TestModelPerformance.html">TestModelPerformance()</a></code> </p>
+          <p><code><a href="test_spectra.html">test_spectra()</a></code> </p>
         </td>
         <td><p>Test the performance of spectral models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ikeogu.2017.html">ikeogu.2017</a></code> </p>
-        </td>
-        <td><p>Example vis-NIRS and reference dataset</p></td>
       </tr>
     </tbody>
     </table>
@@ -213,7 +213,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jenna Hershberger, NSF BREAD IOS-1543958.</p>
+  <p>Developed by <a href='https://jmh579.github.io'>Jenna Hershberger</a>, NSF BREAD IOS-1543958.</p>
 </div>
 
 <div class="pkgdown">

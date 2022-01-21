@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/solar/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -94,7 +94,7 @@ Each cell represents the mean of 150 scans on a single root at a single waveleng
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -177,27 +177,27 @@ Each cell represents the mean of 150 scans on a single root at a single waveleng
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ikeogu.2017</span><span class='op'>)</span>
-<span class='va'>ikeogu.2017</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 10</span><span>
+<span class='va'>ikeogu.2017</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 10</span>
 #&gt;    study.name sample.id  DMC.oven   TCC  X350  X351  X352  X353  X354  X355
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> C16Mcal    C16Mcal_1      39.6  1.00 0.488 0.495 0.506 0.494 0.500 0.496
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> C16Mcal    C16Mcal_2      35.5 17.0  0.573 0.568 0.599 0.593 0.581 0.597
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> C16Mcal    C16Mcal_3      42.0 21.6  0.599 0.627 0.624 0.606 0.607 0.624
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> C16Mcal    C16Mcal_4      39.0  2.43 0.517 0.516 0.514 0.536 0.542 0.536
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> C16Mcal    C16Mcal_5      33.4 24.0  0.519 0.548 0.554 0.549 0.549 0.567
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> C16Mcal    C16Mcal_6      32.1 19.0  0.576 0.566 0.589 0.591 0.613 0.628
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> C16Mcal    C16Mcal_7      35.8  6.61 0.530 0.536 0.525 0.539 0.537 0.529
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> C16Mcal    C16Mcal_8      26.3 14.1  0.596 0.596 0.602 0.608 0.604 0.610
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> C16Mcal    C16Mcal_9      38.1 28.9  0.675 0.662 0.688 0.694 0.697 0.695
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> C16Mcal    C16Mcal_10     31.8 18.4  0.510 0.527 0.535 0.538 0.542 0.551</div><div class='input'><span class='va'>ikeogu.2017</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"X"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>study.name</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/gather.html'>gather</a></span><span class='op'>(</span><span class='va'>trait</span>, <span class='va'>value</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>DMC.oven</span><span class='op'>:</span><span class='va'>TCC</span><span class='op'>)</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>study.name</span>, y <span class='op'>=</span> <span class='va'>value</span>, fill <span class='op'>=</span> <span class='va'>study.name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>trait</span>, scales <span class='op'>=</span> <span class='st'>'free_y'</span>, nrow <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
-        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='ikeogu.2017-1.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> C16Mcal    C16Mcal_1      39.6  1.00 0.488 0.495 0.506 0.494 0.500 0.496
+#&gt; <span style='color: #BCBCBC;'> 2</span> C16Mcal    C16Mcal_2      35.5 17.0  0.573 0.568 0.599 0.593 0.581 0.597
+#&gt; <span style='color: #BCBCBC;'> 3</span> C16Mcal    C16Mcal_3      42.0 21.6  0.599 0.627 0.624 0.606 0.607 0.624
+#&gt; <span style='color: #BCBCBC;'> 4</span> C16Mcal    C16Mcal_4      39.0  2.43 0.517 0.516 0.514 0.536 0.542 0.536
+#&gt; <span style='color: #BCBCBC;'> 5</span> C16Mcal    C16Mcal_5      33.4 24.0  0.519 0.548 0.554 0.549 0.549 0.567
+#&gt; <span style='color: #BCBCBC;'> 6</span> C16Mcal    C16Mcal_6      32.1 19.0  0.576 0.566 0.589 0.591 0.613 0.628
+#&gt; <span style='color: #BCBCBC;'> 7</span> C16Mcal    C16Mcal_7      35.8  6.61 0.530 0.536 0.525 0.539 0.537 0.529
+#&gt; <span style='color: #BCBCBC;'> 8</span> C16Mcal    C16Mcal_8      26.3 14.1  0.596 0.596 0.602 0.608 0.604 0.610
+#&gt; <span style='color: #BCBCBC;'> 9</span> C16Mcal    C16Mcal_9      38.1 28.9  0.675 0.662 0.688 0.694 0.697 0.695
+#&gt; <span style='color: #BCBCBC;'>10</span> C16Mcal    C16Mcal_10     31.8 18.4  0.510 0.527 0.535 0.538 0.542 0.551</div><div class='input'><span class='va'>ikeogu.2017</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"X"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>study.name</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/gather.html'>gather</a></span><span class='op'>(</span><span class='va'>trait</span>, <span class='va'>value</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>DMC.oven</span><span class='op'>:</span><span class='va'>TCC</span><span class='op'>)</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>study.name</span>, y <span class='op'>=</span> <span class='va'>value</span>, fill <span class='op'>=</span> <span class='va'>study.name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>trait</span>, scales <span class='op'>=</span> <span class='st'>"free_y"</span>, nrow <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='ikeogu.2017-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -209,7 +209,7 @@ Each cell represents the mean of 150 scans on a single root at a single waveleng
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jenna Hershberger, NSF BREAD IOS-1543958.</p>
+  <p>Developed by <a href='https://jmh579.github.io'>Jenna Hershberger</a>, NSF BREAD IOS-1543958.</p>
 </div>
 
 <div class="pkgdown">
