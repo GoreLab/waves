@@ -24,7 +24,7 @@
 #'   \item Second derivative
 #'   \item Savitzky–Golay filter (SG)
 #'   \item SNV and SG
-#'   \item Gap segment derivative (window size = 11)
+#'   \item Gap-segment derivative (window size = 11)
 #'   \item SG and first derivative (window size = 5)
 #'   \item SG and first derivative (window size = 11)
 #'   \item SG and second derivative (window size = 5)
@@ -107,7 +107,7 @@ pretreat_spectra <- function(df,
     # 8. SNV + Savitzky-Golay
     SNVSG = savitzkyGolay(standardNormalVariate(spc), p = 2, w = 11, m = 0),
     # 9. Savitzky-Golay + Gap-segment derivative (gapDer) algorithms
-    SGD1 = gapDer(spc, m = 1, w = 11, s = 10),
+    SGD1 = gapDer(spc, m = 1, w = 11, s = 9),
     # 10. Savitzky-Golay filter + 1st derivative - window size = 5
     SG.D1W5 = savitzkyGolay(spc, p = 2, w = 5, m = 1),
     # 11. Savitzky-Golay filter + 1st derivative - window size = 11
