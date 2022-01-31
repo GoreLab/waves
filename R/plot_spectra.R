@@ -21,10 +21,11 @@
 #'  the console. Default is \code{TRUE}.
 #' @param color String or vector of strings indicating colors to be passed to
 #'  \code{\link[ggplot2]{ggplot}}. Default is default \code{\link[ggplot2]{ggplot}} colors.
-#' @param alternate.title String to be used as plot title in place of the default title.
-#'  Default is \code{NULL}, indicating that default titles will be used.
+#' @param alternate.title String to be used as plot title. If \code{detect.outliers} is
+#'  \code{TRUE}, a descriptive title will be supplied. If \code{detect.outliers} is
+#'  \code{FALSE}, default is no title will be used.
 #' @param wavelengths `r lifecycle::badge("deprecated")` \code{wavelengths} is no
-#'   longer supported; this information is now inferred from \code{df} column names
+#'  longer supported; this information is now inferred from \code{df} column names
 #'
 #' @importFrom dplyr select mutate distinct
 #' @importFrom tidyselect starts_with
@@ -145,7 +146,6 @@ plot_spectra <- function(df,
       theme_minimal() +
       labs(
         title = plot.title,
-        subtitle = "Raw spectra",
         x = "Wavelength",
         y = "Spectral Value"
       )
@@ -175,9 +175,7 @@ plot_spectra <- function(df,
     }
 
     # Plot title
-    if (is.null(alternate.title)) {
-      plot.title <- "Raw spectra"
-    } else {
+    if (!is.null(alternate.title)) {
       plot.title <- alternate.title
     }
 

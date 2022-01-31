@@ -38,8 +38,9 @@ the console. Default is \code{TRUE}.}
 \item{color}{String or vector of strings indicating colors to be passed to
 \code{\link[ggplot2]{ggplot}}. Default is default \code{\link[ggplot2]{ggplot}} colors.}
 
-\item{alternate.title}{String to be used as plot title in place of the default title.
-Default is \code{NULL}, indicating that default titles will be used.}
+\item{alternate.title}{String to be used as plot title. If \code{detect.outliers} is
+\code{TRUE}, a descriptive title will be supplied. If \code{detect.outliers} is
+\code{FALSE}, default is no title will be used.}
 
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
