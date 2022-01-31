@@ -52,7 +52,7 @@ is \code{NULL}.}
   \item Second derivative
   \item Savitzky–Golay filter (SG)
   \item SNV and SG
-  \item Gap segment derivative (window size = 11)
+  \item Gap-segment derivative (window size = 11)
   \item SG and first derivative (window size = 5)
   \item SG and first derivative (window size = 11)
   \item SG and second derivative (window size = 5)
@@ -143,9 +143,10 @@ results are always returned if the \code{model.method} is set to `pls` or `rf`.}
   method specified by the \code{pretreatment} argument. Each model is trained with all
   rows of \code{df}.
   \item `summary.model.performance` is a \code{data.frame} containing summary statistics
-  across all model training iterations and pretreatments.
+  across all model training iterations and pretreatments. See below for a description of
+  the summary statistics provided.
   \item `model.performance` is a \code{data.frame} containing performance statistics for
-  each iteration of model training separately.
+  each iteration of model training separately (see below).
   \item `predictions` is a \code{data.frame} containing both reference and predicted
   values for each test set entry in each iteration of model training.
   \item `importance` is a \code{data.frame} containing variable importance results for
@@ -153,13 +154,8 @@ results are always returned if the \code{model.method} is set to `pls` or `rf`.}
   "pls" or "rf", this list item is \code{NULL}.
   }
 
-\code{data.frame} with model performance statistics in summary format
-  (2 rows, one with mean and one with standard deviation of all training
-  iterations) or in long format (number of rows = num.iterations).
-  \strong{Note} if \code{preprocessing = TRUE}, only the first mean of
-  summary statistics for all iterations of training are provided for each
-  technique.
-Included summary statistics:
+`summary.model.performance` and `model.performance` \code{data.frames} summary
+ statistics include:
 \itemize{
   \item Tuned parameters depending on the model algorithm:
   \itemize{

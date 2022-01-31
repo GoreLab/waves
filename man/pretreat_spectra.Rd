@@ -34,7 +34,7 @@ transformations are applied to each row. Default is \code{NULL}.}
   \item Second derivative
   \item Savitzky–Golay filter (SG)
   \item SNV and SG
-  \item Gap segment derivative (window size = 11)
+  \item Gap-segment derivative (window size = 11)
   \item SG and first derivative (window size = 5)
   \item SG and first derivative (window size = 11)
   \item SG and second derivative (window size = 5)

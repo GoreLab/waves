@@ -60,7 +60,7 @@ predict_spectra <- function(input.data,
   model.object <- readRDS(model.location)
   final.model <- model.object
   # Match best pretreatment method with index number ---------------------------
-  best.preprocessing.num <- match(
+  best.pretreatment.num <- match(
     model.stats$Pretreatment[1],
     c(
       "Raw_data", "SNV", "SNV1D", "SNV2D", "D1",
@@ -70,9 +70,9 @@ predict_spectra <- function(input.data,
   )
 
   # Use pretreat_spectra() function to format input.data and preprocess if needed ---------------------------
-  preprocessed <- pretreat_spectra(
+  pretreated <- pretreat_spectra(
     df = input.data, test.data = NULL,
-    preprocessing.method = best.preprocessing.num
+    pretreatment = best.pretreatment.num
   )
 
   # Predict values using imported model, pretreated/formatted input data, and method of choice ---------------------------
@@ -81,18 +81,18 @@ predict_spectra <- function(input.data,
     best.ncomp <- model.stats$best.ncomp[1]
     # Get predictions
     predicted.values <- as.numeric(predict(final.model,
-      newdata = as.matrix(preprocessed[2:ncol(preprocessed)]),
+      newdata = as.matrix(pretreated[2:ncol(pretreated)]),
       ncomp = best.ncomp
     ))
   } else if (model.method == "svmLinear") {
-    predicted.values <- as.numeric(predict(final.model, newdata = preprocessed))
+    predicted.values <- as.numeric(predict(final.model, newdata = pretreated))
   } else if (model.method == "svmRadial") {
-    predicted.values <- as.numeric(predict(final.model, newdata = preprocessed))
+    predicted.values <- as.numeric(predict(final.model, newdata = pretreated))
   } else if (model.method == "rf") {
     best.ntree <- final.model$ntree
     best.mtry <- final.model$mtry
     predicted.values <- as.numeric(predict(final.model,
-      newdata = preprocessed,
+      newdata = pretreated,
       ntree = best.ntree,
       mtry = best.mtry
     ))
