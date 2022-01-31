@@ -50,7 +50,7 @@ save to a file. Default is \code{TRUE}.}
   \item Second derivative
   \item Savitzky–Golay filter (SG)
   \item SNV and SG
-  \item Gap segment derivative (window size = 11)
+  \item Gap-segment derivative (window size = 11)
   \item SG and first derivative (window size = 5)
   \item SG and first derivative (window size = 11)
   \item SG and second derivative (window size = 5)
@@ -162,8 +162,8 @@ test.model <- ikeogu.2017 \%>\%
     write.model = FALSE,
     pretreatment = 1:13,
     model.name = "my_prediction_model",
-    tune.length = 50,
-    num.iterations = 10
+    tune.length = 3,
+    num.iterations = 3
   )
 summary(test.model$best.model)
 test.model$best.model.stats
