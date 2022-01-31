@@ -6,7 +6,7 @@
 [![R build status](https://github.com/GoreLab/waves/workflows/R-CMD-check/badge.svg)](https://github.com/GoreLab/waves/actions)
 <!-- badges: end -->
 
-Originally designed application in the context of resource-limited plant research and breeding programs, `waves` provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, preprocessing, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data. 
+Originally designed application in the context of resource-limited plant research and breeding programs, `waves` provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, pretreatment, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data. 
 
 *Please note: function names were updated as of version 0.2.0. Old function names still work in this version but will be retired in upcoming package versions.*
 
@@ -19,6 +19,11 @@ This package is documented in a peer-reviewed manuscript in the Plant Phenome Jo
 ## Use
 
 Follow the installation instructions below, and then go wild! Use `waves` to analyze your own data. Please report any bugs or feature requests by opening issues in this repository.
+
+More detailed examples can be found in the package vignette by running the following:
+``` r
+waves::vignette("waves")
+```
 
 ## Installation
 Install the latest `waves` release directly from CRAN: 
@@ -51,7 +56,7 @@ devtools::install_github("GoreLab/waves")
 
 #### c. Trains spectral prediction models using `train_spectra()`.
    - Choose from partial least squares regression, random forest, and support vector machine algorithms
-   - Uses 5-fold cross validation within the training set to tune model hyperparameters
+   - Uses k-fold cross validation within the training set to tune model hyperparameters
    - Outputs model performance statistics (RMSE, R<sup>2</sup>, Bias, etc.) as assessed with test set
 
 ### 5. Save trained prediction models with `save_model()`.

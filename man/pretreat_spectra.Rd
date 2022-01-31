@@ -48,7 +48,7 @@ has been renamed "pretreatment"}
 longer supported; this information is now inferred from \code{df} column names}
 }
 \value{
-Preprocessed \code{df}` (or list of \code{data.frame}s) with
+Pretreated \code{df}` (or list of \code{data.frame}s) with
   reference column intact
 }
 \description{

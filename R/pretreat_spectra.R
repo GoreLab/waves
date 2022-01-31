@@ -42,7 +42,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom lifecycle is_present deprecate_warn deprecated
 #'
-#' @return Preprocessed \code{df}` (or list of \code{data.frame}s) with
+#' @return Pretreated \code{df}` (or list of \code{data.frame}s) with
 #'   reference column intact
 #' @export
 #'
