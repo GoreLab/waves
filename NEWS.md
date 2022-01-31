@@ -1,3 +1,13 @@
+# waves 0.2.1
+
+* Bug fix: `test_spectra()` now returns trained model correctly when only one pretreatment is specified.
+* Change the gap-segment derivative pretreatment to retain compatibility with prospectr. In the upcoming version of prospectr, the gapDer function only accepts odd values for the segment argument in order to properly compute the convolution filter.
+* Default plot title for `plot_spectra()` is now `NULL` (no title) if `detect.outliers` is set to `FALSE`.
+* Column names in output list item `$summary.model.performance` from `test_spectra()` now include underscores rather than periods for easier parsing.
+* Update website
+* New vignette: `vignette("waves")`
+
+
 # waves 0.2.0
 
 * Update all files to conform to the tidyverse style guide (#6).
