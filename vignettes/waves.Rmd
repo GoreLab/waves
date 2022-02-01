@@ -1,28 +1,39 @@
 ---
-title: "Introduction to the `waves` package"
-author: Jenna Hershberger [jmh579@cornell.edu]
-date: "`r Sys.Date()`"
+title: "Introduction to the waves package"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{waves}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+resource_files:
+  - save_model.R
+  - test_spectra.R
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 5,
+  fig.align = "center"
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE, warning=FALSE}
 library(waves)
 library(magrittr)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(tibble)
+```
+
+```{r, include=FALSE}
+library(waves)
+library(lifecycle)
+library(pls)
+source("test_spectra.R")
+source("save_model.R")
 ```
 
 ## Introduction
@@ -35,18 +46,21 @@ Follow the installation instructions below, and then go wild! Use `waves` to ana
 
 ## Installation
 Install the latest `waves` release directly from CRAN: 
-``` r
+```{r install_cran, eval=FALSE}
 install.packages("waves")
+library(waves)
 ```
+
 Alternatively, install the development version to get the most up-to-date (but not necessarily thoroughly tested) version:
-``` r
-# install.packages("devtools")
+```{r install_dev, eval=FALSE}
+install.packages("devtools")
 devtools::install_github("GoreLab/waves")
+library(waves)
 ```
 
 ## 1. Format your data
-Match spectra with reference values so that you have a dataframe with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with "X". Remove rows with missing values.
-```{r}
+Match spectra with reference values so that you have a `data.frame` with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with "X". Remove rows with missing values.
+```{r format}
 ikeogu.2017[1:7,1:7]
 
 ikeogu.2017.prepped <- ikeogu.2017 %>%
@@ -55,15 +69,13 @@ ikeogu.2017.prepped <- ikeogu.2017 %>%
   dplyr::select(unique.id, dplyr::everything(), -TCC) %>%
   na.omit() 
 
-head(ikeogu.2017.prepped, )
-ikeogu.2017.prepped[1:5,1:5]
+ikeogu.2017.prepped[1:7,1:7]
 ```
-
 
 ## 2. Visualize spectra using `plot_spectra()` 
 To display outliers in a different color, set `detect.outliers` to `TRUE`.
 
-```{r}
+```{r plot_raw}
 ikeogu.2017.prepped %>%
   plot_spectra(
     df = .,
@@ -81,7 +93,7 @@ The distance tells us how far an observation is from the center of the cloud, ta
 
 To detect outliers, the calculated Mahalanobis distance is compared against a $\chi^2$ distribution with degrees of freedom equal to the number of spectral data columns and an alpha level of 0.05.
 
-```{r}
+```{r filter}
 filtered.df <- ikeogu.2017.prepped %>%
   filter_spectra(
     df = .,
@@ -91,7 +103,7 @@ filtered.df <- ikeogu.2017.prepped %>%
     window.size = 15
     )
 
-filtered.df[1:5, c(1:5, (ncol(filtered.df) - 5):ncol(filtered.df))]
+filtered.df[1:5, c(1:5, (ncol(filtered.df) - 3):ncol(filtered.df))]
 ```
 No outliers were identified in the example dataset. Note the if `return.distances` is set to `TRUE`, the rightmost column contains Mahalanobis distances (`h.distances`).
 
@@ -99,7 +111,7 @@ No outliers were identified in the example dataset. Note the if `return.distance
 ## 4. If you have more than one scan per unique identifier, aggregate the scans by mean or median with `aggregate_spectra()`.
 
 In this example, we will aggregate by `study.name`.
-```{r}
+```{r aggregate}
 aggregated.test <- ikeogu.2017.prepped %>%
   aggregate_spectra(
     grouping.colnames = c("study.name"),
@@ -114,13 +126,9 @@ aggregated.test[, 1:5]
 
 Note that the following subsections describe functions that are called within `test_spectra()`. They do not need to be used separately for model pretreatment, cross-validation set formation, or model training.
 
-### Arguments
-- `train.data` is a 
+Some of the arguments for this function are detailed below. A description of output is below under section [5.4](#5.4. Output). See `?test_spectra()` for more information on the arguments and output for this function.
 
-
-See `?test_spectra()` for more information on the arguments and output for this function. A description of output is below under section [5.4](#5.4. Output).
-
-```{r}
+```{r run_test_spectra}
 results.list <- ikeogu.2017.prepped %>%
  dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
  na.omit() %>%
@@ -149,7 +157,7 @@ results.list <- ikeogu.2017.prepped %>%
 12. SG and second derivative (window size = 5)
 13. SG and second derivative (window size = 11)
 
-```{r}
+```{r plot_pretreatments, fig.height=6, fig.width = 7}
 ikeogu.2017.prepped[1:10,] %>% # subset the first 10 scans for speed
   pretreat_spectra(pretreatment = 2:13) %>% # exclude pretreatment 1 (raw data)
   bind_rows(.id = "pretreatment") %>%
@@ -161,10 +169,11 @@ ikeogu.2017.prepped[1:10,] %>% # subset the first 10 scans for speed
   drop_na(s.value) %>%
   ggplot(data = ., aes(x = wl, y = s.value, group = unique.id)) +
   geom_line(alpha = .5) +
-  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45)) +
   labs(title = "Pretreated spectra",
        x = "Wavelength",
        y = "Spectral Value") +
+  
   facet_wrap( ~ pretreatment, scales = "free")
 ```
 Note that the scales in this plot are "free". Without free scales, anything derivative-based treatment (D1 or D2) looks like it's a constant zero in comparison to those without derivative-based treatments (SNV, SG).
@@ -179,8 +188,6 @@ Choose from random, stratified random, or a plant breeding-specific scheme from 
 | "CV2"       | Tested lines in tested environments                                                       |
 | "CV0"       | Tested lines in untested environments                                                     |
 | "CV00"      | Untested lines in untested environments                                                   |
-
-![CV](../man/figures/cv_schemes.png)
 
 If `cv.scheme` is set to `NULL`, the argument `stratified.sampling` is used to determine whether stratified random sampling should be performed. If `TRUE`, the reference values from the input `data.frame` (`train.data`) will be used to create a balanced split of data between the training and test sets in each training iteration.
 
@@ -212,33 +219,33 @@ Models can also be trained with the standalone function `train_spectra()`. Model
 ### 5.4. Output
 `test_spectra()` outputs a list with four objects:
 
-1.`model.list` is a list of trained model objects, one for each pretreatment method specified by the `pretreatment` argument. Each model is trained with all rows of the input `data.frame` (`df`)
+1. `model.list` is a list of trained model objects, one for each pretreatment method specified by the `pretreatment` argument. Each model is trained with all rows of the input `data.frame` (`df`)
 
-```{r}
+```{r view_model}
 summary(results.list$model)
 ```
 
 2. `summary.model.performance` is a `data.frame` containing summary statistics across all model training iterations and pretreatments. See below for a description of the summary statistics provided.
 
-```{r}
+```{r view_summary}
 results.list$summary.model.performance
 ```
 
 3. `model.performance` is a `data.frame` containing performance statistics for each iteration of model training separately (see below).
 
-```{r}
+```{r view_performance}
 results.list$model.performance
 ```
 
 4. `predictions` is a `data.frame` containing both reference and predicted values for each test set entry in each iteration of model training.
 
-```{r}
+```{r view_predictions}
 head(results.list$predictions)
 ```
 
 5. `importance` is a `data.frame` containing variable importance results for each wavelength at each iteration of model training. If `model.method` is not "pls" or "rf", this list item is `NULL`.
 
-```{r}
+```{r view_importance}
 results.list$importance[, 1:7]
 ```
 
@@ -268,7 +275,7 @@ results.list$importance[, 1:7]
   - The `$model` output from `test_spectra()` can also be saved and used for prediction, but `save_model()` will take the extra step of saving an .Rds file for you if `write.model` is set to `TRUE`.
   
 In the example below, we'll use one subset of the example dataset ("C16Mcal") to create the model and then we'll predict the other subset ("C16Mval") in section [7](#7. Predict phenotypic values with new spectra).
-```{r}
+```{r run_save_model}
 model.to.save <- ikeogu.2017.prepped %>%
    dplyr::filter(study.name == "C16Mcal") %>%
    dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
@@ -278,30 +285,32 @@ model.to.save <- ikeogu.2017.prepped %>%
      write.model = FALSE,
      pretreatment = 1:13,
      tune.length = 5,
-     num.iterations = 3
+     num.iterations = 3,
+     verbose = FALSE
    )
 ```
 
 Now let's take a look at our trained model:
-```{r}
+```{r summarize_saved_model}
 summary(model.to.save$best.model)
 ```
 
 
-```{r}
+```{r format_saved_output}
 model.to.save$best.model.stats %>% 
   gather(key = "statistic", value = "value", RMSEp_mean:best.mtry_mode) %>% 
   separate(statistic, into =  c("statistic", "summary_type"), sep = "_") %>% 
-  pivot_wider(id_cols = c(Pretreatment, summary_type), names_from = statistic, values_from = value)
+  pivot_wider(id_cols = c(Pretreatment, summary_type), 
+              names_from = statistic, values_from = value)
 ```
 
-## 7. Predict phenotypic values with new spectra.
+## 7. Predict phenotypic values with new spectra
 If generating predictions from a saved model file in .Rds format, use `predict_spectra()`. If the model object is already in your R environment, the function `stats::predict()` can be used to generate predictions. `predict_spectra()` pulls the best model hyperparameters from your saved model object, but if using `stats::predict()`, these must be supplied separately.
 
 Using the model we trained in section [6](#6. Save trained prediction models with `save_model()`), we can predict cassava root dry matter content for our held out validation set:
 
 First, determine which pretreatment generated the best model. In this case, it's "SNVSG", which is pretreatment #8. Pretreat the new spectral dataset with these spectra.
-```{r}
+```{r prep_for_predictions}
 pretreated.val <- ikeogu.2017.prepped %>% 
   filter(study.name == "C16Mval") %>% 
   pretreat_spectra(pretreatment = 8) 
@@ -313,25 +322,25 @@ pretreated.val.mx <- pretreated.val %>%
 best.ncomp <- model.to.save$best.model.stats$best.ncomp_mode
 ```
 
-Perform predictions!
-```{r}
+#### Perform predictions!
+```{r predict}
 predicted.values <- as.numeric(predict(model.to.save$best.model,
       newdata = pretreated.val.mx, ncomp = best.ncomp))
 ```
 
-How did we do?
-```{r}
+#### How did we do?
+```{r calculate_statistics}
 spectacles::postResampleSpectro(pred = predicted.values, obs = pretreated.val$reference)
 ```
 
-Plot predictions
-```{r plot_predictions}
+#### Plot predictions
+```{r plot_predictions, fig.height=6}
 overall.range <- c(min(c(pretreated.val$reference, predicted.values)),
                    max(c(pretreated.val$reference, predicted.values)))
 cbind(unique.id = pretreated.val$unique.id, 
       observed = pretreated.val$reference, 
       predicted = predicted.values) %>% 
-  as.tibble() %>% 
+  as_tibble() %>% 
   mutate(observed = as.numeric(observed),
          predicted = as.numeric(predicted)) %>% 
   ggplot(aes(x = observed, y = predicted)) + 
@@ -341,7 +350,7 @@ cbind(unique.id = pretreated.val$unique.id,
   geom_point() +
   coord_fixed(xlim = overall.range,
                   ylim = overall.range) + 
-  labs(title = "Example dry matter content prediction from ikeogu.2017",
+  labs(title = "Example dry matter content predictions",
        x = "Observed",
        y = "Predicted") + 
   theme_bw()
