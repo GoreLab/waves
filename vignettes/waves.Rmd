@@ -28,14 +28,6 @@ library(ggplot2)
 library(tibble)
 ```
 
-```{r, include=FALSE}
-library(waves)
-library(lifecycle)
-library(pls)
-source("test_spectra.R")
-source("save_model.R")
-```
-
 ## Introduction
 
 Originally designed application in the context of resource-limited plant research and breeding programs, `waves` provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, pretreatment, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data. 
