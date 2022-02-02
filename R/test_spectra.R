@@ -266,7 +266,7 @@ test_spectra <- function(train.data,
       verbose = verbose
     )
 
-    if (length(pretreatment > 1)) {
+    if (length(pretreatment) != 1) {
       # Add Pretreatment column to each data.frame in the training results list
       for (j in 2:length(training.results.i)) {
         training.results.i[[j]] <- cbind("Pretreatment" = methods.list[i], training.results.i[[j]])
