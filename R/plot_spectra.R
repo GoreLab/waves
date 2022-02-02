@@ -141,7 +141,7 @@ plot_spectra <- function(df,
       )
     ) +
       geom_line(alpha = .5) +
-      geom_line(data = subset(.data$hdists.df, .data$Outlier == T), alpha = .7) +
+      geom_line(data = subset(hdists.df, hdists.df$Outlier == T), alpha = .7) +
       scale_color_manual(values = color, name = "Outlier?") +
       theme_minimal() +
       labs(

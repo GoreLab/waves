@@ -279,8 +279,9 @@ test_spectra <- function(train.data,
       summary.i <- training.results.i$summary.model.performance %>%
         tidyr::pivot_longer(cols = .data$RMSEp:.data$best.mtry) %>%
         pivot_wider(
-          id_cols = c(.data$Pretreatment, .data$SummaryType),
-          names_from = c(.data$name, .data$SummaryType), names_sep = "_"
+          id_cols = c(.data$Pretreatment),
+          names_from = c(.data$name, .data$SummaryType),
+          names_sep = "_"
         )
     } else {
       summary.i <- training.results.i$summary.model.performance

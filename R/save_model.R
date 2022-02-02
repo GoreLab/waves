@@ -159,7 +159,7 @@ save_model <- function(df,
     if (verbose) print(best.model.stats)
   }
 
-  if (length(pretreatment) > 1) {
+  if (length(pretreatment) != 1) {
     # Use results data frame to determine best pretreatment technique
     results.df <- training.results$summary.model.performance
     best.type.num <- ifelse(best.model.metric == "RMSE",
