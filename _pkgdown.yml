@@ -25,13 +25,6 @@ reference:
   contents:
   - starts_with("ikeogu")
 
-
-articles:
-- title: Get started
-  navbar: ~
-  contents:
-  - waves
-
 navbar:
   components:
     home: ~
