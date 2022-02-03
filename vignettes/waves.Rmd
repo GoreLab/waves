@@ -14,7 +14,7 @@ resource_files:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 5,
+  fig.width = 6,
   fig.align = "center"
 )
 ```
@@ -64,10 +64,10 @@ ikeogu.2017.prepped <- ikeogu.2017 %>%
 ikeogu.2017.prepped[1:7,1:7]
 ```
 
-## 2. Visualize spectra using `plot_spectra()` 
+## 2. Visualize spectra with `plot_spectra()` 
 To display outliers in a different color, set `detect.outliers` to `TRUE`.
 
-```{r plot_raw}
+```{r plot_raw, fig.height=5, fig.width=7}
 ikeogu.2017.prepped %>%
   plot_spectra(
     df = .,
@@ -77,7 +77,7 @@ ikeogu.2017.prepped %>%
   )
 ```
 
-## 3. Filter spectra to remove outliers with `filter_spectra()`.
+## 3. Perform outlier removal with `filter_spectra()`.
 
 `waves` uses Mahalanobis distance to identify outliers. Mahalanobis distance is a common metric used to identify multivariate outliers. The larger the value of Mahalanobis distance, the more unusual the data point (i.e., the more likely it is to be a multivariate outlier). 
 
@@ -100,7 +100,8 @@ filtered.df[1:5, c(1:5, (ncol(filtered.df) - 3):ncol(filtered.df))]
 No outliers were identified in the example dataset. Note the if `return.distances` is set to `TRUE`, the rightmost column contains Mahalanobis distances (`h.distances`).
 
 
-## 4. If you have more than one scan per unique identifier, aggregate the scans by mean or median with `aggregate_spectra()`.
+## 4. Aggregate scans
+If you have more than one scan per unique identifier, aggregate the scans by mean or median with `aggregate_spectra()`.
 
 In this example, we will aggregate by `study.name`.
 ```{r aggregate}
@@ -114,7 +115,8 @@ aggregated.test[, 1:5]
 ```
 
 
-## 5. Use `test_spectra()` to perform spectral pretreatment, cross-validation set formation, and model training functions over multiple iterations.
+## 5. Evaluate the predictive ability of your spectra
+`test_spectra()` is a wrapper that performs spectral pretreatment ([5.1](#5.1. Pretreat spectra)), cross-validation set formation ([5.2](#5.2. Specify a cross-validation scheme)), and model training functions over multiple iterations ([5.3](#5.3. Train spectral prediction models)).
 
 Note that the following subsections describe functions that are called within `test_spectra()`. They do not need to be used separately for model pretreatment, cross-validation set formation, or model training.
 
@@ -132,8 +134,8 @@ results.list <- ikeogu.2017.prepped %>%
   )
 ```
 
-### 5.1. Specify which spectral pretreatments (1-13) to apply with the parameter `pretreatment`.
-`pretreat_spectra()` can also be used on its own to transform a data.frame using any/all of 12 available pretreatments:
+### 5.1. Pretreat spectra
+Specify which spectral pretreatments (1-13) to apply with the parameter `pretreatment`. `pretreat_spectra()` can also be used on its own to transform a data.frame using any/all of 12 available pretreatments:
 
 1. Raw data (no pretreatment is applied)
 2. Standard normal variate (SNV)
@@ -149,7 +151,7 @@ results.list <- ikeogu.2017.prepped %>%
 12. SG and second derivative (window size = 5)
 13. SG and second derivative (window size = 11)
 
-```{r plot_pretreatments, fig.height=6, fig.width = 7}
+```{r plot_pretreatments, fig.height=6, fig.width=7}
 ikeogu.2017.prepped[1:10,] %>% # subset the first 10 scans for speed
   pretreat_spectra(pretreatment = 2:13) %>% # exclude pretreatment 1 (raw data)
   bind_rows(.id = "pretreatment") %>%
@@ -190,7 +192,7 @@ When using one of the four specialized cross-validation schemes ("CV1", "CV2", "
 
 Cross-validation schemes can also be formatted outside of `test_spectra()` using the function `format_cv()`. 
 
-### 5.3. Train spectral prediction models 
+### 5.3. Train spectral prediction models
 Many of the arguments for `test_spectra()` are related to model training:
    - `model.method` is the algorithm type to use for training. See the table below for more information
    - `tune.length` is the number of PLS components to test. This argument is ignored if other algorithms are used
@@ -199,7 +201,7 @@ Many of the arguments for `test_spectra()` are related to model training:
    - `num.iterations` sets the number of training iterations
    - `proportion.train` is the fraction of samples to be included in the training set (default is 0.7)
 
-Models can also be trained with the standalone function `train_spectra()`. Model training is implemented with [`caret`](https://topepo.github.io/caret/)
+Models can also be trained with the standalone function `train_spectra()`. Model training is implemented with [`caret`](https://topepo.github.io/caret/).
    
 | Algorithm                                       | `model.method` | R package source                                                  | Tuning parameters (hyperparameters) |
 |-------------------------------------------------|----------------|-------------------------------------------------------------------|-------------------------------------|

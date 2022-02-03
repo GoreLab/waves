@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/solar/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -39,6 +39,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -72,13 +74,10 @@
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="articles/waves.html">Get started</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/GoreLab/waves/">
+  <a href="https://github.com/GoreLab/waves/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -95,42 +94,42 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="waves" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#waves" class="anchor"></a>waves</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="waves">waves<a class="anchor" aria-label="anchor" href="#waves"></a>
+</h1></div>
 <!-- badges: start -->
 
 <p>Originally designed application in the context of resource-limited plant research and breeding programs, <code>waves</code> provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, pretreatment, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data.</p>
 <p><em>Please note: function names were updated as of version 0.2.0. Old function names still work in this version but will be retired in upcoming package versions.</em></p>
-<div id="cite" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cite" class="anchor"></a>Cite</h2>
+<div class="section level2">
+<h2 id="cite">Cite<a class="anchor" aria-label="anchor" href="#cite"></a>
+</h2>
 <p>This package is documented in a peer-reviewed manuscript in the Plant Phenome Journal. Please cite the manuscript if you have found this package to be useful!</p>
 <blockquote>
-<p>Hershberger, J, Morales, N, Simoes, CC, Ellerbrock, B, Bauchet, G, Mueller, LA, Gore MA. Making waves in Breedbase: An integrated spectral data storage and analysis pipeline for plant breeding programs. Plant Phenome J. 2021; 4:e20012. <a href="https://doi.org/10.1002/ppj2.20012" class="uri">https://doi.org/10.1002/ppj2.20012</a></p>
+<p>Hershberger, J, Morales, N, Simoes, CC, Ellerbrock, B, Bauchet, G, Mueller, LA, Gore MA. Making waves in Breedbase: An integrated spectral data storage and analysis pipeline for plant breeding programs. Plant Phenome J. 2021; 4:e20012. <a href="https://doi.org/10.1002/ppj2.20012" class="external-link uri">https://doi.org/10.1002/ppj2.20012</a></p>
 </blockquote>
 </div>
-<div id="use" class="section level2">
-<h2 class="hasAnchor">
-<a href="#use" class="anchor"></a>Use</h2>
+<div class="section level2">
+<h2 id="use">Use<a class="anchor" aria-label="anchor" href="#use"></a>
+</h2>
 <p>Follow the installation instructions below, and then go wild! Use <code>waves</code> to analyze your own data. Please report any bugs or feature requests by opening issues in this repository.</p>
 <p>More detailed examples can be found in the package vignette, <a href="articles/waves.html">“Getting started with waves”</a></p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the latest <code>waves</code> release directly from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"waves"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"waves"</span><span class="op">)</span></code></pre></div>
 <p>Alternatively, install the development version to get the most up-to-date (but not necessarily thoroughly tested) version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"GoreLab/waves"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"GoreLab/waves"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<ol>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<ol style="list-style-type: decimal">
 <li><p>Format your data. Match spectra with reference values so that you have a dataframe with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with “X”.</p></li>
 <li><p>Visualize and filter spectra using <code><a href="reference/plot_spectra.html">plot_spectra()</a></code> and <code><a href="reference/filter_spectra.html">filter_spectra()</a></code>.</p></li>
 <li><p>If you have more than one scan per unique identifier, aggregate the scans by mean or median with <code><a href="reference/aggregate_spectra.html">aggregate_spectra()</a></code>.</p></li>
@@ -138,7 +137,7 @@
 <p>Use <code><a href="reference/test_spectra.html">test_spectra()</a></code> to perform spectral pretreatment, cross-validation set formation, and model training functions over multiple iterations.</p>
 <ul>
 <li>Applies any of 12 combinations of spectral pretreatment methods using <code><a href="reference/pretreat_spectra.html">pretreat_spectra()</a></code>.</li>
-<li>Determines cross-validation scheme with <code><a href="reference/format_cv.html">format_cv()</a></code>. Choose from random, stratified random, or a plant breeding-specific scheme from <a href="https://doi.org/10.3835/plantgenome2016.12.0130">Jarquín et <em>al.</em>, 2017. <em>The Plant Genome</em></a>.</li>
+<li>Determines cross-validation scheme with <code><a href="reference/format_cv.html">format_cv()</a></code>. Choose from random, stratified random, or a plant breeding-specific scheme from <a href="https://doi.org/10.3835/plantgenome2016.12.0130" class="external-link">Jarquín et <em>al.</em>, 2017. <em>The Plant Genome</em></a>.</li>
 <li>Trains spectral prediction models using <code><a href="reference/train_spectra.html">train_spectra()</a></code>.
 <ul>
 <li>Choose from partial least squares regression, random forest, and support vector machine algorithms</li>
@@ -160,10 +159,10 @@
 <li><p>Predict phenotypic values with new spectra and a saved model using <code><a href="reference/predict_spectra.html">predict_spectra()</a></code>.</p></li>
 </ol>
 </div>
-<div id="examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h2>
-<p>The package comes with an example dataset (<code>ikeogu.2017</code>) from <a href="https://doi.org/10.1371/journal.pone.0188918">Ikeogu et <em>al.</em> (2017) <em>PLoS ONE</em></a> that can be used to try out package capabilities. This dataset includes vis-NIR spectra from cassava roots as well as two reference phenotypes:</p>
+<div class="section level2">
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h2>
+<p>The package comes with an example dataset (<code>ikeogu.2017</code>) from <a href="https://doi.org/10.1371/journal.pone.0188918" class="external-link">Ikeogu et <em>al.</em> (2017) <em>PLoS ONE</em></a> that can be used to try out package capabilities. This dataset includes vis-NIR spectra from cassava roots as well as two reference phenotypes:</p>
 <ul>
 <li>Root dry matter content as measured by the oven method for the four studies included in the example dataset</li>
 <li>Total carotenoid content as measured by HPLC</li>
@@ -174,61 +173,65 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=waves">https://​cloud.r-project.org/​package=waves</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/GoreLab/waves/">https://​github.com/​GoreLab/​waves/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/GoreLab/waves/issues">https://​github.com/​GoreLab/​waves/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=waves" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/GoreLab/waves/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/GoreLab/waves/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing waves</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>
-<a href="https://jmh579.github.io">Jenna Hershberger</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-3147-6867" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>NSF BREAD IOS-1543958 <br><small class="roles"> Funder </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing waves</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/GoreLab/waves/actions"><img src="https://github.com/GoreLab/waves/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li>
+<a href="https://jmh579.github.io" class="external-link">Jenna Hershberger</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-3147-6867" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>NSF BREAD IOS-1543958 <br><small class="roles"> Funder </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/GoreLab/waves/actions" class="external-link"><img src="https://github.com/GoreLab/waves/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://jmh579.github.io">Jenna Hershberger</a>, NSF BREAD IOS-1543958.</p>
+  <p></p>
+<p>Developed by <a href="https://jmh579.github.io" class="external-link">Jenna Hershberger</a>, NSF BREAD IOS-1543958.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -236,6 +239,8 @@
 
   
 
+
+  
 
   </body>
 </html>
