@@ -20,8 +20,10 @@ This package is documented in a peer-reviewed manuscript in the Plant Phenome Jo
 
 Follow the installation instructions below, and then go wild! Use `waves` to analyze your own data. Please report any bugs or feature requests by opening issues in this repository.
 
-More detailed examples can be found in the package vignette, ["Getting started with waves"](articles/waves.html)
-
+More detailed examples can be found in the package [vignette](https://gorelab.github.io/waves/articles/waves.html). The vignette can also be found by running the following:
+``` r
+vignette("waves")
+```
 
 ## Installation
 Install the latest `waves` release directly from CRAN: 

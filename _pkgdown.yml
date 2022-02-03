@@ -1,3 +1,41 @@
+reference:
+- title: "Core model development workflow"
+  desc: >
+   These functions prepare spectra for model development and allow for the streamlined testing of model performance.
+  contents:
+  - plot_spectra
+  - filter_spectra
+  - aggregate_spectra
+  - test_spectra
+
+- title: "Internal use"
+  desc: >
+   While these functions can be used on their own, they were developed to be called within test_spectra().
+  contents:
+  - pretreat_spectra
+  - format_cv
+  - train_spectra
+
+- title: "Model development and testing for routine use"
+  contents:
+  - save_model
+  - predict_spectra
+
+- title: "Example Dataset"
+  contents:
+  - starts_with("ikeogu")
+
+
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - waves
+
+navbar:
+  components:
+    home: ~
+
 development:
   mode: auto
 
