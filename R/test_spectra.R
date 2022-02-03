@@ -33,9 +33,10 @@
 #'   method specified by the \code{pretreatment} argument. Each model is trained with all
 #'   rows of \code{df}.
 #'   \item `summary.model.performance` is a \code{data.frame} containing summary statistics
-#'   across all model training iterations and pretreatments.
+#'   across all model training iterations and pretreatments. See below for a description of
+#'   the summary statistics provided.
 #'   \item `model.performance` is a \code{data.frame} containing performance statistics for
-#'   each iteration of model training separately.
+#'   each iteration of model training separately (see below).
 #'   \item `predictions` is a \code{data.frame} containing both reference and predicted
 #'   values for each test set entry in each iteration of model training.
 #'   \item `importance` is a \code{data.frame} containing variable importance results for
@@ -43,13 +44,8 @@
 #'   "pls" or "rf", this list item is \code{NULL}.
 #'   }
 #'
-#' \code{data.frame} with model performance statistics in summary format
-#'   (2 rows, one with mean and one with standard deviation of all training
-#'   iterations) or in long format (number of rows = num.iterations).
-#'   \strong{Note} if \code{preprocessing = TRUE}, only the first mean of
-#'   summary statistics for all iterations of training are provided for each
-#'   technique.
-#' Included summary statistics:
+#' `summary.model.performance` and `model.performance` \code{data.frames} summary
+#'  statistics include:
 #' \itemize{
 #'   \item Tuned parameters depending on the model algorithm:
 #'   \itemize{
@@ -270,7 +266,7 @@ test_spectra <- function(train.data,
       verbose = verbose
     )
 
-    if (length(pretreatment > 1)) {
+    if (length(pretreatment) != 1) {
       # Add Pretreatment column to each data.frame in the training results list
       for (j in 2:length(training.results.i)) {
         training.results.i[[j]] <- cbind("Pretreatment" = methods.list[i], training.results.i[[j]])
@@ -283,24 +279,26 @@ test_spectra <- function(train.data,
       summary.i <- training.results.i$summary.model.performance %>%
         tidyr::pivot_longer(cols = .data$RMSEp:.data$best.mtry) %>%
         pivot_wider(
-          id_cols = c(.data$Pretreatment, .data$SummaryType),
-          names_from = c(.data$name, .data$SummaryType), names_sep = "."
+          id_cols = c(.data$Pretreatment),
+          names_from = c(.data$name, .data$SummaryType),
+          names_sep = "_"
         )
     } else {
       summary.i <- training.results.i$summary.model.performance
     }
 
-    if (counter == 1) {
+    if (counter == 1) { # Counter indicates pretreatment number
       # Set up results compilations in first iteration
-      model.list <- ifelse(length(pretreatment) > 1,
-        list(training.results.i$model), # if TRUE
-        training.results.i$model # if FALSE
-      )
+      if(length(pretreatment) != 1) {
+        model.list <- list(training.results.i$model)
+      } else{ # If only one pretreatment, don't make a list.
+        model.list <- training.results.i$model
+      }
       summary.df <- summary.i
       results.df <- training.results.i$model.performance
       predictions.df <- training.results.i$predictions
       importance.df <- training.results.i$importance
-    } else {
+    } else { # Not the first pretreatment
       # Add new results to existing objects
       model.list <- append(model.list, list(training.results.i$model))
       summary.df <- rbind(summary.df, summary.i)
@@ -311,7 +309,9 @@ test_spectra <- function(train.data,
   } # End of loop ---------------------------
   rownames(summary.df) <- NULL
   rownames(results.df) <- NULL
-  names(model.list) <- methods.list[pretreatment]
+  if (length(pretreatment) != 1) {
+    names(model.list) <- methods.list[pretreatment]
+  }
 
   if (model.method %in% c("pls", "rf")) {
     # Reformat importance.df

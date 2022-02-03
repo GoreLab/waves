@@ -1,15 +1,9 @@
-template:
-  params:
-    bootswatch: solar
-
 navbar:
   structure:
     left:
     - home
-    - intro
     - reference
     - articles
-    - tutorials
     - news
     right: github
   components:
@@ -19,6 +13,9 @@ navbar:
     reference:
       text: Reference
       href: reference/index.html
+    articles:
+      text: Get Started
+      href: articles/waves.html
     news:
       text: Changelog
       href: news/index.html

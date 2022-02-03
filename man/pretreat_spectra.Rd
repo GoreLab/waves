@@ -34,7 +34,7 @@ transformations are applied to each row. Default is \code{NULL}.}
   \item Second derivative
   \item Savitzky–Golay filter (SG)
   \item SNV and SG
-  \item Gap segment derivative (window size = 11)
+  \item Gap-segment derivative (window size = 11)
   \item SG and first derivative (window size = 5)
   \item SG and first derivative (window size = 11)
   \item SG and second derivative (window size = 5)
@@ -48,7 +48,7 @@ has been renamed "pretreatment"}
 longer supported; this information is now inferred from \code{df} column names}
 }
 \value{
-Preprocessed \code{df}` (or list of \code{data.frame}s) with
+Pretreated \code{df}` (or list of \code{data.frame}s) with
   reference column intact
 }
 \description{

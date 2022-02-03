@@ -48,8 +48,8 @@
 #'     write.model = FALSE,
 #'     pretreatment = 1:13,
 #'     model.name = "my_prediction_model",
-#'     tune.length = 50,
-#'     num.iterations = 10
+#'     tune.length = 3,
+#'     num.iterations = 3
 #'   )
 #' summary(test.model$best.model)
 #' test.model$best.model.stats
@@ -159,12 +159,12 @@ save_model <- function(df,
     if (verbose) print(best.model.stats)
   }
 
-  if (length(pretreatment) > 1) {
+  if (length(pretreatment) != 1) {
     # Use results data frame to determine best pretreatment technique
     results.df <- training.results$summary.model.performance
     best.type.num <- ifelse(best.model.metric == "RMSE",
-      which.min(results.df$RMSEp.mean),
-      which.max(results.df$R2p.mean)
+      which.min(results.df$RMSEp_mean),
+      which.max(results.df$R2p_mean)
     )
     # Set chosen model as best.model for export
     best.model <- training.results$model[[best.type.num]]

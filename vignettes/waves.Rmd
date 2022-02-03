@@ -1,0 +1,351 @@
+---
+title: "waves"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{waves}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+resource_files:
+  - save_model.R
+  - test_spectra.R
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.align = "center"
+)
+```
+
+```{r setup, message=FALSE, warning=FALSE}
+library(waves)
+library(magrittr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(tibble)
+```
+
+## Introduction
+
+Originally designed application in the context of resource-limited plant research and breeding programs, `waves` provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, pretreatment, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data. 
+
+## Use
+
+Follow the installation instructions below, and then go wild! Use `waves` to analyze your own data. Please report any bugs or feature requests by opening issues in the [`waves` repository](https://github.com/GoreLab/waves).
+
+## Installation
+Install the latest `waves` release directly from CRAN: 
+```{r install_cran, eval=FALSE}
+install.packages("waves")
+library(waves)
+```
+
+Alternatively, install the development version to get the most up-to-date (but not necessarily thoroughly tested) version:
+```{r install_dev, eval=FALSE}
+install.packages("devtools")
+devtools::install_github("GoreLab/waves")
+library(waves)
+```
+
+## 1. Format your data
+Match spectra with reference values so that you have a `data.frame` with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with "X". Remove rows with missing values.
+```{r format}
+ikeogu.2017[1:7,1:7]
+
+ikeogu.2017.prepped <- ikeogu.2017 %>%
+  dplyr::rename(unique.id = sample.id,
+                reference = DMC.oven) %>%
+  dplyr::select(unique.id, dplyr::everything(), -TCC) %>%
+  na.omit() 
+
+ikeogu.2017.prepped[1:7,1:7]
+```
+
+## 2. Visualize spectra with `plot_spectra()` 
+To display outliers in a different color, set `detect.outliers` to `TRUE`.
+
+```{r plot_raw, fig.height=5, fig.width=7}
+ikeogu.2017.prepped %>%
+  plot_spectra(
+    df = .,
+    num.col.before.spectra = 5,
+    detect.outliers = FALSE,
+    alternate.title = "Example spectra"
+  )
+```
+
+## 3. Perform outlier removal with `filter_spectra()`.
+
+`waves` uses Mahalanobis distance to identify outliers. Mahalanobis distance is a common metric used to identify multivariate outliers. The larger the value of Mahalanobis distance, the more unusual the data point (i.e., the more likely it is to be a multivariate outlier). 
+
+The distance tells us how far an observation is from the center of the cloud, taking into account the shape (covariance) of the cloud as well.
+
+To detect outliers, the calculated Mahalanobis distance is compared against a $\chi^2$ distribution with degrees of freedom equal to the number of spectral data columns and an alpha level of 0.05.
+
+```{r filter}
+filtered.df <- ikeogu.2017.prepped %>%
+  filter_spectra(
+    df = .,
+    filter = TRUE,
+    return.distances = TRUE,
+    num.col.before.spectra = 5,
+    window.size = 15
+    )
+
+filtered.df[1:5, c(1:5, (ncol(filtered.df) - 3):ncol(filtered.df))]
+```
+No outliers were identified in the example dataset. Note the if `return.distances` is set to `TRUE`, the rightmost column contains Mahalanobis distances (`h.distances`).
+
+
+## 4. Aggregate scans
+If you have more than one scan per unique identifier, aggregate the scans by mean or median with `aggregate_spectra()`.
+
+In this example, we will aggregate by `study.name`.
+```{r aggregate}
+aggregated.test <- ikeogu.2017.prepped %>%
+  aggregate_spectra(
+    grouping.colnames = c("study.name"),
+    reference.value.colname = "reference",
+    agg.function = "mean"
+    )
+aggregated.test[, 1:5]
+```
+
+
+## 5. Evaluate the predictive ability of your spectra
+`test_spectra()` is a wrapper that performs spectral pretreatment ([5.1](#5.1. Pretreat spectra)), cross-validation set formation ([5.2](#5.2. Specify a cross-validation scheme)), and model training functions over multiple iterations ([5.3](#5.3. Train spectral prediction models)).
+
+Note that the following subsections describe functions that are called within `test_spectra()`. They do not need to be used separately for model pretreatment, cross-validation set formation, or model training.
+
+Some of the arguments for this function are detailed below. A description of output is below under section [5.4](#5.4. Output). See `?test_spectra()` for more information on the arguments and output for this function.
+
+```{r run_test_spectra}
+results.list <- ikeogu.2017.prepped %>%
+ dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
+ na.omit() %>%
+ test_spectra(
+   train.data = .,
+   tune.length = 3,
+   num.iterations = 3,
+   pretreatment = 1
+  )
+```
+
+### 5.1. Pretreat spectra
+Specify which spectral pretreatments (1-13) to apply with the parameter `pretreatment`. `pretreat_spectra()` can also be used on its own to transform a data.frame using any/all of 12 available pretreatments:
+
+1. Raw data (no pretreatment is applied)
+2. Standard normal variate (SNV)
+3. SNV and first derivative
+4. SNV and second derivative
+5. First derivative
+6. Second derivative
+7. Savitzky–Golay filter (SG)
+8. SNV and SG
+9. Gap segment derivative (window size = 11)
+10. SG and first derivative (window size = 5)
+11. SG and first derivative (window size = 11)
+12. SG and second derivative (window size = 5)
+13. SG and second derivative (window size = 11)
+
+```{r plot_pretreatments, fig.height=6, fig.width=7}
+ikeogu.2017.prepped[1:10,] %>% # subset the first 10 scans for speed
+  pretreat_spectra(pretreatment = 2:13) %>% # exclude pretreatment 1 (raw data)
+  bind_rows(.id = "pretreatment") %>%
+  gather(key = "wl",
+         value = "s.value",
+         tidyselect::starts_with("X")) %>%
+  mutate(wl = as.numeric(stringr::str_extract(.data$wl, "\\-*\\d+\\.*\\d*")),
+         pretreatment = as.factor(pretreatment)) %>%
+  drop_na(s.value) %>%
+  ggplot(data = ., aes(x = wl, y = s.value, group = unique.id)) +
+  geom_line(alpha = .5) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Pretreated spectra",
+       x = "Wavelength",
+       y = "Spectral Value") +
+  
+  facet_wrap( ~ pretreatment, scales = "free")
+```
+Note that the scales in this plot are "free". Without free scales, anything derivative-based treatment (D1 or D2) looks like it's a constant zero in comparison to those without derivative-based treatments (SNV, SG).
+
+### 5.2. Specify a cross-validation scheme
+Choose from random, stratified random, or a plant breeding-specific scheme from [Jarqu&iacute;n et *al.*, 2017. *The Plant Genome*](https://doi.org/10.3835/plantgenome2016.12.0130). Options include:
+
+| `cv.scheme` | Description                                                                               |
+|-------------|-------------------------------------------------------------------------------------------|
+| `NULL`      | Random or stratified random sampling (does not take genotype or environment into account) |
+| "CV1"       | Untested lines in tested environments                                                     |
+| "CV2"       | Tested lines in tested environments                                                       |
+| "CV0"       | Tested lines in untested environments                                                     |
+| "CV00"      | Untested lines in untested environments                                                   |
+
+If `cv.scheme` is set to `NULL`, the argument `stratified.sampling` is used to determine whether stratified random sampling should be performed. If `TRUE`, the reference values from the input `data.frame` (`train.data`) will be used to create a balanced split of data between the training and test sets in each training iteration.
+
+When using one of the four specialized cross-validation schemes ("CV1", "CV2", "CV0", or "CV00"), additional arguments are required:
+    - `trial1` contains the trial to be tested in subsequent model training functions. The first column contains unique identifiers, second contains genotypes, third contains reference values, followed by spectral columns. Include no other columns to right of spectra! Column names of spectra must start with "X", reference column must be named "reference", and genotype column must be named "genotype".
+    -`trial2`	contains a trial that has overlapping genotypes with `trial1` but that were grown in a different site/year (different environment). Formatting must be consistent with `trial1`.
+    - `trial3` contains a trial that may or may not contain genotypes that overlap with `trial1`. Formatting must be consistent with `trial1`.
+
+Cross-validation schemes can also be formatted outside of `test_spectra()` using the function `format_cv()`. 
+
+### 5.3. Train spectral prediction models
+Many of the arguments for `test_spectra()` are related to model training:
+   - `model.method` is the algorithm type to use for training. See the table below for more information
+   - `tune.length` is the number of PLS components to test. This argument is ignored if other algorithms are used
+   - `best.model.metric` indicates the metric used to decide which model is best ("RMSE" or "R-squared")
+   - `k-fold` specifies the number of folds used for cross-validation to tune model hyperparameters within the training set
+   - `num.iterations` sets the number of training iterations
+   - `proportion.train` is the fraction of samples to be included in the training set (default is 0.7)
+
+Models can also be trained with the standalone function `train_spectra()`. Model training is implemented with [`caret`](https://topepo.github.io/caret/).
+   
+| Algorithm                                       | `model.method` | R package source                                                  | Tuning parameters (hyperparameters) |
+|-------------------------------------------------|----------------|-------------------------------------------------------------------|-------------------------------------|
+| Partial least squares (PLS)                     | "pls"          | [`pls`](https://CRAN.R-project.org/package=pls)                   | ncomp                               |
+| Random forest (RF)                              | "rf"           | [`randomForest`](https://CRAN.R-project.org/package=randomForest) | mtry                                |
+| Support vector machine (SVM) with linear kernel | "svmLinear"    | [`kernlab`](https://CRAN.R-project.org/package=kernlab)           | C                                   |
+| Support vector machine (SVM) with radial kernel | "svmRadial     | [`kernlab`](https://CRAN.R-project.org/package=kernlab)           | sigma, C                            |
+
+### 5.4. Output
+`test_spectra()` outputs a list with four objects:
+
+1. `model.list` is a list of trained model objects, one for each pretreatment method specified by the `pretreatment` argument. Each model is trained with all rows of the input `data.frame` (`df`)
+
+```{r view_model}
+summary(results.list$model)
+```
+
+2. `summary.model.performance` is a `data.frame` containing summary statistics across all model training iterations and pretreatments. See below for a description of the summary statistics provided.
+
+```{r view_summary}
+results.list$summary.model.performance
+```
+
+3. `model.performance` is a `data.frame` containing performance statistics for each iteration of model training separately (see below).
+
+```{r view_performance}
+results.list$model.performance
+```
+
+4. `predictions` is a `data.frame` containing both reference and predicted values for each test set entry in each iteration of model training.
+
+```{r view_predictions}
+head(results.list$predictions)
+```
+
+5. `importance` is a `data.frame` containing variable importance results for each wavelength at each iteration of model training. If `model.method` is not "pls" or "rf", this list item is `NULL`.
+
+```{r view_importance}
+results.list$importance[, 1:7]
+```
+
+| Statistic*                  | Description                                                                        |
+|----------------------------|------------------------------------------------------------------------------------|
+| RMSE<sub>p</sub>           | Root mean squared error of prediction                                              |
+| R<sup>2</sup><sub>p</sub>  | Squared Pearson’s correlation between predicted and observed test set values       |
+| RPD                        | Ratio of standard deviation of observed test set values to RMSE<sub>p</sub>        |
+| RPIQ                       | Ratio of performance to interquartile difference                                   |
+| CCC                        | Concordance correlation coefficient                                                |
+| Bias                       | Average difference between the predicted and observed values                       |
+| SEP                        | Standard error of prediction                                                       |
+| RMSE<sub>cv</sub>          | Root mean squared error of cross-validation                                        |
+| R<sup>2</sup><sub>cv</sub> | Coefficient of multiple determination of cross-validation for PLS models           |
+| R<sup>2</sup><sub>sp</sub> | Squared Spearman’s rank correlation between predicted and observed test set values |
+| best.ncomp                 | Best number of components in a PLS model                                           |
+| best.ntree                 | Best number of trees in an RF model                                                |
+| best.mtry                  | Best number of variables to include at every decision point in an RF model         |
+
+*Many of the spectral model performance statistics are calculated using the function `postResampleSpectro()` from the `spectacles` package.
+
+## 6. Save trained prediction models with `save_model()`
+  - Intended for a production environment
+  - Can evaluate spectral pretreatment methods using the input dataset
+  - Selects best model using the metric provided with `best.model.metric` ("RMSE" or "Rsquared")
+  - Returns trained model with option to save as .Rds object
+  - The `$model` output from `test_spectra()` can also be saved and used for prediction, but `save_model()` will take the extra step of saving an .Rds file for you if `write.model` is set to `TRUE`.
+  
+In the example below, we'll use one subset of the example dataset ("C16Mcal") to create the model and then we'll predict the other subset ("C16Mval") in section [7](#7. Predict phenotypic values with new spectra).
+```{r run_save_model}
+model.to.save <- ikeogu.2017.prepped %>%
+   dplyr::filter(study.name == "C16Mcal") %>%
+   dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
+   na.omit() %>%
+   save_model(
+     df = .,
+     write.model = FALSE,
+     pretreatment = 1:13,
+     tune.length = 5,
+     num.iterations = 3,
+     verbose = FALSE
+   )
+```
+
+Now let's take a look at our trained model:
+```{r summarize_saved_model}
+summary(model.to.save$best.model)
+```
+
+
+```{r format_saved_output}
+model.to.save$best.model.stats %>% 
+  gather(key = "statistic", value = "value", RMSEp_mean:best.mtry_mode) %>% 
+  separate(statistic, into =  c("statistic", "summary_type"), sep = "_") %>% 
+  pivot_wider(id_cols = c(Pretreatment, summary_type), 
+              names_from = statistic, values_from = value)
+```
+
+## 7. Predict phenotypic values with new spectra
+If generating predictions from a saved model file in .Rds format, use `predict_spectra()`. If the model object is already in your R environment, the function `stats::predict()` can be used to generate predictions. `predict_spectra()` pulls the best model hyperparameters from your saved model object, but if using `stats::predict()`, these must be supplied separately.
+
+Using the model we trained in section [6](#6. Save trained prediction models with `save_model()`), we can predict cassava root dry matter content for our held out validation set:
+
+First, determine which pretreatment generated the best model. In this case, it's "SNVSG", which is pretreatment #8. Pretreat the new spectral dataset with these spectra.
+```{r prep_for_predictions}
+pretreated.val <- ikeogu.2017.prepped %>% 
+  filter(study.name == "C16Mval") %>% 
+  pretreat_spectra(pretreatment = 8) 
+
+pretreated.val.mx <- pretreated.val %>% 
+  dplyr::select(starts_with("X")) %>% 
+  as.matrix()
+
+best.ncomp <- model.to.save$best.model.stats$best.ncomp_mode
+```
+
+#### Perform predictions!
+```{r predict}
+predicted.values <- as.numeric(predict(model.to.save$best.model,
+      newdata = pretreated.val.mx, ncomp = best.ncomp))
+```
+
+#### How did we do?
+```{r calculate_statistics}
+spectacles::postResampleSpectro(pred = predicted.values, obs = pretreated.val$reference)
+```
+
+#### Plot predictions
+```{r plot_predictions, fig.height=6}
+overall.range <- c(min(c(pretreated.val$reference, predicted.values)),
+                   max(c(pretreated.val$reference, predicted.values)))
+cbind(unique.id = pretreated.val$unique.id, 
+      observed = pretreated.val$reference, 
+      predicted = predicted.values) %>% 
+  as_tibble() %>% 
+  mutate(observed = as.numeric(observed),
+         predicted = as.numeric(predicted)) %>% 
+  ggplot(aes(x = observed, y = predicted)) + 
+  geom_abline(intercept = 0,
+              slope = 1,
+              color = "gray80") +
+  geom_point() +
+  coord_fixed(xlim = overall.range,
+                  ylim = overall.range) + 
+  labs(title = "Example dry matter content predictions",
+       x = "Observed",
+       y = "Predicted") + 
+  theme_bw()
+```
