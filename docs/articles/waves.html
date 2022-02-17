@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -389,14 +389,14 @@
 </ol>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">results.list</span><span class="op">$</span><span class="va">summary.model.performance</span>
-<span class="co">#&gt;   SummaryType ModelType     RMSEp        R2p       RPD      RPIQ        CCC</span>
-<span class="co">#&gt; 1        mean       pls 2.0641051 0.76043121 1.9837567 2.5475633 0.83680534</span>
-<span class="co">#&gt; 2          sd       pls 0.1801002 0.04519436 0.1096973 0.2661373 0.01681368</span>
-<span class="co">#&gt; 3        mode       pls 2.2707020 0.73541906 1.9512213 2.2597161 0.84806430</span>
-<span class="co">#&gt;         Bias       SEP     RMSEcv       R2cv       R2sp best.ncomp best.ntree</span>
-<span class="co">#&gt; 1 -0.0256951 2.0854954 1.97097690 0.77723431 0.74687740          3         NA</span>
-<span class="co">#&gt; 2  0.2607325 0.1819666 0.02703099 0.01190025 0.01688465          0         NA</span>
-<span class="co">#&gt; 3  0.2527077 2.2942332 1.94035296 0.77045986 0.72771345          3         NA</span>
+<span class="co">#&gt;   SummaryType ModelType      RMSEp        R2p       RPD      RPIQ       CCC</span>
+<span class="co">#&gt; 1        mean       pls 1.95141383 0.78643870 2.1507422 2.8095415 0.8608408</span>
+<span class="co">#&gt; 2          sd       pls 0.05428676 0.04985941 0.2292396 0.1142572 0.0327865</span>
+<span class="co">#&gt; 3        mode       pls 1.93228450 0.74135909 1.9355442 2.8304361 0.8249171</span>
+<span class="co">#&gt;          Bias        SEP     RMSEcv       R2cv      R2sp best.ncomp best.ntree</span>
+<span class="co">#&gt; 1 -0.08977919 1.97163628 2.00278851 0.76384531 0.8147579          3         NA</span>
+<span class="co">#&gt; 2  0.11892148 0.05484933 0.05493816 0.01295365 0.0278424          0         NA</span>
+<span class="co">#&gt; 3 -0.08373932 1.95230871 2.04722033 0.77386174 0.7841283          3         NA</span>
 <span class="co">#&gt;   best.mtry</span>
 <span class="co">#&gt; 1        NA</span>
 <span class="co">#&gt; 2        NA</span>
@@ -408,13 +408,13 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">results.list</span><span class="op">$</span><span class="va">model.performance</span>
 <span class="co">#&gt;   Iteration ModelType    RMSEp       R2p      RPD     RPIQ       CCC</span>
-<span class="co">#&gt; 1         1       pls 2.270702 0.7354191 1.951221 2.259716 0.8480643</span>
-<span class="co">#&gt; 2         2       pls 1.981408 0.8126024 2.106041 2.784691 0.8448735</span>
-<span class="co">#&gt; 3         3       pls 1.940206 0.7332721 1.894008 2.598283 0.8174782</span>
+<span class="co">#&gt; 1         1       pls 1.932284 0.7413591 1.935544 2.830436 0.8249171</span>
+<span class="co">#&gt; 2         2       pls 2.012676 0.8399919 2.391826 2.686279 0.8891501</span>
+<span class="co">#&gt; 3         3       pls 1.909281 0.7779651 2.124857 2.911910 0.8684551</span>
 <span class="co">#&gt;          Bias      SEP   RMSEcv      R2cv      R2sp best.ncomp best.ntree</span>
-<span class="co">#&gt; 1  0.25270772 2.294233 1.940353 0.7704599 0.7277135          3         NA</span>
-<span class="co">#&gt; 2 -0.06564772 2.001941 1.991514 0.7702680 0.7595656          3         NA</span>
-<span class="co">#&gt; 3 -0.26414531 1.960312 1.981063 0.7909751 0.7533531          3         NA</span>
+<span class="co">#&gt; 1 -0.08373932 1.952309 2.047220 0.7738617 0.7841283          3         NA</span>
+<span class="co">#&gt; 2  0.02600728 2.033533 1.941361 0.7492168 0.8216128          3         NA</span>
+<span class="co">#&gt; 3 -0.21160551 1.929067 2.019784 0.7684574 0.8385327          3         NA</span>
 <span class="co">#&gt;   best.mtry</span>
 <span class="co">#&gt; 1        NA</span>
 <span class="co">#&gt; 2        NA</span>
@@ -426,12 +426,12 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results.list</span><span class="op">$</span><span class="va">predictions</span><span class="op">)</span>
 <span class="co">#&gt;      Iteration ModelType unique.id    reference    predicted         </span>
-<span class="co">#&gt; [1,] "1"       "pls"     "C16Mcal_4"  "39.0099869" "36.5234016949211"</span>
-<span class="co">#&gt; [2,] "1"       "pls"     "C16Mcal_8"  "26.2774601" "30.1024607639964"</span>
-<span class="co">#&gt; [3,] "1"       "pls"     "C16Mcal_10" "31.7993336" "33.9786002024318"</span>
-<span class="co">#&gt; [4,] "1"       "pls"     "C16Mcal_16" "36.3796349" "38.3285973575354"</span>
-<span class="co">#&gt; [5,] "1"       "pls"     "C16Mcal_22" "41.2799988" "40.237071446883" </span>
-<span class="co">#&gt; [6,] "1"       "pls"     "C16Mcal_23" "37.1399994" "37.0678811260276"</span></code></pre></div>
+<span class="co">#&gt; [1,] "1"       "pls"     "C16Mcal_7"  "35.8100014" "37.5591175865318"</span>
+<span class="co">#&gt; [2,] "1"       "pls"     "C16Mcal_9"  "38.1199989" "36.8642045131194"</span>
+<span class="co">#&gt; [3,] "1"       "pls"     "C16Mcal_10" "31.7993336" "33.913462730692" </span>
+<span class="co">#&gt; [4,] "1"       "pls"     "C16Mcal_19" "39.7091141" "38.5039276219713"</span>
+<span class="co">#&gt; [5,] "1"       "pls"     "C16Mcal_21" "37.6122742" "38.1986697564787"</span>
+<span class="co">#&gt; [6,] "1"       "pls"     "C16Mcal_22" "41.2799988" "40.1669612092853"</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>
 <code>importance</code> is a <code>data.frame</code> containing variable importance results for each wavelength at each iteration of model training. If <code>model.method</code> is not “pls” or “rf”, this list item is <code>NULL</code>.</li>
@@ -441,9 +441,9 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span>
 <span class="co">#&gt;   Iteration ModelType   X350   X351   X352   X353   X354</span>
 <span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 pls       0.032<span style="text-decoration: underline;">6</span> 0.033<span style="text-decoration: underline;">1</span> 0.031<span style="text-decoration: underline;">5</span> 0.030<span style="text-decoration: underline;">8</span> 0.033<span style="text-decoration: underline;">4</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 pls       0.027<span style="text-decoration: underline;">1</span> 0.027<span style="text-decoration: underline;">7</span> 0.027<span style="text-decoration: underline;">1</span> 0.026<span style="text-decoration: underline;">7</span> 0.027<span style="text-decoration: underline;">5</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 pls       0.029<span style="text-decoration: underline;">2</span> 0.030<span style="text-decoration: underline;">9</span> 0.029<span style="text-decoration: underline;">9</span> 0.029<span style="text-decoration: underline;">8</span> 0.029<span style="text-decoration: underline;">7</span></span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 pls       0.025<span style="text-decoration: underline;">3</span> 0.026<span style="text-decoration: underline;">9</span> 0.026<span style="text-decoration: underline;">3</span> 0.026<span style="text-decoration: underline;">1</span> 0.026<span style="text-decoration: underline;">2</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 pls       0.034<span style="text-decoration: underline;">2</span> 0.035<span style="text-decoration: underline;">8</span> 0.031<span style="text-decoration: underline;">8</span> 0.032<span style="text-decoration: underline;">8</span> 0.032<span style="text-decoration: underline;">3</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 pls       0.025<span style="text-decoration: underline;">9</span> 0.025<span style="text-decoration: underline;">5</span> 0.024<span style="text-decoration: underline;">8</span> 0.024<span style="text-decoration: underline;">6</span> 0.025<span style="text-decoration: underline;">8</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="25%">
