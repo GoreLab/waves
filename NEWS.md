@@ -1,3 +1,8 @@
+# waves 0.2.2
+
+* Bug fix: `model.method = "svmLinear` and `model.method = "svmRadial` no longer return an error when used in `train_spectra()` or `test_spectra()`.
+
+
 # waves 0.2.1
 
 * Bug fix: `test_spectra()` now returns trained model correctly when only one pretreatment is specified.

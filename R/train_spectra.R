@@ -372,6 +372,8 @@ train_spectra <- function(df,
       ) %>%
         tibble::rownames_to_column(var = "wavelength")
       rownames(importance.df.i) <- NULL
+    } else{
+      importance.df.i <- NULL
     }
 
     # Get model performance statistics ---------------------------
@@ -434,7 +436,7 @@ train_spectra <- function(df,
 
   # Stitch on ModelType column later so doesn't interfere with mean calculations for summary
   results.df$ModelType <- model.method
-  results.df %<>%
+  results.df <- results.df %>%
     dplyr::select(all_of(df.colnames))
 
   # Create model with all input data (not just 70%). Results will give an idea of this model's performance,
