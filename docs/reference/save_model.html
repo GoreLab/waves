@@ -20,7 +20,7 @@ one pretreatment method is supplied, results from that method are stored."><meta
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -79,6 +79,7 @@ one pretreatment method is supplied, results from that method are stored.</p>
   trial1 <span class="op">=</span> <span class="cn">NULL</span>,
   trial2 <span class="op">=</span> <span class="cn">NULL</span>,
   trial3 <span class="op">=</span> <span class="cn">NULL</span>,
+  seed <span class="op">=</span> <span class="fl">1</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   save.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
   wavelengths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
@@ -173,22 +174,26 @@ site/year (different environment). Formatting must be consistent with
 <code>cv.scheme</code> is provided. This data.frame contains a trial that may or
 may not contain genotypes that overlap with <code>trial1</code>. Formatting must
 be consistent with <code>trial1</code>.</p></dd>
+<dt>seed</dt>
+<dd><p>Integer to be used internally as input for <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code>. Only used if
+<code>stratified.sampling = TRUE</code>. In all other cases, seed is set to the current
+iteration number. Default is 1.</p></dd>
 <dt>verbose</dt>
 <dd><p>If <code>TRUE</code>, the number of rows removed through filtering
 will be printed to the console. Default is <code>TRUE</code>.</p></dd>
 <dt>save.model</dt>
-<dd><p>`r lifecycle::badge("deprecated")` <code>save.model = FALSE</code> is no
+<dd><p>DEPRECATED <code>save.model = FALSE</code> is no
 longer supported; this function will always return a saved model.</p></dd>
 <dt>wavelengths</dt>
-<dd><p>`r lifecycle::badge("deprecated")` <code>wavelengths</code> is no
+<dd><p>DEPRECATED <code>wavelengths</code> is no
 longer supported; this information is now inferred from <code>df</code> column names</p></dd>
 <dt>autoselect.preprocessing</dt>
-<dd><p>`r lifecycle::badge("deprecated")`
+<dd><p>DEPRECATED
 <code>autoselect.preprocessing = FALSE</code> is no longer supported. If
 multiple pretreatment methods are supplied, the best will be automatically
 selected as the model to be saved.</p></dd>
 <dt>preprocessing.method</dt>
-<dd><p>`r lifecycle::badge("deprecated")` this argument
+<dd><p>DEPRECATED <code>preprocessing.method</code>
 has been renamed "pretreatment"</p></dd>
 </dl></div>
     <div id="value">
@@ -229,15 +234,6 @@ has been renamed "pretreatment"</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Pretreatment initiated.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training models...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Working on Raw_data </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: lattice</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘pls’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:caret’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     R2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:stats’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     loadings</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Returning model...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Working on SNV </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Returning model...</span>
@@ -268,7 +264,7 @@ has been renamed "pretreatment"</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 40</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Pretreatment RMSEp_mean R2p_mean RPD_mean RPIQ_mean CCC_mean Bias_mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Raw_data           1.79   0.800     2.27       3.13    0.879    0.031<span style="text-decoration: underline;">5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Raw_data           2.06   0.817     2.20       2.74    0.886   -<span style="color: #BB0000;">0.245</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SNV                1.73   0.860     2.64       3.28    0.916   -<span style="color: #BB0000;">0.080</span><span style="color: #BB0000; text-decoration: underline;">8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> SNV1D              2.61   0.704     1.74       2.18    0.781   -<span style="color: #BB0000;">0.119</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> SNV2D              4.59   0.035<span style="text-decoration: underline;">4</span>    0.986      1.25    0.124    0.630 </span>

@@ -24,7 +24,7 @@
 #' @param alternate.title String to be used as plot title. If \code{detect.outliers} is
 #'  \code{TRUE}, a descriptive title will be supplied. If \code{detect.outliers} is
 #'  \code{FALSE}, default is no title will be used.
-#' @param wavelengths `r lifecycle::badge("deprecated")` \code{wavelengths} is no
+#' @param wavelengths DEPRECATED \code{wavelengths} is no
 #'  longer supported; this information is now inferred from \code{df} column names
 #'
 #' @importFrom dplyr select mutate distinct

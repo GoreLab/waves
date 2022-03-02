@@ -35,17 +35,17 @@
 #'   \code{test.data} will remain as a testing set or if none is provided, 30\%
 #'   of the provided \code{train.data} will be used for testing. Default is
 #'   \code{FALSE}.
-#' @param seed Integer to be used as input for `set.seed()`. Only used if
+#' @param seed Integer to be used internally as input for \code{set.seed()}. Only used if
 #'   \code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
 #'   iteration number. Default is 1.
 #' @param verbose If \code{TRUE}, the number of rows removed through filtering
 #'   will be printed to the console. Default is \code{TRUE}.
-#' @param save.model `r lifecycle::badge("deprecated")` \code{save.model = FALSE} is no
+#' @param save.model DEPRECATED \code{save.model = FALSE} is no
 #'   longer supported; this function will always return a saved model.
-#' @param rf.variable.importance `r lifecycle::badge("deprecated")`
+#' @param rf.variable.importance DEPRECATED
 #'   \code{rf.variable.importance = FALSE} is no longer supported; variable importance
 #'   results are always returned if the \code{model.method} is set to `pls` or `rf`.
-#' @param output.summary `r lifecycle::badge("deprecated")` \code{output.summary = FALSE}
+#' @param output.summary DEPRECATED \code{output.summary = FALSE}
 #'   is no longer supported; a summary of output is always returned alongside the full
 #'   performance statistics.
 #'

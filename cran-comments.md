@@ -18,5 +18,25 @@ Found the following files/directories:
   
 This NOTE is not reproducible locally or with any of the other checks listed above.
 
+One additional NOTE was found with all R-hub and the win-builder checks.
+*Found the following (possibly) invalid URLs:
+  URL: https://doi.org/10.1002/ppj2.20012
+    From: inst/CITATION
+    Status: 503
+    Message: Service Unavailable
+
+Found the following (possibly) invalid DOIs:
+  DOI: 10.1002/ppj2.20012
+    From: DESCRIPTION
+          inst/CITATION
+    Status: Service Unavailable
+    Message: 503
+  DOI: 10.3835/plantgenome2016.12.0130
+    From: DESCRIPTION
+    Status: Service Unavailable
+    Message: 503
+    
+These DOIs have not changed since the last version. The links work when manually typed in and do not produce NOTEs locally or with GitHub Actions checks. 
+
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.

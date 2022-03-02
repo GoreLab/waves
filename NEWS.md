@@ -1,6 +1,9 @@
 # waves 0.2.3
 
+* Bug fix: `save_model()` output now works correctly with `predict_spectra()`.
+* Bug fix: `train_spectra()` no longer returns an error when `stratified.sampling = F`.
 * In `train_spectra()`, stratified random sampling of training and test sets now allows the user to provide a seed value for `set.seed()`. For random (non-stratified) sampling of training and test sets, seed is set to the current iteration number.
+* Minor documentation updates added.
 
 
 # waves 0.2.2

@@ -30,9 +30,9 @@
 #'   \item SG and second derivative (window size = 5)
 #'   \item SG and second derivative (window size = 11)
 #' }
-#' @param wavelengths `r lifecycle::badge("deprecated")` \code{wavelengths} is no
+#' @param wavelengths DEPRECATED \code{wavelengths} is no
 #'   longer supported; this information is now inferred from \code{df} column names
-#' @param preprocessing.method `r lifecycle::badge("deprecated")` this argument
+#' @param preprocessing.method DEPRECATED \code{preprocessing.method}
 #'   has been renamed "pretreatment"
 #'
 #' @importFrom prospectr standardNormalVariate savitzkyGolay gapDer

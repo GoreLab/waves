@@ -45,7 +45,7 @@ the console. Default is \code{TRUE}.}
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
 
-\item{wavelengths}{`r lifecycle::badge("deprecated")` \code{wavelengths} is no
+\item{wavelengths}{DEPRECATED \code{wavelengths} is no
 longer supported; this information is now inferred from \code{df} column names}
 }
 \value{

@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -74,6 +74,7 @@
   trial2 <span class="op">=</span> <span class="cn">NULL</span>,
   trial3 <span class="op">=</span> <span class="cn">NULL</span>,
   split.test <span class="op">=</span> <span class="cn">FALSE</span>,
+  seed <span class="op">=</span> <span class="fl">1</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   wavelengths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
   preprocessing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
@@ -171,23 +172,27 @@ stratified subset (70%) of a third and test on the remaining samples
 <code>test.data</code> will remain as a testing set or if none is provided, 30%
 of the provided <code>train.data</code> will be used for testing. Default is
 <code>FALSE</code>.</p></dd>
+<dt>seed</dt>
+<dd><p>Integer to be used internally as input for <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code>. Only used if
+<code>stratified.sampling = TRUE</code>. In all other cases, seed is set to the current
+iteration number. Default is 1.</p></dd>
 <dt>verbose</dt>
 <dd><p>If <code>TRUE</code>, the number of rows removed through filtering
 will be printed to the console. Default is <code>TRUE</code>.</p></dd>
 <dt>wavelengths</dt>
-<dd><p>`r lifecycle::badge("deprecated")` <code>wavelengths</code> is no
+<dd><p>DEPRECATED <code>wavelengths</code> is no
 longer supported; this information is now inferred from <code>df</code> column names</p></dd>
 <dt>preprocessing</dt>
-<dd><p>`r lifecycle::badge("deprecated")` please use
+<dd><p>DEPRECATED please use
 <code>pretreatment</code> to specify the specific pretreatment(s) to test. For behavior
 identical to that of <code>preprocessing = TRUE</code>, set
 <code>pretreatment = 1:13</code>`.</p></dd>
 <dt>output.summary</dt>
-<dd><p>`r lifecycle::badge("deprecated")` <code>output.summary = FALSE</code>
+<dd><p>DEPRECATED <code>output.summary = FALSE</code>
 is no longer supported; a summary of output is always returned alongside the full
 performance statistics.</p></dd>
 <dt>rf.variable.importance</dt>
-<dd><p>`r lifecycle::badge("deprecated")`
+<dd><p>DEPRECATED
 <code>rf.variable.importance = FALSE</code> is no longer supported; variable importance
 results are always returned if the <code>model.method</code> is set to `pls` or `rf`.</p></dd>
 </dl></div>

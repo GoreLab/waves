@@ -8,15 +8,15 @@
 #'
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
-#' @inheritParams format_cv
 #' @inheritParams train_spectra
+#' @inheritParams format_cv
 #' @inheritParams pretreat_spectra
 #' @param train.data \code{data.frame} object of spectral data for input into a
 #'   spectral prediction model. First column contains unique identifiers, second
 #'   contains reference values, followed by spectral columns. Include no other
 #'   columns to right of spectra! Column names of spectra must start with "X"
 #'   and reference column must be named "reference".
-#' @param preprocessing `r lifecycle::badge("deprecated")` please use
+#' @param preprocessing DEPRECATED please use
 #'   \code{pretreatment} to specify the specific pretreatment(s) to test. For behavior
 #'   identical to that of \code{preprocessing = TRUE}, set
 #'   \code{pretreatment = 1:13}`.
@@ -103,6 +103,7 @@ test_spectra <- function(train.data,
                          trial2 = NULL,
                          trial3 = NULL,
                          split.test = FALSE,
+                         seed = 1,
                          verbose = TRUE,
                          wavelengths = deprecated(),
                          preprocessing = deprecated(),

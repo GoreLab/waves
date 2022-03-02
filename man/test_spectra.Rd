@@ -20,6 +20,7 @@ test_spectra(
   trial2 = NULL,
   trial3 = NULL,
   split.test = FALSE,
+  seed = 1,
   verbose = TRUE,
   wavelengths = deprecated(),
   preprocessing = deprecated(),
@@ -117,22 +118,26 @@ stratified subset (70\%) of a third and test on the remaining samples
 of the provided \code{train.data} will be used for testing. Default is
 \code{FALSE}.}
 
+\item{seed}{Integer to be used internally as input for \code{set.seed()}. Only used if
+\code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
+iteration number. Default is 1.}
+
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
 
-\item{wavelengths}{`r lifecycle::badge("deprecated")` \code{wavelengths} is no
+\item{wavelengths}{DEPRECATED \code{wavelengths} is no
 longer supported; this information is now inferred from \code{df} column names}
 
-\item{preprocessing}{`r lifecycle::badge("deprecated")` please use
+\item{preprocessing}{DEPRECATED please use
 \code{pretreatment} to specify the specific pretreatment(s) to test. For behavior
 identical to that of \code{preprocessing = TRUE}, set
 \code{pretreatment = 1:13}`.}
 
-\item{output.summary}{`r lifecycle::badge("deprecated")` \code{output.summary = FALSE}
+\item{output.summary}{DEPRECATED \code{output.summary = FALSE}
 is no longer supported; a summary of output is always returned alongside the full
 performance statistics.}
 
-\item{rf.variable.importance}{`r lifecycle::badge("deprecated")`
+\item{rf.variable.importance}{DEPRECATED
 \code{rf.variable.importance = FALSE} is no longer supported; variable importance
 results are always returned if the \code{model.method} is set to `pls` or `rf`.}
 }
