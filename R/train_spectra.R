@@ -35,6 +35,9 @@
 #'   \code{test.data} will remain as a testing set or if none is provided, 30\%
 #'   of the provided \code{train.data} will be used for testing. Default is
 #'   \code{FALSE}.
+#' @param seed Integer to be used as input for `set.seed()`. Only used if
+#'   \code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
+#'   iteration number. Default is 1.
 #' @param verbose If \code{TRUE}, the number of rows removed through filtering
 #'   will be printed to the console. Default is \code{TRUE}.
 #' @param save.model `r lifecycle::badge("deprecated")` \code{save.model = FALSE} is no
@@ -124,6 +127,7 @@ train_spectra <- function(df,
                           trial2 = NULL,
                           trial3 = NULL,
                           split.test = FALSE,
+                          seed = 1,
                           verbose = TRUE,
                           rf.variable.importance = deprecated(),
                           output.summary = deprecated(),
@@ -204,35 +208,27 @@ train_spectra <- function(df,
   )
 
   # Train model ---------------------------
-
   # Partition training and test sets
-  if (is.null(test.data)) {
-    # No separate test set provided
-    if (stratified.sampling) {
-      # Stratified sampling to get representative sample of ground truth (reference column) values
-      # Outputs list with n = num.iterations
-      train.index <- caret::createDataPartition(df$reference, p = proportion.train, times = num.iterations)
-    } else if (!stratified.sampling) {
-      # Random sample (not stratified)
-      train.index <- sort(sample(
-        x = 1:nrow(df),
-        size = proportion.train * nrow(df),
-        replace = FALSE, prob = NULL
-      ))
-    }
-  } else if (!is.null(test.data)) {
-    # If fixed training and test sets provided
-    if (split.test) {
-      # Fixed training set + add 70% of samples from test set pool to training set
-      train.index <- caret::createDataPartition(test.data$reference,
+  # Random sampling occurs in the loop below
+  if (is.null(test.data)){
+    partition.input.df <- df
+  } else {
+    partition.input.df <- test.data
+  }
+
+  if (!is.null(test.data) & !split.test) {
+    # If fixed training and test sets provided but split.test = F
+    num.iterations <- 1 # only one possible combination because the sets are fixed
+    data.train <- df
+    data.test <- test.data
+  }
+
+  if (stratified.sampling) {
+    # Stratified sampling to get representative sample of ground truth (reference column) values
+    # Outputs list with n = num.iterations
+    train.index <- caret::createDataPartition(partition.input.df$reference,
         p = proportion.train, times = num.iterations
-      )
-    } else if (!split.test) {
-      # If fixed training and test sets provided but split.test = F
-      num.iterations <- 1 # only one possible combination because the sets are fixed
-      data.train <- df
-      data.test <- test.data
-    }
+    )
   }
 
   for (i in 1:num.iterations) {
@@ -240,15 +236,37 @@ train_spectra <- function(df,
     set.seed(i)
 
     if (is.null(cv.scheme)) {
-      if (split.test & !is.null(test.data)) {
-        # Fixed training set + add 70% of samples from test set pool to training set
-        data.train <- rbind(df, test.data[train.index[[i]], ])
-        data.test <- test.data[-train.index[[i]], ]
+      if (!stratified.sampling) {
+        # Random sample (not stratified)
+        train.index <- sort(sample(
+          x = 1:nrow(partition.input.df),
+          size = proportion.train * nrow(partition.input.df),
+          replace = FALSE, prob = NULL
+        ))
+        if (is.null(test.data)){
+          # No test set provided
+          data.train <- df[train.index, ]
+          data.test <- df[-train.index, ]
+        } else if (!is.null(test.data) & split.test){
+          # Test set provided and split randomly
+          # Fixed training set + add proportion.train from test set pool to training set
+          data.train <- rbind(df, test.data[train.index, ])
+          data.test <- test.data[-train.index, ]
+        }
       }
-      else if (!split.test & is.null(test.data)) {
-        # If fixed training and test sets provided but split.test = F
-        data.train <- df[train.index[[i]], ]
-        data.test <- df[-train.index[[i]], ]
+
+      else if (stratified.sampling) {
+        # Stratified random sampling
+        if (is.null(test.data)){
+          # No test set provided
+          data.train <- df[train.index[[i]], ]
+          data.test <- df[-train.index[[i]], ]
+        } else if (!is.null(test.data) & split.test){
+          # Test set provided and split in a stratified random manner
+          # Fixed training set + add proportion.train from test set pool to training set
+          data.train <- rbind(df, test.data[train.index[[i]], ])
+          data.test <- test.data[-train.index[[i]], ]
+        }
       }
     }
 

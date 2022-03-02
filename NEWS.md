@@ -1,3 +1,8 @@
+# waves 0.2.3
+
+* In `train_spectra()`, stratified random sampling of training and test sets now allows the user to provide a seed value for `set.seed()`. For random (non-stratified) sampling of training and test sets, seed is set to the current iteration number.
+
+
 # waves 0.2.2
 
 * Bug fix: `model.method = "svmLinear` and `model.method = "svmRadial` no longer return an error when used in `train_spectra()` or `test_spectra()`.

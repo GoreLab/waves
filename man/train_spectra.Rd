@@ -19,6 +19,7 @@ train_spectra(
   trial2 = NULL,
   trial3 = NULL,
   split.test = FALSE,
+  seed = 1,
   verbose = TRUE,
   rf.variable.importance = deprecated(),
   output.summary = deprecated(),
@@ -95,6 +96,10 @@ stratified subset (70\%) of a third and test on the remaining samples
 \code{test.data} will remain as a testing set or if none is provided, 30\%
 of the provided \code{train.data} will be used for testing. Default is
 \code{FALSE}.}
+
+\item{seed}{Integer to be used as input for `set.seed()`. Only used if
+\code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
+iteration number. Default is 1.}
 
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
