@@ -20,7 +20,7 @@ within [train_spectra()]"><meta property="og:image" content="/logo.png"><!-- mat
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -77,6 +77,7 @@ within [train_spectra()]</p>
   trial2 <span class="op">=</span> <span class="cn">NULL</span>,
   trial3 <span class="op">=</span> <span class="cn">NULL</span>,
   split.test <span class="op">=</span> <span class="cn">FALSE</span>,
+  seed <span class="op">=</span> <span class="fl">1</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   rf.variable.importance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
   output.summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
@@ -156,6 +157,10 @@ stratified subset (70%) of a third and test on the remaining samples
 <code>test.data</code> will remain as a testing set or if none is provided, 30%
 of the provided <code>train.data</code> will be used for testing. Default is
 <code>FALSE</code>.</p></dd>
+<dt>seed</dt>
+<dd><p>Integer to be used as input for `set.seed()`. Only used if
+<code>stratified.sampling = TRUE</code>. In all other cases, seed is set to the current
+iteration number. Default is 1.</p></dd>
 <dt>verbose</dt>
 <dd><p>If <code>TRUE</code>, the number of rows removed through filtering
 will be printed to the console. Default is <code>TRUE</code>.</p></dd>
