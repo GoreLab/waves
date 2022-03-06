@@ -111,7 +111,8 @@
 #'     num.iterations = 3,
 #'     best.model.metric = "RMSE",
 #'     stratified.sampling = TRUE
-#'   )
+#'   ) %>%
+#'   summary()
 #' }
 train_spectra <- function(df,
                           num.iterations,
@@ -495,7 +496,7 @@ train_spectra <- function(df,
     model = full.model,
     summary.model.performance = summary.df,
     model.performance = results.df,
-    predictions = predictions.df,
+    predictions = as.data.frame(predictions.df),
     importance = importance.df
   ))
 }

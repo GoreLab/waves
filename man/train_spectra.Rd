@@ -175,7 +175,8 @@ ikeogu.2017 \%>\%
     num.iterations = 3,
     best.model.metric = "RMSE",
     stratified.sampling = TRUE
-  )
+  ) \%>\%
+  summary()
 }
 }
 \author{
