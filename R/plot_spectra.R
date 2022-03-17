@@ -127,7 +127,7 @@ plot_spectra <- function(df,
     # Prepare data frame for plotting ---------------------------
     hdists.df <- filtered.df %>%
       tibble::rownames_to_column(var = "rownames") %>%
-      dplyr::select(.data$rownames .data$h.distances, .data$Outlier, tidyselect::starts_with("X")) %>%
+      dplyr::select(.data$rownames, .data$h.distances, .data$Outlier, tidyselect::starts_with("X")) %>%
       tidyr::gather(key = "wl", value = "s.value", tidyselect::starts_with("X")) %>%
       dplyr::mutate(wl = as.numeric(readr::parse_number(.data$wl)))
 

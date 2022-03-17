@@ -1,3 +1,11 @@
+# waves 0.2.4
+
+* Bug fix: Different CV schemes no longer return the same results (#20).
+* When `cv.scheme` is set to "CV2" and "CV0" and there are no overlapping genotypes between "trial1" and "trial2", `format_cv()` now returns `NULL`. Previously, results would be returned even if no overlap was present, resulting in incorrect CV scheme specification.
+* `format_cv()` parameter `cv.method` is now the boolean parameter `stratified.sampling` for consistency with other waves functions. 
+* `plot_spectra()` no longer requires a column named "unique.id".
+
+
 # waves 0.2.3
 
 * Bug fix: `save_model()` output now works correctly with `predict_spectra()`.

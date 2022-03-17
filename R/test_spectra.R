@@ -259,6 +259,7 @@ test_spectra <- function(train.data,
       proportion.train = proportion.train,
       tune.length = tune.length,
       model.method = model.method,
+      cv.scheme = cv.scheme,
       stratified.sampling = stratified.sampling,
       trial1 = processed.trial1,
       trial2 = processed.trial2,
@@ -307,7 +308,7 @@ test_spectra <- function(train.data,
       predictions.df <- rbind(predictions.df, training.results.i$predictions)
       importance.df <- rbind(importance.df, training.results.i$importance)
     }
-  } # End of loop ---------------------------
+  } # End of pretreatment loop ---------------------------
   rownames(summary.df) <- NULL
   rownames(results.df) <- NULL
   if (length(pretreatment) != 1) {

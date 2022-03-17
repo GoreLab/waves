@@ -208,6 +208,9 @@ train_spectra <- function(df,
     "SEP", "RMSEcv", "R2cv", "R2sp", "best.ncomp", "best.ntree", "best.mtry"
   )
 
+  # Set seed ------------------------------
+  set.seed(seed = seed)
+
   # Train model ---------------------------
   # Partition training and test sets
   # Random sampling occurs in the loop below
@@ -224,20 +227,20 @@ train_spectra <- function(df,
     data.test <- test.data
   }
 
-  if (stratified.sampling) {
+  if (stratified.sampling & is.null(cv.scheme)) {
     # Stratified sampling to get representative sample of ground truth (reference column) values
     # Outputs list with n = num.iterations
-    train.index <- caret::createDataPartition(partition.input.df$reference,
+      train.index <- caret::createDataPartition(
+        y = partition.input.df$reference,
         p = proportion.train, times = num.iterations
-    )
-  }
+      )
+    }
 
   for (i in 1:num.iterations) {
     # set seed, different for each iteration for random samples
     set.seed(i)
 
-    if (is.null(cv.scheme)) {
-      if (!stratified.sampling) {
+    if (!stratified.sampling & is.null(cv.scheme)) {
         # Random sample (not stratified)
         train.index <- sort(sample(
           x = 1:nrow(partition.input.df),
@@ -256,7 +259,7 @@ train_spectra <- function(df,
         }
       }
 
-      else if (stratified.sampling) {
+      else if (stratified.sampling & is.null(cv.scheme)) {
         # Stratified random sampling
         if (is.null(test.data)){
           # No test set provided
@@ -269,16 +272,17 @@ train_spectra <- function(df,
           data.test <- test.data[-train.index[[i]], ]
         }
       }
-    }
 
     else if (!is.null(cv.scheme)) {
       # cv.scheme present
       # Use selected cross-validation scheme
-      formatted.lists <- FormatCV(
+      formatted.lists <- format_cv(
         trial1 = trial1,
         trial2 = trial2,
         trial3 = trial3,
         cv.scheme = cv.scheme,
+        stratified.sampling = stratified.sampling,
+        proportion.train = proportion.train,
         seed = i,
         remove.genotype = TRUE
       )

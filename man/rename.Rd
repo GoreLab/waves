@@ -35,7 +35,7 @@ FormatCV(
   trial2,
   trial3 = NULL,
   cv.scheme,
-  cv.method = "stratified",
+  stratified.sampling = TRUE,
   proportion.train = 0.7,
   seed = NULL,
   remove.genotype = FALSE
