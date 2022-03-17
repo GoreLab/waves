@@ -36,7 +36,7 @@ Found the following (possibly) invalid DOIs:
     Status: Service Unavailable
     Message: 503
     
-These DOIs in the DESCRIPTION and CITATION files have not changed since the last package version (0.2.2; February 2022). They have been manually checked and are correct. They do not produce NOTEs locally or with GitHub Actions checks. 
+These DOIs in the DESCRIPTION and CITATION files have not changed since the last package version (0.2.3; March 7, 2022). They have been manually checked and are correct. They do not produce NOTEs locally or with GitHub Actions checks. 
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
