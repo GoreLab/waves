@@ -69,7 +69,8 @@ plot_spectra <- function(df,
                          wavelengths = deprecated()) {
 
   # Strip off non-spectral columns
-  spectra <- df[, (num.col.before.spectra + 1):ncol(df)]
+  spectra <- df %>%
+    dplyr::select(tidyselect::starts_with("X"))
 
   # Error handling ---------------------------
   # mahalanobis function does not allow missing values or non-numeric data
@@ -101,8 +102,7 @@ plot_spectra <- function(df,
       )
     }
 
-    wavelengths <- df %>%
-      dplyr::select(tidyselect::starts_with("X")) %>%
+    wavelengths <- spectra %>%
       colnames() %>%
       readr::parse_number()
 
@@ -126,9 +126,10 @@ plot_spectra <- function(df,
 
     # Prepare data frame for plotting ---------------------------
     hdists.df <- filtered.df %>%
-      dplyr::select(1, .data$h.distances, .data$Outlier, tidyselect::starts_with("X")) %>%
+      tibble::rownames_to_column(var = "rownames") %>%
+      dplyr::select(.data$rownames .data$h.distances, .data$Outlier, tidyselect::starts_with("X")) %>%
       tidyr::gather(key = "wl", value = "s.value", tidyselect::starts_with("X")) %>%
-      dplyr::mutate(wl = as.numeric(stringr::str_extract(.data$wl, "\\-*\\d+\\.*\\d*")))
+      dplyr::mutate(wl = as.numeric(readr::parse_number(.data$wl)))
 
     # Create plot ---------------------------
     spectral.plot <- ggplot2::ggplot(
@@ -136,7 +137,7 @@ plot_spectra <- function(df,
       aes(
         x = .data$wl,
         y = .data$s.value,
-        group = .data$unique.id,
+        group = .data$rownames,
         color = .data$Outlier
       )
     ) +
@@ -181,7 +182,8 @@ plot_spectra <- function(df,
 
     # Prepare data frame for plotting ---------------------------
     prepped.df <- df %>%
-      dplyr::select(1, tidyselect::starts_with("X")) %>%
+      tibble::rownames_to_column(var = "rownames") %>%
+      dplyr::select(.data$rownames, tidyselect::starts_with("X")) %>%
       tidyr::gather(key = "wl", value = "s.value", tidyselect::starts_with("X")) %>%
       dplyr::mutate(wl = as.numeric(stringr::str_extract(.data$wl, "\\-*\\d+\\.*\\d*")))
 
@@ -190,7 +192,7 @@ plot_spectra <- function(df,
       aes(
         x = .data$wl,
         y = .data$s.value,
-        group = .data$unique.id
+        group = .data$rownames
       )
     ) +
       geom_line(alpha = .5, color = color) +
