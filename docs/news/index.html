@@ -17,22 +17,16 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/waves.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../articles/waves.html">Get Started</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -57,7 +51,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.2.1" id="waves-021">waves 0.2.1<a class="anchor" aria-label="anchor" href="#waves-021"></a></h2>
+<h2 class="page-header" data-toc-text="0.2.4" id="waves-024">waves 0.2.4<a class="anchor" aria-label="anchor" href="#waves-024"></a></h2>
+<ul><li>Bug fix: Different CV schemes no longer return the same results (<a href="https://github.com/GoreLab/waves/issues/20" class="external-link">#20</a>).</li>
+<li>When <code>cv.scheme</code> is set to “CV2” and “CV0” and there are no overlapping genotypes between “trial1” and “trial2”, <code><a href="../reference/format_cv.html">format_cv()</a></code> now returns <code>NULL</code>. Previously, results would be returned even if no overlap was present, resulting in incorrect CV scheme specification.</li>
+<li>
+<code><a href="../reference/format_cv.html">format_cv()</a></code> parameter <code>cv.method</code> is now the boolean parameter <code>stratified.sampling</code> for consistency with other waves functions.</li>
+<li>
+<code><a href="../reference/plot_spectra.html">plot_spectra()</a></code> no longer requires a column named “unique.id”.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.3" id="waves-023">waves 0.2.3<small>2022-03-07</small><a class="anchor" aria-label="anchor" href="#waves-023"></a></h2>
+<ul><li>Bug fix: <code><a href="../reference/save_model.html">save_model()</a></code> output now works correctly with <code><a href="../reference/predict_spectra.html">predict_spectra()</a></code>.</li>
+<li>Bug fix: <code><a href="../reference/train_spectra.html">train_spectra()</a></code> no longer returns an error when <code>stratified.sampling = F</code>.</li>
+<li>In <code><a href="../reference/train_spectra.html">train_spectra()</a></code>, stratified random sampling of training and test sets now allows the user to provide a seed value for <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code>. For random (non-stratified) sampling of training and test sets, seed is set to the current iteration number.</li>
+<li>Minor documentation updates added.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.2" id="waves-022">waves 0.2.2<small>2022-02-18</small><a class="anchor" aria-label="anchor" href="#waves-022"></a></h2>
+<ul><li>Bug fix: <code>model.method = "svmLinear</code> and <code>model.method = "svmRadial</code> no longer return an error when used in <code><a href="../reference/train_spectra.html">train_spectra()</a></code> or <code><a href="../reference/test_spectra.html">test_spectra()</a></code>.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.1" id="waves-021">waves 0.2.1<small>2022-02-03</small><a class="anchor" aria-label="anchor" href="#waves-021"></a></h2>
 <ul><li>Bug fix: <code><a href="../reference/test_spectra.html">test_spectra()</a></code> now returns trained model correctly when only one pretreatment is specified.</li>
 <li>Change the gap-segment derivative pretreatment to retain compatibility with prospectr. In the upcoming version of prospectr, the gapDer function only accepts odd values for the segment argument in order to properly compute the convolution filter.</li>
 <li>Default plot title for <code><a href="../reference/plot_spectra.html">plot_spectra()</a></code> is now <code>NULL</code> (no title) if <code>detect.outliers</code> is set to <code>FALSE</code>.</li>

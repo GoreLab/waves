@@ -19,7 +19,7 @@
 #'   provided, will save to working directory.
 #' @param model.name Name that model will be saved as in
 #'   \code{model.save.folder}. Default is "PredictionModel".
-#' @param autoselect.preprocessing `r lifecycle::badge("deprecated")`
+#' @param autoselect.preprocessing DEPRECATED
 #'   \code{autoselect.preprocessing = FALSE} is no longer supported. If
 #'   multiple pretreatment methods are supplied, the best will be automatically
 #'   selected as the model to be saved.
@@ -27,6 +27,8 @@
 #' @importFrom utils write.csv
 #' @importFrom rlang abort
 #' @importFrom lifecycle deprecated
+#' @importFrom tibble add_column
+#' @importFrom magrittr %>%
 #'
 #' @return List of model stats (in \code{data.frame}) and trained model object.
 #'   If the parameter \code{write.model} is TRUE, both objects are saved to
@@ -70,6 +72,7 @@ save_model <- function(df,
                        trial1 = NULL,
                        trial2 = NULL,
                        trial3 = NULL,
+                       seed = 1,
                        verbose = TRUE,
                        save.model = deprecated(),
                        wavelengths = deprecated(),
@@ -155,7 +158,9 @@ save_model <- function(df,
 
   if (length(pretreatment) == 1) {
     best.model <- training.results$model
-    best.model.stats <- training.results$summary.model.performance
+    best.model.stats <- training.results$summary.model.performance %>%
+      tibble::add_column(Pretreatment = methods.list[pretreatment],
+                 .before = "SummaryType")
     if (verbose) print(best.model.stats)
   }
 

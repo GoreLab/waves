@@ -20,22 +20,16 @@ one pretreatment method is supplied, results from that method are stored."><meta
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/waves.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../articles/waves.html">Get Started</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -85,6 +79,7 @@ one pretreatment method is supplied, results from that method are stored.</p>
   trial1 <span class="op">=</span> <span class="cn">NULL</span>,
   trial2 <span class="op">=</span> <span class="cn">NULL</span>,
   trial3 <span class="op">=</span> <span class="cn">NULL</span>,
+  seed <span class="op">=</span> <span class="fl">1</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   save.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
   wavelengths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
@@ -179,22 +174,26 @@ site/year (different environment). Formatting must be consistent with
 <code>cv.scheme</code> is provided. This data.frame contains a trial that may or
 may not contain genotypes that overlap with <code>trial1</code>. Formatting must
 be consistent with <code>trial1</code>.</p></dd>
+<dt>seed</dt>
+<dd><p>Integer to be used internally as input for <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code>. Only used if
+<code>stratified.sampling = TRUE</code>. In all other cases, seed is set to the current
+iteration number. Default is 1.</p></dd>
 <dt>verbose</dt>
 <dd><p>If <code>TRUE</code>, the number of rows removed through filtering
 will be printed to the console. Default is <code>TRUE</code>.</p></dd>
 <dt>save.model</dt>
-<dd><p>`r lifecycle::badge("deprecated")` <code>save.model = FALSE</code> is no
+<dd><p>DEPRECATED <code>save.model = FALSE</code> is no
 longer supported; this function will always return a saved model.</p></dd>
 <dt>wavelengths</dt>
-<dd><p>`r lifecycle::badge("deprecated")` <code>wavelengths</code> is no
+<dd><p>DEPRECATED <code>wavelengths</code> is no
 longer supported; this information is now inferred from <code>df</code> column names</p></dd>
 <dt>autoselect.preprocessing</dt>
-<dd><p>`r lifecycle::badge("deprecated")`
+<dd><p>DEPRECATED
 <code>autoselect.preprocessing = FALSE</code> is no longer supported. If
 multiple pretreatment methods are supplied, the best will be automatically
 selected as the model to be saved.</p></dd>
 <dt>preprocessing.method</dt>
-<dd><p>`r lifecycle::badge("deprecated")` this argument
+<dd><p>DEPRECATED <code>preprocessing.method</code>
 has been renamed "pretreatment"</p></dd>
 </dl></div>
     <div id="value">
@@ -274,19 +273,19 @@ has been renamed "pretreatment"</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 40</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Pretreatment RMSEp_mean R2p_mean RPD_mean RPIQ_mean CCC_mean Bias_mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Raw_data           2.14   0.804     1.97       2.56    0.828    0.113 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SNV                1.73   0.860     2.64       3.28    0.916   -<span style="color: #BB0000;">0.080</span><span style="color: #BB0000; text-decoration: underline;">8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> SNV1D              2.61   0.704     1.74       2.18    0.781   -<span style="color: #BB0000;">0.119</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> SNV2D              4.59   0.035<span style="text-decoration: underline;">4</span>    0.986      1.25    0.124    0.630 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> D1                 2.46   0.720     1.86       2.31    0.799   -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> D2                 4.58   0.036<span style="text-decoration: underline;">9</span>    0.988      1.25    0.125    0.648 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> SG                 2.06   0.817     2.20       2.74    0.886   -<span style="color: #BB0000;">0.245</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> SNVSG              1.70   0.863     2.69       3.33    0.918   -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> SGD1               2.02   0.801     2.27       2.81    0.880   -<span style="color: #BB0000;">0.158</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> SG.D1W5            2.05   0.798     2.25       2.79    0.869   -<span style="color: #BB0000;">0.149</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> SG.D1W11           1.97   0.809     2.33       2.89    0.884   -<span style="color: #BB0000;">0.165</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> SG.D2W5            4.32   0.095<span style="text-decoration: underline;">0</span>    1.05       1.32    0.213    0.199 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> SG.D2W11           2.70   0.665     1.70       2.11    0.759    0.057<span style="text-decoration: underline;">8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Raw_data           2.30   0.717     1.86       2.41    0.817     0.299</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> SNV                1.83   0.820     2.34       3.03    0.888     0.190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> SNV1D              2.93   0.548     1.44       1.87    0.702     0.403</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> SNV2D              4.28   0.071<span style="text-decoration: underline;">7</span>    0.988      1.28    0.205     0.635</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> D1                 2.76   0.591     1.53       1.99    0.738     0.463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> D2                 4.28   0.072<span style="text-decoration: underline;">8</span>    0.988      1.28    0.206     0.658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> SG                 2.30   0.716     1.86       2.41    0.817     0.299</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> SNVSG              1.80   0.828     2.39       3.09    0.893     0.167</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> SGD1               2.37   0.706     1.81       2.34    0.807     0.370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> SG.D1W5            2.33   0.721     1.83       2.37    0.814     0.460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> SG.D1W11           2.35   0.713     1.82       2.35    0.811     0.395</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> SG.D2W5            4.07   0.094<span style="text-decoration: underline;">1</span>    1.04       1.35    0.225     0.370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> SG.D2W11           3.15   0.500     1.34       1.74    0.636     0.644</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 33 more variables: SEP_mean &lt;dbl&gt;, RMSEcv_mean &lt;dbl&gt;, R2cv_mean &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   R2sp_mean &lt;dbl&gt;, best.ncomp_mean &lt;dbl&gt;, best.ntree_mean &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   best.mtry_mean &lt;dbl&gt;, RMSEp_sd &lt;dbl&gt;, R2p_sd &lt;dbl&gt;, RPD_sd &lt;dbl&gt;,</span></span>
@@ -309,7 +308,7 @@ has been renamed "pretreatment"</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 40</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Pretreatment RMSEp_mean R2p_mean RPD_mean RPIQ_mean CCC_mean Bias_mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> SNVSG              1.70    0.863     2.69      3.33    0.918   -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> SNVSG              1.80    0.828     2.39      3.09    0.893     0.167</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 33 more variables: SEP_mean &lt;dbl&gt;, RMSEcv_mean &lt;dbl&gt;, R2cv_mean &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   R2sp_mean &lt;dbl&gt;, best.ncomp_mean &lt;dbl&gt;, best.ntree_mean &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   best.mtry_mean &lt;dbl&gt;, RMSEp_sd &lt;dbl&gt;, R2p_sd &lt;dbl&gt;, RPD_sd &lt;dbl&gt;,</span></span>

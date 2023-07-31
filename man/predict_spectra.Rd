@@ -31,7 +31,7 @@ by the \code{\link{save_model}} function.}
 "rf": Random forest \item "svmLinear": Support vector machine with linear
 kernel \item "svmRadial": Support vector machine with radial kernel }}
 
-\item{wavelengths}{`r lifecycle::badge("deprecated")` \code{wavelengths} is no
+\item{wavelengths}{DEPRECATED \code{wavelengths} is no
 longer supported; this information is now inferred from \code{input.data}
 column names}
 }

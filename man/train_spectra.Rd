@@ -19,6 +19,7 @@ train_spectra(
   trial2 = NULL,
   trial3 = NULL,
   split.test = FALSE,
+  seed = 1,
   verbose = TRUE,
   rf.variable.importance = deprecated(),
   output.summary = deprecated(),
@@ -96,18 +97,22 @@ stratified subset (70\%) of a third and test on the remaining samples
 of the provided \code{train.data} will be used for testing. Default is
 \code{FALSE}.}
 
+\item{seed}{Integer to be used internally as input for \code{set.seed()}. Only used if
+\code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
+iteration number. Default is 1.}
+
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
 
-\item{rf.variable.importance}{`r lifecycle::badge("deprecated")`
+\item{rf.variable.importance}{DEPRECATED
 \code{rf.variable.importance = FALSE} is no longer supported; variable importance
 results are always returned if the \code{model.method} is set to `pls` or `rf`.}
 
-\item{output.summary}{`r lifecycle::badge("deprecated")` \code{output.summary = FALSE}
+\item{output.summary}{DEPRECATED \code{output.summary = FALSE}
 is no longer supported; a summary of output is always returned alongside the full
 performance statistics.}
 
-\item{save.model}{`r lifecycle::badge("deprecated")` \code{save.model = FALSE} is no
+\item{save.model}{DEPRECATED \code{save.model = FALSE} is no
 longer supported; this function will always return a saved model.}
 
 \item{vector.input}{The mode of this vector of numbers will be calculated by this function}
@@ -170,7 +175,8 @@ ikeogu.2017 \%>\%
     num.iterations = 3,
     best.model.metric = "RMSE",
     stratified.sampling = TRUE
-  )
+  ) \%>\%
+  summary()
 }
 }
 \author{

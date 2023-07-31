@@ -1,27 +1,33 @@
+reference:
+- title: "Core model development workflow"
+  desc: >
+   These functions prepare spectra for model development and allow for the streamlined testing of model performance.
+  contents:
+  - plot_spectra
+  - filter_spectra
+  - aggregate_spectra
+  - test_spectra
+
+- title: "Internal use"
+  desc: >
+   While these functions can be used on their own, they were developed to be called within test_spectra().
+  contents:
+  - pretreat_spectra
+  - format_cv
+  - train_spectra
+
+- title: "Model development and testing for routine use"
+  contents:
+  - save_model
+  - predict_spectra
+
+- title: "Example Dataset"
+  contents:
+  - starts_with("ikeogu")
+
 navbar:
-  structure:
-    left:
-    - home
-    - reference
-    - articles
-    - news
-    right: github
   components:
-    home:
-      icon: fas fa-home fa-lg
-      href: index.html
-    reference:
-      text: Reference
-      href: reference/index.html
-    articles:
-      text: Get Started
-      href: articles/waves.html
-    news:
-      text: Changelog
-      href: news/index.html
-    github:
-      icon: fab fa-github fa-lg
-      href: https://github.com/GoreLab/waves/
+    home: ~
 
 development:
   mode: auto

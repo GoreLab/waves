@@ -21,6 +21,7 @@ save_model(
   trial1 = NULL,
   trial2 = NULL,
   trial3 = NULL,
+  seed = 1,
   verbose = TRUE,
   save.model = deprecated(),
   wavelengths = deprecated(),
@@ -115,21 +116,25 @@ site/year (different environment). Formatting must be consistent with
 may not contain genotypes that overlap with \code{trial1}. Formatting must
 be consistent with \code{trial1}.}
 
+\item{seed}{Integer to be used internally as input for \code{set.seed()}. Only used if
+\code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
+iteration number. Default is 1.}
+
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
 
-\item{save.model}{`r lifecycle::badge("deprecated")` \code{save.model = FALSE} is no
+\item{save.model}{DEPRECATED \code{save.model = FALSE} is no
 longer supported; this function will always return a saved model.}
 
-\item{wavelengths}{`r lifecycle::badge("deprecated")` \code{wavelengths} is no
+\item{wavelengths}{DEPRECATED \code{wavelengths} is no
 longer supported; this information is now inferred from \code{df} column names}
 
-\item{autoselect.preprocessing}{`r lifecycle::badge("deprecated")`
+\item{autoselect.preprocessing}{DEPRECATED
 \code{autoselect.preprocessing = FALSE} is no longer supported. If
 multiple pretreatment methods are supplied, the best will be automatically
 selected as the model to be saved.}
 
-\item{preprocessing.method}{`r lifecycle::badge("deprecated")` this argument
+\item{preprocessing.method}{DEPRECATED \code{preprocessing.method}
 has been renamed "pretreatment"}
 }
 \value{

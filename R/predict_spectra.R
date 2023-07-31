@@ -15,7 +15,7 @@
 #' @param model.location String containing file path (including file name) to
 #'   location where the trained model ("(model.name).Rds") was saved as output
 #'   by the \code{\link{save_model}} function.
-#' @param wavelengths `r lifecycle::badge("deprecated")` \code{wavelengths} is no
+#' @param wavelengths DEPRECATED \code{wavelengths} is no
 #'   longer supported; this information is now inferred from \code{input.data}
 #'   column names
 #'

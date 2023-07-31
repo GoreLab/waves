@@ -10,7 +10,7 @@ format_cv(
   trial2,
   trial3 = NULL,
   cv.scheme,
-  cv.method = "stratified",
+  stratified.sampling = TRUE,
   proportion.train = 0.7,
   seed = NULL,
   remove.genotype = FALSE
@@ -45,14 +45,9 @@ Options for \code{cv.scheme} include:
     \item "CV00": untested lines in untested environments
 }}
 
-\item{cv.method}{Cross-validation method used to subdivide into training
-and test sets. Options for \code{cv.method} include:
-\itemize{
-    \item "random": random cross-validation with 70% training and 30% test
-    \item "stratified": random cross-validation stratified by reference
-    values. 70% training and 30% test.
-}
-Default is \code{stratified}.}
+\item{stratified.sampling}{If \code{TRUE}, training and test
+sets will be selected using stratified random sampling. Default is
+\code{TRUE}.}
 
 \item{proportion.train}{Fraction of samples to include in the training set.
 Default is 0.7.}
@@ -100,7 +95,7 @@ trial2 <- trials \%>\%
   dplyr::select(-study.name)
 cv.list <- format_cv(
   trial1 = trial1, trial2 = trial2, cv.scheme = "CV00",
-  cv.method = "random", remove.genotype = TRUE
+  stratified.sampling = FALSE, remove.genotype = TRUE
 )
 cv.list$train.set[1:5, 1:5]
 cv.list$test.set[1:5, 1:5]

@@ -35,14 +35,17 @@
 #'   \code{test.data} will remain as a testing set or if none is provided, 30\%
 #'   of the provided \code{train.data} will be used for testing. Default is
 #'   \code{FALSE}.
+#' @param seed Integer to be used internally as input for \code{set.seed()}. Only used if
+#'   \code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
+#'   iteration number. Default is 1.
 #' @param verbose If \code{TRUE}, the number of rows removed through filtering
 #'   will be printed to the console. Default is \code{TRUE}.
-#' @param save.model `r lifecycle::badge("deprecated")` \code{save.model = FALSE} is no
+#' @param save.model DEPRECATED \code{save.model = FALSE} is no
 #'   longer supported; this function will always return a saved model.
-#' @param rf.variable.importance `r lifecycle::badge("deprecated")`
+#' @param rf.variable.importance DEPRECATED
 #'   \code{rf.variable.importance = FALSE} is no longer supported; variable importance
 #'   results are always returned if the \code{model.method} is set to `pls` or `rf`.
-#' @param output.summary `r lifecycle::badge("deprecated")` \code{output.summary = FALSE}
+#' @param output.summary DEPRECATED \code{output.summary = FALSE}
 #'   is no longer supported; a summary of output is always returned alongside the full
 #'   performance statistics.
 #'
@@ -108,7 +111,8 @@
 #'     num.iterations = 3,
 #'     best.model.metric = "RMSE",
 #'     stratified.sampling = TRUE
-#'   )
+#'   ) %>%
+#'   summary()
 #' }
 train_spectra <- function(df,
                           num.iterations,
@@ -124,6 +128,7 @@ train_spectra <- function(df,
                           trial2 = NULL,
                           trial3 = NULL,
                           split.test = FALSE,
+                          seed = 1,
                           verbose = TRUE,
                           rf.variable.importance = deprecated(),
                           output.summary = deprecated(),
@@ -203,63 +208,81 @@ train_spectra <- function(df,
     "SEP", "RMSEcv", "R2cv", "R2sp", "best.ncomp", "best.ntree", "best.mtry"
   )
 
-  # Train model ---------------------------
+  # Set seed ------------------------------
+  set.seed(seed = seed)
 
+  # Train model ---------------------------
   # Partition training and test sets
-  if (is.null(test.data)) {
-    # No separate test set provided
-    if (stratified.sampling) {
-      # Stratified sampling to get representative sample of ground truth (reference column) values
-      # Outputs list with n = num.iterations
-      train.index <- caret::createDataPartition(df$reference, p = proportion.train, times = num.iterations)
-    } else if (!stratified.sampling) {
-      # Random sample (not stratified)
-      train.index <- sort(sample(
-        x = 1:nrow(df),
-        size = proportion.train * nrow(df),
-        replace = FALSE, prob = NULL
-      ))
-    }
-  } else if (!is.null(test.data)) {
-    # If fixed training and test sets provided
-    if (split.test) {
-      # Fixed training set + add 70% of samples from test set pool to training set
-      train.index <- caret::createDataPartition(test.data$reference,
+  # Random sampling occurs in the loop below
+  if (is.null(test.data)){
+    partition.input.df <- df
+  } else {
+    partition.input.df <- test.data
+  }
+
+  if (!is.null(test.data) & !split.test) {
+    # If fixed training and test sets provided but split.test = F
+    num.iterations <- 1 # only one possible combination because the sets are fixed
+    data.train <- df
+    data.test <- test.data
+  }
+
+  if (stratified.sampling & is.null(cv.scheme)) {
+    # Stratified sampling to get representative sample of ground truth (reference column) values
+    # Outputs list with n = num.iterations
+      train.index <- caret::createDataPartition(
+        y = partition.input.df$reference,
         p = proportion.train, times = num.iterations
       )
-    } else if (!split.test) {
-      # If fixed training and test sets provided but split.test = F
-      num.iterations <- 1 # only one possible combination because the sets are fixed
-      data.train <- df
-      data.test <- test.data
     }
-  }
 
   for (i in 1:num.iterations) {
     # set seed, different for each iteration for random samples
     set.seed(i)
 
-    if (is.null(cv.scheme)) {
-      if (split.test & !is.null(test.data)) {
-        # Fixed training set + add 70% of samples from test set pool to training set
-        data.train <- rbind(df, test.data[train.index[[i]], ])
-        data.test <- test.data[-train.index[[i]], ]
+    if (!stratified.sampling & is.null(cv.scheme)) {
+        # Random sample (not stratified)
+        train.index <- sort(sample(
+          x = 1:nrow(partition.input.df),
+          size = proportion.train * nrow(partition.input.df),
+          replace = FALSE, prob = NULL
+        ))
+        if (is.null(test.data)){
+          # No test set provided
+          data.train <- df[train.index, ]
+          data.test <- df[-train.index, ]
+        } else if (!is.null(test.data) & split.test){
+          # Test set provided and split randomly
+          # Fixed training set + add proportion.train from test set pool to training set
+          data.train <- rbind(df, test.data[train.index, ])
+          data.test <- test.data[-train.index, ]
+        }
       }
-      else if (!split.test & is.null(test.data)) {
-        # If fixed training and test sets provided but split.test = F
-        data.train <- df[train.index[[i]], ]
-        data.test <- df[-train.index[[i]], ]
+
+      else if (stratified.sampling & is.null(cv.scheme)) {
+        # Stratified random sampling
+        if (is.null(test.data)){
+          # No test set provided
+          data.train <- df[train.index[[i]], ]
+          data.test <- df[-train.index[[i]], ]
+        } else if (!is.null(test.data) & split.test){
+          # Test set provided and split in a stratified random manner
+          # Fixed training set + add proportion.train from test set pool to training set
+          data.train <- rbind(df, test.data[train.index[[i]], ])
+          data.test <- test.data[-train.index[[i]], ]
+        }
       }
-    }
 
     else if (!is.null(cv.scheme)) {
       # cv.scheme present
       # Use selected cross-validation scheme
-      formatted.lists <- FormatCV(
+      formatted.lists <- format_cv(
         trial1 = trial1,
         trial2 = trial2,
         trial3 = trial3,
         cv.scheme = cv.scheme,
+        stratified.sampling = stratified.sampling,
+        proportion.train = proportion.train,
         seed = i,
         remove.genotype = TRUE
       )
@@ -372,6 +395,8 @@ train_spectra <- function(df,
       ) %>%
         tibble::rownames_to_column(var = "wavelength")
       rownames(importance.df.i) <- NULL
+    } else{
+      importance.df.i <- NULL
     }
 
     # Get model performance statistics ---------------------------
@@ -434,7 +459,7 @@ train_spectra <- function(df,
 
   # Stitch on ModelType column later so doesn't interfere with mean calculations for summary
   results.df$ModelType <- model.method
-  results.df %<>%
+  results.df <- results.df %>%
     dplyr::select(all_of(df.colnames))
 
   # Create model with all input data (not just 70%). Results will give an idea of this model's performance,
@@ -475,7 +500,7 @@ train_spectra <- function(df,
     model = full.model,
     summary.model.performance = summary.df,
     model.performance = results.df,
-    predictions = predictions.df,
+    predictions = as.data.frame(predictions.df),
     importance = importance.df
   ))
 }

@@ -41,10 +41,10 @@ transformations are applied to each row. Default is \code{NULL}.}
   \item SG and second derivative (window size = 11)
 }}
 
-\item{preprocessing.method}{`r lifecycle::badge("deprecated")` this argument
+\item{preprocessing.method}{DEPRECATED \code{preprocessing.method}
 has been renamed "pretreatment"}
 
-\item{wavelengths}{`r lifecycle::badge("deprecated")` \code{wavelengths} is no
+\item{wavelengths}{DEPRECATED \code{wavelengths} is no
 longer supported; this information is now inferred from \code{df} column names}
 }
 \value{

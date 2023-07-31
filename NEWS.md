@@ -1,3 +1,24 @@
+# waves 0.2.4
+
+* Bug fix: Different CV schemes no longer return the same results (#20).
+* When `cv.scheme` is set to "CV2" and "CV0" and there are no overlapping genotypes between "trial1" and "trial2", `format_cv()` now returns `NULL`. Previously, results would be returned even if no overlap was present, resulting in incorrect CV scheme specification.
+* `format_cv()` parameter `cv.method` is now the boolean parameter `stratified.sampling` for consistency with other waves functions. 
+* `plot_spectra()` no longer requires a column named "unique.id".
+
+
+# waves 0.2.3
+
+* Bug fix: `save_model()` output now works correctly with `predict_spectra()`.
+* Bug fix: `train_spectra()` no longer returns an error when `stratified.sampling = F`.
+* In `train_spectra()`, stratified random sampling of training and test sets now allows the user to provide a seed value for `set.seed()`. For random (non-stratified) sampling of training and test sets, seed is set to the current iteration number.
+* Minor documentation updates added.
+
+
+# waves 0.2.2
+
+* Bug fix: `model.method = "svmLinear` and `model.method = "svmRadial` no longer return an error when used in `train_spectra()` or `test_spectra()`.
+
+
 # waves 0.2.1
 
 * Bug fix: `test_spectra()` now returns trained model correctly when only one pretreatment is specified.

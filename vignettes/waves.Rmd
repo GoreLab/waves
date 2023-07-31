@@ -158,7 +158,7 @@ ikeogu.2017.prepped[1:10,] %>% # subset the first 10 scans for speed
   gather(key = "wl",
          value = "s.value",
          tidyselect::starts_with("X")) %>%
-  mutate(wl = as.numeric(stringr::str_extract(.data$wl, "\\-*\\d+\\.*\\d*")),
+  mutate(wl = as.numeric(readr::parse_number(.data$wl)),
          pretreatment = as.factor(pretreatment)) %>%
   drop_na(s.value) %>%
   ggplot(data = ., aes(x = wl, y = s.value, group = unique.id)) +
