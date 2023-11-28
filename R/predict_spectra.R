@@ -78,7 +78,7 @@ predict_spectra <- function(input.data,
   # Predict values using imported model, pretreated/formatted input data, and method of choice ---------------------------
   if (model.method == "pls") {
     # Extract best number of components
-    best.ncomp <- model.stats$best.ncomp[1]
+    best.ncomp <- model.stats$best.ncomp_mode[1]
     # Get predictions
     predicted.values <- as.numeric(predict(final.model,
       newdata = as.matrix(pretreated[2:ncol(pretreated)]),

@@ -1,3 +1,8 @@
+# waves 0.2.5
+
+* Bug fix: `predict_spectra()` no longer returns error when running example code (#25).
+
+
 # waves 0.2.4
 
 * Bug fix: Different CV schemes no longer return the same results (#20).
