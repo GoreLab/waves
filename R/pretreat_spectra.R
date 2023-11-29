@@ -31,7 +31,8 @@
 #'   \item SG and second derivative (window size = 11)
 #' }
 #' @param wavelengths DEPRECATED \code{wavelengths} is no
-#'   longer supported; this information is now inferred from \code{df} column names
+#'   longer supported; this information is now inferred from \code{df}
+#'   column names
 #' @param preprocessing.method DEPRECATED \code{preprocessing.method}
 #'   has been renamed "pretreatment"
 #'
@@ -77,7 +78,8 @@ pretreat_spectra <- function(df,
     )
   }
 
-  # Remove rows with missing spectral data (shouldn't be any, but this is just in case)
+  # Remove rows with missing spectral data
+  # (shouldn't be any, but this is just in case)
   df <- df %>% tidyr::drop_na(tidyselect::starts_with("X"))
 
   # Split spectra from metadata turn spectra into matrix (spc)
@@ -118,7 +120,8 @@ pretreat_spectra <- function(df,
     SG.D2W11 = savitzkyGolay(spc, p = 2, w = 11, m = 2)
   )
 
-  # Make each matrix in list into a data frame and add back metadata and reference column if present
+  # Make each matrix in list into a data frame and add back metadata and
+  # reference column if present
   processed.meta.list <- lapply(
     seq_along(processed.list),
     function(x) cbind(metadata, processed.list[[x]])
@@ -130,7 +133,8 @@ pretreat_spectra <- function(df,
     # Return a single processed data frame if only one pretreatment was chosen.
     processed <- processed.meta.list[[pretreatment]]
   } else {
-    # Return a list of processed data frames if more than one pretreatment was chosen.
+    # Return a list of processed data frames if more
+    # than one pretreatment was chosen.
     processed <- processed.meta.list[c(pretreatment)]
   }
 

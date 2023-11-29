@@ -53,15 +53,15 @@ library(waves)
 ## 1. Format your data
 Match spectra with reference values so that you have a `data.frame` with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with "X". Remove rows with missing values.
 ```{r format}
-ikeogu.2017[1:7,1:7]
+ikeogu.2017[1:7, 1:7]
 
 ikeogu.2017.prepped <- ikeogu.2017 %>%
   dplyr::rename(unique.id = sample.id,
                 reference = DMC.oven) %>%
   dplyr::select(unique.id, dplyr::everything(), -TCC) %>%
-  na.omit() 
+  na.omit()
 
-ikeogu.2017.prepped[1:7,1:7]
+ikeogu.2017.prepped[1:7, 1:7]
 ```
 
 ## 2. Visualize spectra with `plot_spectra()` 
@@ -124,14 +124,14 @@ Some of the arguments for this function are detailed below. A description of out
 
 ```{r run_test_spectra}
 results.list <- ikeogu.2017.prepped %>%
- dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
- na.omit() %>%
- test_spectra(
-   train.data = .,
-   tune.length = 3,
-   num.iterations = 3,
-   pretreatment = 1
-  )
+  dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
+  na.omit() %>%
+  test_spectra(
+    train.data = .,
+    tune.length = 3,
+    num.iterations = 3,
+    pretreatment = 1
+    )
 ```
 
 ### 5.1. Pretreat spectra
@@ -152,7 +152,7 @@ Specify which spectral pretreatments (1-13) to apply with the parameter `pretrea
 13. SG and second derivative (window size = 11)
 
 ```{r plot_pretreatments, fig.height=6, fig.width=7}
-ikeogu.2017.prepped[1:10,] %>% # subset the first 10 scans for speed
+ikeogu.2017.prepped[1:10, ] %>% # subset the first 10 scans for speed
   pretreat_spectra(pretreatment = 2:13) %>% # exclude pretreatment 1 (raw data)
   bind_rows(.id = "pretreatment") %>%
   gather(key = "wl",
@@ -167,8 +167,7 @@ ikeogu.2017.prepped[1:10,] %>% # subset the first 10 scans for speed
   labs(title = "Pretreated spectra",
        x = "Wavelength",
        y = "Spectral Value") +
-  
-  facet_wrap( ~ pretreatment, scales = "free")
+  facet_wrap(~ pretreatment, scales = "free")
 ```
 Note that the scales in this plot are "free". Without free scales, anything derivative-based treatment (D1 or D2) looks like it's a constant zero in comparison to those without derivative-based treatments (SNV, SG).
 
@@ -271,17 +270,17 @@ results.list$importance[, 1:7]
 In the example below, we'll use one subset of the example dataset ("C16Mcal") to create the model and then we'll predict the other subset ("C16Mval") in section [7](#7. Predict phenotypic values with new spectra).
 ```{r run_save_model}
 model.to.save <- ikeogu.2017.prepped %>%
-   dplyr::filter(study.name == "C16Mcal") %>%
-   dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
-   na.omit() %>%
-   save_model(
-     df = .,
-     write.model = FALSE,
-     pretreatment = 1:13,
-     tune.length = 5,
-     num.iterations = 3,
-     verbose = FALSE
-   )
+  dplyr::filter(study.name == "C16Mcal") %>%
+  dplyr::select(unique.id, reference, dplyr::starts_with("X")) %>%
+  na.omit() %>%
+  save_model(
+    df = .,
+    write.model = FALSE,
+    pretreatment = 1:13,
+    tune.length = 5,
+    num.iterations = 3,
+    verbose = FALSE
+    )
 ```
 
 Now let's take a look at our trained model:
@@ -291,10 +290,10 @@ summary(model.to.save$best.model)
 
 
 ```{r format_saved_output}
-model.to.save$best.model.stats %>% 
-  gather(key = "statistic", value = "value", RMSEp_mean:best.mtry_mode) %>% 
-  separate(statistic, into =  c("statistic", "summary_type"), sep = "_") %>% 
-  pivot_wider(id_cols = c(Pretreatment, summary_type), 
+model.to.save$best.model.stats %>%
+  gather(key = "statistic", value = "value", RMSEp_mean:best.mtry_mode) %>%
+  separate(statistic, into =  c("statistic", "summary_type"), sep = "_") %>%
+  pivot_wider(id_cols = c(Pretreatment, summary_type),
               names_from = statistic, values_from = value)
 ```
 
@@ -305,12 +304,12 @@ Using the model we trained in section [6](#6. Save trained prediction models wit
 
 First, determine which pretreatment generated the best model. In this case, it's "SNVSG", which is pretreatment #8. Pretreat the new spectral dataset with these spectra.
 ```{r prep_for_predictions}
-pretreated.val <- ikeogu.2017.prepped %>% 
-  filter(study.name == "C16Mval") %>% 
-  pretreat_spectra(pretreatment = 8) 
+pretreated.val <- ikeogu.2017.prepped %>%
+  filter(study.name == "C16Mval") %>%
+  pretreat_spectra(pretreatment = 8)
 
-pretreated.val.mx <- pretreated.val %>% 
-  dplyr::select(starts_with("X")) %>% 
+pretreated.val.mx <- pretreated.val %>%
+  dplyr::select(starts_with("X")) %>%
   as.matrix()
 
 best.ncomp <- model.to.save$best.model.stats$best.ncomp_mode
@@ -319,33 +318,35 @@ best.ncomp <- model.to.save$best.model.stats$best.ncomp_mode
 #### Perform predictions!
 ```{r predict}
 predicted.values <- as.numeric(predict(model.to.save$best.model,
-      newdata = pretreated.val.mx, ncomp = best.ncomp))
+                                       newdata = pretreated.val.mx,
+                                       ncomp = best.ncomp))
 ```
 
 #### How did we do?
 ```{r calculate_statistics}
-spectacles::postResampleSpectro(pred = predicted.values, obs = pretreated.val$reference)
+spectacles::postResampleSpectro(pred = predicted.values,
+                                obs = pretreated.val$reference)
 ```
 
 #### Plot predictions
 ```{r plot_predictions, fig.height=6}
 overall.range <- c(min(c(pretreated.val$reference, predicted.values)),
                    max(c(pretreated.val$reference, predicted.values)))
-cbind(unique.id = pretreated.val$unique.id, 
-      observed = pretreated.val$reference, 
-      predicted = predicted.values) %>% 
-  as_tibble() %>% 
+cbind(unique.id = pretreated.val$unique.id,
+      observed = pretreated.val$reference,
+      predicted = predicted.values) %>%
+  as_tibble() %>%
   mutate(observed = as.numeric(observed),
-         predicted = as.numeric(predicted)) %>% 
-  ggplot(aes(x = observed, y = predicted)) + 
+         predicted = as.numeric(predicted)) %>%
+  ggplot(aes(x = observed, y = predicted)) +
   geom_abline(intercept = 0,
               slope = 1,
               color = "gray80") +
   geom_point() +
   coord_fixed(xlim = overall.range,
-                  ylim = overall.range) + 
+              ylim = overall.range) +
   labs(title = "Example dry matter content predictions",
        x = "Observed",
-       y = "Predicted") + 
+       y = "Predicted") +
   theme_bw()
 ```

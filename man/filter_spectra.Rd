@@ -10,9 +10,10 @@ filter_spectra(df, filter, return.distances, num.col.before.spectra,
 \arguments{
 \item{df}{\code{data.frame} object containing columns of spectra and rows of
 observations. Spectral columns must be labeled with an "X" and then the
-wavelength (example: "X740" = 740nm). Left-most column must be unique ID. May
-also contain columns of metadata between the unique ID and spectral columns.
-Cannot contain any missing values. Metadata column names may not start with "X".}
+wavelength (example: "X740" = 740nm). Left-most column must be unique ID.
+May also contain columns of metadata between the unique ID and spectral
+columns. Cannot contain any missing values. Metadata column names may not
+start with "X".}
 
 \item{filter}{boolean that determines whether or not the input
 \code{data.frame} will be filtered. If \code{TRUE}, \code{df} will be

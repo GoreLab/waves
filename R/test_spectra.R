@@ -17,8 +17,8 @@
 #'   columns to right of spectra! Column names of spectra must start with "X"
 #'   and reference column must be named "reference".
 #' @param preprocessing DEPRECATED please use
-#'   \code{pretreatment} to specify the specific pretreatment(s) to test. For behavior
-#'   identical to that of \code{preprocessing = TRUE}, set
+#'   \code{pretreatment} to specify the specific pretreatment(s) to test.
+#'   For behavior identical to that of \code{preprocessing = TRUE}, set
 #'   \code{pretreatment = 1:13}`.
 #'
 #' @importFrom magrittr %>%
@@ -29,46 +29,47 @@
 #'
 #' @return \code{list} of 5 objects:
 #'   \enumerate{
-#'   \item `model.list` is a \code{list} of trained model objects, one for each pretreatment
-#'   method specified by the \code{pretreatment} argument. Each model is trained with all
-#'   rows of \code{df}.
-#'   \item `summary.model.performance` is a \code{data.frame} containing summary statistics
-#'   across all model training iterations and pretreatments. See below for a description of
-#'   the summary statistics provided.
-#'   \item `model.performance` is a \code{data.frame} containing performance statistics for
-#'   each iteration of model training separately (see below).
-#'   \item `predictions` is a \code{data.frame} containing both reference and predicted
-#'   values for each test set entry in each iteration of model training.
-#'   \item `importance` is a \code{data.frame} containing variable importance results for
-#'   each wavelength at each iteration of model training. If \code{model.method} is not
-#'   "pls" or "rf", this list item is \code{NULL}.
+#'   \item `model.list` is a \code{list} of trained model objects, one for each
+#'   pretreatment method specified by the \code{pretreatment} argument.
+#'   Each model is trained with all rows of \code{df}.
+#'   \item `summary.model.performance` is a \code{data.frame} containing summary
+#'   statistics across all model training iterations and pretreatments.
+#'   See below for a description of the summary statistics provided.
+#'   \item `model.performance` is a \code{data.frame} containing performance
+#'   statistics for each iteration of model training separately (see below).
+#'   \item `predictions` is a \code{data.frame} containing both reference and
+#'   predicted values for each test set entry in each iteration of
+#'   model training.
+#'   \item `importance` is a \code{data.frame} containing variable importance
+#'   results for each wavelength at each iteration of model training.
+#'   If \code{model.method} is not "pls" or "rf", this list item is \code{NULL}.
 #'   }
 #'
-#' `summary.model.performance` and `model.performance` \code{data.frames} summary
-#'  statistics include:
+#' `summary.model.performance` and `model.performance` \code{data.frames}
+#' summary statistics include:
 #' \itemize{
 #'   \item Tuned parameters depending on the model algorithm:
 #'   \itemize{
 #'     \item \strong{Best.n.comp}, the best number of components
 #'     \item \strong{Best.ntree}, the best number of trees in an RF model
-#'     \item \strong{Best.mtry}, the best number of variables to include at every
-#'     decision point in an RF model
+#'     \item \strong{Best.mtry}, the best number of variables to include at
+#'     every decision point in an RF model
 #'     }
 #'   \item \strong{RMSECV}, the root mean squared error of cross-validation
-#'   \item \strong{R2cv}, the coefficient of multiple determination of cross-validation
-#'   for PLSR models
+#'   \item \strong{R2cv}, the coefficient of multiple determination of
+#'   cross-validation for PLSR models
 #'   \item \strong{RMSEP}, the root mean squared error of prediction
 #'   \item \strong{R2p}, the squared Pearson’s correlation between predicted and
 #'   observed test set values
-#'   \item \strong{RPD}, the ratio of standard deviation of observed test set values
-#'   to RMSEP
+#'   \item \strong{RPD}, the ratio of standard deviation of observed test set
+#'   values to RMSEP
 #'   \item \strong{RPIQ}, the ratio of performance to interquartile difference
 #'   \item \strong{CCC}, the concordance correlation coefficient
-#'   \item \strong{Bias}, the average difference between the predicted and observed
-#'   values
+#'   \item \strong{Bias}, the average difference between the predicted and
+#'   observed values
 #'   \item \strong{SEP}, the standard error of prediction
-#'   \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted
-#'   and observed test set values
+#'   \item \strong{R2sp}, the squared Spearman’s rank correlation between
+#'   predicted and observed test set values
 #' }
 #'
 #' @export
@@ -123,25 +124,17 @@ test_spectra <- function(train.data,
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(preprocessing)",
-      details = "To test all pretreatment methods, use 'pretreatment = 1:13'. To test only raw data, use 'pretreatment = 1'."
+      details = "To test all pretreatment methods, use 'pretreatment = 1:13'.
+      To test only raw data, use 'pretreatment = 1'."
     )
-    # pretreatment <- 1:13
   }
-
-  # if (!isTRUE(preprocessing)) {
-  #   lifecycle::deprecate_warn(
-  #     when = "0.2.0",
-  #     what = "test_spectra(preprocessing)",
-  #     details = "To test only raw data, use 'pretreatment = 1'."
-  #   )
-  #   pretreatment <- 1
-  # }
 
   if (lifecycle::is_present(rf.variable.importance)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "test_spectra(rf.variable importance)",
-      details = "Variable importance is now output by default when `model.method` is set to `pls` or `rf`."
+      details = "Variable importance is now output by default when
+      `model.method` is set to `pls` or `rf`."
     )
   }
 
@@ -162,10 +155,12 @@ test_spectra <- function(train.data,
       rlang::abort("trial2 must be provided if using cv.scheme")
     }
     if (sum(colnames(trial1) != colnames(trial2)) > 0) {
-      rlang::abort("Column names must match for trial1 and trial2 if using cv.scheme")
+      rlang::abort("Column names must match for trial1 and trial2
+                   if using cv.scheme")
     }
-    if (!is.null(trial3) & sum(colnames(trial1) != colnames(trial3)) > 0) {
-      rlang::abort("Column names must match for trial1, trial2, and trial3 if using cv.scheme and including trial3")
+    if (!is.null(trial3) && sum(colnames(trial1) != colnames(trial3)) > 0) {
+      rlang::abort("Column names must match for trial1, trial2, and trial3
+                   if using cv.scheme and including trial3")
     }
     train.data <- trial1
   }
@@ -175,13 +170,15 @@ test_spectra <- function(train.data,
   }
 
   if (!is.null(test.data) && (nrow(test.data) != nrow(na.omit(test.data)))) {
-    rlang::abort("Test data cannot contain missing values. \nEither omit missing values or exclude training data (
-         set as NULL).")
+    rlang::abort("Test data cannot contain missing values.
+                 Either omit missing values or exclude training data
+                 (set as NULL).")
   }
 
-  if (model.method == "rf" & tune.length > 5) {
-    rlang::abort("The waves implementation of the random forest algorithm uses oob cross-validation for model training
-         and requires a tune length of 5.")
+  if (model.method == "rf" && tune.length > 5) {
+    rlang::abort("The waves implementation of the random forest algorithm uses
+                 oob cross-validation for model training
+                 and requires a tune length of 5.")
   }
 
   # End error handling ---------------------------
@@ -190,7 +187,8 @@ test_spectra <- function(train.data,
   n.test <- ifelse(is.null(test.data), 0, nrow(test.data))
 
   # Perform pretreatments on everything ---------------------------
-  # Returns a list of data frames, one for each transformation specified by pretreatment argument
+  # Returns a list of data frames,
+  # one for each transformation specified by pretreatment argument
   if (verbose) {
     cat("Pretreatment initiated.\n")
   }
@@ -210,9 +208,11 @@ test_spectra <- function(train.data,
     pretreatment = pretreatment
   )
 
-  # If only one pretreatment, pretreat_spectra() outputs a data.frame, not a list.
-  # To simplify downstream use of pretreated spectra, make this data.frame into a list with one item.
-  if (length(pretreatment) == 1){
+  # If only one pretreatment, pretreat_spectra() outputs a data.frame,
+  # not a list.
+  # To simplify downstream use of pretreated spectra,
+  # make this data.frame into a list with one item.
+  if (length(pretreatment) == 1) {
     df.list <- list(df.list)
     names(df.list) <- methods.list[pretreatment]
   }
@@ -233,24 +233,28 @@ test_spectra <- function(train.data,
     }
 
     # Extract preprocessed data ---------------------------
-    # df.list contains named data.frames transformed by the requested methods (only).
+    # df.list contains named data.frames transformed by the requested methods.
     # To access a specific method, use df.list[[methods.list[i]]].
-    # This will call the preprocessed data.frame by name from the transformed list.
+    # This will call the preprocessed data.frame by
+    # name from the transformed list.
     # Then extract the test dataset from full processed data frame
     processed.train.data <- df.list[[methods.list[i]]][1:n.train, ]
     if (n.test == 0) {
       processed.test.data <- NULL
     } else {
-      processed.test.data <- df.list[[methods.list[i]]][(n.train + 1):(n.train + n.test), ]
+      processed.test.data <- df.list[[methods.list[i]]][(
+        n.train + 1):(n.train + n.test), ]
     }
 
     if (!is.null(cv.scheme)) {
-      processed.trial1 <- df.list[[methods.list[i]]][1:nrow(trial1), ]
-      processed.trial2 <- df.list[[methods.list[i]]][(nrow(trial1) + 1):(nrow(trial1) + nrow(trial2)), ]
-      processed.trial3 <- df.list[[methods.list[i]]][(nrow(trial1) + nrow(trial2) + 1):nrow(train.data), ]
+      processed.trial1 <- df.list[[methods.list[i]]][seq_len(nrow(trial1)), ]
+      processed.trial2 <- df.list[[methods.list[i]]][(
+        nrow(trial1) + 1):(nrow(trial1) + nrow(trial2)), ]
+      processed.trial3 <- df.list[[methods.list[i]]][(
+        nrow(trial1) + nrow(trial2) + 1):nrow(train.data), ]
     }
 
-    # Fit models for each pretreatment and output results ---------------------------
+    # Fit models for each pretreatment and output results ----------------------
     training.results.i <- train_spectra(
       df = processed.train.data,
       num.iterations = num.iterations,
@@ -271,13 +275,17 @@ test_spectra <- function(train.data,
     if (length(pretreatment) != 1) {
       # Add Pretreatment column to each data.frame in the training results list
       for (j in 2:length(training.results.i)) {
-        training.results.i[[j]] <- cbind("Pretreatment" = methods.list[i], training.results.i[[j]])
+        training.results.i[[j]] <- cbind("Pretreatment" = methods.list[i],
+                                         training.results.i[[j]])
         rownames(training.results.i[[j]]) <- NULL
       }
 
-      # Reformat summary statistics data.frame so multiple pretreatments can be stacked
-      # Put pretreatment name in first column followed by performance statistics
-      # Append SummaryType (mean, sd, mode) to statistic name to flatten into a single row
+      # 1. Reformat summary statistics data.frame so
+      #    multiple pretreatments can be stacked
+      # 2. Put pretreatment name in first column followed by
+      #    performance statistics
+      # 3. Append SummaryType (mean, sd, mode) to statistic name
+      #    to flatten into a single row
       summary.i <- training.results.i$summary.model.performance %>%
         tidyr::pivot_longer(cols = .data$RMSEp:.data$best.mtry) %>%
         pivot_wider(
@@ -291,9 +299,9 @@ test_spectra <- function(train.data,
 
     if (counter == 1) { # Counter indicates pretreatment number
       # Set up results compilations in first iteration
-      if(length(pretreatment) != 1) {
+      if (length(pretreatment) != 1) {
         model.list <- list(training.results.i$model)
-      } else{ # If only one pretreatment, don't make a list.
+      } else { # If only one pretreatment, don't make a list.
         model.list <- training.results.i$model
       }
       summary.df <- summary.i
@@ -317,9 +325,13 @@ test_spectra <- function(train.data,
 
   if (model.method %in% c("pls", "rf")) {
     # Reformat importance.df
-    # Some pretreatments trim the wavelengths, so they do not return the full set of importance values.
-    # If pivot_wider is used with each pretreatment separately, the number of columns will not match.
-    importance.df <- tidyr::pivot_wider(importance.df, names_from = .data$wavelength, values_from = .data$Overall)
+    # Some pretreatments trim the wavelengths,
+    # so they do not return the full set of importance values.
+    # If pivot_wider is used with each pretreatment separately,
+    # the number of columns will not match.
+    importance.df <- tidyr::pivot_wider(importance.df,
+                                        names_from = .data$wavelength,
+                                        values_from = .data$Overall)
   }
 
   results.list <- list(

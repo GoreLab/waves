@@ -17,9 +17,10 @@
 #'
 #' @param df \code{data.frame} object containing columns of spectra and rows of
 #'   observations. Spectral columns must be labeled with an "X" and then the
-#'   wavelength (example: "X740" = 740nm). Left-most column must be unique ID. May
-#'   also contain columns of metadata between the unique ID and spectral columns.
-#'   Cannot contain any missing values. Metadata column names may not start with "X".
+#'   wavelength (example: "X740" = 740nm). Left-most column must be unique ID.
+#'   May also contain columns of metadata between the unique ID and spectral
+#'   columns. Cannot contain any missing values. Metadata column names may not
+#'   start with "X".
 #' @param filter boolean that determines whether or not the input
 #'   \code{data.frame} will be filtered. If \code{TRUE}, \code{df} will be
 #'   filtered according to squared Mahalanobis distance with a 95\% cutoff from
@@ -73,17 +74,20 @@ filter_spectra <- function(df,
   # Error handling
   # mahalanobis function does not allow missing values or non-numeric data
   if (nrow(spectra) != nrow(na.omit(spectra))) {
-    rlang::abort("Input data frame cannot contain missing values! Remove them and try again.")
+    rlang::abort("Input data frame cannot contain missing values!
+                 Remove them and try again.")
   }
 
-  # Make subset of spectra using provided window size (otherwise the system is computationally singular)
+  # Make subset of spectra using provided window size
+  # (otherwise the system is computationally singular)
   spectra.subset <- spectra[, seq(1, ncol(spectra), window.size)]
 
   # Calculate covariance of spectral matrix
   spectra.cov <- tryCatch(
     expr = cov(as.matrix(spectra.subset)),
     error = function(err) {
-      message("Error in covariance matrix calculation. Please increase 'window.size' and try again.")
+      message("Error in covariance matrix calculation.
+              Please increase 'window.size' and try again.")
       print(err)
     }
   )
@@ -118,7 +122,8 @@ filter_spectra <- function(df,
       return(dplyr::select(df.filtered, -h.distances))
     }
   } else {
-    # Don't filter, just return input df with or without distances as rightmost column
+    # Don't filter.
+    # Just return input data.frame with or without distances as rightmost column
     if (return.distances) {
       return(df.distances)
     } else {

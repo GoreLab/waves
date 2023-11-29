@@ -101,7 +101,8 @@ save_model <- function(df,
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "save_model(autoselect.preprocessing)",
-      details = "If multiple pretreatment methods are supplied, the best will be selected automatically."
+      details = "If multiple pretreatment methods are supplied,
+      the best will be selected automatically."
     )
   }
 
@@ -160,7 +161,7 @@ save_model <- function(df,
     best.model <- training.results$model
     best.model.stats <- training.results$summary.model.performance %>%
       tibble::add_column(Pretreatment = methods.list[pretreatment],
-                 .before = "SummaryType")
+                         .before = "SummaryType")
     if (verbose) print(best.model.stats)
   }
 

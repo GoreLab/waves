@@ -59,7 +59,7 @@ aggregate_spectra <- function(df,
   } else {
     agg.function <-
       function(x) {
-        suppressWarnings(mean(as.numeric(as.character(x)), na.rm = T))
+        suppressWarnings(mean(as.numeric(as.character(x)), na.rm = TRUE))
       }
   }
 

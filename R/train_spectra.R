@@ -1,7 +1,7 @@
 #' @title Train a model based predict reference values with spectral data
 #' @name train_spectra
-#' @description Trains spectral prediction models using one of several algorithms and sampling
-#' procedures.
+#' @description Trains spectral prediction models using one of several
+#' algorithms and sampling procedures.
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #'
 #' @inheritParams format_cv
@@ -14,8 +14,8 @@
 #'   if specific test set is desired for hyperparameter tuning. If \code{NULL},
 #'   function will automatically train with a stratified sample of 70\%. Default
 #'   is \code{NULL}.
-#' @param k.folds Number indicating the number of folds for k-fold cross-validation
-#'   during model training. Default is 5.
+#' @param k.folds Number indicating the number of folds for k-fold
+#' cross-validation during model training. Default is 5.
 #' @param tune.length Number delineating search space for tuning of the PLSR
 #'   hyperparameter \code{ncomp}. Must be set to 5 when using the random forest
 #'   algorithm (\code{model.method == rf}). Default is 50.
@@ -35,32 +35,38 @@
 #'   \code{test.data} will remain as a testing set or if none is provided, 30\%
 #'   of the provided \code{train.data} will be used for testing. Default is
 #'   \code{FALSE}.
-#' @param seed Integer to be used internally as input for \code{set.seed()}. Only used if
-#'   \code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
-#'   iteration number. Default is 1.
+#' @param seed Integer to be used internally as input for \code{set.seed()}.
+#' Only used if \code{stratified.sampling = TRUE}. In all other cases, seed
+#' is set to the current iteration number. Default is 1.
 #' @param verbose If \code{TRUE}, the number of rows removed through filtering
 #'   will be printed to the console. Default is \code{TRUE}.
 #' @param save.model DEPRECATED \code{save.model = FALSE} is no
 #'   longer supported; this function will always return a saved model.
 #' @param rf.variable.importance DEPRECATED
-#'   \code{rf.variable.importance = FALSE} is no longer supported; variable importance
-#'   results are always returned if the \code{model.method} is set to `pls` or `rf`.
+#'   \code{rf.variable.importance = FALSE} is no longer supported; variable
+#'   importance results are always returned if the \code{model.method} is
+#'   set to `pls` or `rf`.
 #' @param output.summary DEPRECATED \code{output.summary = FALSE}
-#'   is no longer supported; a summary of output is always returned alongside the full
-#'   performance statistics.
+#'   is no longer supported; a summary of output is always returned alongside
+#'   the full performance statistics.
+#' @param return.model DEPRECATED \code{return.model = FALSE}
+#'   is no longer supported; a trained model object is always returned
+#'   alongside the full performance statistics and summary.
 #'
 #' @return list of the following:
 #' \enumerate{
 #'   \item \code{model} is a model object trained with all rows of \code{df}.
-#'   \item \code{summary.model.performance} is a \code{data.frame} with model performance
-#'   statistics in summary format (2 rows, one with mean and one with standard deviation of
-#'   all training iterations).
-#'   \item \code{full.model.performance} is a \code{data.frame} with model performance
-#'   statistics in long format (number of rows = \code{num.iterations})
-#'   \item \code{predictions} is a \code{data.frame} containing predicted values for each
-#'   test set entry at each iteration of model training.
-#'   \item \code{importance} is a \code{data.frame} that contains variable importance for
-#'   each wavelength. Only available for \code{model.method} options "rf" and "pls".
+#'   \item \code{summary.model.performance} is a \code{data.frame} with model
+#'   performance statistics in summary format (2 rows, one with mean and one
+#'   with standard deviation of all training iterations).
+#'   \item \code{full.model.performance} is a \code{data.frame} with model
+#'   performance statistics in long format
+#'   (number of rows = \code{num.iterations})
+#'   \item \code{predictions} is a \code{data.frame} containing predicted values
+#'   for each test set entry at each iteration of model training.
+#'   \item \code{importance} is a \code{data.frame} that contains variable
+#'   importance for each wavelength. Only available for \code{model.method}
+#'   options "rf" and "pls".
 #'   }
 #' Included summary statistics:
 #' \itemize{
@@ -68,18 +74,24 @@
 #'   \itemize{
 #'     \item \strong{Best.n.comp}, the best number of components
 #'     \item \strong{Best.ntree}, the best number of trees in an RF model
-#'     \item \strong{Best.mtry}, the best number of variables to include at every decision point in an RF model
+#'     \item \strong{Best.mtry}, the best number of variables to include at
+#'     every decision point in an RF model
 #'     }
 #'   \item \strong{RMSECV}, the root mean squared error of cross-validation
-#'   \item \strong{R2cv}, the coefficient of multiple determination of cross-validation for PLSR models
+#'   \item \strong{R2cv}, the coefficient of multiple determination of
+#'   cross-validation for PLSR models
 #'   \item \strong{RMSEP}, the root mean squared error of prediction
-#'   \item \strong{R2p}, the squared Pearson’s correlation between predicted and observed test set values
-#'   \item \strong{RPD}, the ratio of standard deviation of observed test set values to RMSEP
+#'   \item \strong{R2p}, the squared Pearson’s correlation between predicted and
+#'   observed test set values
+#'   \item \strong{RPD}, the ratio of standard deviation of observed test set
+#'   values to RMSEP
 #'   \item \strong{RPIQ}, the ratio of performance to interquartile difference
 #'   \item \strong{CCC}, the concordance correlation coefficient
-#'   \item \strong{Bias}, the average difference between the predicted and observed values
+#'   \item \strong{Bias}, the average difference between the predicted and
+#'   observed values
 #'   \item \strong{SEP}, the standard error of prediction
-#'   \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted and observed test set values
+#'   \item \strong{R2sp}, the squared Spearman’s rank correlation between
+#'   predicted and observed test set values
 #' }
 #'
 #' @importFrom caret createDataPartition trainControl train createResample varImp
@@ -130,6 +142,7 @@ train_spectra <- function(df,
                           split.test = FALSE,
                           seed = 1,
                           verbose = TRUE,
+                          save.model = deprecated(),
                           rf.variable.importance = deprecated(),
                           output.summary = deprecated(),
                           return.model = deprecated()) {
@@ -139,7 +152,8 @@ train_spectra <- function(df,
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = "train_spectra(rf.variable importance)",
-      details = "Variable importance is now output by default when `model.method` is set to `pls` or `rf`."
+      details = "Variable importance is now output by default when
+      `model.method` is set to `pls` or `rf`."
     )
   }
 
@@ -165,14 +179,15 @@ train_spectra <- function(df,
   }
 
   if (!(model.method %in% c("pls", "rf", "svmLinear", "svmRadial"))) {
-    rlang::abort('model.method must be "pls", "rf", "svmLinear", or "svmRadial"')
+    rlang::abort('model.method must be "pls", "rf", "svmLinear",
+                 or "svmRadial"')
   }
 
-  if (!rlang::has_name(df, "reference")){
+  if (!rlang::has_name(df, "reference")) {
     rlang::abort('The training dataset must include a column named "reference"')
   }
 
-  if (!is.null(test.data) & !(rlang::has_name(test.data, "reference"))) {
+  if (!is.null(test.data) && !(rlang::has_name(test.data, "reference"))) {
     rlang::abort('The test dataset must include a column named "reference"')
   }
 
@@ -180,7 +195,7 @@ train_spectra <- function(df,
     rlang::abort('The training dataset must include a column named "unique.id"')
   }
 
-  if (!is.null(test.data) & !(rlang::has_name(test.data, "unique.id"))) {
+  if (!is.null(test.data) && !(rlang::has_name(test.data, "unique.id"))) {
     rlang::abort('The test dataset must include a column named "unique.id"')
   }
 
@@ -189,12 +204,12 @@ train_spectra <- function(df,
       rlang::abort('cv.scheme must be NULL, "CV0", "CV00", "CV1", or "CV2"')
     }
     # Set num.iterations based on cv.scheme
-    if (cv.scheme == "CV0" | cv.scheme == "CV00") {
+    if (cv.scheme == "CV0" || cv.scheme == "CV00") {
       num.iterations <- 1
     } # else use provided number of iterations
   }
 
-  if (proportion.train > 1 | proportion.train < 0) {
+  if (proportion.train > 1 || proportion.train < 0) {
     rlang::abort("'proportion.train' must be a number between 0 and 1")
   }
 
@@ -214,25 +229,28 @@ train_spectra <- function(df,
   # Train model ---------------------------
   # Partition training and test sets
   # Random sampling occurs in the loop below
-  if (is.null(test.data)){
+  if (is.null(test.data)) {
     partition.input.df <- df
   } else {
     partition.input.df <- test.data
   }
 
-  if (!is.null(test.data) & !split.test) {
+  if (!is.null(test.data) && !split.test) {
     # If fixed training and test sets provided but split.test = F
-    num.iterations <- 1 # only one possible combination because the sets are fixed
+    # One iteration is the only option because there is only one
+    # possible combination when the sets are fixed
+    num.iterations <- 1
     data.train <- df
     data.test <- test.data
   }
 
-  if (stratified.sampling & is.null(cv.scheme)) {
-    # Stratified sampling to get representative sample of ground truth (reference column) values
+  if (stratified.sampling && is.null(cv.scheme)) {
+    # Stratified sampling to get representative sample of ground
+    #   truth (reference column) values
     # Outputs list with n = num.iterations
-      train.index <- caret::createDataPartition(
-        y = partition.input.df$reference,
-        p = proportion.train, times = num.iterations
+    train.index <- caret::createDataPartition(
+      y = partition.input.df$reference,
+      p = proportion.train, times = num.iterations
       )
     }
 
@@ -240,40 +258,38 @@ train_spectra <- function(df,
     # set seed, different for each iteration for random samples
     set.seed(i)
 
-    if (!stratified.sampling & is.null(cv.scheme)) {
-        # Random sample (not stratified)
+    if (!stratified.sampling && is.null(cv.scheme)) {
+      # Random sample (not stratified)
         train.index <- sort(sample(
-          x = 1:nrow(partition.input.df),
+          x = seq_len(nrow(partition.input.df)),
           size = proportion.train * nrow(partition.input.df),
           replace = FALSE, prob = NULL
         ))
-        if (is.null(test.data)){
+        if (is.null(test.data)) {
           # No test set provided
           data.train <- df[train.index, ]
           data.test <- df[-train.index, ]
-        } else if (!is.null(test.data) & split.test){
+        } else if (!is.null(test.data) && split.test) {
           # Test set provided and split randomly
-          # Fixed training set + add proportion.train from test set pool to training set
+          # Fixed training set + add proportion.train from test set pool
+          #    to training set
           data.train <- rbind(df, test.data[train.index, ])
           data.test <- test.data[-train.index, ]
         }
-      }
-
-      else if (stratified.sampling & is.null(cv.scheme)) {
+      } else if (stratified.sampling && is.null(cv.scheme)) {
         # Stratified random sampling
-        if (is.null(test.data)){
+        if (is.null(test.data)) {
           # No test set provided
           data.train <- df[train.index[[i]], ]
           data.test <- df[-train.index[[i]], ]
-        } else if (!is.null(test.data) & split.test){
+        } else if (!is.null(test.data) && split.test) {
           # Test set provided and split in a stratified random manner
-          # Fixed training set + add proportion.train from test set pool to training set
+          # Fixed training set + add proportion.train from test set pool to
+          #   training set
           data.train <- rbind(df, test.data[train.index[[i]], ])
           data.test <- test.data[-train.index[[i]], ]
         }
-      }
-
-    else if (!is.null(cv.scheme)) {
+      } else if (!is.null(cv.scheme)) {
       # cv.scheme present
       # Use selected cross-validation scheme
       formatted.lists <- format_cv(
@@ -304,7 +320,8 @@ train_spectra <- function(df,
     }
 
     # Tune hyperparameters with training data
-    # Example// for 'pls', train hyperparameter "ncomps", where tune.length is number of ncomps tried
+    # Example// for 'pls', train hyperparameter "ncomps", where tune.length is
+    #    number of ncomps tried
     if (model.method != "rf") {
       # 5-fold cross validation on training set
       cv.kfold <- caret::trainControl(
@@ -387,7 +404,8 @@ train_spectra <- function(df,
 
     # Variable importance ---------------------------
     # Can only be performed for pls and rf model types
-    # Each row contains iteration number followed by model type and importance value of each wavelength.
+    # Each row contains iteration number followed by model type and importance
+    #   value of each wavelength.
     if (model.method %in% c("pls", "rf")) {
       importance.df.i <- cbind(
         "Iteration" = i, "ModelType" = model.method,
@@ -395,7 +413,7 @@ train_spectra <- function(df,
       ) %>%
         tibble::rownames_to_column(var = "wavelength")
       rownames(importance.df.i) <- NULL
-    } else{
+    } else {
       importance.df.i <- NULL
     }
 
@@ -415,8 +433,10 @@ train_spectra <- function(df,
     colnames(results.df.i) <- df.colnames.notype
 
     # Compile predictions ---------------------------
-    predictions.df.i <- cbind(i, model.method, data.test$unique.id, reference.values, predicted.values)
-    colnames(predictions.df.i) <- c("Iteration", "ModelType", "unique.id", "reference", "predicted")
+    predictions.df.i <- cbind(i, model.method, data.test$unique.id,
+                              reference.values, predicted.values)
+    colnames(predictions.df.i) <- c("Iteration", "ModelType", "unique.id",
+                                    "reference", "predicted")
 
     if (i == 1) {
       predictions.df <- predictions.df.i
@@ -429,23 +449,11 @@ train_spectra <- function(df,
     }
   } # End of loop
 
-  #' @description Get the mode of a set of numbers. Used in getting summary of results
-  #' within [train_spectra()]
-  #' @param vector.input The mode of this vector of numbers will be calculated by this function
-  #' @return mode of the numbers in `vector.input`
-  #' @export
-  #' @keywords internal
-  getmode <- function(vector.input) {
-    as.matrix(vector.input)
-    unique.vector <- unique(vector.input)
-    return(unique.vector[which.max(tabulate(match(vector.input, unique.vector)))])
-  }
-
   # Create summary data.frame ---------------------------
   summary.df <- rbind(
     summarize_all(results.df, .funs = mean),
     summarize_all(results.df, .funs = sd, na.rm = TRUE),
-    summarize_all(results.df, .funs = getmode)
+    summarize_all(results.df, .funs = get_mode)
   ) %>%
     mutate(
       ModelType = model.method,
@@ -457,13 +465,15 @@ train_spectra <- function(df,
       .data$best.ncomp, .data$best.ntree, .data$best.mtry
     )
 
-  # Stitch on ModelType column later so doesn't interfere with mean calculations for summary
+  # Stitch on ModelType column later so doesn't interfere with
+  # mean calculations for summary
   results.df$ModelType <- model.method
   results.df <- results.df %>%
     dplyr::select(all_of(df.colnames))
 
-  # Create model with all input data (not just 70%). Results will give an idea of this model's performance,
-  #     but they will have been generated with only subsets of the data.
+  # Create model with all input data (not just 70%). Results will give an idea
+  # of this model's performance, but they will have been generated with
+  # only subsets of the data.
   if (verbose) cat("Returning model...\n")
   if (model.method == "pls") {
     # Format df for plsr() function
@@ -486,7 +496,7 @@ train_spectra <- function(df,
       ntree = tune.length
     )
   }
-  if (model.method == "svmLinear" | model.method == "svmRadial") {
+  if (model.method == "svmLinear" || model.method == "svmRadial") {
     full.model <- caret::train(reference ~ .,
       data = df,
       method = model.method,

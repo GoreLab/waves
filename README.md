@@ -4,7 +4,7 @@
 ![language: R](https://img.shields.io/badge/language-R-blue.svg)
 ![CRAN/METACRAN](https://img.shields.io/cran/v/waves?label=CRAN)
 [![R build status](https://github.com/GoreLab/waves/workflows/R-CMD-check/badge.svg)](https://github.com/GoreLab/waves/actions)
-[![](https://cranlogs.r-pkg.org/badges/grand-total/waves)](https://cran.rstudio.com/web/packages/waves/index.html)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/waves)](https://CRAN.R-project.org/package=waves)
 
 <!-- badges: end -->
 

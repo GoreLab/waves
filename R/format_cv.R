@@ -3,8 +3,8 @@
 #' @name format_cv
 #' @author Jenna Hershberger \email{jmh579@@cornell.edu}
 #' @description Standalone function that is also used within
-#'   \code{\link{train_spectra}} to divide trials or studies into training and test
-#'   sets based on overlap in trial environments and genotype entries
+#'   \code{\link{train_spectra}} to divide trials or studies into training and
+#'   test sets based on overlap in trial environments and genotype entries
 #' @details Use of a cross-validation scheme requires a column in the input
 #'   \code{data.frame} named "genotype" to ensure proper sorting of training and
 #'   test sets. Variables \code{trial1} and \code{trial2} are required, while
@@ -65,8 +65,8 @@
 #' @examples
 #' # Must have a column called "genotype", so we'll create a fake one for now
 #' # We will use CV00, which does not require any overlap in genotypes
-#' # In real scenarios, CV schemes that rely on genotypes should not be applied when
-#' # genotypes are unknown, as in this case.
+#' # In real scenarios, CV schemes that rely on genotypes should not be applied
+#' # when genotypes are unknown, as in this case.
 #' library(magrittr)
 #' trials <- ikeogu.2017 %>%
 #'   dplyr::mutate(genotype = 1:nrow(ikeogu.2017)) %>% # fake for this example
@@ -100,19 +100,20 @@ format_cv <- function(trial1,
     rlang::abort("cv.scheme must be 'CV0', 'CV00', 'CV1', or 'CV2'")
   }
 
-  if (!"genotype" %in% colnames(trial1) | !"genotype" %in% colnames(trial2)) {
+  if (!"genotype" %in% colnames(trial1) || !"genotype" %in% colnames(trial2)) {
     rlang::abort("trial1 and trial2 must each have a column named 'genotype'")
   }
 
-  if (proportion.train > 1 | proportion.train < 0) {
+  if (proportion.train > 1 || proportion.train < 0) {
     rlang::abort("'proportion.train' must be a number between 0 and 1")
   }
 
-  overlapping.genos <- trial1[which(trial1$genotype %in% rbind(trial2, trial3)[,"genotype"]),]
-  if ((cv.scheme %in% c("CV2", "CV0")) & (nrow(overlapping.genos) < 1)) {
-    rlang::abort("There are no overlapping genotypes between the trials provided,
-  so the CV scheme you have chosen cannot be used. Please choose another,
-  more appropriate CV scheme (CV1 or CV00).")
+  overlapping.genos <- trial1[which(trial1$genotype %in%
+                                      rbind(trial2, trial3)[, "genotype"]), ]
+  if ((cv.scheme %in% c("CV2", "CV0")) && (nrow(overlapping.genos) < 1)) {
+    rlang::abort("There are no overlapping genotypes between the trials
+  provided,so the CV scheme you have chosen cannot be used.
+  Please choose another, more appropriate CV scheme (CV1 or CV00).")
   }
 
 
@@ -127,7 +128,7 @@ format_cv <- function(trial1,
   # Random sampling
   if (!stratified.sampling) {
     train.index <- sort(sample(
-      x = 1:nrow(t1),
+      x = seq_len(nrow(t1)),
       size = proportion.train * nrow(t1),
       replace = FALSE, prob = NULL
     ))
@@ -139,7 +140,7 @@ format_cv <- function(trial1,
     train.index <- caret::createDataPartition(
       y = t1_summary$reference.mean,
       p = proportion.train
-      ) %>%
+    ) %>%
       unlist()
   }
 
@@ -150,7 +151,8 @@ format_cv <- function(trial1,
   t1.b <- t1[train.index, ] %>%
     tidyr::unnest(c(-.data$genotype)) %>%
     dplyr::ungroup()
-  # we want t2.a to be the same genotypes as in t1.a and t2.b to be the same genotypes as t1.b
+  # we want t2.a to be the same genotypes as in t1.a
+  # and t2.b to be the same genotypes as t1.b
   t2.a <- trial2[which(trial2$genotype %in% t1.a$genotype), ]
   t2.b <- trial2[which(trial2$genotype %in% t1.b$genotype), ]
 
@@ -162,10 +164,13 @@ format_cv <- function(trial1,
 
   if (cv.scheme == "CV00") {
     # Untested lines in untested environment
-    # check for overlapping genotypes and remove from either training or test set
-    trial2.no.overlap <- trial2 %>% dplyr::filter(!.data$genotype %in% t1.a$genotype)
+    # check for overlapping genotypes and remove
+    # from either training or test set
+    trial2.no.overlap <- trial2 %>%
+      dplyr::filter(!.data$genotype %in% t1.a$genotype)
     if (!is.null(trial3)) {
-      trial3.no.overlap <- trial3 %>% dplyr::filter(!.data$genotype %in% t1.a$genotype)
+      trial3.no.overlap <- trial3 %>%
+        dplyr::filter(!.data$genotype %in% t1.a$genotype)
     } else {
       trial3.no.overlap <- NULL
     }

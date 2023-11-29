@@ -69,13 +69,15 @@ predict_spectra <- function(input.data,
     )
   )
 
-  # Use pretreat_spectra() function to format input.data and preprocess if needed ---------------------------
+  # Use pretreat_spectra() function to format input.data and preprocess
+  # if needed ------------------------------------------------------------------
   pretreated <- pretreat_spectra(
     df = input.data, test.data = NULL,
     pretreatment = best.pretreatment.num
   )
 
-  # Predict values using imported model, pretreated/formatted input data, and method of choice ---------------------------
+  # Predict values using imported model, pretreated/formatted input data,
+  # and method of choice -------------------------------------------------------
   if (model.method == "pls") {
     # Extract best number of components
     best.ncomp <- model.stats$best.ncomp_mode[1]
@@ -98,7 +100,7 @@ predict_spectra <- function(input.data,
     ))
   }
 
-  # Bind unique identifiers from the input data to the predicted values ---------------------------
+  # Bind unique identifiers from the input data to the predicted values --------
   predicted.df <- cbind(input.data[, 1], data.frame(predicted.values))
   colnames(predicted.df) <- c(colnames(input.data)[1], "predicted.values")
 

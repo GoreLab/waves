@@ -45,7 +45,8 @@ transformations are applied to each row. Default is \code{NULL}.}
 has been renamed "pretreatment"}
 
 \item{wavelengths}{DEPRECATED \code{wavelengths} is no
-longer supported; this information is now inferred from \code{df} column names}
+longer supported; this information is now inferred from \code{df}
+column names}
 }
 \value{
 Pretreated \code{df}` (or list of \code{data.frame}s) with

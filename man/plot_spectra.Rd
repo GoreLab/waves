@@ -21,7 +21,8 @@ plot_spectra(
 Spectral columns must be labeled with an "X" and then the wavelength
 (example: "X740" = 740nm). Left-most column must be unique ID. May also
 contain columns of metadata between the unique ID and spectral columns.
-Cannot contain any missing values. Metadata column names may not start with "X".}
+Cannot contain any missing values. Metadata column names may not start
+with "X".}
 
 \item{num.col.before.spectra}{Number of columns to the left of the spectral
 matrix (including unique ID). Default is 1.}
@@ -30,28 +31,30 @@ matrix (including unique ID). Default is 1.}
 the covariance of the spectra (required to calculate Mahalanobis distance).
 Default is 10.}
 
-\item{detect.outliers}{Boolean indicating whether spectra should be filtered before plotting.
-If \code{TRUE}, outliers are indicated by color in the resulting plot. If
-\code{verbose} is also set to \code{TRUE}, outlier metadata will be printed to
-the console. Default is \code{TRUE}.}
+\item{detect.outliers}{Boolean indicating whether spectra should be filtered
+before plotting. If \code{TRUE}, outliers are indicated by color in the
+resulting plot. If \code{verbose} is also set to \code{TRUE}, outlier
+metadata will be printed to the console. Default is \code{TRUE}.}
 
 \item{color}{String or vector of strings indicating colors to be passed to
-\code{\link[ggplot2]{ggplot}}. Default is default \code{\link[ggplot2]{ggplot}} colors.}
+\code{\link[ggplot2]{ggplot}}. Default is default
+\code{\link[ggplot2]{ggplot}} colors.}
 
-\item{alternate.title}{String to be used as plot title. If \code{detect.outliers} is
-\code{TRUE}, a descriptive title will be supplied. If \code{detect.outliers} is
-\code{FALSE}, default is no title will be used.}
+\item{alternate.title}{String to be used as plot title. If
+\code{detect.outliers} is \code{TRUE}, a descriptive title will be supplied.
+If \code{detect.outliers} is \code{FALSE}, default is no title will be used.}
 
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
 
 \item{wavelengths}{DEPRECATED \code{wavelengths} is no
-longer supported; this information is now inferred from \code{df} column names}
+longer supported; this information is now inferred from
+\code{df} column names}
 }
 \value{
-If verbose, prints unique ID and metadata for rows identified as outliers.
- Returns plot of spectral data with non-outliers in blue and outliers in red.
- X-axis is wavelengths and y-axis is spectral values.
+If verbose, prints unique ID and metadata for rows identified as
+outliers. Returns plot of spectral data with non-outliers in blue and
+outliers in red. X-axis is wavelengths and y-axis is spectral values.
 }
 \description{
 Generates a \code{\link[ggplot2]{ggplot}} object of given

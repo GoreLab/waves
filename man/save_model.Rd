@@ -67,8 +67,8 @@ provided, will save to working directory.}
 \item{best.model.metric}{Metric used to decide which model is best. Must be
 either "RMSE" or "Rsquared"}
 
-\item{k.folds}{Number indicating the number of folds for k-fold cross-validation
-during model training. Default is 5.}
+\item{k.folds}{Number indicating the number of folds for k-fold
+cross-validation during model training. Default is 5.}
 
 \item{proportion.train}{Fraction of samples to include in the training set.
 Default is 0.7.}
@@ -116,9 +116,9 @@ site/year (different environment). Formatting must be consistent with
 may not contain genotypes that overlap with \code{trial1}. Formatting must
 be consistent with \code{trial1}.}
 
-\item{seed}{Integer to be used internally as input for \code{set.seed()}. Only used if
-\code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
-iteration number. Default is 1.}
+\item{seed}{Integer to be used internally as input for \code{set.seed()}.
+Only used if \code{stratified.sampling = TRUE}. In all other cases, seed
+is set to the current iteration number. Default is 1.}
 
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
@@ -127,7 +127,8 @@ will be printed to the console. Default is \code{TRUE}.}
 longer supported; this function will always return a saved model.}
 
 \item{wavelengths}{DEPRECATED \code{wavelengths} is no
-longer supported; this information is now inferred from \code{df} column names}
+longer supported; this information is now inferred from \code{df}
+column names}
 
 \item{autoselect.preprocessing}{DEPRECATED
 \code{autoselect.preprocessing = FALSE} is no longer supported. If

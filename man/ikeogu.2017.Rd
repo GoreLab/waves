@@ -20,10 +20,13 @@ The `ikeogu.2017` data set contains raw vis-NIRS scans, total
 \itemize{
   \item study.name = Name of the study as described in Ikeogu et al. (2017).
   \item sample.id = Unique identifier for each individual root sample
-  \item DMC.oven = Cassava root dry matter content, the percentage of dry weight relative to fresh weight of a sample after oven drying.
-  \item TCC = Total carotenoid content (\eqn{\mu g/g}, unknown whether on a fresh or dry weight basis) as measured by
+  \item DMC.oven = Cassava root dry matter content, the percentage of dry
+  weight relative to fresh weight of a sample after oven drying.
+  \item TCC = Total carotenoid content (\eqn{\mu g/g}, unknown whether on a
+  fresh or dry weight basis) as measured by
   high performance liquid chromatography
-  \item X350:X2500 = spectral reflectance measured with the QualitySpec Trek: S-10016 vis-NIR spectrometer.
+  \item X350:X2500 = spectral reflectance measured with the QualitySpec Trek:
+  S-10016 vis-NIR spectrometer.
 Each cell represents the mean of 150 scans on a single root at a single wavelength.
 }
 }

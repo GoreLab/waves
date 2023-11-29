@@ -60,8 +60,8 @@ is \code{NULL}.}
   \item SG and second derivative (window size = 11)
 }}
 
-\item{k.folds}{Number indicating the number of folds for k-fold cross-validation
-during model training. Default is 5.}
+\item{k.folds}{Number indicating the number of folds for k-fold
+cross-validation during model training. Default is 5.}
 
 \item{proportion.train}{Fraction of samples to include in the training set.
 Default is 0.7.}
@@ -118,72 +118,75 @@ stratified subset (70\%) of a third and test on the remaining samples
 of the provided \code{train.data} will be used for testing. Default is
 \code{FALSE}.}
 
-\item{seed}{Integer to be used internally as input for \code{set.seed()}. Only used if
-\code{stratified.sampling = TRUE}. In all other cases, seed is set to the current
-iteration number. Default is 1.}
+\item{seed}{Integer to be used internally as input for \code{set.seed()}.
+Only used if \code{stratified.sampling = TRUE}. In all other cases, seed
+is set to the current iteration number. Default is 1.}
 
 \item{verbose}{If \code{TRUE}, the number of rows removed through filtering
 will be printed to the console. Default is \code{TRUE}.}
 
 \item{wavelengths}{DEPRECATED \code{wavelengths} is no
-longer supported; this information is now inferred from \code{df} column names}
+longer supported; this information is now inferred from \code{df}
+column names}
 
 \item{preprocessing}{DEPRECATED please use
-\code{pretreatment} to specify the specific pretreatment(s) to test. For behavior
-identical to that of \code{preprocessing = TRUE}, set
+\code{pretreatment} to specify the specific pretreatment(s) to test.
+For behavior identical to that of \code{preprocessing = TRUE}, set
 \code{pretreatment = 1:13}`.}
 
 \item{output.summary}{DEPRECATED \code{output.summary = FALSE}
-is no longer supported; a summary of output is always returned alongside the full
-performance statistics.}
+is no longer supported; a summary of output is always returned alongside
+the full performance statistics.}
 
 \item{rf.variable.importance}{DEPRECATED
-\code{rf.variable.importance = FALSE} is no longer supported; variable importance
-results are always returned if the \code{model.method} is set to `pls` or `rf`.}
+\code{rf.variable.importance = FALSE} is no longer supported; variable
+importance results are always returned if the \code{model.method} is
+set to `pls` or `rf`.}
 }
 \value{
 \code{list} of 5 objects:
   \enumerate{
-  \item `model.list` is a \code{list} of trained model objects, one for each pretreatment
-  method specified by the \code{pretreatment} argument. Each model is trained with all
-  rows of \code{df}.
-  \item `summary.model.performance` is a \code{data.frame} containing summary statistics
-  across all model training iterations and pretreatments. See below for a description of
-  the summary statistics provided.
-  \item `model.performance` is a \code{data.frame} containing performance statistics for
-  each iteration of model training separately (see below).
-  \item `predictions` is a \code{data.frame} containing both reference and predicted
-  values for each test set entry in each iteration of model training.
-  \item `importance` is a \code{data.frame} containing variable importance results for
-  each wavelength at each iteration of model training. If \code{model.method} is not
-  "pls" or "rf", this list item is \code{NULL}.
+  \item `model.list` is a \code{list} of trained model objects, one for each
+  pretreatment method specified by the \code{pretreatment} argument.
+  Each model is trained with all rows of \code{df}.
+  \item `summary.model.performance` is a \code{data.frame} containing summary
+  statistics across all model training iterations and pretreatments.
+  See below for a description of the summary statistics provided.
+  \item `model.performance` is a \code{data.frame} containing performance
+  statistics for each iteration of model training separately (see below).
+  \item `predictions` is a \code{data.frame} containing both reference and
+  predicted values for each test set entry in each iteration of
+  model training.
+  \item `importance` is a \code{data.frame} containing variable importance
+  results for each wavelength at each iteration of model training.
+  If \code{model.method} is not "pls" or "rf", this list item is \code{NULL}.
   }
 
-`summary.model.performance` and `model.performance` \code{data.frames} summary
- statistics include:
+`summary.model.performance` and `model.performance` \code{data.frames}
+summary statistics include:
 \itemize{
   \item Tuned parameters depending on the model algorithm:
   \itemize{
     \item \strong{Best.n.comp}, the best number of components
     \item \strong{Best.ntree}, the best number of trees in an RF model
-    \item \strong{Best.mtry}, the best number of variables to include at every
-    decision point in an RF model
+    \item \strong{Best.mtry}, the best number of variables to include at
+    every decision point in an RF model
     }
   \item \strong{RMSECV}, the root mean squared error of cross-validation
-  \item \strong{R2cv}, the coefficient of multiple determination of cross-validation
-  for PLSR models
+  \item \strong{R2cv}, the coefficient of multiple determination of
+  cross-validation for PLSR models
   \item \strong{RMSEP}, the root mean squared error of prediction
   \item \strong{R2p}, the squared Pearson’s correlation between predicted and
   observed test set values
-  \item \strong{RPD}, the ratio of standard deviation of observed test set values
-  to RMSEP
+  \item \strong{RPD}, the ratio of standard deviation of observed test set
+  values to RMSEP
   \item \strong{RPIQ}, the ratio of performance to interquartile difference
   \item \strong{CCC}, the concordance correlation coefficient
-  \item \strong{Bias}, the average difference between the predicted and observed
-  values
+  \item \strong{Bias}, the average difference between the predicted and
+  observed values
   \item \strong{SEP}, the standard error of prediction
-  \item \strong{R2sp}, the squared Spearman’s rank correlation between predicted
-  and observed test set values
+  \item \strong{R2sp}, the squared Spearman’s rank correlation between
+  predicted and observed test set values
 }
 }
 \description{

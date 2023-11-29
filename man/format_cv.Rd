@@ -65,8 +65,8 @@ List of data.frames ($train.set, $test.set) compiled according to
 }
 \description{
 Standalone function that is also used within
-  \code{\link{train_spectra}} to divide trials or studies into training and test
-  sets based on overlap in trial environments and genotype entries
+  \code{\link{train_spectra}} to divide trials or studies into training and
+  test sets based on overlap in trial environments and genotype entries
 }
 \details{
 Use of a cross-validation scheme requires a column in the input
@@ -77,8 +77,8 @@ Use of a cross-validation scheme requires a column in the input
 \examples{
 # Must have a column called "genotype", so we'll create a fake one for now
 # We will use CV00, which does not require any overlap in genotypes
-# In real scenarios, CV schemes that rely on genotypes should not be applied when
-# genotypes are unknown, as in this case.
+# In real scenarios, CV schemes that rely on genotypes should not be applied
+# when genotypes are unknown, as in this case.
 library(magrittr)
 trials <- ikeogu.2017 \%>\%
   dplyr::mutate(genotype = 1:nrow(ikeogu.2017)) \%>\% # fake for this example
