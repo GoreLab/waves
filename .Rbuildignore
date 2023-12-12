@@ -1,14 +1,4 @@
-^waves\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
-^LICENSE\.md$
-^data-raw$
-^cran-comments.md$
-^CRAN-RELEASE$
-^\.github$
-^_pkgdown\.yml$
-^docs$
-^pkgdown$
-^logo.png$
-^test_waves\.R
-
+^revdep$
 ^CRAN-SUBMISSION$
