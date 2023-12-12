@@ -2,3 +2,12 @@
 ^\.Rproj\.user$
 ^revdep$
 ^CRAN-SUBMISSION$
+^.github$
+^logo.png$
+^test_waves.R$
+^data-raw$
+^cran-comments\.md$
+^LICENSE.md$
+^_pkgdown.yml$
+^docs$
+^pkgdown$

@@ -1,3 +1,6 @@
+## Resubmission
+This is a resubmission. In this version, I have added the extra top-level files to .Rbuildignore to address all of the notes generated through the last submission.
+
 ## Test environments
 * local Apple Silicon (M1), macOS 13.5.2 Ventura, R 4.2.1
 * windows-latest (release; R CMD check workflow on Github Actions)
