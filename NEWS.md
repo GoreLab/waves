@@ -1,3 +1,5 @@
+# waves (development version)
+
 # waves 0.2.5
 
 * Bug fix: `predict_spectra()` no longer returns error when running example code (#25).

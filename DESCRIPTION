@@ -1,6 +1,6 @@
 Package: waves
 Title: Vis-NIR Spectral Analysis Wrapper
-Version: 0.2.5
+Version: 0.2.5.9000
 Authors@R: 
     c(person(given = "Jenna",
              family = "Hershberger",
