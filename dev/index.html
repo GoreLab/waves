@@ -54,17 +54,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">waves</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.5.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="articles/waves.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -97,7 +94,8 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>Originally designed application in the context of resource-limited plant research and breeding programs, <code>waves</code> provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, preprocessing, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data.</p>
+<!-- badges: end -->
+<p>Originally designed application in the context of resource-limited plant research and breeding programs, <code>waves</code> provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, pretreatment, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data.</p>
 <p><em>Please note: function names were updated as of version 0.2.0. Old function names still work in this version but will be retired in upcoming package versions.</em></p>
 <div class="section level2">
 <h2 id="cite">Cite<a class="anchor" aria-label="anchor" href="#cite"></a>
@@ -111,146 +109,62 @@
 <h2 id="use">Use<a class="anchor" aria-label="anchor" href="#use"></a>
 </h2>
 <p>Follow the installation instructions below, and then go wild! Use <code>waves</code> to analyze your own data. Please report any bugs or feature requests by opening issues in this repository.</p>
+<p>More detailed examples can be found in the package <a href="https://gorelab.github.io/waves/articles/waves.html" class="external-link">vignette</a>. The vignette can also be found by running the following:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"waves"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install the latest <code>waves</code> release directly from CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"waves"</span><span class="op">)</span></code></pre></div>
-<p>Alternatively, install the development version to get the most up-to-date (but not necessarily thoroughly tested) version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"GoreLab/waves"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"waves"</span><span class="op">)</span></span></code></pre></div>
+<p>Alternatively, install the development version to get the most up-to-date (but not necessarily thoroughly tested) version:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"GoreLab/waves"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<div class="section level3">
-<h3 id="1-format-your-data-match-spectra-with-reference-values-so-that-you-have-a-dataframe-with-unique-identifiers-reference-values-and-other-metadata-as-columns-to-the-left-of-spectral-values-spectral-column-names-should-start-with-x">1. Format your data. Match spectra with reference values so that you have a dataframe with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with “X”.<a class="anchor" aria-label="anchor" href="#1-format-your-data-match-spectra-with-reference-values-so-that-you-have-a-dataframe-with-unique-identifiers-reference-values-and-other-metadata-as-columns-to-the-left-of-spectral-values-spectral-column-names-should-start-with-x"></a>
-</h3>
-<div class="figure">
-<img src="reference/figures/formatted_data.png" alt=""><p class="caption">Example Format</p>
-</div>
-</div>
-<div class="section level3">
-<h3 id="2-visualize-and-filter-spectra-using-plot_spectra-and-filter_spectra">2. Visualize and filter spectra using <code>plot_spectra()</code> and <code>filter_spectra()</code>.<a class="anchor" aria-label="anchor" href="#2-visualize-and-filter-spectra-using-plot_spectra-and-filter_spectra"></a>
-</h3>
-<div class="figure">
-<img src="reference/figures/filter_data.png" alt=""><p class="caption">Filter data</p>
-</div>
-</div>
-<div class="section level3">
-<h3 id="3-if-you-have-more-than-one-scan-per-unique-identifier-aggregate-the-scans-by-mean-or-median-with-aggregate_spectra">3. If you have more than one scan per unique identifier, aggregate the scans by mean or median with <code>aggregate_spectra()</code>.<a class="anchor" aria-label="anchor" href="#3-if-you-have-more-than-one-scan-per-unique-identifier-aggregate-the-scans-by-mean-or-median-with-aggregate_spectra"></a>
-</h3>
-<div class="figure">
-<img src="reference/figures/aggregate.png" alt=""><p class="caption">Aggregate</p>
-</div>
-</div>
-<div class="section level3">
-<h3 id="4-use-test_spectra-to-perform-spectral-pretreatment-cross-validation-set-formation-and-model-training-functions-over-multiple-iterations">4. Use <code>test_spectra()</code> to perform spectral pretreatment, cross-validation set formation, and model training functions over multiple iterations.<a class="anchor" aria-label="anchor" href="#4-use-test_spectra-to-perform-spectral-pretreatment-cross-validation-set-formation-and-model-training-functions-over-multiple-iterations"></a>
-</h3>
-<div class="section level4">
-<h4 id="a-applies-any-of-12-combinations-of-spectral-pretreatment-methods-using-pretreat_spectra">a. Applies any of 12 combinations of spectral pretreatment methods using <code>pretreat_spectra()</code>.<a class="anchor" aria-label="anchor" href="#a-applies-any-of-12-combinations-of-spectral-pretreatment-methods-using-pretreat_spectra"></a>
-</h4>
-<div class="figure">
-<img src="reference/figures/preprocess.png" alt=""><p class="caption">Preprocess</p>
-</div>
-</div>
-<div class="section level4">
-<h4 id="b-determines-cross-validation-scheme-with-format_cv-choose-from-random-stratified-random-or-a-plant-breeding-specific-scheme-from-jarquín-et-al-2017-the-plant-genome">b. Determines cross-validation scheme with <code>format_cv()</code>. Choose from random, stratified random, or a plant breeding-specific scheme from <a href="https://doi.org/10.3835/plantgenome2016.12.0130" class="external-link">Jarquín et <em>al.</em>, 2017. <em>The Plant Genome</em></a>.<a class="anchor" aria-label="anchor" href="#b-determines-cross-validation-scheme-with-format_cv-choose-from-random-stratified-random-or-a-plant-breeding-specific-scheme-from-jarqu%C3%ADn-et-al-2017-the-plant-genome"></a>
-</h4>
-<div class="figure">
-<img src="reference/figures/cv_schemes.png" alt=""><p class="caption">CV</p>
-</div>
-</div>
-<div class="section level4">
-<h4 id="c-trains-spectral-prediction-models-using-train_spectra">c. Trains spectral prediction models using <code>train_spectra()</code>.<a class="anchor" aria-label="anchor" href="#c-trains-spectral-prediction-models-using-train_spectra"></a>
-</h4>
+<ol style="list-style-type: decimal">
+<li><p>Format your data. Match spectra with reference values so that you have a dataframe with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with “X”.</p></li>
+<li><p>Visualize and filter spectra using <code><a href="reference/plot_spectra.html">plot_spectra()</a></code> and <code><a href="reference/filter_spectra.html">filter_spectra()</a></code>.</p></li>
+<li><p>If you have more than one scan per unique identifier, aggregate the scans by mean or median with <code><a href="reference/aggregate_spectra.html">aggregate_spectra()</a></code>.</p></li>
+<li>
+<p>Use <code><a href="reference/test_spectra.html">test_spectra()</a></code> to perform spectral pretreatment, cross-validation set formation, and model training functions over multiple iterations.</p>
+<ul>
+<li>Applies any of 12 combinations of spectral pretreatment methods using <code><a href="reference/pretreat_spectra.html">pretreat_spectra()</a></code>.</li>
+<li>Determines cross-validation scheme with <code><a href="reference/format_cv.html">format_cv()</a></code>. Choose from random, stratified random, or a plant breeding-specific scheme from <a href="https://doi.org/10.3835/plantgenome2016.12.0130" class="external-link">Jarquín et <em>al.</em>, 2017. <em>The Plant Genome</em></a>.</li>
+<li>Trains spectral prediction models using <code><a href="reference/train_spectra.html">train_spectra()</a></code>.
 <ul>
 <li>Choose from partial least squares regression, random forest, and support vector machine algorithms</li>
-<li>Uses 5-fold cross validation within the training set to tune model hyperparameters</li>
+<li>Uses k-fold cross validation within the training set to tune model hyperparameters</li>
 <li>Outputs model performance statistics (RMSE, R<sup>2</sup>, Bias, etc.) as assessed with test set</li>
 </ul>
-</div>
-</div>
-<div class="section level3">
-<h3 id="5-save-trained-prediction-models-with-save_model">5. Save trained prediction models with <code>save_model()</code>.<a class="anchor" aria-label="anchor" href="#5-save-trained-prediction-models-with-save_model"></a>
-</h3>
+</li>
+</ul>
+</li>
+<li>
+<p>Save trained prediction models with <code><a href="reference/save_model.html">save_model()</a></code>.</p>
 <ul>
 <li>Intended for a production environment</li>
 <li>Can evaluate spectral pretreatment methods using the input dataset</li>
 <li>Selects best model using the metric provided (RMSE or R<sup>2</sup>)</li>
 <li>Returns trained model with option to save as .Rds object</li>
 </ul>
-</div>
-<div class="section level3">
-<h3 id="6-predict-phenotypic-values-with-new-spectra-and-a-saved-model-using-predict_spectra">6. Predict phenotypic values with new spectra and a saved model using <code>predict_spectra()</code>.<a class="anchor" aria-label="anchor" href="#6-predict-phenotypic-values-with-new-spectra-and-a-saved-model-using-predict_spectra"></a>
-</h3>
-</div>
+</li>
+<li><p>Predict phenotypic values with new spectra and a saved model using <code><a href="reference/predict_spectra.html">predict_spectra()</a></code>.</p></li>
+</ol>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>The package comes with an example dataset from <a href="https://doi.org/10.1371/journal.pone.0188918" class="external-link">Ikeogu et <em>al.</em> (2017) <em>PLoS ONE</em></a> that can be used to try out package capabilities:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load and preview the example dataset (ikeogu.2017)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ikeogu.2017</span><span class="op">)</span>
-<span class="va">ikeogu.2017</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
-
-<span class="co"># Inspect and show the number of observations for each study within the `data.frame`</span>
-<span class="va">ikeogu.2017</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">study.name</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">nest</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>n.obs <span class="op">=</span> <span class="fu">map_dbl</span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-  
-<span class="co"># Plot reference value distributions</span>
-<span class="va">ikeogu.2017</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu">starts_with</span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">study.name</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gather</span><span class="op">(</span><span class="va">trait</span>, <span class="va">value</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">DMC.oven</span><span class="op">:</span><span class="va">TCC</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span> <span class="va">study.name</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">study.name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">trait</span>, scales<span class="op">=</span><span class="st">'free_y'</span>, nrow<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="section level3">
-<h3 id="example-dataset-reference-distributions">Example dataset reference distributions:<a class="anchor" aria-label="anchor" href="#example-dataset-reference-distributions"></a>
-</h3>
-<div class="figure">
-<img src="reference/figures/example_ref_dists_h.png" alt=""><p class="caption">Reference distributions</p>
-</div>
-<p>A. Root dry matter content as measured by the oven method for the four studies included in the example dataset</p>
-<p>B. Total carotenoid content as measured by HPLC</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="performance-tests">Performance tests<a class="anchor" aria-label="anchor" href="#performance-tests"></a>
-</h2>
-<pre class="{r}"><code><span class="co"># Subset two of the studies from the dataset in preparation for model building</span>
-<span class="va">C16Mcal</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study.name</span> <span class="op">==</span> <span class="st">"C16Mcal"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">rename</span><span class="op">(</span>reference <span class="op">=</span> <span class="va">DMC.oven</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">rename</span><span class="op">(</span>unique.id <span class="op">=</span> <span class="va">sample.id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="va">reference</span>, <span class="fu">starts_with</span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">C16Mval</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study.name</span> <span class="op">==</span> <span class="st">"C16Mval"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">rename</span><span class="op">(</span>reference <span class="op">=</span> <span class="va">DMC.oven</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">rename</span><span class="op">(</span>unique.id <span class="op">=</span> <span class="va">sample.id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="va">reference</span>, <span class="fu">starts_with</span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span>
-  
-<span class="co"># Then try out `test_spectra()` to predict reference values from spectra</span>
-<span class="va">test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/test_spectra.html">test_spectra</a></span><span class="op">(</span>train.data <span class="op">=</span> <span class="va">C16Mcal</span>, 
-                             test.data <span class="op">=</span> <span class="va">C16Mval</span>,
-                             num.iterations <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre>
-<div class="section level3">
-<h3 id="waves-prediction-model-performance">
-<code>waves</code> prediction model performance<a class="anchor" aria-label="anchor" href="#waves-prediction-model-performance"></a>
-</h3>
-<div class="figure">
-<img src="reference/figures/testplot_all_R2_hlines.png" alt=""><p class="caption">Pretreatment performance with example data</p>
-</div>
-<p>Distributions of R<sub>p</sub><sup>2</sup>, the squared Pearson’s correlation between predicted and observed for the test set, for partial least squares regression (PLSR) models of two root quality traits trained on samples from the C16Mcal dataset and tested on samples from the C16Mval dataset from <a href="https://doi.org/10.1371/journal.pone.0188918" class="external-link">Ikeogu et <em>al.</em> (2017) <em>PLoS ONE</em></a> with raw data or after pretreatment.</p>
-<p>*SNV: standard normal variate, SNV1D: standard normal variate and first derivative, SNV2D: standard normal variate and second derivative, D1: first derivative, D2: second derivative, SG: Savitzky-Golay with window size = 11, SNVSG: standard normal variate and Savitzky-Golay, SGD1: gap segment derivative with window size = 11, SG.D1W5: Savitzky-Golay with window size = 5 and first derivative, SG.D1W11: Savitzky-Golay with window size = 11 and first derivative, SG.D2W5: Savitzky-Golay with window size = 5 and second derivative, SG.D2W11: Savitzky-Golay with window size = 11 and second derivative.</p>
-</div>
+<p>The package comes with an example dataset (<code>ikeogu.2017</code>) from <a href="https://doi.org/10.1371/journal.pone.0188918" class="external-link">Ikeogu et <em>al.</em> (2017) <em>PLoS ONE</em></a> that can be used to try out package capabilities. This dataset includes vis-NIR spectra from cassava roots as well as two reference phenotypes:</p>
+<ul>
+<li>Root dry matter content as measured by the oven method for the four studies included in the example dataset</li>
+<li>Total carotenoid content as measured by HPLC</li>
+</ul>
 </div>
 </div>
   </div>
@@ -300,7 +214,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/GoreLab/waves/actions" class="external-link"><img src="https://github.com/GoreLab/waves/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/GoreLab/waves/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/GoreLab/waves/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main" alt="R-CMD-check"></a></li>
+<li><a href="https://CRAN.R-project.org/package=waves" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/waves"></a></li>
 </ul>
 </div>
 
@@ -315,7 +230,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

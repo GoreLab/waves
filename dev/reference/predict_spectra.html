@@ -19,16 +19,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.5.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/waves.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -63,13 +60,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">predict_spectra</span><span class="op">(</span>
-  <span class="va">input.data</span>,
-  <span class="va">model.stats.location</span>,
-  <span class="va">model.location</span>,
-  model.method <span class="op">=</span> <span class="st">"pls"</span>,
-  wavelengths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">predict_spectra</span><span class="op">(</span></span>
+<span>  <span class="va">input.data</span>,</span>
+<span>  <span class="va">model.stats.location</span>,</span>
+<span>  <span class="va">model.location</span>,</span>
+<span>  model.method <span class="op">=</span> <span class="st">"pls"</span>,</span>
+<span>  wavelengths <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,14 +76,20 @@
 spectral prediction model. First column contains unique identifiers
 followed by spectral columns. Include no other columns to right of spectra!
 Column names of spectra must start with "X".</p></dd>
+
+
 <dt>model.stats.location</dt>
 <dd><p>String containing file path (including file name)
 to save location of "(model.name)_stats.csv" as output from the
 <code><a href="save_model.html">save_model</a></code> function.</p></dd>
+
+
 <dt>model.location</dt>
 <dd><p>String containing file path (including file name) to
 location where the trained model ("(model.name).Rds") was saved as output
 by the <code><a href="save_model.html">save_model</a></code> function.</p></dd>
+
+
 <dt>model.method</dt>
 <dd><p>Model type to use for training. Valid options include:</p><ul><li><p>"pls": Partial least squares regression (Default)</p></li>
 <li><p>"rf": Random forest</p></li>
@@ -94,14 +97,19 @@ by the <code><a href="save_model.html">save_model</a></code> function.</p></dd>
 kernel</p></li>
 <li><p>"svmRadial": Support vector machine with radial kernel</p></li>
 </ul></dd>
+
+
 <dt>wavelengths</dt>
-<dd><p>`r lifecycle::badge("deprecated")` <code>wavelengths</code> is no
+<dd><p>DEPRECATED <code>wavelengths</code> is no
 longer supported; this information is now inferred from <code>input.data</code>
 column names</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>data.frame</code> object of predictions for each sample (row). First
+    
+
+<p><code>data.frame</code> object of predictions for each sample (row). First
   column is unique identifier supplied by <code>input.data</code> and second is
   predicted values</p>
     </div>
@@ -112,19 +120,19 @@ column names</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">ikeogu.2017</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sample.id</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">predict_spectra</span><span class="op">(</span></span>
-<span class="r-in">    input.data <span class="op">=</span> <span class="va">.</span>,</span>
-<span class="r-in">    model.stats.location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">      <span class="st">"/my_model_stats.csv"</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    model.location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/my_model.Rds"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">ikeogu.2017</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sample.id</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">predict_spectra</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    input.data <span class="op">=</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>    model.stats.location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"/my_model_stats.csv"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    model.location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/my_model.Rds"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -139,7 +147,7 @@ column names</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

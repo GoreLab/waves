@@ -23,16 +23,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.5.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/waves.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -70,16 +67,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_spectra</span><span class="op">(</span>
-  <span class="va">df</span>,
-  num.col.before.spectra <span class="op">=</span> <span class="fl">1</span>,
-  window.size <span class="op">=</span> <span class="fl">10</span>,
-  detect.outliers <span class="op">=</span> <span class="cn">TRUE</span>,
-  color <span class="op">=</span> <span class="cn">NULL</span>,
-  alternate.title <span class="op">=</span> <span class="cn">NULL</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  wavelengths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_spectra</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  num.col.before.spectra <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  window.size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  detect.outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alternate.title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  wavelengths <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -89,37 +86,58 @@
 Spectral columns must be labeled with an "X" and then the wavelength
 (example: "X740" = 740nm). Left-most column must be unique ID. May also
 contain columns of metadata between the unique ID and spectral columns.
-Cannot contain any missing values. Metadata column names may not start with "X".</p></dd>
+Cannot contain any missing values. Metadata column names may not start
+with "X".</p></dd>
+
+
 <dt>num.col.before.spectra</dt>
 <dd><p>Number of columns to the left of the spectral
 matrix (including unique ID). Default is 1.</p></dd>
+
+
 <dt>window.size</dt>
 <dd><p>number defining the size of window to use when calculating
 the covariance of the spectra (required to calculate Mahalanobis distance).
 Default is 10.</p></dd>
+
+
 <dt>detect.outliers</dt>
-<dd><p>Boolean indicating whether spectra should be filtered before plotting.
-If <code>TRUE</code>, outliers are indicated by color in the resulting plot. If
-<code>verbose</code> is also set to <code>TRUE</code>, outlier metadata will be printed to
-the console. Default is <code>TRUE</code>.</p></dd>
+<dd><p>Boolean indicating whether spectra should be filtered
+before plotting. If <code>TRUE</code>, outliers are indicated by color in the
+resulting plot. If <code>verbose</code> is also set to <code>TRUE</code>, outlier
+metadata will be printed to the console. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>color</dt>
 <dd><p>String or vector of strings indicating colors to be passed to
-<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code>. Default is default <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code> colors.</p></dd>
+<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code>. Default is default
+<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code> colors.</p></dd>
+
+
 <dt>alternate.title</dt>
-<dd><p>String to be used as plot title in place of the default title.
-Default is <code>NULL</code>, indicating that default titles will be used.</p></dd>
+<dd><p>String to be used as plot title. If
+<code>detect.outliers</code> is <code>TRUE</code>, a descriptive title will be supplied.
+If <code>detect.outliers</code> is <code>FALSE</code>, default is no title will be used.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>If <code>TRUE</code>, the number of rows removed through filtering
 will be printed to the console. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>wavelengths</dt>
-<dd><p>`r lifecycle::badge("deprecated")` <code>wavelengths</code> is no
-longer supported; this information is now inferred from <code>df</code> column names</p></dd>
+<dd><p>DEPRECATED <code>wavelengths</code> is no
+longer supported; this information is now inferred from
+<code>df</code> column names</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If verbose, prints unique ID and metadata for rows identified as outliers.
- Returns plot of spectral data with non-outliers in blue and outliers in red.
- X-axis is wavelengths and y-axis is spectral values.</p>
+    
+
+<p>If verbose, prints unique ID and metadata for rows identified as
+outliers. Returns plot of spectral data with non-outliers in blue and
+outliers in red. X-axis is wavelengths and y-axis is spectral values.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -128,24 +146,24 @@ longer supported; this information is now inferred from <code>df</code> column n
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ikeogu.2017</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>unique.id <span class="op">=</span> <span class="va">sample.id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="va">TCC</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">plot_spectra</span><span class="op">(</span></span>
-<span class="r-in">    df <span class="op">=</span> <span class="va">.</span>,</span>
-<span class="r-in">    num.col.before.spectra <span class="op">=</span> <span class="fl">5</span>,</span>
-<span class="r-in">    window.size <span class="op">=</span> <span class="fl">15</span>,</span>
-<span class="r-in">    detect.outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">    alternate.title <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">    verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ikeogu.2017</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>unique.id <span class="op">=</span> <span class="va">sample.id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="va">TCC</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_spectra</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    df <span class="op">=</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>    num.col.before.spectra <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>    window.size <span class="op">=</span> <span class="fl">15</span>,</span></span>
+<span class="r-in"><span>    detect.outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    color <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>    alternate.title <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>    verbose <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> No outliers detected.</span>
 <span class="r-plt img"><img src="plot_spectra-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -160,7 +178,7 @@ longer supported; this information is now inferred from <code>df</code> column n
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

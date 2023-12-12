@@ -28,6 +28,33 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/AggregateSpectra.html</loc>
+  </url>
+  <url>
+    <loc>/reference/DoPreprocessing.html</loc>
+  </url>
+  <url>
+    <loc>/reference/FilterSpectra.html</loc>
+  </url>
+  <url>
+    <loc>/reference/FormatCV.html</loc>
+  </url>
+  <url>
+    <loc>/reference/PlotSpectra.html</loc>
+  </url>
+  <url>
+    <loc>/reference/PredictFromSavedModel.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SaveModel.html</loc>
+  </url>
+  <url>
+    <loc>/reference/TestModelPerformance.html</loc>
+  </url>
+  <url>
+    <loc>/reference/TrainSpectralModel.html</loc>
+  </url>
+  <url>
     <loc>/reference/aggregate_spectra.html</loc>
   </url>
   <url>

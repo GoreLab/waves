@@ -125,7 +125,7 @@ repository</a>.</p>
 up-to-date (but not necessarily thoroughly tested) version:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"GoreLab/waves"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"GoreLab/waves"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GoreLab/waves" class="external-link">waves</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -273,6 +273,7 @@ more information on the arguments and output for this function.</p>
 <span><span class="co">#&gt; Training models...</span></span>
 <span><span class="co">#&gt; Working on Raw_data</span></span>
 <span><span class="co">#&gt; Loading required package: lattice</span></span>
+<span><span class="co">#&gt; Warning: package 'pls' was built under R version 4.2.3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'pls'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:caret':</span></span>
@@ -519,12 +520,12 @@ iteration of model training.</li>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results.list</span><span class="op">$</span><span class="va">predictions</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   Iteration ModelType  unique.id  reference        predicted</span></span>
-<span><span class="co">#&gt; 1         1       pls  C16Mcal_3 42.0446205 39.7341295535481</span></span>
-<span><span class="co">#&gt; 2         1       pls C16Mcal_11 35.2299995 37.0584291524636</span></span>
-<span><span class="co">#&gt; 3         1       pls C16Mcal_14 42.2379684 41.2378709425075</span></span>
-<span><span class="co">#&gt; 4         1       pls C16Mcal_16 36.3796349 38.4719648775465</span></span>
-<span><span class="co">#&gt; 5         1       pls C16Mcal_17 36.6281929 38.3893405413671</span></span>
-<span><span class="co">#&gt; 6         1       pls C16Mcal_21 37.6122742 37.5876338455538</span></span></code></pre></div>
+<span><span class="co">#&gt; 1         1       pls  C16Mcal_3 42.0446205 39.7341295535482</span></span>
+<span><span class="co">#&gt; 2         1       pls C16Mcal_11 35.2299995 37.0584291524637</span></span>
+<span><span class="co">#&gt; 3         1       pls C16Mcal_14 42.2379684 41.2378709425078</span></span>
+<span><span class="co">#&gt; 4         1       pls C16Mcal_16 36.3796349 38.4719648775467</span></span>
+<span><span class="co">#&gt; 5         1       pls C16Mcal_17 36.6281929 38.3893405413672</span></span>
+<span><span class="co">#&gt; 6         1       pls C16Mcal_21 37.6122742 37.5876338455539</span></span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>
 <code>importance</code> is a <code>data.frame</code> containing

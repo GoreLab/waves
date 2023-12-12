@@ -28,16 +28,13 @@ name adheres to the tidyverse style guide.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.5.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/waves.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -81,108 +78,108 @@ name adheres to the tidyverse style guide.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">AggregateSpectra</span><span class="op">(</span>
-  <span class="va">df</span>,
-  grouping.colnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"unique.id"</span><span class="op">)</span>,
-  reference.value.colname <span class="op">=</span> <span class="st">"reference"</span>,
-  agg.function <span class="op">=</span> <span class="st">"mean"</span>
-<span class="op">)</span>
-
-<span class="fu">DoPreprocessing</span><span class="op">(</span><span class="va">df</span>, test.data <span class="op">=</span> <span class="cn">NULL</span>, pretreatment <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-
-<span class="fu">FilterSpectra</span><span class="op">(</span>
-  <span class="va">df</span>,
-  filter <span class="op">=</span> <span class="cn">TRUE</span>,
-  return.distances <span class="op">=</span> <span class="cn">FALSE</span>,
-  num.col.before.spectra <span class="op">=</span> <span class="fl">4</span>,
-  window.size <span class="op">=</span> <span class="fl">10</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">FormatCV</span><span class="op">(</span>
-  <span class="va">trial1</span>,
-  <span class="va">trial2</span>,
-  trial3 <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">cv.scheme</span>,
-  cv.method <span class="op">=</span> <span class="st">"stratified"</span>,
-  proportion.train <span class="op">=</span> <span class="fl">0.7</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  remove.genotype <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="fu">PlotSpectra</span><span class="op">(</span>
-  <span class="va">df</span>,
-  num.col.before.spectra <span class="op">=</span> <span class="fl">1</span>,
-  window.size <span class="op">=</span> <span class="fl">10</span>,
-  detect.outliers <span class="op">=</span> <span class="cn">TRUE</span>,
-  color <span class="op">=</span> <span class="cn">NULL</span>,
-  alternate.title <span class="op">=</span> <span class="cn">NULL</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">PredictFromSavedModel</span><span class="op">(</span>
-  <span class="va">input.data</span>,
-  <span class="va">model.stats.location</span>,
-  <span class="va">model.location</span>,
-  model.method <span class="op">=</span> <span class="st">"pls"</span>
-<span class="op">)</span>
-
-<span class="fu">SaveModel</span><span class="op">(</span>
-  <span class="va">df</span>,
-  save.model <span class="op">=</span> <span class="cn">TRUE</span>,
-  pretreatment <span class="op">=</span> <span class="fl">1</span>,
-  model.save.folder <span class="op">=</span> <span class="cn">NULL</span>,
-  model.name <span class="op">=</span> <span class="st">"PredictionModel"</span>,
-  best.model.metric <span class="op">=</span> <span class="st">"RMSE"</span>,
-  k.folds <span class="op">=</span> <span class="fl">5</span>,
-  proportion.train <span class="op">=</span> <span class="fl">0.7</span>,
-  tune.length <span class="op">=</span> <span class="fl">50</span>,
-  model.method <span class="op">=</span> <span class="st">"pls"</span>,
-  num.iterations <span class="op">=</span> <span class="fl">10</span>,
-  stratified.sampling <span class="op">=</span> <span class="cn">TRUE</span>,
-  cv.scheme <span class="op">=</span> <span class="cn">NULL</span>,
-  trial1 <span class="op">=</span> <span class="cn">NULL</span>,
-  trial2 <span class="op">=</span> <span class="cn">NULL</span>,
-  trial3 <span class="op">=</span> <span class="cn">NULL</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">TestModelPerformance</span><span class="op">(</span>
-  <span class="va">train.data</span>,
-  <span class="va">num.iterations</span>,
-  test.data <span class="op">=</span> <span class="cn">NULL</span>,
-  pretreatment <span class="op">=</span> <span class="fl">1</span>,
-  k.folds <span class="op">=</span> <span class="fl">5</span>,
-  proportion.train <span class="op">=</span> <span class="fl">0.7</span>,
-  tune.length <span class="op">=</span> <span class="fl">50</span>,
-  model.method <span class="op">=</span> <span class="st">"pls"</span>,
-  best.model.metric <span class="op">=</span> <span class="st">"RMSE"</span>,
-  stratified.sampling <span class="op">=</span> <span class="cn">TRUE</span>,
-  cv.scheme <span class="op">=</span> <span class="cn">NULL</span>,
-  trial1 <span class="op">=</span> <span class="cn">NULL</span>,
-  trial2 <span class="op">=</span> <span class="cn">NULL</span>,
-  trial3 <span class="op">=</span> <span class="cn">NULL</span>,
-  split.test <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">TrainSpectralModel</span><span class="op">(</span>
-  <span class="va">df</span>,
-  <span class="va">num.iterations</span>,
-  test.data <span class="op">=</span> <span class="cn">NULL</span>,
-  k.folds <span class="op">=</span> <span class="fl">5</span>,
-  proportion.train <span class="op">=</span> <span class="fl">0.7</span>,
-  tune.length <span class="op">=</span> <span class="fl">50</span>,
-  model.method <span class="op">=</span> <span class="st">"pls"</span>,
-  best.model.metric <span class="op">=</span> <span class="st">"RMSE"</span>,
-  stratified.sampling <span class="op">=</span> <span class="cn">TRUE</span>,
-  cv.scheme <span class="op">=</span> <span class="cn">NULL</span>,
-  trial1 <span class="op">=</span> <span class="cn">NULL</span>,
-  trial2 <span class="op">=</span> <span class="cn">NULL</span>,
-  trial3 <span class="op">=</span> <span class="cn">NULL</span>,
-  split.test <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">AggregateSpectra</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  grouping.colnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"unique.id"</span><span class="op">)</span>,</span>
+<span>  reference.value.colname <span class="op">=</span> <span class="st">"reference"</span>,</span>
+<span>  agg.function <span class="op">=</span> <span class="st">"mean"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">DoPreprocessing</span><span class="op">(</span><span class="va">df</span>, test.data <span class="op">=</span> <span class="cn">NULL</span>, pretreatment <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">FilterSpectra</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  filter <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  return.distances <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  num.col.before.spectra <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  window.size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">FormatCV</span><span class="op">(</span></span>
+<span>  <span class="va">trial1</span>,</span>
+<span>  <span class="va">trial2</span>,</span>
+<span>  trial3 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">cv.scheme</span>,</span>
+<span>  stratified.sampling <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  proportion.train <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  remove.genotype <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">PlotSpectra</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  num.col.before.spectra <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  window.size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  detect.outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alternate.title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">PredictFromSavedModel</span><span class="op">(</span></span>
+<span>  <span class="va">input.data</span>,</span>
+<span>  <span class="va">model.stats.location</span>,</span>
+<span>  <span class="va">model.location</span>,</span>
+<span>  model.method <span class="op">=</span> <span class="st">"pls"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">SaveModel</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  save.model <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  pretreatment <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  model.save.folder <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  model.name <span class="op">=</span> <span class="st">"PredictionModel"</span>,</span>
+<span>  best.model.metric <span class="op">=</span> <span class="st">"RMSE"</span>,</span>
+<span>  k.folds <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  proportion.train <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>  tune.length <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  model.method <span class="op">=</span> <span class="st">"pls"</span>,</span>
+<span>  num.iterations <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  stratified.sampling <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cv.scheme <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial3 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">TestModelPerformance</span><span class="op">(</span></span>
+<span>  <span class="va">train.data</span>,</span>
+<span>  <span class="va">num.iterations</span>,</span>
+<span>  test.data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pretreatment <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  k.folds <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  proportion.train <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>  tune.length <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  model.method <span class="op">=</span> <span class="st">"pls"</span>,</span>
+<span>  best.model.metric <span class="op">=</span> <span class="st">"RMSE"</span>,</span>
+<span>  stratified.sampling <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cv.scheme <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial3 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  split.test <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">TrainSpectralModel</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">num.iterations</span>,</span>
+<span>  test.data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  k.folds <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  proportion.train <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>  tune.length <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  model.method <span class="op">=</span> <span class="st">"pls"</span>,</span>
+<span>  best.model.metric <span class="op">=</span> <span class="st">"RMSE"</span>,</span>
+<span>  stratified.sampling <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cv.scheme <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trial3 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  split.test <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
 
@@ -198,7 +195,7 @@ name adheres to the tidyverse style guide.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

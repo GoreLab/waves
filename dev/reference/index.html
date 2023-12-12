@@ -17,16 +17,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.5.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/waves.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -53,48 +50,64 @@
     </div>
 
     <table class="ref-index"><colgroup><col class="alias"><col class="title"></colgroup><tbody><tr><th colspan="2">
-          <h2 id="all-functions">All functions <a href="#all-functions" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p>
+          <h2 id="core-model-development-workflow">Core model development workflow <a href="#core-model-development-workflow" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>These functions prepare spectra for model development and allow for the streamlined testing of model performance.</p>
         </th>
       </tr></tbody><tbody><tr><td>
+          <p><code><a href="plot_spectra.html">plot_spectra()</a></code> </p>
+        </td>
+        <td><p>Plot spectral data, highlighting outliers as identified using
+ Mahalanobis distance</p></td>
+      </tr><tr><td>
+          <p><code><a href="filter_spectra.html">filter_spectra()</a></code> </p>
+        </td>
+        <td><p>Filter spectral data frame based on Mahalanobis distance</p></td>
+      </tr><tr><td>
           <p><code><a href="aggregate_spectra.html">aggregate_spectra()</a></code> </p>
         </td>
         <td><p>Aggregate data based on grouping variables and a user-provided
   function</p></td>
       </tr><tr><td>
-          <p><code><a href="filter_spectra.html">filter_spectra()</a></code> </p>
+          <p><code><a href="test_spectra.html">test_spectra()</a></code> </p>
         </td>
-        <td><p>Filter spectral data frame based on Mahalanobis distance</p></td>
+        <td><p>Test the performance of spectral models</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="internal-use">Internal use <a href="#internal-use" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>While these functions can be used on their own, they were developed to be called within test_spectra().</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="pretreat_spectra.html">pretreat_spectra()</a></code> </p>
+        </td>
+        <td><p>Pretreat spectral data according to user-designated method</p></td>
       </tr><tr><td>
           <p><code><a href="format_cv.html">format_cv()</a></code> </p>
         </td>
         <td><p>Format multiple trials with or without overlapping genotypes into
   training and test sets according to user-provided cross validation scheme</p></td>
       </tr><tr><td>
-          <p><code><a href="ikeogu.2017.html">ikeogu.2017</a></code> </p>
+          <p><code><a href="train_spectra.html">train_spectra()</a></code> </p>
         </td>
-        <td><p>Example vis-NIRS and reference dataset</p></td>
-      </tr><tr><td>
-          <p><code><a href="plot_spectra.html">plot_spectra()</a></code> </p>
-        </td>
-        <td><p>Plot spectral data, highlighting outliers as identified using
- Mahalanobis distance</p></td>
-      </tr><tr><td>
-          <p><code><a href="predict_spectra.html">predict_spectra()</a></code> </p>
-        </td>
-        <td><p>Use provided model object to predict trait values with input dataset</p></td>
-      </tr><tr><td>
-          <p><code><a href="pretreat_spectra.html">pretreat_spectra()</a></code> </p>
-        </td>
-        <td><p>Pretreat spectral data according to user-designated method</p></td>
-      </tr><tr><td>
+        <td><p>Train a model based predict reference values with spectral data</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="model-development-and-testing-for-routine-use">Model development and testing for routine use <a href="#model-development-and-testing-for-routine-use" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
           <p><code><a href="save_model.html">save_model()</a></code> </p>
         </td>
         <td><p>Save spectral prediction model and model performance statistics</p></td>
       </tr><tr><td>
-          <p><code><a href="test_spectra.html">test_spectra()</a></code> </p>
+          <p><code><a href="predict_spectra.html">predict_spectra()</a></code> </p>
         </td>
-        <td><p>Test the performance of spectral models</p></td>
+        <td><p>Use provided model object to predict trait values with input dataset</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="example-dataset">Example Dataset <a href="#example-dataset" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="ikeogu.2017.html">ikeogu.2017</a></code> </p>
+        </td>
+        <td><p>Example vis-NIRS and reference dataset</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -108,7 +121,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
