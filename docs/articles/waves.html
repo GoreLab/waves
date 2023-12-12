@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -87,169 +87,209 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GoreLab/waves" class="external-link">waves</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GoreLab/waves" class="external-link">waves</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Originally designed application in the context of resource-limited plant research and breeding programs, <code>waves</code> provides an open-source solution to spectral data processing and model development by bringing useful packages together into a streamlined pipeline. This package is wrapper for functions related to the analysis of point visible and near-infrared reflectance measurements. It includes visualization, filtering, aggregation, pretreatment, cross-validation set formation, model training, and prediction functions to enable open-source association of spectral and reference data.</p>
+<p>Originally designed application in the context of resource-limited
+plant research and breeding programs, <code>waves</code> provides an
+open-source solution to spectral data processing and model development
+by bringing useful packages together into a streamlined pipeline. This
+package is wrapper for functions related to the analysis of point
+visible and near-infrared reflectance measurements. It includes
+visualization, filtering, aggregation, pretreatment, cross-validation
+set formation, model training, and prediction functions to enable
+open-source association of spectral and reference data.</p>
 </div>
 <div class="section level2">
 <h2 id="use">Use<a class="anchor" aria-label="anchor" href="#use"></a>
 </h2>
-<p>Follow the installation instructions below, and then go wild! Use <code>waves</code> to analyze your own data. Please report any bugs or feature requests by opening issues in the <a href="https://github.com/GoreLab/waves" class="external-link"><code>waves</code> repository</a>.</p>
+<p>Follow the installation instructions below, and then go wild! Use
+<code>waves</code> to analyze your own data. Please report any bugs or
+feature requests by opening issues in the <a href="https://github.com/GoreLab/waves" class="external-link"><code>waves</code>
+repository</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install the latest <code>waves</code> release directly from CRAN:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"waves"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GoreLab/waves" class="external-link">waves</a></span><span class="op">)</span></code></pre></div>
-<p>Alternatively, install the development version to get the most up-to-date (but not necessarily thoroughly tested) version:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"waves"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GoreLab/waves" class="external-link">waves</a></span><span class="op">)</span></span></code></pre></div>
+<p>Alternatively, install the development version to get the most
+up-to-date (but not necessarily thoroughly tested) version:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"GoreLab/waves"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GoreLab/waves" class="external-link">waves</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"GoreLab/waves"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GoreLab/waves" class="external-link">waves</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="format-your-data">1. Format your data<a class="anchor" aria-label="anchor" href="#format-your-data"></a>
 </h2>
-<p>Match spectra with reference values so that you have a <code>data.frame</code> with unique identifiers, reference values, and other metadata as columns to the left of spectral values. Spectral column names should start with “X”. Remove rows with missing values.</p>
+<p>Match spectra with reference values so that you have a
+<code>data.frame</code> with unique identifiers, reference values, and
+other metadata as columns to the left of spectral values. Spectral
+column names should start with “X”. Remove rows with missing values.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ikeogu.2017</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 7</span></span>
-<span class="co">#&gt;   study.name sample.id DMC.oven   TCC  X350  X351  X352</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C16Mcal    C16Mcal_1     39.6  1.00 0.488 0.495 0.506</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C16Mcal    C16Mcal_2     35.5 17.0  0.573 0.568 0.599</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C16Mcal    C16Mcal_3     42.0 21.6  0.599 0.627 0.624</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C16Mcal    C16Mcal_4     39.0  2.43 0.517 0.516 0.514</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C16Mcal    C16Mcal_5     33.4 24.0  0.519 0.548 0.554</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C16Mcal    C16Mcal_6     32.1 19.0  0.576 0.566 0.589</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> C16Mcal    C16Mcal_7     35.8  6.61 0.530 0.536 0.525</span>
-
-<span class="va">ikeogu.2017.prepped</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>unique.id <span class="op">=</span> <span class="va">sample.id</span>,
-                reference <span class="op">=</span> <span class="va">DMC.oven</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="va">TCC</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> 
-
-<span class="va">ikeogu.2017.prepped</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 7</span></span>
-<span class="co">#&gt;   unique.id study.name reference  X350  X351  X352  X353</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C16Mcal_1 C16Mcal         39.6 0.488 0.495 0.506 0.494</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C16Mcal_2 C16Mcal         35.5 0.573 0.568 0.599 0.593</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C16Mcal_3 C16Mcal         42.0 0.599 0.627 0.624 0.606</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C16Mcal_4 C16Mcal         39.0 0.517 0.516 0.514 0.536</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C16Mcal_5 C16Mcal         33.4 0.519 0.548 0.554 0.549</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C16Mcal_6 C16Mcal         32.1 0.576 0.566 0.589 0.591</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> C16Mcal_7 C16Mcal         35.8 0.530 0.536 0.525 0.539</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ikeogu.2017</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 7</span></span></span>
+<span><span class="co">#&gt;   study.name sample.id DMC.oven   TCC  X350  X351  X352</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C16Mcal    C16Mcal_1     39.6  1.00 0.488 0.495 0.506</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C16Mcal    C16Mcal_2     35.5 17.0  0.573 0.568 0.599</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C16Mcal    C16Mcal_3     42.0 21.6  0.599 0.627 0.624</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C16Mcal    C16Mcal_4     39.0  2.43 0.517 0.516 0.514</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C16Mcal    C16Mcal_5     33.4 24.0  0.519 0.548 0.554</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C16Mcal    C16Mcal_6     32.1 19.0  0.576 0.566 0.589</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> C16Mcal    C16Mcal_7     35.8  6.61 0.530 0.536 0.525</span></span>
+<span></span>
+<span><span class="va">ikeogu.2017.prepped</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>unique.id <span class="op">=</span> <span class="va">sample.id</span>,</span>
+<span>                reference <span class="op">=</span> <span class="va">DMC.oven</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="va">TCC</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ikeogu.2017.prepped</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 7</span></span></span>
+<span><span class="co">#&gt;   unique.id study.name reference  X350  X351  X352  X353</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C16Mcal_1 C16Mcal         39.6 0.488 0.495 0.506 0.494</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C16Mcal_2 C16Mcal         35.5 0.573 0.568 0.599 0.593</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C16Mcal_3 C16Mcal         42.0 0.599 0.627 0.624 0.606</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C16Mcal_4 C16Mcal         39.0 0.517 0.516 0.514 0.536</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C16Mcal_5 C16Mcal         33.4 0.519 0.548 0.554 0.549</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C16Mcal_6 C16Mcal         32.1 0.576 0.566 0.589 0.591</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> C16Mcal_7 C16Mcal         35.8 0.530 0.536 0.525 0.539</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualize-spectra-with-plot_spectra">2. Visualize spectra with <code>plot_spectra()</code><a class="anchor" aria-label="anchor" href="#visualize-spectra-with-plot_spectra"></a>
 </h2>
-<p>To display outliers in a different color, set <code>detect.outliers</code> to <code>TRUE</code>.</p>
+<p>To display outliers in a different color, set
+<code>detect.outliers</code> to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/plot_spectra.html">plot_spectra</a></span><span class="op">(</span>
-    df <span class="op">=</span> <span class="va">.</span>,
-    num.col.before.spectra <span class="op">=</span> <span class="fl">5</span>,
-    detect.outliers <span class="op">=</span> <span class="cn">FALSE</span>,
-    alternate.title <span class="op">=</span> <span class="st">"Example spectra"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/plot_spectra.html">plot_spectra</a></span><span class="op">(</span></span>
+<span>    df <span class="op">=</span> <span class="va">.</span>,</span>
+<span>    num.col.before.spectra <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    detect.outliers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    alternate.title <span class="op">=</span> <span class="st">"Example spectra"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="waves_files/figure-html/plot_raw-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="perform-outlier-removal-with-filter_spectra-">3. Perform outlier removal with <code>filter_spectra()</code>.<a class="anchor" aria-label="anchor" href="#perform-outlier-removal-with-filter_spectra-"></a>
 </h2>
-<p><code>waves</code> uses Mahalanobis distance to identify outliers. Mahalanobis distance is a common metric used to identify multivariate outliers. The larger the value of Mahalanobis distance, the more unusual the data point (i.e., the more likely it is to be a multivariate outlier).</p>
-<p>The distance tells us how far an observation is from the center of the cloud, taking into account the shape (covariance) of the cloud as well.</p>
-<p>To detect outliers, the calculated Mahalanobis distance is compared against a <span class="math inline">\(\chi^2\)</span> distribution with degrees of freedom equal to the number of spectral data columns and an alpha level of 0.05.</p>
+<p><code>waves</code> uses Mahalanobis distance to identify outliers.
+Mahalanobis distance is a common metric used to identify multivariate
+outliers. The larger the value of Mahalanobis distance, the more unusual
+the data point (i.e., the more likely it is to be a multivariate
+outlier).</p>
+<p>The distance tells us how far an observation is from the center of
+the cloud, taking into account the shape (covariance) of the cloud as
+well.</p>
+<p>To detect outliers, the calculated Mahalanobis distance is compared
+against a <span class="math inline">\(\chi^2\)</span> distribution with
+degrees of freedom equal to the number of spectral data columns and an
+alpha level of 0.05.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">filtered.df</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_spectra.html">filter_spectra</a></span><span class="op">(</span>
-    df <span class="op">=</span> <span class="va">.</span>,
-    filter <span class="op">=</span> <span class="cn">TRUE</span>,
-    return.distances <span class="op">=</span> <span class="cn">TRUE</span>,
-    num.col.before.spectra <span class="op">=</span> <span class="fl">5</span>,
-    window.size <span class="op">=</span> <span class="fl">15</span>
-    <span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Removed 0 rows.</span>
-
-<span class="va">filtered.df</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">filtered.df</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">filtered.df</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
-<span class="co">#&gt;   unique.id study.name reference      X350      X351    X2498    X2499    X2500</span>
-<span class="co">#&gt; 1 C16Mcal_1    C16Mcal  39.62109 0.4881079 0.4951843 1.867465 1.870405 1.870702</span>
-<span class="co">#&gt; 2 C16Mcal_2    C16Mcal  35.52017 0.5727389 0.5682541 1.901451 1.891114 1.888507</span>
-<span class="co">#&gt; 3 C16Mcal_3    C16Mcal  42.04462 0.5989934 0.6266454 1.828793 1.826562 1.832022</span>
-<span class="co">#&gt; 4 C16Mcal_4    C16Mcal  39.00999 0.5169374 0.5164186 1.836635 1.835856 1.834857</span>
-<span class="co">#&gt; 5 C16Mcal_5    C16Mcal  33.44273 0.5189608 0.5477946 1.897076 1.899430 1.896130</span>
-<span class="co">#&gt;   h.distances</span>
-<span class="co">#&gt; 1    139.8898</span>
-<span class="co">#&gt; 2    149.5721</span>
-<span class="co">#&gt; 3    140.5149</span>
-<span class="co">#&gt; 4    148.3881</span>
-<span class="co">#&gt; 5    152.2514</span></code></pre></div>
-<p>No outliers were identified in the example dataset. Note the if <code>return.distances</code> is set to <code>TRUE</code>, the rightmost column contains Mahalanobis distances (<code>h.distances</code>).</p>
+<code class="sourceCode R"><span><span class="va">filtered.df</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_spectra.html">filter_spectra</a></span><span class="op">(</span></span>
+<span>    df <span class="op">=</span> <span class="va">.</span>,</span>
+<span>    filter <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    return.distances <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    num.col.before.spectra <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    window.size <span class="op">=</span> <span class="fl">15</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Removed 0 rows.</span></span>
+<span></span>
+<span><span class="va">filtered.df</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">filtered.df</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">filtered.df</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt;   unique.id study.name reference      X350      X351    X2498    X2499    X2500</span></span>
+<span><span class="co">#&gt; 1 C16Mcal_1    C16Mcal  39.62109 0.4881079 0.4951843 1.867465 1.870405 1.870702</span></span>
+<span><span class="co">#&gt; 2 C16Mcal_2    C16Mcal  35.52017 0.5727389 0.5682541 1.901451 1.891114 1.888507</span></span>
+<span><span class="co">#&gt; 3 C16Mcal_3    C16Mcal  42.04462 0.5989934 0.6266454 1.828793 1.826562 1.832022</span></span>
+<span><span class="co">#&gt; 4 C16Mcal_4    C16Mcal  39.00999 0.5169374 0.5164186 1.836635 1.835856 1.834857</span></span>
+<span><span class="co">#&gt; 5 C16Mcal_5    C16Mcal  33.44273 0.5189608 0.5477946 1.897076 1.899430 1.896130</span></span>
+<span><span class="co">#&gt;   h.distances</span></span>
+<span><span class="co">#&gt; 1    139.8898</span></span>
+<span><span class="co">#&gt; 2    149.5721</span></span>
+<span><span class="co">#&gt; 3    140.5149</span></span>
+<span><span class="co">#&gt; 4    148.3881</span></span>
+<span><span class="co">#&gt; 5    152.2514</span></span></code></pre></div>
+<p>No outliers were identified in the example dataset. Note the if
+<code>return.distances</code> is set to <code>TRUE</code>, the rightmost
+column contains Mahalanobis distances (<code>h.distances</code>).</p>
 </div>
 <div class="section level2">
 <h2 id="aggregate-scans">4. Aggregate scans<a class="anchor" aria-label="anchor" href="#aggregate-scans"></a>
 </h2>
-<p>If you have more than one scan per unique identifier, aggregate the scans by mean or median with <code><a href="../reference/aggregate_spectra.html">aggregate_spectra()</a></code>.</p>
+<p>If you have more than one scan per unique identifier, aggregate the
+scans by mean or median with <code><a href="../reference/aggregate_spectra.html">aggregate_spectra()</a></code>.</p>
 <p>In this example, we will aggregate by <code>study.name</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">aggregated.test</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/aggregate_spectra.html">aggregate_spectra</a></span><span class="op">(</span>
-    grouping.colnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"study.name"</span><span class="op">)</span>,
-    reference.value.colname <span class="op">=</span> <span class="st">"reference"</span>,
-    agg.function <span class="op">=</span> <span class="st">"mean"</span>
-    <span class="op">)</span>
-<span class="va">aggregated.test</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span>
-<span class="co">#&gt;   study.name reference  X350  X351  X352</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C16Mcal         36.1 0.559 0.562 0.569</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C16Mval         36.4 0.545 0.549 0.552</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">aggregated.test</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/aggregate_spectra.html">aggregate_spectra</a></span><span class="op">(</span></span>
+<span>    grouping.colnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"study.name"</span><span class="op">)</span>,</span>
+<span>    reference.value.colname <span class="op">=</span> <span class="st">"reference"</span>,</span>
+<span>    agg.function <span class="op">=</span> <span class="st">"mean"</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="va">aggregated.test</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span></span>
+<span><span class="co">#&gt;   study.name reference  X350  X351  X352</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C16Mcal         36.1 0.559 0.562 0.569</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C16Mval         36.4 0.545 0.549 0.552</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="evaluate-the-predictive-ability-of-your-spectra">5. Evaluate the predictive ability of your spectra<a class="anchor" aria-label="anchor" href="#evaluate-the-predictive-ability-of-your-spectra"></a>
 </h2>
-<p><code><a href="../reference/test_spectra.html">test_spectra()</a></code> is a wrapper that performs spectral pretreatment (<a href="#5.1.%20Pretreat%20spectra">5.1</a>), cross-validation set formation (<a href="#5.2.%20Specify%20a%20cross-validation%20scheme">5.2</a>), and model training functions over multiple iterations (<a href="#5.3.%20Train%20spectral%20prediction%20models">5.3</a>).</p>
-<p>Note that the following subsections describe functions that are called within <code><a href="../reference/test_spectra.html">test_spectra()</a></code>. They do not need to be used separately for model pretreatment, cross-validation set formation, or model training.</p>
-<p>Some of the arguments for this function are detailed below. A description of output is below under section <a href="#5.4.%20Output">5.4</a>. See <code>?test_spectra()</code> for more information on the arguments and output for this function.</p>
+<p><code><a href="../reference/test_spectra.html">test_spectra()</a></code> is a wrapper that performs spectral
+pretreatment (<a href="#id_5.1.%20Pretreat%20spectra">5.1</a>),
+cross-validation set formation (<a href="#id_5.2.%20Specify%20a%20cross-validation%20scheme">5.2</a>), and
+model training functions over multiple iterations (<a href="#id_5.3.%20Train%20spectral%20prediction%20models">5.3</a>).</p>
+<p>Note that the following subsections describe functions that are
+called within <code><a href="../reference/test_spectra.html">test_spectra()</a></code>. They do not need to be used
+separately for model pretreatment, cross-validation set formation, or
+model training.</p>
+<p>Some of the arguments for this function are detailed below. A
+description of output is below under section <a href="#id_5.4.%20Output">5.4</a>. See <code>?test_spectra()</code> for
+more information on the arguments and output for this function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">results.list</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
- <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="va">reference</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
- <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
- <span class="fu"><a href="../reference/test_spectra.html">test_spectra</a></span><span class="op">(</span>
-   train.data <span class="op">=</span> <span class="va">.</span>,
-   tune.length <span class="op">=</span> <span class="fl">3</span>,
-   num.iterations <span class="op">=</span> <span class="fl">3</span>,
-   pretreatment <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span>
-<span class="co">#&gt; Pretreatment initiated.</span>
-<span class="co">#&gt; Training models...</span>
-<span class="co">#&gt; Working on Raw_data</span>
-<span class="co">#&gt; Loading required package: lattice</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'pls'</span>
-<span class="co">#&gt; The following object is masked from 'package:caret':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     R2</span>
-<span class="co">#&gt; The following object is masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     loadings</span>
-<span class="co">#&gt; Returning model...</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">results.list</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="va">reference</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/test_spectra.html">test_spectra</a></span><span class="op">(</span></span>
+<span>    train.data <span class="op">=</span> <span class="va">.</span>,</span>
+<span>    tune.length <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    num.iterations <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    pretreatment <span class="op">=</span> <span class="fl">1</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="co">#&gt; Pretreatment initiated.</span></span>
+<span><span class="co">#&gt; Training models...</span></span>
+<span><span class="co">#&gt; Working on Raw_data</span></span>
+<span><span class="co">#&gt; Loading required package: lattice</span></span>
+<span><span class="co">#&gt; Warning: package 'pls' was built under R version 4.2.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'pls'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:caret':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     R2</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     loadings</span></span>
+<span><span class="co">#&gt; Returning model...</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="pretreat-spectra">5.1. Pretreat spectra<a class="anchor" aria-label="anchor" href="#pretreat-spectra"></a>
 </h3>
-<p>Specify which spectral pretreatments (1-13) to apply with the parameter <code>pretreatment</code>. <code><a href="../reference/pretreat_spectra.html">pretreat_spectra()</a></code> can also be used on its own to transform a data.frame using any/all of 12 available pretreatments:</p>
+<p>Specify which spectral pretreatments (1-13) to apply with the
+parameter <code>pretreatment</code>. <code><a href="../reference/pretreat_spectra.html">pretreat_spectra()</a></code> can
+also be used on its own to transform a data.frame using any/all of 12
+available pretreatments:</p>
 <ol style="list-style-type: decimal">
 <li>Raw data (no pretreatment is applied)</li>
 <li>Standard normal variate (SNV)</li>
@@ -266,29 +306,34 @@
 <li>SG and second derivative (window size = 11)</li>
 </ol>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ikeogu.2017.prepped</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># subset the first 10 scans for speed</span>
-  <span class="fu"><a href="../reference/pretreat_spectra.html">pretreat_spectra</a></span><span class="op">(</span>pretreatment <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">13</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># exclude pretreatment 1 (raw data)</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"pretreatment"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"wl"</span>,
-         value <span class="op">=</span> <span class="st">"s.value"</span>,
-         <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>wl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html" class="external-link">parse_number</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">wl</span><span class="op">)</span><span class="op">)</span>,
-         pretreatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">pretreatment</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">s.value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wl</span>, y <span class="op">=</span> <span class="va">s.value</span>, group <span class="op">=</span> <span class="va">unique.id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Pretreated spectra"</span>,
-       x <span class="op">=</span> <span class="st">"Wavelength"</span>,
-       y <span class="op">=</span> <span class="st">"Spectral Value"</span><span class="op">)</span> <span class="op">+</span>
-  
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">pretreatment</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></code></pre></div>
-<p><img src="waves_files/figure-html/plot_pretreatments-1.png" width="672" style="display: block; margin: auto;"> Note that the scales in this plot are “free”. Without free scales, anything derivative-based treatment (D1 or D2) looks like it’s a constant zero in comparison to those without derivative-based treatments (SNV, SG).</p>
+<code class="sourceCode R"><span><span class="va">ikeogu.2017.prepped</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># subset the first 10 scans for speed</span></span>
+<span>  <span class="fu"><a href="../reference/pretreat_spectra.html">pretreat_spectra</a></span><span class="op">(</span>pretreatment <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">13</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># exclude pretreatment 1 (raw data)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"pretreatment"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"wl"</span>,</span>
+<span>         value <span class="op">=</span> <span class="st">"s.value"</span>,</span>
+<span>         <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>wl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html" class="external-link">parse_number</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">wl</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         pretreatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">pretreatment</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">s.value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wl</span>, y <span class="op">=</span> <span class="va">s.value</span>, group <span class="op">=</span> <span class="va">unique.id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Pretreated spectra"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Wavelength"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Spectral Value"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">pretreatment</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="waves_files/figure-html/plot_pretreatments-1.png" width="672" style="display: block; margin: auto;">
+Note that the scales in this plot are “free”. Without free scales,
+anything derivative-based treatment (D1 or D2) looks like it’s a
+constant zero in comparison to those without derivative-based treatments
+(SNV, SG).</p>
 </div>
 <div class="section level3">
 <h3 id="specify-a-cross-validation-scheme">5.2. Specify a cross-validation scheme<a class="anchor" aria-label="anchor" href="#specify-a-cross-validation-scheme"></a>
 </h3>
-<p>Choose from random, stratified random, or a plant breeding-specific scheme from <a href="https://doi.org/10.3835/plantgenome2016.12.0130" class="external-link">Jarquín et <em>al.</em>, 2017. <em>The Plant Genome</em></a>. Options include:</p>
+<p>Choose from random, stratified random, or a plant breeding-specific
+scheme from <a href="https://doi.org/10.3835/plantgenome2016.12.0130" class="external-link">Jarquín et
+<em>al.</em>, 2017. <em>The Plant Genome</em></a>. Options include:</p>
 <table class="table">
 <colgroup>
 <col width="12%">
@@ -301,7 +346,8 @@
 <tbody>
 <tr class="odd">
 <td><code>NULL</code></td>
-<td>Random or stratified random sampling (does not take genotype or environment into account)</td>
+<td>Random or stratified random sampling (does not take genotype or
+environment into account)</td>
 </tr>
 <tr class="even">
 <td>“CV1”</td>
@@ -321,16 +367,54 @@
 </tr>
 </tbody>
 </table>
-<p>If <code>cv.scheme</code> is set to <code>NULL</code>, the argument <code>stratified.sampling</code> is used to determine whether stratified random sampling should be performed. If <code>TRUE</code>, the reference values from the input <code>data.frame</code> (<code>train.data</code>) will be used to create a balanced split of data between the training and test sets in each training iteration.</p>
-<p>When using one of the four specialized cross-validation schemes (“CV1”, “CV2”, “CV0”, or “CV00”), additional arguments are required: - <code>trial1</code> contains the trial to be tested in subsequent model training functions. The first column contains unique identifiers, second contains genotypes, third contains reference values, followed by spectral columns. Include no other columns to right of spectra! Column names of spectra must start with “X”, reference column must be named “reference”, and genotype column must be named “genotype”. -<code>trial2</code> contains a trial that has overlapping genotypes with <code>trial1</code> but that were grown in a different site/year (different environment). Formatting must be consistent with <code>trial1</code>. - <code>trial3</code> contains a trial that may or may not contain genotypes that overlap with <code>trial1</code>. Formatting must be consistent with <code>trial1</code>.</p>
-<p>Cross-validation schemes can also be formatted outside of <code><a href="../reference/test_spectra.html">test_spectra()</a></code> using the function <code><a href="../reference/format_cv.html">format_cv()</a></code>.</p>
+<p>If <code>cv.scheme</code> is set to <code>NULL</code>, the argument
+<code>stratified.sampling</code> is used to determine whether stratified
+random sampling should be performed. If <code>TRUE</code>, the reference
+values from the input <code>data.frame</code> (<code>train.data</code>)
+will be used to create a balanced split of data between the training and
+test sets in each training iteration.</p>
+<p>When using one of the four specialized cross-validation schemes
+(“CV1”, “CV2”, “CV0”, or “CV00”), additional arguments are required: -
+<code>trial1</code> contains the trial to be tested in subsequent model
+training functions. The first column contains unique identifiers, second
+contains genotypes, third contains reference values, followed by
+spectral columns. Include no other columns to right of spectra! Column
+names of spectra must start with “X”, reference column must be named
+“reference”, and genotype column must be named “genotype”.
+-<code>trial2</code> contains a trial that has overlapping genotypes
+with <code>trial1</code> but that were grown in a different site/year
+(different environment). Formatting must be consistent with
+<code>trial1</code>. - <code>trial3</code> contains a trial that may or
+may not contain genotypes that overlap with <code>trial1</code>.
+Formatting must be consistent with <code>trial1</code>.</p>
+<p>Cross-validation schemes can also be formatted outside of
+<code><a href="../reference/test_spectra.html">test_spectra()</a></code> using the function
+<code><a href="../reference/format_cv.html">format_cv()</a></code>.</p>
 </div>
 <div class="section level3">
 <h3 id="train-spectral-prediction-models">5.3. Train spectral prediction models<a class="anchor" aria-label="anchor" href="#train-spectral-prediction-models"></a>
 </h3>
-<p>Many of the arguments for <code><a href="../reference/test_spectra.html">test_spectra()</a></code> are related to model training: - <code>model.method</code> is the algorithm type to use for training. See the table below for more information - <code>tune.length</code> is the number of PLS components to test. This argument is ignored if other algorithms are used - <code>best.model.metric</code> indicates the metric used to decide which model is best (“RMSE” or “R-squared”) - <code>k-fold</code> specifies the number of folds used for cross-validation to tune model hyperparameters within the training set - <code>num.iterations</code> sets the number of training iterations - <code>proportion.train</code> is the fraction of samples to be included in the training set (default is 0.7)</p>
-<p>Models can also be trained with the standalone function <code><a href="../reference/train_spectra.html">train_spectra()</a></code>. Model training is implemented with <a href="https://topepo.github.io/caret/" class="external-link"><code>caret</code></a>.</p>
+<p>Many of the arguments for <code><a href="../reference/test_spectra.html">test_spectra()</a></code> are related to
+model training: - <code>model.method</code> is the algorithm type to use
+for training. See the table below for more information -
+<code>tune.length</code> is the number of PLS components to test. This
+argument is ignored if other algorithms are used -
+<code>best.model.metric</code> indicates the metric used to decide which
+model is best (“RMSE” or “R-squared”) - <code>k-fold</code> specifies
+the number of folds used for cross-validation to tune model
+hyperparameters within the training set - <code>num.iterations</code>
+sets the number of training iterations - <code>proportion.train</code>
+is the fraction of samples to be included in the training set (default
+is 0.7)</p>
+<p>Models can also be trained with the standalone function
+<code><a href="../reference/train_spectra.html">train_spectra()</a></code>. Model training is implemented with <a href="https://topepo.github.io/caret/" class="external-link"><code>caret</code></a>.</p>
 <table class="table">
+<colgroup>
+<col width="28%">
+<col width="9%">
+<col width="39%">
+<col width="21%">
+</colgroup>
 <thead><tr class="header">
 <th>Algorithm</th>
 <th><code>model.method</code></th>
@@ -371,79 +455,92 @@
 <p><code><a href="../reference/test_spectra.html">test_spectra()</a></code> outputs a list with four objects:</p>
 <ol style="list-style-type: decimal">
 <li>
-<code>model.list</code> is a list of trained model objects, one for each pretreatment method specified by the <code>pretreatment</code> argument. Each model is trained with all rows of the input <code>data.frame</code> (<code>df</code>)</li>
+<code>model.list</code> is a list of trained model objects, one for
+each pretreatment method specified by the <code>pretreatment</code>
+argument. Each model is trained with all rows of the input
+<code>data.frame</code> (<code>df</code>)</li>
 </ol>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results.list</span><span class="op">$</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; Data:    X dimension: 173 2151 </span>
-<span class="co">#&gt;  Y dimension: 173 1</span>
-<span class="co">#&gt; Fit method: kernelpls</span>
-<span class="co">#&gt; Number of components considered: 3</span>
-<span class="co">#&gt; TRAINING: % variance explained</span>
-<span class="co">#&gt;            1 comps  2 comps  3 comps</span>
-<span class="co">#&gt; X            62.65    68.38    91.17</span>
-<span class="co">#&gt; reference    63.34    75.71    76.87</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results.list</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Data:    X dimension: 173 2151 </span></span>
+<span><span class="co">#&gt;  Y dimension: 173 1</span></span>
+<span><span class="co">#&gt; Fit method: kernelpls</span></span>
+<span><span class="co">#&gt; Number of components considered: 3</span></span>
+<span><span class="co">#&gt; TRAINING: % variance explained</span></span>
+<span><span class="co">#&gt;            1 comps  2 comps  3 comps</span></span>
+<span><span class="co">#&gt; X            62.65    68.38    91.17</span></span>
+<span><span class="co">#&gt; reference    63.34    75.71    76.87</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>
-<code>summary.model.performance</code> is a <code>data.frame</code> containing summary statistics across all model training iterations and pretreatments. See below for a description of the summary statistics provided.</li>
+<code>summary.model.performance</code> is a <code>data.frame</code>
+containing summary statistics across all model training iterations and
+pretreatments. See below for a description of the summary statistics
+provided.</li>
 </ol>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">results.list</span><span class="op">$</span><span class="va">summary.model.performance</span>
-<span class="co">#&gt;   SummaryType ModelType     RMSEp        R2p      RPD      RPIQ        CCC</span>
-<span class="co">#&gt; 1        mean       pls 2.0440540 0.77824381 2.085018 2.6038009 0.85155095</span>
-<span class="co">#&gt; 2          sd       pls 0.2661027 0.02093217 0.183391 0.3062501 0.04696515</span>
-<span class="co">#&gt; 3        mode       pls 1.8971232 0.78270780 2.139263 2.7700624 0.86628031</span>
-<span class="co">#&gt;          Bias       SEP     RMSEcv      R2cv       R2sp best.ncomp best.ntree</span>
-<span class="co">#&gt; 1 -0.05516781 2.0652364 1.95463427 0.7755627 0.77670789          3         NA</span>
-<span class="co">#&gt; 2  0.09468830 0.2688604 0.08412512 0.0157923 0.01211986          0         NA</span>
-<span class="co">#&gt; 3 -0.13588174 1.9167831 1.96423744 0.7807426 0.76866372          3         NA</span>
-<span class="co">#&gt;   best.mtry</span>
-<span class="co">#&gt; 1        NA</span>
-<span class="co">#&gt; 2        NA</span>
-<span class="co">#&gt; 3        NA</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">results.list</span><span class="op">$</span><span class="va">summary.model.performance</span></span>
+<span><span class="co">#&gt;   SummaryType ModelType     RMSEp        R2p      RPD      RPIQ        CCC</span></span>
+<span><span class="co">#&gt; 1        mean       pls 2.0440540 0.77824381 2.085018 2.6038009 0.85155095</span></span>
+<span><span class="co">#&gt; 2          sd       pls 0.2661027 0.02093217 0.183391 0.3062501 0.04696515</span></span>
+<span><span class="co">#&gt; 3        mode       pls 1.8971232 0.78270780 2.139263 2.7700624 0.86628031</span></span>
+<span><span class="co">#&gt;          Bias       SEP     RMSEcv      R2cv       R2sp best.ncomp best.ntree</span></span>
+<span><span class="co">#&gt; 1 -0.05516781 2.0652364 1.95463427 0.7755627 0.77670789          3         NA</span></span>
+<span><span class="co">#&gt; 2  0.09468830 0.2688604 0.08412512 0.0157923 0.01211986          0         NA</span></span>
+<span><span class="co">#&gt; 3 -0.13588174 1.9167831 1.96423744 0.7807426 0.76866372          3         NA</span></span>
+<span><span class="co">#&gt;   best.mtry</span></span>
+<span><span class="co">#&gt; 1        NA</span></span>
+<span><span class="co">#&gt; 2        NA</span></span>
+<span><span class="co">#&gt; 3        NA</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>
-<code>model.performance</code> is a <code>data.frame</code> containing performance statistics for each iteration of model training separately (see below).</li>
+<code>model.performance</code> is a <code>data.frame</code>
+containing performance statistics for each iteration of model training
+separately (see below).</li>
 </ol>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">results.list</span><span class="op">$</span><span class="va">model.performance</span>
-<span class="co">#&gt;   Iteration ModelType    RMSEp       R2p      RPD     RPIQ       CCC</span>
-<span class="co">#&gt; 1         1       pls 1.897123 0.7827078 2.139263 2.770062 0.8662803</span>
-<span class="co">#&gt; 2         2       pls 1.883812 0.7965839 2.235167 2.790961 0.8893859</span>
-<span class="co">#&gt; 3         3       pls 2.351227 0.7554397 1.880623 2.250380 0.7989866</span>
-<span class="co">#&gt;          Bias      SEP   RMSEcv      R2cv      R2sp best.ncomp best.ntree</span>
-<span class="co">#&gt; 1 -0.13588174 1.916783 1.964237 0.7807426 0.7686637          3         NA</span>
-<span class="co">#&gt; 2  0.04906262 1.903334 2.033546 0.7578310 0.7708123          3         NA</span>
-<span class="co">#&gt; 3 -0.07868431 2.375593 1.866120 0.7881145 0.7906476          3         NA</span>
-<span class="co">#&gt;   best.mtry</span>
-<span class="co">#&gt; 1        NA</span>
-<span class="co">#&gt; 2        NA</span>
-<span class="co">#&gt; 3        NA</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">results.list</span><span class="op">$</span><span class="va">model.performance</span></span>
+<span><span class="co">#&gt;   Iteration ModelType    RMSEp       R2p      RPD     RPIQ       CCC</span></span>
+<span><span class="co">#&gt; 1         1       pls 1.897123 0.7827078 2.139263 2.770062 0.8662803</span></span>
+<span><span class="co">#&gt; 2         2       pls 1.883812 0.7965839 2.235167 2.790961 0.8893859</span></span>
+<span><span class="co">#&gt; 3         3       pls 2.351227 0.7554397 1.880623 2.250380 0.7989866</span></span>
+<span><span class="co">#&gt;          Bias      SEP   RMSEcv      R2cv      R2sp best.ncomp best.ntree</span></span>
+<span><span class="co">#&gt; 1 -0.13588174 1.916783 1.964237 0.7807426 0.7686637          3         NA</span></span>
+<span><span class="co">#&gt; 2  0.04906262 1.903334 2.033546 0.7578310 0.7708123          3         NA</span></span>
+<span><span class="co">#&gt; 3 -0.07868431 2.375593 1.866120 0.7881145 0.7906476          3         NA</span></span>
+<span><span class="co">#&gt;   best.mtry</span></span>
+<span><span class="co">#&gt; 1        NA</span></span>
+<span><span class="co">#&gt; 2        NA</span></span>
+<span><span class="co">#&gt; 3        NA</span></span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>
-<code>predictions</code> is a <code>data.frame</code> containing both reference and predicted values for each test set entry in each iteration of model training.</li>
+<code>predictions</code> is a <code>data.frame</code> containing
+both reference and predicted values for each test set entry in each
+iteration of model training.</li>
 </ol>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results.list</span><span class="op">$</span><span class="va">predictions</span><span class="op">)</span>
-<span class="co">#&gt;   Iteration ModelType  unique.id  reference        predicted</span>
-<span class="co">#&gt; 1         1       pls  C16Mcal_3 42.0446205 39.7341295535482</span>
-<span class="co">#&gt; 2         1       pls C16Mcal_11 35.2299995 37.0584291524637</span>
-<span class="co">#&gt; 3         1       pls C16Mcal_14 42.2379684 41.2378709425078</span>
-<span class="co">#&gt; 4         1       pls C16Mcal_16 36.3796349 38.4719648775467</span>
-<span class="co">#&gt; 5         1       pls C16Mcal_17 36.6281929 38.3893405413672</span>
-<span class="co">#&gt; 6         1       pls C16Mcal_21 37.6122742 37.5876338455539</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results.list</span><span class="op">$</span><span class="va">predictions</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Iteration ModelType  unique.id  reference        predicted</span></span>
+<span><span class="co">#&gt; 1         1       pls  C16Mcal_3 42.0446205 39.7341295535482</span></span>
+<span><span class="co">#&gt; 2         1       pls C16Mcal_11 35.2299995 37.0584291524637</span></span>
+<span><span class="co">#&gt; 3         1       pls C16Mcal_14 42.2379684 41.2378709425078</span></span>
+<span><span class="co">#&gt; 4         1       pls C16Mcal_16 36.3796349 38.4719648775467</span></span>
+<span><span class="co">#&gt; 5         1       pls C16Mcal_17 36.6281929 38.3893405413672</span></span>
+<span><span class="co">#&gt; 6         1       pls C16Mcal_21 37.6122742 37.5876338455539</span></span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>
-<code>importance</code> is a <code>data.frame</code> containing variable importance results for each wavelength at each iteration of model training. If <code>model.method</code> is not “pls” or “rf”, this list item is <code>NULL</code>.</li>
+<code>importance</code> is a <code>data.frame</code> containing
+variable importance results for each wavelength at each iteration of
+model training. If <code>model.method</code> is not “pls” or “rf”, this
+list item is <code>NULL</code>.</li>
 </ol>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">results.list</span><span class="op">$</span><span class="va">importance</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span>
-<span class="co">#&gt;   Iteration ModelType   X350   X351   X352   X353   X354</span>
-<span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 pls       0.025<span style="text-decoration: underline;">8</span> 0.024<span style="text-decoration: underline;">5</span> 0.027<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">5</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 pls       0.035<span style="text-decoration: underline;">1</span> 0.034<span style="text-decoration: underline;">4</span> 0.032<span style="text-decoration: underline;">9</span> 0.031<span style="text-decoration: underline;">5</span> 0.032<span style="text-decoration: underline;">8</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 pls       0.024<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">6</span> 0.025<span style="text-decoration: underline;">8</span> 0.025<span style="text-decoration: underline;">3</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">results.list</span><span class="op">$</span><span class="va">importance</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span></span>
+<span><span class="co">#&gt;   Iteration ModelType   X350   X351   X352   X353   X354</span></span>
+<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 pls       0.025<span style="text-decoration: underline;">8</span> 0.024<span style="text-decoration: underline;">5</span> 0.027<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 pls       0.035<span style="text-decoration: underline;">1</span> 0.034<span style="text-decoration: underline;">4</span> 0.032<span style="text-decoration: underline;">9</span> 0.031<span style="text-decoration: underline;">5</span> 0.032<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 pls       0.024<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">6</span> 0.025<span style="text-decoration: underline;">8</span> 0.025<span style="text-decoration: underline;">3</span></span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -462,11 +559,13 @@
 <tr class="even">
 <td>R<sup>2</sup><sub>p</sub>
 </td>
-<td>Squared Pearson’s correlation between predicted and observed test set values</td>
+<td>Squared Pearson’s correlation between predicted and observed test
+set values</td>
 </tr>
 <tr class="odd">
 <td>RPD</td>
-<td>Ratio of standard deviation of observed test set values to RMSE<sub>p</sub>
+<td>Ratio of standard deviation of observed test set values to
+RMSE<sub>p</sub>
 </td>
 </tr>
 <tr class="even">
@@ -493,12 +592,14 @@
 <tr class="odd">
 <td>R<sup>2</sup><sub>cv</sub>
 </td>
-<td>Coefficient of multiple determination of cross-validation for PLS models</td>
+<td>Coefficient of multiple determination of cross-validation for PLS
+models</td>
 </tr>
 <tr class="even">
 <td>R<sup>2</sup><sub>sp</sub>
 </td>
-<td>Squared Spearman’s rank correlation between predicted and observed test set values</td>
+<td>Squared Spearman’s rank correlation between predicted and observed
+test set values</td>
 </tr>
 <tr class="odd">
 <td>best.ncomp</td>
@@ -510,117 +611,139 @@
 </tr>
 <tr class="odd">
 <td>best.mtry</td>
-<td>Best number of variables to include at every decision point in an RF model</td>
+<td>Best number of variables to include at every decision point in an RF
+model</td>
 </tr>
 </tbody>
 </table>
-<p>*Many of the spectral model performance statistics are calculated using the function <code>postResampleSpectro()</code> from the <code>spectacles</code> package.</p>
+<p>*Many of the spectral model performance statistics are calculated
+using the function <code>postResampleSpectro()</code> from the
+<code>spectacles</code> package.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="save-trained-prediction-models-with-save_model">6. Save trained prediction models with <code>save_model()</code><a class="anchor" aria-label="anchor" href="#save-trained-prediction-models-with-save_model"></a>
+<h2 id="save-trained-prediction-models-with-save_model">6. Save trained prediction models with
+<code>save_model()</code><a class="anchor" aria-label="anchor" href="#save-trained-prediction-models-with-save_model"></a>
 </h2>
 <ul>
 <li>Intended for a production environment</li>
-<li>Can evaluate spectral pretreatment methods using the input dataset</li>
-<li>Selects best model using the metric provided with <code>best.model.metric</code> (“RMSE” or “Rsquared”)</li>
+<li>Can evaluate spectral pretreatment methods using the input
+dataset</li>
+<li>Selects best model using the metric provided with
+<code>best.model.metric</code> (“RMSE” or “Rsquared”)</li>
 <li>Returns trained model with option to save as .Rds object</li>
-<li>The <code>$model</code> output from <code><a href="../reference/test_spectra.html">test_spectra()</a></code> can also be saved and used for prediction, but <code><a href="../reference/save_model.html">save_model()</a></code> will take the extra step of saving an .Rds file for you if <code>write.model</code> is set to <code>TRUE</code>.</li>
+<li>The <code>$model</code> output from <code><a href="../reference/test_spectra.html">test_spectra()</a></code> can
+also be saved and used for prediction, but <code><a href="../reference/save_model.html">save_model()</a></code>
+will take the extra step of saving an .Rds file for you if
+<code>write.model</code> is set to <code>TRUE</code>.</li>
 </ul>
-<p>In the example below, we’ll use one subset of the example dataset (“C16Mcal”) to create the model and then we’ll predict the other subset (“C16Mval”) in section <a href="#7.%20Predict%20phenotypic%20values%20with%20new%20spectra">7</a>.</p>
+<p>In the example below, we’ll use one subset of the example dataset
+(“C16Mcal”) to create the model and then we’ll predict the other subset
+(“C16Mval”) in section <a href="#id_7.%20Predict%20phenotypic%20values%20with%20new%20spectra">7</a>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">model.to.save</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study.name</span> <span class="op">==</span> <span class="st">"C16Mcal"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="va">reference</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-   <span class="fu"><a href="../reference/save_model.html">save_model</a></span><span class="op">(</span>
-     df <span class="op">=</span> <span class="va">.</span>,
-     write.model <span class="op">=</span> <span class="cn">FALSE</span>,
-     pretreatment <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">13</span>,
-     tune.length <span class="op">=</span> <span class="fl">5</span>,
-     num.iterations <span class="op">=</span> <span class="fl">3</span>,
-     verbose <span class="op">=</span> <span class="cn">FALSE</span>
-   <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">model.to.save</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study.name</span> <span class="op">==</span> <span class="st">"C16Mcal"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">unique.id</span>, <span class="va">reference</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/save_model.html">save_model</a></span><span class="op">(</span></span>
+<span>    df <span class="op">=</span> <span class="va">.</span>,</span>
+<span>    write.model <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    pretreatment <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">13</span>,</span>
+<span>    tune.length <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    num.iterations <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
 <p>Now let’s take a look at our trained model:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model.to.save</span><span class="op">$</span><span class="va">best.model</span><span class="op">)</span>
-<span class="co">#&gt; Data:    X dimension: 120 2141 </span>
-<span class="co">#&gt;  Y dimension: 120 1</span>
-<span class="co">#&gt; Fit method: kernelpls</span>
-<span class="co">#&gt; Number of components considered: 5</span>
-<span class="co">#&gt; TRAINING: % variance explained</span>
-<span class="co">#&gt;            1 comps  2 comps  3 comps  4 comps  5 comps</span>
-<span class="co">#&gt; X            64.48    87.94    91.43    95.16    97.75</span>
-<span class="co">#&gt; reference    33.93    64.97    87.18    89.26    89.54</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model.to.save</span><span class="op">$</span><span class="va">best.model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Data:    X dimension: 120 2141 </span></span>
+<span><span class="co">#&gt;  Y dimension: 120 1</span></span>
+<span><span class="co">#&gt; Fit method: kernelpls</span></span>
+<span><span class="co">#&gt; Number of components considered: 5</span></span>
+<span><span class="co">#&gt; TRAINING: % variance explained</span></span>
+<span><span class="co">#&gt;            1 comps  2 comps  3 comps  4 comps  5 comps</span></span>
+<span><span class="co">#&gt; X            64.48    87.94    91.43    95.16    97.75</span></span>
+<span><span class="co">#&gt; reference    33.93    64.97    87.18    89.26    89.54</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">model.to.save</span><span class="op">$</span><span class="va">best.model.stats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"statistic"</span>, value <span class="op">=</span> <span class="st">"value"</span>, <span class="va">RMSEp_mean</span><span class="op">:</span><span class="va">best.mtry_mode</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">statistic</span>, into <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"statistic"</span>, <span class="st">"summary_type"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>id_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Pretreatment</span>, <span class="va">summary_type</span><span class="op">)</span>, 
-              names_from <span class="op">=</span> <span class="va">statistic</span>, values_from <span class="op">=</span> <span class="va">value</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 15</span></span>
-<span class="co">#&gt;   Pretreatment summary_type  RMSEp     R2p   RPD  RPIQ     CCC    Bias    SEP</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> SNVSG        mean         1.49   0.886   2.82  3.66  0.930    0.062<span style="text-decoration: underline;">2</span> 1.52  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> SNVSG        sd           0.049<span style="text-decoration: underline;">9</span> 0.002<span style="text-decoration: underline;">19</span> 0.125 0.208 0.005<span style="text-decoration: underline;">87</span>  0.605  0.050<span style="text-decoration: underline;">6</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> SNVSG        mode         1.55   0.885   2.74  3.49  0.926   -<span style="color: #BB0000;">0.624</span>  1.57  </span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 6 more variables: RMSEcv &lt;dbl&gt;, R2cv &lt;dbl&gt;, R2sp &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   best.ncomp &lt;dbl&gt;, best.ntree &lt;dbl&gt;, best.mtry &lt;dbl&gt;</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">model.to.save</span><span class="op">$</span><span class="va">best.model.stats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"statistic"</span>, value <span class="op">=</span> <span class="st">"value"</span>, <span class="va">RMSEp_mean</span><span class="op">:</span><span class="va">best.mtry_mode</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">statistic</span>, into <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"statistic"</span>, <span class="st">"summary_type"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>id_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Pretreatment</span>, <span class="va">summary_type</span><span class="op">)</span>,</span>
+<span>              names_from <span class="op">=</span> <span class="va">statistic</span>, values_from <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 15</span></span></span>
+<span><span class="co">#&gt;   Pretreatment summary_type  RMSEp     R2p   RPD  RPIQ     CCC    Bias    SEP</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> SNVSG        mean         1.49   0.886   2.82  3.66  0.930    0.062<span style="text-decoration: underline;">2</span> 1.52  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> SNVSG        sd           0.049<span style="text-decoration: underline;">9</span> 0.002<span style="text-decoration: underline;">19</span> 0.125 0.208 0.005<span style="text-decoration: underline;">87</span>  0.605  0.050<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> SNVSG        mode         1.55   0.885   2.74  3.49  0.926   -<span style="color: #BB0000;">0.624</span>  1.57  </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: RMSEcv &lt;dbl&gt;, R2cv &lt;dbl&gt;, R2sp &lt;dbl&gt;, best.ncomp &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   best.ntree &lt;dbl&gt;, best.mtry &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="predict-phenotypic-values-with-new-spectra">7. Predict phenotypic values with new spectra<a class="anchor" aria-label="anchor" href="#predict-phenotypic-values-with-new-spectra"></a>
 </h2>
-<p>If generating predictions from a saved model file in .Rds format, use <code><a href="../reference/predict_spectra.html">predict_spectra()</a></code>. If the model object is already in your R environment, the function <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">stats::predict()</a></code> can be used to generate predictions. <code><a href="../reference/predict_spectra.html">predict_spectra()</a></code> pulls the best model hyperparameters from your saved model object, but if using <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">stats::predict()</a></code>, these must be supplied separately.</p>
-<p>Using the model we trained in section <a href="#6.%20Save%20trained%20prediction%20models%20with%20%60save_model()%60">6</a>, we can predict cassava root dry matter content for our held out validation set:</p>
-<p>First, determine which pretreatment generated the best model. In this case, it’s “SNVSG”, which is pretreatment #8. Pretreat the new spectral dataset with these spectra.</p>
+<p>If generating predictions from a saved model file in .Rds format, use
+<code><a href="../reference/predict_spectra.html">predict_spectra()</a></code>. If the model object is already in your R
+environment, the function <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">stats::predict()</a></code> can be used to
+generate predictions. <code><a href="../reference/predict_spectra.html">predict_spectra()</a></code> pulls the best
+model hyperparameters from your saved model object, but if using
+<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">stats::predict()</a></code>, these must be supplied separately.</p>
+<p>Using the model we trained in section <a href="#id_6.%20Save%20trained%20prediction%20models%20with%20%60save_model()%60">6</a>,
+we can predict cassava root dry matter content for our held out
+validation set:</p>
+<p>First, determine which pretreatment generated the best model. In this
+case, it’s “SNVSG”, which is pretreatment #8. Pretreat the new spectral
+dataset with these spectra.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pretreated.val</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study.name</span> <span class="op">==</span> <span class="st">"C16Mval"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/pretreat_spectra.html">pretreat_spectra</a></span><span class="op">(</span>pretreatment <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> 
-
-<span class="va">pretreated.val.mx</span> <span class="op">&lt;-</span> <span class="va">pretreated.val</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">best.ncomp</span> <span class="op">&lt;-</span> <span class="va">model.to.save</span><span class="op">$</span><span class="va">best.model.stats</span><span class="op">$</span><span class="va">best.ncomp_mode</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pretreated.val</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017.prepped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study.name</span> <span class="op">==</span> <span class="st">"C16Mval"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/pretreat_spectra.html">pretreat_spectra</a></span><span class="op">(</span>pretreatment <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pretreated.val.mx</span> <span class="op">&lt;-</span> <span class="va">pretreated.val</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">best.ncomp</span> <span class="op">&lt;-</span> <span class="va">model.to.save</span><span class="op">$</span><span class="va">best.model.stats</span><span class="op">$</span><span class="va">best.ncomp_mode</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="perform-predictions">Perform predictions!<a class="anchor" aria-label="anchor" href="#perform-predictions"></a>
 </h4>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">predicted.values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">model.to.save</span><span class="op">$</span><span class="va">best.model</span>,
-      newdata <span class="op">=</span> <span class="va">pretreated.val.mx</span>, ncomp <span class="op">=</span> <span class="va">best.ncomp</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">predicted.values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">model.to.save</span><span class="op">$</span><span class="va">best.model</span>,</span>
+<span>                                       newdata <span class="op">=</span> <span class="va">pretreated.val.mx</span>,</span>
+<span>                                       ncomp <span class="op">=</span> <span class="va">best.ncomp</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="how-did-we-do">How did we do?<a class="anchor" aria-label="anchor" href="#how-did-we-do"></a>
 </h4>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">spectacles</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spectacles/man/postResampleSpectro.html" class="external-link">postResampleSpectro</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="va">predicted.values</span>, obs <span class="op">=</span> <span class="va">pretreated.val</span><span class="op">$</span><span class="va">reference</span><span class="op">)</span>
-<span class="co">#&gt;      RMSE  Rsquared       RPD      RPIQ       CCC      Bias        SE </span>
-<span class="co">#&gt; 1.5623465 0.8499210 2.4572591 2.7400322 0.8999667 0.3619829 1.5772976</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">spectacles</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spectacles/man/postResampleSpectro.html" class="external-link">postResampleSpectro</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="va">predicted.values</span>,</span>
+<span>                                obs <span class="op">=</span> <span class="va">pretreated.val</span><span class="op">$</span><span class="va">reference</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      RMSE  Rsquared       RPD      RPIQ       CCC      Bias        SE </span></span>
+<span><span class="co">#&gt; 1.5623465 0.8499210 2.4572591 2.7400322 0.8999667 0.3619829 1.5772976</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="plot-predictions">Plot predictions<a class="anchor" aria-label="anchor" href="#plot-predictions"></a>
 </h4>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">overall.range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pretreated.val</span><span class="op">$</span><span class="va">reference</span>, <span class="va">predicted.values</span><span class="op">)</span><span class="op">)</span>,
-                   <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pretreated.val</span><span class="op">$</span><span class="va">reference</span>, <span class="va">predicted.values</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>unique.id <span class="op">=</span> <span class="va">pretreated.val</span><span class="op">$</span><span class="va">unique.id</span>, 
-      observed <span class="op">=</span> <span class="va">pretreated.val</span><span class="op">$</span><span class="va">reference</span>, 
-      predicted <span class="op">=</span> <span class="va">predicted.values</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">observed</span><span class="op">)</span>,
-         predicted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">observed</span>, y <span class="op">=</span> <span class="va">predicted</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>,
-              slope <span class="op">=</span> <span class="fl">1</span>,
-              color <span class="op">=</span> <span class="st">"gray80"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="va">overall.range</span>,
-                  ylim <span class="op">=</span> <span class="va">overall.range</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Example dry matter content predictions"</span>,
-       x <span class="op">=</span> <span class="st">"Observed"</span>,
-       y <span class="op">=</span> <span class="st">"Predicted"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">overall.range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pretreated.val</span><span class="op">$</span><span class="va">reference</span>, <span class="va">predicted.values</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                   <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pretreated.val</span><span class="op">$</span><span class="va">reference</span>, <span class="va">predicted.values</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>unique.id <span class="op">=</span> <span class="va">pretreated.val</span><span class="op">$</span><span class="va">unique.id</span>,</span>
+<span>      observed <span class="op">=</span> <span class="va">pretreated.val</span><span class="op">$</span><span class="va">reference</span>,</span>
+<span>      predicted <span class="op">=</span> <span class="va">predicted.values</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">observed</span><span class="op">)</span>,</span>
+<span>         predicted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">observed</span>, y <span class="op">=</span> <span class="va">predicted</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>              slope <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>              color <span class="op">=</span> <span class="st">"gray80"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="va">overall.range</span>,</span>
+<span>              ylim <span class="op">=</span> <span class="va">overall.range</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Example dry matter content predictions"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Observed"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Predicted"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="waves_files/figure-html/plot_predictions-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -643,7 +766,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waves</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -61,8 +61,8 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">aggregate_spectra</span><span class="op">(</span><span class="va">df</span>, <span class="va">grouping.colnames</span>, <span class="va">reference.value.colname</span>,
-  <span class="va">agg.function</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">aggregate_spectra</span><span class="op">(</span><span class="va">df</span>, <span class="va">grouping.colnames</span>, <span class="va">reference.value.colname</span>,</span>
+<span>  <span class="va">agg.function</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,20 +72,31 @@
 grouping variables (must be consistent within each group), column of
 reference values (optional), and columns of spectra. Spectral column names
 must start with "X".</p></dd>
+
+
 <dt>grouping.colnames</dt>
 <dd><p>Names of columns to be used as grouping variables.
 Minimum 2 variables required. Default is c("trial", "plot").</p></dd>
+
+
 <dt>reference.value.colname</dt>
 <dd><p>Name of reference column to be aggregated
 along with spectra. Default is "reference"</p></dd>
+
+
 <dt>agg.function</dt>
 <dd><p>Name of function (string format) to be used for sample
 aggregation. Must be either "mean" or "median". Default is "mean".</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>data.frame</code> object <code>df</code> aggregated based on grouping
+    
+
+<p><code>data.frame</code> object <code>df</code> aggregated based on grouping
   column by <code>agg.function</code></p>
+
+
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -94,16 +105,16 @@ aggregation. Must be either "mean" or "median". Default is "mean".</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">aggregated.test</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">TCC</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">aggregate_spectra</span><span class="op">(</span></span>
-<span class="r-in">    grouping.colnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"study.name"</span><span class="op">)</span>,</span>
-<span class="r-in">    reference.value.colname <span class="op">=</span> <span class="st">"DMC.oven"</span>,</span>
-<span class="r-in">    agg.function <span class="op">=</span> <span class="st">"mean"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="va">aggregated.test</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">aggregated.test</span> <span class="op">&lt;-</span> <span class="va">ikeogu.2017</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">TCC</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">aggregate_spectra</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    grouping.colnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"study.name"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    reference.value.colname <span class="op">=</span> <span class="st">"DMC.oven"</span>,</span></span>
+<span class="r-in"><span>    agg.function <span class="op">=</span> <span class="st">"mean"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">aggregated.test</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   study.name DMC.oven   X350   X351   X352</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -126,7 +137,7 @@ aggregation. Must be either "mean" or "median". Default is "mean".</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
