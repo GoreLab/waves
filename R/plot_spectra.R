@@ -67,7 +67,7 @@ plot_spectra <- function(df,
                          window.size = 10,
                          detect.outliers = TRUE,
                          color = NULL,
-                         alternate.title = NULL,
+                         alternate.title = "",
                          verbose = TRUE,
                          wavelengths = deprecated()) {
 

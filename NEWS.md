@@ -1,5 +1,9 @@
 # waves (development version)
 
+# waves 0.2.6
+
+* Bug fix: `plot_spectra()` no longer returns an error when `detect.outliers` is set to `FALSE` and no alternative title is provided via the `alternate.title` parameter (#29).
+
 # waves 0.2.5
 
 * Bug fix: `predict_spectra()` no longer returns error when running example code (#25).
