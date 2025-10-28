@@ -3,6 +3,10 @@
 # waves 0.2.6
 
 * Bug fix: `plot_spectra()` no longer returns an error when `detect.outliers` is set to `FALSE` and no alternative title is provided via the `alternate.title` parameter (#29).
+* Fixed: Temporary CRAN archive issue with the dependency `spectacles` resolved (#31). 
+  - The dependency `spectacles` is now restored on CRAN.
+  - `waves` is fully compatible with the restored version.
+* When `return.distances = TRUE`, the h.distance column is now located between metadata and spectra in the returned `data.frame`.
 
 # waves 0.2.5
 

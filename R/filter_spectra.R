@@ -100,7 +100,11 @@ filter_spectra <- function(df,
   if (sum(h.distances <= 0) > 0) {
     rlang::abort("Please increase window size.")
   }
-  df.distances <- cbind(df, h.distances)
+
+  # Place distance column between metadata and spectra
+  df.distances <- cbind(df[, 1:num.col.before.spectra],
+                        h.distances,
+                        spectra)
 
   if (filter) {
     # Filter input data based on square of Mahalanobis distance
