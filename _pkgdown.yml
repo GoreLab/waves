@@ -1,3 +1,19 @@
+
+# URL
+url: https://GoreLab.github.io/waves
+
+# Template configuration
+template:
+  bootstrap: 5
+  params:
+    bootswatch: sandstone
+
+# Navbar
+navbar:
+  components:
+    home: ~
+
+# Reference
 reference:
 - title: "Core model development workflow"
   desc: >
@@ -25,13 +41,11 @@ reference:
   contents:
   - starts_with("ikeogu")
 
-navbar:
-  components:
-    home: ~
-
+# Development mode for rebuilding the site automatically
 development:
   mode: auto
 
+# Authors
 authors:
   Jenna Hershberger:
     href: https://jmh579.github.io

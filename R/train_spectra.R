@@ -252,7 +252,12 @@ train_spectra <- function(df,
       y = partition.input.df$reference,
       p = proportion.train, times = num.iterations
       )
-    }
+  }
+
+  # set up results lists
+  predictions.list <- vector("list", length = num.iterations)
+  results.list  <- vector("list", length = num.iterations)
+  importance.list  <- vector("list", length = num.iterations)
 
   for (i in 1:num.iterations) {
     # set seed, different for each iteration for random samples
@@ -438,22 +443,23 @@ train_spectra <- function(df,
     colnames(predictions.df.i) <- c("Iteration", "ModelType", "unique.id",
                                     "reference", "predicted")
 
-    if (i == 1) {
-      predictions.df <- predictions.df.i
-      results.df <- results.df.i
-      importance.df <- importance.df.i
-    } else {
-      predictions.df <- rbind(predictions.df, predictions.df.i)
-      results.df <- rbind(results.df, results.df.i)
-      importance.df <- rbind(importance.df, importance.df.i)
-    }
+    predictions.list[[i]] <- predictions.df.i
+    results.list[[i]]  <- results.df.i
+    importance.list[[i]]  <- importance.df.i
+
   } # End of loop
+
+  #
+  predictions.df <- dplyr::bind_rows(predictions.list)
+  results.df     <- dplyr::bind_rows(results.list)
+  importance.df  <- dplyr::bind_rows(importance.list)
+
 
   # Create summary data.frame ---------------------------
   summary.df <- rbind(
-    summarize_all(results.df, .funs = mean),
-    summarize_all(results.df, .funs = sd, na.rm = TRUE),
-    summarize_all(results.df, .funs = get_mode)
+    dplyr::summarise(results.df, dplyr::across(dplyr::everything(), mean)),
+    dplyr::summarise(results.df, dplyr::across(dplyr::everything(), sd, na.rm = TRUE)),
+    dplyr::summarise(results.df, dplyr::across(dplyr::everything(), get_mode))
   ) %>%
     mutate(
       ModelType = model.method,
