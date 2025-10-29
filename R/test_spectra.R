@@ -112,73 +112,29 @@ test_spectra <- function(train.data,
                          rf.variable.importance = deprecated()) {
 
   # Deprecate warnings ---------------------------
-  if (lifecycle::is_present(wavelengths)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
-      what = "test_spectra(wavelengths)",
-      details = "Wavelength specification is now inferred from column names."
-    )
-  }
-
-  if (is_present(preprocessing)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
-      what = "test_spectra(preprocessing)",
-      details = "To test all pretreatment methods, use 'pretreatment = 1:13'.
-      To test only raw data, use 'pretreatment = 1'."
-    )
-  }
-
-  if (lifecycle::is_present(rf.variable.importance)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
-      what = "test_spectra(rf.variable importance)",
-      details = "Variable importance is now output by default when
-      `model.method` is set to `pls` or `rf`."
-    )
-  }
-
-  if (lifecycle::is_present(output.summary)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
-      what = "test_spectra(output.summary)",
-      details = "Summary is now default output alongside full results."
-    )
-  }
+  handle_deprecations(
+    function_name = "test_spectra",
+    wavelengths = wavelengths,
+    preprocessing = preprocessing,
+    output.summary = output.summary,
+    rf.variable.importance = rf.variable.importance
+  )
 
   # Error handling ---------------------------
+  validate_inputs(
+    train.data = train.data,
+    test.data = test.data,
+    cv.scheme = cv.scheme,
+    trial1 = trial1,
+    trial2 = trial2,
+    trial3 = trial3,
+    model.method = model.method,
+    tune.length = tune.length
+  )
+
+  # Handle cv.scheme data setup
   if (!is.null(cv.scheme)) {
-    if (is.null(trial1)) {
-      rlang::abort("trial1 must be provided if using cv.scheme")
-    }
-    if (is.null(trial2)) {
-      rlang::abort("trial2 must be provided if using cv.scheme")
-    }
-    if (sum(colnames(trial1) != colnames(trial2)) > 0) {
-      rlang::abort("Column names must match for trial1 and trial2
-                   if using cv.scheme")
-    }
-    if (!is.null(trial3) && sum(colnames(trial1) != colnames(trial3)) > 0) {
-      rlang::abort("Column names must match for trial1, trial2, and trial3
-                   if using cv.scheme and including trial3")
-    }
     train.data <- trial1
-  }
-
-  if (nrow(train.data) != nrow(na.omit(train.data))) {
-    rlang::abort("Training data cannot contain missing values.")
-  }
-
-  if (!is.null(test.data) && (nrow(test.data) != nrow(na.omit(test.data)))) {
-    rlang::abort("Test data cannot contain missing values.
-                 Either omit missing values or exclude training data
-                 (set as NULL).")
-  }
-
-  if (model.method == "rf" && tune.length > 5) {
-    rlang::abort("The waves implementation of the random forest algorithm uses
-                 oob cross-validation for model training
-                 and requires a tune length of 5.")
   }
 
   # End error handling ---------------------------
@@ -223,6 +179,8 @@ test_spectra <- function(train.data,
   }
 
   counter <- 0
+  aggregated.results <- NULL
+  
   for (i in pretreatment) {
     # This implementation allows for any combination of pretreatments
     # ex// pretreatment = c(1,4,8)
@@ -232,91 +190,56 @@ test_spectra <- function(train.data,
       cat(paste("Working on", methods.list[i], "\n", sep = " "))
     }
 
-    # Extract preprocessed data ---------------------------
-    # df.list contains named data.frames transformed by the requested methods.
-    # To access a specific method, use df.list[[methods.list[i]]].
-    # This will call the preprocessed data.frame by
-    # name from the transformed list.
-    # Then extract the test dataset from full processed data frame
-    processed.train.data <- df.list[[methods.list[i]]][1:n.train, ]
-    if (n.test == 0) {
-      processed.test.data <- NULL
-    } else {
-      processed.test.data <- df.list[[methods.list[i]]][(
-        n.train + 1):(n.train + n.test), ]
-    }
-
-    if (!is.null(cv.scheme)) {
-      processed.trial1 <- df.list[[methods.list[i]]][seq_len(nrow(trial1)), ]
-      processed.trial2 <- df.list[[methods.list[i]]][(
-        nrow(trial1) + 1):(nrow(trial1) + nrow(trial2)), ]
-      processed.trial3 <- df.list[[methods.list[i]]][(
-        nrow(trial1) + nrow(trial2) + 1):nrow(train.data), ]
-    }
+    # Extract preprocessed data using helper function --------
+    processed.data <- process_pretreatment_data(
+      df.list = df.list,
+      methods.list = methods.list,
+      i = i,
+      n.train = n.train,
+      n.test = n.test,
+      cv.scheme = cv.scheme,
+      trial1 = trial1,
+      trial2 = trial2,
+      trial3 = trial3
+    )
 
     # Fit models for each pretreatment and output results ----------------------
     training.results.i <- train_spectra(
-      df = processed.train.data,
+      df = processed.data$train.data,
       num.iterations = num.iterations,
-      test.data = processed.test.data,
+      test.data = processed.data$test.data,
       k.folds = k.folds,
       proportion.train = proportion.train,
       tune.length = tune.length,
       model.method = model.method,
       cv.scheme = cv.scheme,
       stratified.sampling = stratified.sampling,
-      trial1 = processed.trial1,
-      trial2 = processed.trial2,
-      trial3 = processed.trial3,
+      trial1 = processed.data$trial1,
+      trial2 = processed.data$trial2,
+      trial3 = processed.data$trial3,
       split.test = split.test,
       verbose = verbose
     )
 
-    if (length(pretreatment) != 1) {
-      # Add Pretreatment column to each data.frame in the training results list
-      for (j in 2:length(training.results.i)) {
-        training.results.i[[j]] <- cbind("Pretreatment" = methods.list[i],
-                                         training.results.i[[j]])
-        rownames(training.results.i[[j]]) <- NULL
-      }
-
-      # 1. Reformat summary statistics data.frame so
-      #    multiple pretreatments can be stacked
-      # 2. Put pretreatment name in first column followed by
-      #    performance statistics
-      # 3. Append SummaryType (mean, sd, mode) to statistic name
-      #    to flatten into a single row
-      summary.i <- training.results.i$summary.model.performance %>%
-        tidyr::pivot_longer(cols = .data$RMSEp:.data$best.mtry) %>%
-        pivot_wider(
-          id_cols = c(.data$Pretreatment),
-          names_from = c(.data$name, .data$SummaryType),
-          names_sep = "_"
-        )
-    } else {
-      summary.i <- training.results.i$summary.model.performance
-    }
-
-    if (counter == 1) { # Counter indicates pretreatment number
-      # Set up results compilations in first iteration
-      if (length(pretreatment) != 1) {
-        model.list <- list(training.results.i$model)
-      } else { # If only one pretreatment, don't make a list.
-        model.list <- training.results.i$model
-      }
-      summary.df <- summary.i
-      results.df <- training.results.i$model.performance
-      predictions.df <- training.results.i$predictions
-      importance.df <- training.results.i$importance
-    } else { # Not the first pretreatment
-      # Add new results to existing objects
-      model.list <- append(model.list, list(training.results.i$model))
-      summary.df <- rbind(summary.df, summary.i)
-      results.df <- rbind(results.df, training.results.i$model.performance)
-      predictions.df <- rbind(predictions.df, training.results.i$predictions)
-      importance.df <- rbind(importance.df, training.results.i$importance)
-    }
-  } # End of pretreatment loop ---------------------------
+    # Aggregate results using helper function
+    aggregated.results <- aggregate_pretreatment_results(
+      training.results.i = training.results.i,
+      methods.list = methods.list,
+      i = i,
+      pretreatment = pretreatment,
+      counter = counter,
+      existing.results = aggregated.results
+    )
+  }
+  
+  # Extract final results from aggregated results
+  model.list <- aggregated.results$model.list
+  summary.df <- aggregated.results$summary.df
+  results.df <- aggregated.results$results.df
+  predictions.df <- aggregated.results$predictions.df
+  importance.df <- aggregated.results$importance.df
+  
+  # End of pretreatment loop ---------------------------
   rownames(summary.df) <- NULL
   rownames(results.df) <- NULL
   if (length(pretreatment) != 1) {

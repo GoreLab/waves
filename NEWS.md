@@ -1,13 +1,24 @@
-# waves (development version)
+# waves
 
 # waves 0.2.6
 
 * Bug fix: `plot_spectra()` no longer returns an error when `detect.outliers` is set to `FALSE` and no alternative title is provided via the `alternate.title` parameter (#29).
+* Bug fix: Fixed compatibility issue with updated `spectacles` package (v0.5.5) that was causing data frame construction errors in model performance calculations.
 * Fixed: Temporary CRAN archive issue with the dependency `spectacles` resolved (#31). 
   - The dependency `spectacles` is now restored on CRAN.
   - `waves` is fully compatible with the restored version.
-* Performance improvement: Optimized cross-validation loops in `train_spectra()` using vectorized indexing and preallocated result structures.
+* Performance improvements: 
+  - Optimized cross-validation loops in `train_spectra()` using vectorized indexing and preallocated result structures.
+  - Optimized matrix operations in `train_spectra()` for faster column selection and reduced memory overhead.
+  - Added shared utility functions to eliminate code duplication between `train_spectra()` and `test_spectra()`.
 * When `return.distances = TRUE`, the h.distance column is now located between metadata and spectra in the returned `data.frame`.
+* Internal code improvements:
+  - Significantly refactored `train_spectra()` and `test_spectra()` to reduce cyclomatic complexity (#26).
+    - `train_spectra()` complexity reduced from 32+ to 25
+    - `test_spectra()` complexity reduced to 11
+  - Extracted shared utility functions: `handle_deprecations()`, `validate_inputs()`, `partition_data()`, `train_individual_model()`, `calculate_performance()`, and `create_cv_control()`.
+  - Improved code maintainability and reduced duplication through function decomposition.
+  - Added robust error handling for spectacles package compatibility.
 
 # waves 0.2.5
 
