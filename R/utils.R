@@ -7,6 +7,7 @@
 #' by this function
 #' @return mode of the numbers in `vector.input`
 #' @keywords internal
+#' @noRd
 get_mode <- function(vector.input) {
   as.matrix(vector.input)
   unique.vector <- unique(vector.input)
@@ -22,6 +23,7 @@ get_mode <- function(vector.input) {
 #' @return NULL (warnings are issued as side effects)
 #' @keywords internal
 #' @importFrom lifecycle is_present deprecate_warn
+#' @noRd
 handle_deprecations <- function(function_name,
                                 wavelengths = NULL,
                                 preprocessing = NULL,
@@ -88,6 +90,7 @@ handle_deprecations <- function(function_name,
 #' @return NULL (errors are thrown as side effects if validation fails)
 #' @keywords internal
 #' @importFrom rlang abort has_name
+#' @noRd
 validate_inputs <- function(train.data,
                             test.data = NULL,
                             cv.scheme = NULL,
@@ -186,6 +189,7 @@ validate_inputs <- function(train.data,
 #' @return List containing train and test data for current iteration
 #' @keywords internal
 #' @importFrom caret createDataPartition
+#' @noRd
 partition_data <- function(df,
                                      test.data = NULL,
                                      iteration,
@@ -271,6 +275,7 @@ partition_data <- function(df,
 #' @return caret trainControl object
 #' @keywords internal
 #' @importFrom caret trainControl
+#' @noRd
 create_cv_control <- function(k.folds = 5, cv.seeds) {
   caret::trainControl(
     method = "repeatedcv",
@@ -290,11 +295,12 @@ create_cv_control <- function(k.folds = 5, cv.seeds) {
 #' @param k.folds Number of cross-validation folds
 #' @param best.model.metric Metric for model selection
 #' @param cv.seeds Seeds for cross-validation
-#' @return List containing predictions and model performance metrics
+#' @return List containing model object, predictions and model performance metrics
 #' @keywords internal
 #' @importFrom caret trainControl train varImp
 #' @importFrom pls R2 RMSEP
 #' @importFrom stats predict
+#' @noRd
 train_individual_model <- function(train.ref.spectra,
                                    test.spectra,
                                    model.method = "pls",
@@ -392,11 +398,14 @@ train_individual_model <- function(train.ref.spectra,
 #' @param R2cv,RMSEcv Cross-validation metrics (if available)
 #' @param best.ncomp,best.ntree,best.mtry Best tuning parameters
 #' @param importance.df Variable importance data frame
+#' @param unique.ids Vector of unique identifiers for observations
 #' @return List containing performance results, predictions, and importance
 #' @keywords internal
 #' @importFrom spectacles postResampleSpectro
 #' @importFrom stats cor
 #' @importFrom tibble rownames_to_column
+#' @importFrom magrittr %>%
+#' @noRd
 calculate_performance <- function(predicted.values,
                                         reference.values,
                                         iteration,
@@ -496,6 +505,7 @@ calculate_performance <- function(predicted.values,
 #' @param trial1,trial2,trial3 Trial data frames (if using cv.scheme)
 #' @return List containing processed training and test data
 #' @keywords internal
+#' @noRd
 process_pretreatment_data <- function(df.list,
                                        methods.list,
                                        i,
@@ -548,6 +558,8 @@ process_pretreatment_data <- function(df.list,
 #' @keywords internal
 #' @importFrom tidyr pivot_longer pivot_wider
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#' @noRd
 aggregate_pretreatment_results <- function(training.results.i,
                                             methods.list,
                                             i,
