@@ -1,5 +1,7 @@
-#' @title Internal utility functions
-#' @name get_mode
+#' Internal: mode of a vector
+#' 
+#' Compute the statistical mode of a vector.
+#' 
 #' @description Get the mode of a set of numbers. Used in getting summary of
 #' results within [train_spectra()]
 #'
@@ -11,16 +13,22 @@
 get_mode <- function(vector.input) {
   as.matrix(vector.input)
   unique.vector <- unique(vector.input)
-  return(unique.vector[which.max(tabulate(match(vector.input,
-                                                unique.vector)))])
+  unique.vector[which.max(tabulate(match(vector.input,
+                                                unique.vector)))]
 }
 
-#' @title Handle deprecation warnings for spectral functions
-#' @name handle_deprecations
-#' @description Internal function to handle deprecation warnings for parameters used across spectral functions
+#' Internal: lifecycle deprecation helpers for spectral functions
+#' 
+#' Emit deprecation warnings for previously used arguments.
+#' 
 #' @param function_name Name of the calling function (e.g., "test_spectra", "train_spectra")
-#' @param wavelengths,preprocessing,output.summary,rf.variable.importance,save.model,return.model Deprecated parameters
-#' @return NULL (warnings are issued as side effects)
+#' @param wavelengths Deprecated; kept for compatibility
+#' @param preprocessing Deprecated; kept for compatibility
+#' @param output.summary Deprecated; kept for compatibility
+#' @param rf.variable.importance Deprecated; kept for compatibility
+#' @param save.model Deprecated; kept for compatibility
+#' @param return.model Deprecated; kept for compatibility
+#' @return `NULL` (warnings are issued as side effects)
 #' @keywords internal
 #' @importFrom lifecycle is_present deprecate_warn
 #' @noRd
@@ -44,8 +52,11 @@ handle_deprecations <- function(function_name,
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = paste0(function_name, "(preprocessing)"),
-      details = "To test all pretreatment methods, use 'pretreatment = 1:13'.
-      To test only raw data, use 'pretreatment = 1'."
+      details = paste(
+        "Argument `preprocessing` is deprecated.",
+        "Use `pretreatment` instead:",
+        "`pretreatment = 1:13` (all), or `pretreatment = 1` (raw only)."
+      )
     )
   }
 
@@ -62,7 +73,7 @@ handle_deprecations <- function(function_name,
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = paste0(function_name, "(output.summary)"),
-      details = "Summary is now default output alongside full results."
+      details = "Summary output is now returned by default."
     )
   }
 
@@ -78,16 +89,24 @@ handle_deprecations <- function(function_name,
     lifecycle::deprecate_warn(
       when = "0.2.0",
       what = paste0(function_name, "(return.model)"),
-      details = "Trained models are now default output alongside full results."
+      details = "Trained models are now returned by default."
     )
   }
 }
 
-#' @title Validate spectral function inputs
-#' @name validate_inputs
-#' @description Internal function to validate common inputs for spectral functions
-#' @param train.data,test.data,cv.scheme,trial1,trial2,trial3,model.method,tune.length,best.model.metric,proportion.train Input parameters to validate
-#' @return NULL (errors are thrown as side effects if validation fails)
+#' Internal: validate common inputs for spectral functions
+#' 
+#' Basic sanity checks used by training and testing workflows.
+#' 
+#' @param train.data Data frame with training observations (must contain `reference` and `unique.id`)
+#' @param test.data Optional data frame with test observations
+#' @param cv.scheme Optional CV scheme: one of `"CV0"`, `"CV00"`, `"CV1"`, `"CV2"`
+#' @param trial1,trial2,trial3 Optional trial data frames used for CV schemes
+#' @param model.method Modeling method (one of `"pls"`, `"rf"`, `"svmLinear"`, `"svmRadial"`)
+#' @param tune.length Integer tuning length
+#' @param best.model.metric Selection metric: `"RMSE"` or `"Rsquared"`
+#' @param proportion.train Proportion assigned to training (0-1)
+#' @return `NULL` (errors are thrown as side effects if validation fails)
 #' @keywords internal
 #' @importFrom rlang abort has_name
 #' @noRd
@@ -104,24 +123,24 @@ validate_inputs <- function(train.data,
   
   # Model method validation
   if (!(best.model.metric %in% c("RMSE", "Rsquared"))) {
-    rlang::abort('best.model.metric must be either "RMSE" or "Rsquared"')
+    rlang::abort('best.model.metric must be either "RMSE" or "Rsquared".')
   }
 
   if (!(model.method %in% c("pls", "rf", "svmLinear", "svmRadial"))) {
-    rlang::abort('model.method must be "pls", "rf", "svmLinear", or "svmRadial"')
+    rlang::abort('model.method must be "pls", "rf", "svmLinear", or "svmRadial".')
   }
 
   # Data column validation
   if (!rlang::has_name(train.data, "reference")) {
-    rlang::abort('The training dataset must include a column named "reference"')
+    rlang::abort('The training dataset must include a column named "reference".')
   }
 
   if (!is.null(test.data) && !(rlang::has_name(test.data, "reference"))) {
-    rlang::abort('The test dataset must include a column named "reference"')
+    rlang::abort('The test dataset must include a column named "reference".')
   }
 
   if (!(rlang::has_name(train.data, "unique.id"))) {
-    rlang::abort('The training dataset must include a column named "unique.id"')
+    rlang::abort('The training dataset must include a column named "unique.id".')
   }
 
   if (!is.null(test.data) && !(rlang::has_name(test.data, "unique.id"))) {
@@ -131,21 +150,21 @@ validate_inputs <- function(train.data,
   # CV scheme validation
   if (!is.null(cv.scheme)) {
     if (!(cv.scheme %in% c("CV1", "CV2", "CV0", "CV00"))) {
-      rlang::abort('cv.scheme must be NULL, "CV0", "CV00", "CV1", or "CV2"')
+      rlang::abort('cv.scheme must be NULL, "CV0", "CV00", "CV1", or "CV2".')
     }
     if (is.null(trial1)) {
-      rlang::abort("trial1 must be provided if using cv.scheme")
+      rlang::abort("trial1 must be provided if using cv.scheme.")
     }
     if (is.null(trial2)) {
-      rlang::abort("trial2 must be provided if using cv.scheme")
+      rlang::abort("trial2 must be provided if using cv.scheme.")
     }
     if (sum(colnames(trial1) != colnames(trial2)) > 0) {
       rlang::abort("Column names must match for trial1 and trial2
-                   if using cv.scheme")
+                   if using cv.scheme.")
     }
     if (!is.null(trial3) && sum(colnames(trial1) != colnames(trial3)) > 0) {
       rlang::abort("Column names must match for trial1, trial2, and trial3
-                   if using cv.scheme and including trial3")
+                   if using cv.scheme and including trial3.")
     }
   }
 
@@ -162,7 +181,7 @@ validate_inputs <- function(train.data,
 
   # Parameter range validation
   if (proportion.train > 1 || proportion.train < 0) {
-    rlang::abort("'proportion.train' must be a number between 0 and 1")
+    rlang::abort("'proportion.train' must be a number between 0 and 1.")
   }
 
   # Model method specific validation
@@ -173,9 +192,10 @@ validate_inputs <- function(train.data,
   }
 }
 
-#' @title Partition data for training and testing
-#' @name partition_data
-#' @description Internal function to handle data partitioning for train_spectra
+#' Internal: partition data for training and testing
+#' 
+#' Handles stratified and random splits as well as CV-scheme formatting.
+#' 
 #' @param df Training data frame
 #' @param test.data Test data frame (optional)
 #' @param iteration Current iteration number
@@ -267,9 +287,10 @@ partition_data <- function(df,
   return(list(train = data.train, test = data.test))
 }
 
-#' @title Create cross-validation training control
-#' @name create_cv_control
-#' @description Internal function to create consistent caret trainControl objects
+#' Internal: create cross-validation training control
+#' 
+#' Creates consistent caret trainControl objects for model training.
+#' 
 #' @param k.folds Number of cross-validation folds
 #' @param cv.seeds Seeds for cross-validation
 #' @return caret trainControl object
@@ -285,9 +306,10 @@ create_cv_control <- function(k.folds = 5, cv.seeds) {
   )
 }
 
-#' @title Train individual spectral model
-#' @name train_individual_model
-#' @description Internal function to train a single model iteration
+#' Internal: train individual spectral model
+#' 
+#' Trains a single model iteration with cross-validation.
+#' 
 #' @param train.ref.spectra Training data with reference and spectral columns
 #' @param test.spectra Test spectral data (matrix)
 #' @param model.method Model algorithm to use
@@ -388,9 +410,10 @@ train_individual_model <- function(train.ref.spectra,
   ))
 }
 
-#' @title Calculate model performance statistics
-#' @name calculate_performance
-#' @description Internal function to calculate performance statistics for model predictions
+#' Internal: calculate model performance statistics
+#' 
+#' Computes performance metrics for model predictions using spectacles package.
+#' 
 #' @param predicted.values Vector of predicted values
 #' @param reference.values Vector of reference (observed) values
 #' @param iteration Current iteration number
@@ -407,43 +430,40 @@ train_individual_model <- function(train.ref.spectra,
 #' @importFrom magrittr %>%
 #' @noRd
 calculate_performance <- function(predicted.values,
-                                        reference.values,
-                                        iteration,
-                                        model.method,
-                                        R2cv = NA,
-                                        RMSEcv = NA,
-                                        best.ncomp = NA,
-                                        best.ntree = NA,
-                                        best.mtry = NA,
-                                        importance.df = NULL,
-                                        unique.ids = NULL) {
+                                  reference.values,
+                                  iteration,
+                                  model.method,
+                                  R2cv = NA,
+                                  RMSEcv = NA,
+                                  best.ncomp = NA,
+                                  best.ntree = NA,
+                                  best.mtry = NA,
+                                  importance.df = NULL,
+                                  unique.ids = NULL) {
   
   # Calculate correlation statistics
   R2sp <- cor(predicted.values, reference.values, method = "spearman")^2
   
-  # Call spectacles with proper error handling for different return formats
+  # Call spectacles and handle SE to SEP column naming
   tryCatch({
     spectacles.result <- spectacles::postResampleSpectro(
       pred = predicted.values,
       obs = reference.values
     )
     spectacles.df <- as.data.frame(t(spectacles.result))
+    
+    # Rename SE to SEP for consistency with package expectations
+    if ("SE" %in% names(spectacles.df)) {
+      names(spectacles.df)[names(spectacles.df) == "SE"] <- "SEP"
+    }
+    
   }, error = function(e) {
-    # If spectacles fails or returns unexpected format, create default values
+    # If spectacles fails, create default values
     spectacles.df <<- data.frame(
       RMSE = NA, Rsquared = NA, RPD = NA, RPIQ = NA, 
       CCC = NA, Bias = NA, SEP = NA
     )
   })
-  
-  # Ensure we have a valid data frame with the expected columns
-  expected.cols <- c("RMSE", "Rsquared", "RPD", "RPIQ", "CCC", "Bias", "SEP")
-  if (!all(expected.cols %in% names(spectacles.df))) {
-    spectacles.df <- data.frame(
-      RMSE = NA, Rsquared = NA, RPD = NA, RPIQ = NA, 
-      CCC = NA, Bias = NA, SEP = NA
-    )
-  }
   
   # Compile results
   results.df <- data.frame(
@@ -493,9 +513,10 @@ calculate_performance <- function(predicted.values,
   ))
 }
 
-#' @title Process pretreatment data for test_spectra
-#' @name process_pretreatment_data
-#' @description Internal function to handle pretreatment data processing and extraction
+#' Internal: process pretreatment data for test_spectra
+#' 
+#' Handles extraction and organization of pretreated data across different datasets.
+#' 
 #' @param df.list List of pretreated data frames
 #' @param methods.list List of method names
 #' @param i Current pretreatment index
@@ -545,9 +566,10 @@ process_pretreatment_data <- function(df.list,
   ))
 }
 
-#' @title Aggregate results for multiple pretreatments
-#' @name aggregate_pretreatment_results
-#' @description Internal function to combine results from multiple pretreatments
+#' Internal: aggregate results for multiple pretreatments
+#' 
+#' Combines and formats results from multiple pretreatment methods.
+#' 
 #' @param training.results.i Current training results
 #' @param methods.list List of method names
 #' @param i Current pretreatment index

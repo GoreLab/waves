@@ -1,6 +1,6 @@
 Package: waves
 Title: Vis-NIR Spectral Analysis Wrapper
-Version: 0.2.5.9000
+Version: 0.2.6
 Authors@R: 
     c(person(given = "Jenna",
              family = "Hershberger",
@@ -28,7 +28,7 @@ Description: Originally designed application in the context of
     (2017) <doi:10.3835/plantgenome2016.12.0130>. Example data is from
     Ikeogu et al. (2017) <doi:10.1371/journal.pone.0188918>.
 License: MIT + file LICENSE
-URL: https://gorelab.github.io/waves/, https://github.com/GoreLab/waves
+URL: https://GoreLab.github.io/waves/, https://github.com/GoreLab/waves
 BugReports: https://github.com/GoreLab/waves/issues
 Depends: 
     R (>= 3.5)

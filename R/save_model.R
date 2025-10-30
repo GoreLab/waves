@@ -26,7 +26,7 @@
 #'
 #' @importFrom utils write.csv
 #' @importFrom rlang abort
-#' @importFrom lifecycle deprecated
+#' @importFrom lifecycle deprecated is_present deprecate_warn
 #' @importFrom tibble add_column
 #' @importFrom magrittr %>%
 #'
@@ -168,10 +168,12 @@ save_model <- function(df,
   if (length(pretreatment) != 1) {
     # Use results data frame to determine best pretreatment technique
     results.df <- training.results$summary.model.performance
+    
     best.type.num <- ifelse(best.model.metric == "RMSE",
       which.min(results.df$RMSEp_mean),
       which.max(results.df$R2p_mean)
     )
+    
     # Set chosen model as best.model for export
     best.model <- training.results$model[[best.type.num]]
     best.model.stats <- results.df[best.type.num, ]
@@ -213,5 +215,6 @@ save_model <- function(df,
     best.model = best.model,
     best.model.stats = best.model.stats
   )
+  
   return(output.list)
 }

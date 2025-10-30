@@ -276,9 +276,9 @@ model.to.save <- ikeogu.2017.prepped %>%
   save_model(
     df = .,
     write.model = FALSE,
-    pretreatment = 1:13,
-    tune.length = 5,
-    num.iterations = 3,
+    pretreatment = c(1, 2, 8),  # Raw, SNV, and SNVSG (typically best performers)
+    tune.length = 3,
+    num.iterations = 2,
     verbose = FALSE
     )
 ```
@@ -302,11 +302,18 @@ If generating predictions from a saved model file in .Rds format, use `predict_s
 
 Using the model we trained in section [6](#6. Save trained prediction models with `save_model()`), we can predict cassava root dry matter content for our held out validation set:
 
-First, determine which pretreatment generated the best model. In this case, it's "SNVSG", which is pretreatment #8. Pretreat the new spectral dataset with these spectra.
+First, determine which pretreatment generated the best model and pretreat the new spectral dataset accordingly.
 ```{r prep_for_predictions}
+# Get the best pretreatment number from model stats
+best.pretreatment.name <- model.to.save$best.model.stats$Pretreatment
+best.pretreatment.num <- match(best.pretreatment.name, 
+                               c("Raw_data", "SNV", "SNV1D", "SNV2D", "D1", "D2", "SG",
+                                 "SNVSG", "SGD1", "SG.D1W5", "SG.D1W11", "SG.D2W5", "SG.D2W11"))
+
+# Use the example validation set (C16Mval)
 pretreated.val <- ikeogu.2017.prepped %>%
-  filter(study.name == "C16Mval") %>%
-  pretreat_spectra(pretreatment = 8)
+  dplyr::filter(study.name == "C16Mval") %>%
+  pretreat_spectra(pretreatment = best.pretreatment.num)
 
 pretreated.val.mx <- pretreated.val %>%
   dplyr::select(starts_with("X")) %>%
