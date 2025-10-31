@@ -33,7 +33,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.6" id="waves-026">waves 0.2.6<a class="anchor" aria-label="anchor" href="#waves-026"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.6" id="waves-026">waves 0.2.6<a class="anchor" aria-label="anchor" href="#waves-026"></a></h2><p class="text-muted">CRAN release: 2025-10-30</p>
 <ul><li>Bug fix: <code><a href="../reference/plot_spectra.html">plot_spectra()</a></code> no longer returns an error when <code>detect.outliers</code> is set to <code>FALSE</code> and no alternative title is provided via the <code>alternate.title</code> parameter (<a href="https://github.com/GoreLab/waves/issues/29" class="external-link">#29</a>).</li>
 <li>Bug fix: Fixed compatibility issue with updated <code>spectacles</code> package (v0.5.5) that was causing data frame construction errors in model performance calculations.</li>
 <li>Fixed: Temporary CRAN archive issue with the dependency <code>spectacles</code> resolved (<a href="https://github.com/GoreLab/waves/issues/31" class="external-link">#31</a>).
@@ -46,7 +46,7 @@
 <li>Optimized matrix operations in <code><a href="../reference/train_spectra.html">train_spectra()</a></code> for faster column selection and reduced memory overhead.</li>
 <li>Added shared utility functions to eliminate code duplication between <code><a href="../reference/train_spectra.html">train_spectra()</a></code> and <code><a href="../reference/test_spectra.html">test_spectra()</a></code>.</li>
 </ul></li>
-<li>When <code>return.distances = TRUE</code>, the h.distance column is now located between metadata and spectra in the returned <code>data.frame</code>.</li>
+<li>When <code>return.distances = TRUE</code>, the h.distance column is now located between metadata and spectra in the returned <code>data.frame</code> (<a href="https://github.com/GoreLab/waves/issues/28" class="external-link">#28</a>).</li>
 <li>Internal code improvements:
 <ul><li>Significantly refactored <code><a href="../reference/train_spectra.html">train_spectra()</a></code> and <code><a href="../reference/test_spectra.html">test_spectra()</a></code> to reduce cyclomatic complexity (<a href="https://github.com/GoreLab/waves/issues/26" class="external-link">#26</a>).
 <ul><li>
