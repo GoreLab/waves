@@ -11,7 +11,7 @@
   - Optimized cross-validation loops in `train_spectra()` using vectorized indexing and preallocated result structures.
   - Optimized matrix operations in `train_spectra()` for faster column selection and reduced memory overhead.
   - Added shared utility functions to eliminate code duplication between `train_spectra()` and `test_spectra()`.
-* When `return.distances = TRUE`, the h.distance column is now located between metadata and spectra in the returned `data.frame`.
+* When `return.distances = TRUE`, the h.distance column is now located between metadata and spectra in the returned `data.frame` (#28).
 * Internal code improvements:
   - Significantly refactored `train_spectra()` and `test_spectra()` to reduce cyclomatic complexity (#26).
     - `train_spectra()` complexity reduced from 32+ to 25

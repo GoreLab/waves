@@ -4,6 +4,10 @@
   - ubuntu-24.04 (release, devel)
   - windows-latest (release)
   - macOS-latest (release)
+* R-hub
+  - linux (R-devel)
+  - macos (R-devel)
+  - windows (R-devel)
 
 ## R CMD check results
 0 errors | 0 warnings | 1 note
@@ -11,7 +15,7 @@
 * checking for future file timestamps ... NOTE
   unable to verify current time
 
-This note is unrelated to the package itself and occurs when system time verification fails during the check process.
+This note is unrelated to the package itself and occurs when system time verification fails during the check process on my local installation.
 
 ## Comments
 This is a maintenance release that:

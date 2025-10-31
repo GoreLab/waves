@@ -157,7 +157,7 @@ SaveModel <- function(
     verbose = TRUE) {
   lifecycle::deprecate_warn("0.2.0", "SaveModel()", "save_model()")
   save_model(df,
-    save.model = TRUE,
+    write.model = TRUE,
     pretreatment = 1,
     model.save.folder = NULL,
     model.name = "PredictionModel",
