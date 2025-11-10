@@ -69,7 +69,7 @@ plot_spectra <- function(df,
                          color = NULL,
                          alternate.title = "",
                          verbose = TRUE,
-                         wavelengths = deprecated()) {
+                         wavelengths = lifecycle::deprecated()) {
 
   # Strip off non-spectral columns
   spectra <- df %>%

@@ -74,10 +74,10 @@ save_model <- function(df,
                        trial3 = NULL,
                        seed = 1,
                        verbose = TRUE,
-                       save.model = deprecated(),
-                       wavelengths = deprecated(),
-                       autoselect.preprocessing = deprecated(),
-                       preprocessing.method = deprecated()) {
+                       save.model = lifecycle::deprecated(),
+                       wavelengths = lifecycle::deprecated(),
+                       autoselect.preprocessing = lifecycle::deprecated(),
+                       preprocessing.method = lifecycle::deprecated()) {
 
   # Deprecate warnings
   if (lifecycle::is_present(save.model)) {

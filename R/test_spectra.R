@@ -106,10 +106,10 @@ test_spectra <- function(train.data,
                          split.test = FALSE,
                          seed = 1,
                          verbose = TRUE,
-                         wavelengths = deprecated(),
-                         preprocessing = deprecated(),
-                         output.summary = deprecated(),
-                         rf.variable.importance = deprecated()) {
+                         wavelengths = lifecycle::deprecated(),
+                         preprocessing = lifecycle::deprecated(),
+                         output.summary = lifecycle::deprecated(),
+                         rf.variable.importance = lifecycle::deprecated()) {
 
   # Deprecate warnings ---------------------------
   handle_deprecations(

@@ -13,7 +13,7 @@ plot_spectra(
   color = NULL,
   alternate.title = "",
   verbose = TRUE,
-  wavelengths = deprecated()
+  wavelengths = lifecycle::deprecated()
 )
 }
 \arguments{

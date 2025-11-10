@@ -1,5 +1,9 @@
 # waves
 
+# waves 0.2.6.9000 (development version)
+
+* Bug fix: Fixed namespace resolution error with `lifecycle::deprecated()` function calls that was causing "could not find function deprecated" errors for users. All function parameters now properly use `lifecycle::deprecated()` instead of `deprecated()`.
+
 # waves 0.2.6
 
 * Bug fix: `plot_spectra()` no longer returns an error when `detect.outliers` is set to `FALSE` and no alternative title is provided via the `alternate.title` parameter (#29).

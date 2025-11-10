@@ -21,10 +21,10 @@ train_spectra(
   split.test = FALSE,
   seed = 1,
   verbose = TRUE,
-  save.model = deprecated(),
-  rf.variable.importance = deprecated(),
-  output.summary = deprecated(),
-  return.model = deprecated()
+  save.model = lifecycle::deprecated(),
+  rf.variable.importance = lifecycle::deprecated(),
+  output.summary = lifecycle::deprecated(),
+  return.model = lifecycle::deprecated()
 )
 }
 \arguments{

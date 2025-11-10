@@ -8,8 +8,8 @@ pretreat_spectra(
   df,
   test.data = NULL,
   pretreatment = 1,
-  preprocessing.method = deprecated(),
-  wavelengths = deprecated()
+  preprocessing.method = lifecycle::deprecated(),
+  wavelengths = lifecycle::deprecated()
 )
 }
 \arguments{

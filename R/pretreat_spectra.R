@@ -52,8 +52,8 @@
 pretreat_spectra <- function(df,
                              test.data = NULL,
                              pretreatment = 1,
-                             preprocessing.method = deprecated(),
-                             wavelengths = deprecated()) {
+                             preprocessing.method = lifecycle::deprecated(),
+                             wavelengths = lifecycle::deprecated()) {
   # Format input data frames for processing. Combine training.data and test.data
   # so that the same transformations are applied to all samples
   if (!is.null(test.data)) {

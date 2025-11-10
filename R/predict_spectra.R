@@ -46,7 +46,7 @@ predict_spectra <- function(input.data,
                             model.stats.location,
                             model.location,
                             model.method = "pls",
-                            wavelengths = deprecated()) {
+                            wavelengths = lifecycle::deprecated()) {
   if (lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
