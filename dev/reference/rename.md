@@ -1,0 +1,121 @@
+# Functions renamed in waves 0.2.0
+
+\`r lifecycle::badge('deprecated')\`
+
+waves 0.2.0 renamed a number of functions to ensure that every function
+name adheres to the tidyverse style guide.
+
+\* \`AggregateSpectra()\` -\> \`aggregate_spectra()\` \*
+\`DoPreprocessing()\` -\> \`pretreat_spectra()\` \* \`FilterSpectra()\`
+-\> \`filter_spectra()\` \* \`FormatCV()\` -\> \`format_cv()\` \*
+\`PlotSpectra()\` -\> \`plot_spectra()\` \* \`PredictFromSavedModel()\`
+-\> \`predict_spectra()\` \* \`SaveModel()\` -\> \`save_model()\` \*
+\`TestModelPerformance()\` -\> \`test_spectra()\` \*
+\`TrainSpectralModel()\` -\> \`train_spectra()\`
+
+## Usage
+
+``` r
+AggregateSpectra(
+  df,
+  grouping.colnames = c("unique.id"),
+  reference.value.colname = "reference",
+  agg.function = "mean"
+)
+
+DoPreprocessing(df, test.data = NULL, pretreatment = 1)
+
+FilterSpectra(
+  df,
+  filter = TRUE,
+  return.distances = FALSE,
+  num.col.before.spectra = 4,
+  window.size = 10,
+  verbose = TRUE
+)
+
+FormatCV(
+  trial1,
+  trial2,
+  trial3 = NULL,
+  cv.scheme,
+  stratified.sampling = TRUE,
+  proportion.train = 0.7,
+  seed = NULL,
+  remove.genotype = FALSE
+)
+
+PlotSpectra(
+  df,
+  num.col.before.spectra = 1,
+  window.size = 10,
+  detect.outliers = TRUE,
+  color = NULL,
+  alternate.title = NULL,
+  verbose = TRUE
+)
+
+PredictFromSavedModel(
+  input.data,
+  model.stats.location,
+  model.location,
+  model.method = "pls"
+)
+
+SaveModel(
+  df,
+  save.model = TRUE,
+  pretreatment = 1,
+  model.save.folder = NULL,
+  model.name = "PredictionModel",
+  best.model.metric = "RMSE",
+  k.folds = 5,
+  proportion.train = 0.7,
+  tune.length = 50,
+  model.method = "pls",
+  num.iterations = 10,
+  stratified.sampling = TRUE,
+  cv.scheme = NULL,
+  trial1 = NULL,
+  trial2 = NULL,
+  trial3 = NULL,
+  verbose = TRUE
+)
+
+TestModelPerformance(
+  train.data,
+  num.iterations,
+  test.data = NULL,
+  pretreatment = 1,
+  k.folds = 5,
+  proportion.train = 0.7,
+  tune.length = 50,
+  model.method = "pls",
+  best.model.metric = "RMSE",
+  stratified.sampling = TRUE,
+  cv.scheme = NULL,
+  trial1 = NULL,
+  trial2 = NULL,
+  trial3 = NULL,
+  split.test = FALSE,
+  verbose = TRUE
+)
+
+TrainSpectralModel(
+  df,
+  num.iterations,
+  test.data = NULL,
+  k.folds = 5,
+  proportion.train = 0.7,
+  tune.length = 50,
+  model.method = "pls",
+  best.model.metric = "RMSE",
+  stratified.sampling = TRUE,
+  cv.scheme = NULL,
+  trial1 = NULL,
+  trial2 = NULL,
+  trial3 = NULL,
+  split.test = FALSE,
+  verbose = TRUE
+)
+```
