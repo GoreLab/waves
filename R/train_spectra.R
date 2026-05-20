@@ -204,9 +204,6 @@ train_spectra <- function(df,
     test.spectra.cols <- which(startsWith(names(test.data), "X"))
   }
   
-  # Pre-calculate CV seeds
-  cv.seeds <- if (num.iterations > 9) c(1:num.iterations) else c(1:10)
-
   # Set up results storage
   predictions.list <- vector("list", length = num.iterations)
   results.list <- vector("list", length = num.iterations)
@@ -253,8 +250,7 @@ train_spectra <- function(df,
       model.method = model.method,
       tune.length = tune.length,
       k.folds = k.folds,
-      best.model.metric = best.model.metric,
-      cv.seeds = cv.seeds
+      best.model.metric = best.model.metric
     )
 
     # Calculate performance statistics
@@ -324,7 +320,7 @@ train_spectra <- function(df,
   if (verbose) cat("Returning model...\n")
   
   # Set up cross-validation for final model (needed for SVM models)
-  cv.kfold <- create_cv_control(k.folds = k.folds, cv.seeds = cv.seeds)
+  cv.kfold <- create_cv_control(k.folds = k.folds)
   
   if (model.method == "pls") {
     # Format df for plsr() function using optimized indexing
