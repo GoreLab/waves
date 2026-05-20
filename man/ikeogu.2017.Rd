@@ -38,7 +38,8 @@ ikeogu.2017[1:10, 1:10]
 ikeogu.2017 \%>\%
   dplyr::select(-starts_with("X")) \%>\%
   dplyr::group_by(study.name) \%>\%
-  tidyr::gather(trait, value, c(DMC.oven:TCC), na.rm = TRUE) \%>\%
+  tidyr::pivot_longer(cols = c(DMC.oven:TCC), names_to = "trait", values_to = "value") \%>\%
+  tidyr::drop_na(value) \%>\%
   ggplot2::ggplot(aes(x = study.name, y = value, fill = study.name)) +
   facet_wrap(~trait, scales = "free_y", nrow = 2) +
   geom_boxplot()

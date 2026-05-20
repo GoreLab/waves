@@ -148,7 +148,7 @@ Included summary statistics:
     }
   \item \strong{RMSECV}, the root mean squared error of cross-validation
   \item \strong{R2cv}, the coefficient of multiple determination of
-  cross-validation for PLSR models
+  cross-validation (k-fold CV for pls/svm; OOB for rf)
   \item \strong{RMSEP}, the root mean squared error of prediction
   \item \strong{R2p}, the squared Pearson’s correlation between predicted and
   observed test set values
