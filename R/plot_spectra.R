@@ -136,8 +136,8 @@ plot_spectra <- function(df,
       tibble::rownames_to_column(var = "rownames") %>%
       dplyr::select(.data$rownames, .data$h.distances, .data$Outlier,
                     tidyselect::starts_with("X")) %>%
-      tidyr::gather(key = "wl", value = "s.value",
-                    tidyselect::starts_with("X")) %>%
+      tidyr::pivot_longer(cols = tidyselect::starts_with("X"),
+                          names_to = "wl", values_to = "s.value") %>%
       dplyr::mutate(wl = as.numeric(readr::parse_number(.data$wl)))
 
     # Create plot ---------------------------
@@ -197,8 +197,8 @@ plot_spectra <- function(df,
     prepped.df <- df %>%
       tibble::rownames_to_column(var = "rownames") %>%
       dplyr::select(.data$rownames, tidyselect::starts_with("X")) %>%
-      tidyr::gather(key = "wl", value = "s.value",
-                    tidyselect::starts_with("X")) %>%
+      tidyr::pivot_longer(cols = tidyselect::starts_with("X"),
+                          names_to = "wl", values_to = "s.value") %>%
       dplyr::mutate(wl = as.numeric(stringr::str_extract(.data$wl,
                                                          "\\-*\\d+\\.*\\d*")))
 

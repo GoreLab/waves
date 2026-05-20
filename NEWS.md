@@ -1,8 +1,11 @@
 # waves
 
-# waves 0.2.6.9000 (development version)
+# waves 0.2.7
 
 * Bug fix: Fixed namespace resolution error with `lifecycle::deprecated()` function calls that was causing "could not find function deprecated" errors for users. All function parameters now properly use `lifecycle::deprecated()` instead of `deprecated()`.
+* Bug fix: `train_spectra()` now correctly populates `RMSEcv` and `R2cv` for `rf`, `svmLinear`, and `svmRadial` model methods. Previously these were always `NA` for non-PLS models.
+* Bug fix: Replaced deprecated tidyr and dplyr functions across `plot_spectra()`, `aggregate_spectra()`, `train_spectra()`, and the `ikeogu.2017` example to resolve deprecation warnings.
+* Internal: Fixed `trainControl()` configuration in `train_spectra()` — changed `method` from `"repeatedcv"` (with no repeats set) to `"cv"` and removed a malformed `seeds` argument that was being silently ignored. Reproducibility is maintained via the existing `set.seed()` call.
 
 # waves 0.2.6
 

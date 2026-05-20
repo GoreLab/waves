@@ -292,17 +292,15 @@ partition_data <- function(df,
 #' Creates consistent caret trainControl objects for model training.
 #' 
 #' @param k.folds Number of cross-validation folds
-#' @param cv.seeds Seeds for cross-validation
 #' @return caret trainControl object
 #' @keywords internal
 #' @importFrom caret trainControl
 #' @noRd
-create_cv_control <- function(k.folds = 5, cv.seeds) {
+create_cv_control <- function(k.folds = 5) {
   caret::trainControl(
-    method = "repeatedcv",
+    method = "cv",
     number = k.folds,
-    savePredictions = TRUE,
-    seeds = cv.seeds
+    savePredictions = TRUE
   )
 }
 
@@ -316,7 +314,6 @@ create_cv_control <- function(k.folds = 5, cv.seeds) {
 #' @param tune.length Tuning parameter
 #' @param k.folds Number of cross-validation folds
 #' @param best.model.metric Metric for model selection
-#' @param cv.seeds Seeds for cross-validation
 #' @return List containing model object, predictions and model performance metrics
 #' @keywords internal
 #' @importFrom caret trainControl train varImp
@@ -328,8 +325,7 @@ train_individual_model <- function(train.ref.spectra,
                                    model.method = "pls",
                                    tune.length = 50,
                                    k.folds = 5,
-                                   best.model.metric = "RMSE",
-                                   cv.seeds) {
+                                   best.model.metric = "RMSE") {
   
   # Initialize return values
   predicted.values <- NULL
@@ -340,8 +336,7 @@ train_individual_model <- function(train.ref.spectra,
   RMSEcv <- NA
   
   if (model.method != "rf") {
-    # 5-fold cross validation on training set
-    cv.kfold <- create_cv_control(k.folds = k.folds, cv.seeds = cv.seeds)
+    cv.kfold <- create_cv_control(k.folds = k.folds)
 
     data.trained <- caret::train(reference ~ .,
       data = train.ref.spectra,
@@ -364,16 +359,20 @@ train_individual_model <- function(train.ref.spectra,
     
   } else if (model.method == "svmLinear") {
     predicted.values <- as.numeric(predict(data.trained, newdata = test.spectra))
-    
+    best.results <- merge(data.trained$bestTune, data.trained$results)
+    RMSEcv <- best.results$RMSE
+    R2cv <- best.results$Rsquared
+
   } else if (model.method == "svmRadial") {
     predicted.values <- as.numeric(predict(data.trained, newdata = test.spectra))
-    
+    best.results <- merge(data.trained$bestTune, data.trained$results)
+    RMSEcv <- best.results$RMSE
+    R2cv <- best.results$Rsquared
+
   } else if (model.method == "rf") {
     cv.oob <- caret::trainControl(
       method = "oob",
-      number = 5,
-      savePredictions = TRUE,
-      seeds = list(cv.seeds, cv.seeds)
+      savePredictions = TRUE
     )
     data.trained <- caret::train(reference ~ .,
       data = train.ref.spectra,
@@ -391,6 +390,9 @@ train_individual_model <- function(train.ref.spectra,
       ntree = best.ntree,
       mtry = best.mtry
     ))
+    best.results <- merge(data.trained$bestTune, data.trained$results)
+    RMSEcv <- best.results$RMSE
+    R2cv <- best.results$Rsquared
   }
 
   # Variable importance (for pls and rf only)
