@@ -299,7 +299,7 @@ train_spectra <- function(df,
   # Create summary data.frame ---------------------------
   summary.df <- rbind(
     dplyr::summarise(results.df, dplyr::across(dplyr::everything(), mean)),
-    dplyr::summarise(results.df, dplyr::across(dplyr::everything(), sd, na.rm = TRUE)),
+    dplyr::summarise(results.df, dplyr::across(dplyr::everything(), \(x) sd(x, na.rm = TRUE))),
     dplyr::summarise(results.df, dplyr::across(dplyr::everything(), get_mode))
   ) %>%
     mutate(

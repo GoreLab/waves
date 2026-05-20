@@ -3,6 +3,8 @@
 # waves 0.2.6.9000 (development version)
 
 * Bug fix: Fixed namespace resolution error with `lifecycle::deprecated()` function calls that was causing "could not find function deprecated" errors for users. All function parameters now properly use `lifecycle::deprecated()` instead of `deprecated()`.
+* Bug fix: `train_spectra()` now correctly populates `RMSEcv` and `R2cv` for `rf`, `svmLinear`, and `svmRadial` model methods. Previously these were always `NA` for non-PLS models.
+* Bug fix: Fixed deprecation warning from dplyr 1.1.0+ caused by passing `na.rm = TRUE` as an extra argument to `across()` in `train_spectra()`.
 
 # waves 0.2.6
 
