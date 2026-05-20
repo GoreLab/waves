@@ -364,10 +364,16 @@ train_individual_model <- function(train.ref.spectra,
     
   } else if (model.method == "svmLinear") {
     predicted.values <- as.numeric(predict(data.trained, newdata = test.spectra))
-    
+    best.results <- merge(data.trained$bestTune, data.trained$results)
+    RMSEcv <- best.results$RMSE
+    R2cv <- best.results$Rsquared
+
   } else if (model.method == "svmRadial") {
     predicted.values <- as.numeric(predict(data.trained, newdata = test.spectra))
-    
+    best.results <- merge(data.trained$bestTune, data.trained$results)
+    RMSEcv <- best.results$RMSE
+    R2cv <- best.results$Rsquared
+
   } else if (model.method == "rf") {
     cv.oob <- caret::trainControl(
       method = "oob",
@@ -391,6 +397,9 @@ train_individual_model <- function(train.ref.spectra,
       ntree = best.ntree,
       mtry = best.mtry
     ))
+    best.results <- merge(data.trained$bestTune, data.trained$results)
+    RMSEcv <- best.results$RMSE
+    R2cv <- best.results$Rsquared
   }
 
   # Variable importance (for pls and rf only)
