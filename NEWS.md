@@ -6,6 +6,9 @@
 * Bug fix: `train_spectra()` now correctly populates `RMSEcv` and `R2cv` for `rf`, `svmLinear`, and `svmRadial` model methods. Previously these were always `NA` for non-PLS models.
 * Bug fix: Replaced deprecated tidyr and dplyr functions across `plot_spectra()`, `aggregate_spectra()`, `train_spectra()`, and the `ikeogu.2017` example to resolve deprecation warnings.
 * Internal: Fixed `trainControl()` configuration in `train_spectra()` — changed `method` from `"repeatedcv"` (with no repeats set) to `"cv"` and removed a malformed `seeds` argument that was being silently ignored. Reproducibility is maintained via the existing `set.seed()` call.
+* Bug fix: The final RF model returned by `train_spectra()` is now trained with 500 trees (the randomForest default) instead of `tune.length` (≤5). The tuned `mtry` from training iterations is now correctly applied to the final model.
+* Bug fix: The final SVM model returned by `train_spectra()` no longer incorrectly uses the `unique.id` column as a predictor. Training data is now subset to reference and spectral columns only, consistent with iterative model training.
+* Bug fix: The final PLS model returned by `train_spectra()` is now fit using the modal best `ncomp` from training iterations rather than `tune.length`. `predict_spectra()` now reads `ncomp` directly from the model object instead of the stats file.
 
 # waves 0.2.6
 
