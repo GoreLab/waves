@@ -327,7 +327,7 @@ train_spectra <- function(df,
     df.plsr <- as.data.frame(df[, -spectra.cols, drop = FALSE])
     df.plsr$spectra <- as.matrix(df[, spectra.cols, drop = FALSE])
     full.model <- pls::plsr(reference ~ spectra,
-      ncomp = tune.length,
+      ncomp = get_mode(results.df$best.ncomp),
       data = df.plsr
     )
   }
@@ -337,12 +337,13 @@ train_spectra <- function(df,
     full.model <- randomForest::randomForest(reference ~ .,
       data = df.rf,
       importance = FALSE,
-      ntree = tune.length
+      ntree = 500,
+      mtry = get_mode(results.df$best.mtry)
     )
   }
   if (model.method == "svmLinear" || model.method == "svmRadial") {
     full.model <- caret::train(reference ~ .,
-      data = df,
+      data = df[, ref.spectra.cols, drop = FALSE],
       method = model.method,
       tuneLength = tune.length,
       trControl = cv.kfold,
