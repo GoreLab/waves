@@ -295,7 +295,7 @@ and <code><a href="train_spectra.html">train_spectra</a></code> functions.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Partial least squares regression, fitted with the kernel algorithm.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pls::plsr(formula = reference ~ spectra, ncomp = tune.length,     data = df.plsr)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pls::plsr(formula = reference ~ spectra, ncomp = get_mode(results.df$best.ncomp),     data = df.plsr)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $summary.model.performance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   SummaryType ModelType     RMSEp        R2p       RPD      RPIQ        CCC</span>

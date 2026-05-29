@@ -24,6 +24,23 @@
   and removed a malformed `seeds` argument that was being silently
   ignored. Reproducibility is maintained via the existing
   [`set.seed()`](https://rdrr.io/r/base/Random.html) call.
+- Bug fix: The final RF model returned by
+  [`train_spectra()`](https://GoreLab.github.io/waves/reference/train_spectra.md)
+  is now trained with 500 trees (the randomForest default) instead of
+  `tune.length` (≤5). The tuned `mtry` from training iterations is now
+  correctly applied to the final model.
+- Bug fix: The final SVM model returned by
+  [`train_spectra()`](https://GoreLab.github.io/waves/reference/train_spectra.md)
+  no longer incorrectly uses the `unique.id` column as a predictor.
+  Training data is now subset to reference and spectral columns only,
+  consistent with iterative model training.
+- Bug fix: The final PLS model returned by
+  [`train_spectra()`](https://GoreLab.github.io/waves/reference/train_spectra.md)
+  is now fit using the modal best `ncomp` from training iterations
+  rather than `tune.length`.
+  [`predict_spectra()`](https://GoreLab.github.io/waves/reference/predict_spectra.md)
+  now reads `ncomp` directly from the model object instead of the stats
+  file.
 
 ## waves 0.2.6
 

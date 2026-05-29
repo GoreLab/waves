@@ -300,7 +300,7 @@ ikeogu.2017 %>%
 #> $model
 #> Partial least squares regression, fitted with the kernel algorithm.
 #> Call:
-#> pls::plsr(formula = reference ~ spectra, ncomp = tune.length,     data = df.plsr)
+#> pls::plsr(formula = reference ~ spectra, ncomp = get_mode(results.df$best.ncomp),     data = df.plsr)
 #> 
 #> $summary.model.performance
 #>   SummaryType ModelType     RMSEp        R2p       RPD      RPIQ        CCC
