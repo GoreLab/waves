@@ -1,5 +1,5 @@
 ## Test environments
-* local Apple Silicon (M1), macOS 15.6.1 Ventura, R 4.3.3
+* local Apple Silicon (M1), macOS 26.5.1 Tahoe, R 4.6.0
 * GitHub Actions CI:
   - ubuntu-24.04 (release, devel)
   - windows-latest (release)
