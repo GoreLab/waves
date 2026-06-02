@@ -88,12 +88,8 @@ predict_spectra <- function(input.data,
   } else if (model.method == "svmRadial") {
     predicted.values <- as.numeric(predict(final.model, newdata = pretreated))
   } else if (model.method == "rf") {
-    best.ntree <- final.model$ntree
-    best.mtry <- final.model$mtry
     predicted.values <- as.numeric(predict(final.model,
-      newdata = pretreated,
-      ntree = best.ntree,
-      mtry = best.mtry
+      newdata = pretreated
     ))
   }
 

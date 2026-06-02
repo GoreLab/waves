@@ -386,9 +386,7 @@ train_individual_model <- function(train.ref.spectra,
     best.ntree <- data.trained$finalModel$ntree
     best.mtry <- data.trained$finalModel$mtry
     predicted.values <- as.numeric(predict(data.trained$finalModel,
-      newdata = test.spectra,
-      ntree = best.ntree,
-      mtry = best.mtry
+      newdata = test.spectra
     ))
     best.results <- merge(data.trained$bestTune, data.trained$results)
     RMSEcv <- best.results$RMSE
@@ -595,9 +593,11 @@ aggregate_pretreatment_results <- function(training.results.i,
   if (length(pretreatment) != 1) {
     # Add Pretreatment column to each data.frame in the training results list
     for (j in 2:length(training.results.i)) {
-      training.results.i[[j]] <- cbind("Pretreatment" = methods.list[i],
-                                       training.results.i[[j]])
-      rownames(training.results.i[[j]]) <- NULL
+      if (!is.null(training.results.i[[j]])) {
+        training.results.i[[j]] <- cbind("Pretreatment" = methods.list[i],
+                                         training.results.i[[j]])
+        rownames(training.results.i[[j]]) <- NULL
+      }
     }
 
     # Reformat summary statistics data.frame for multiple pretreatments
