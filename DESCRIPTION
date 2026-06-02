@@ -30,8 +30,8 @@ Description: Originally designed application in the context of
 License: MIT + file LICENSE
 URL: https://GoreLab.github.io/waves/, https://github.com/GoreLab/waves
 BugReports: https://github.com/GoreLab/waves/issues
-Depends: 
-    R (>= 3.5)
+Depends:
+    R (>= 4.1.0)
 Imports: 
     caret,
     dplyr,

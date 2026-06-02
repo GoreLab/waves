@@ -12,6 +12,9 @@
 ## R CMD check results
 0 errors | 0 warnings | 0 notes
 
+Minimum R version bumped from 3.5 to 4.1.0 due to use of the `\()` 
+lambda shorthand syntax introduced in R 4.1.0.
+
 ## Comments
 This is a maintenance release that fixes several bugs in `train_spectra()`,
 `test_spectra()`, `predict_spectra()`, and internal utility functions:
