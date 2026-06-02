@@ -208,57 +208,9 @@ results.list <- ikeogu.2017.prepped %>%
     num.iterations = 3,
     pretreatment = 1
     )
-#> Warning: The `save.model` argument of `test_spectra()` is deprecated as of waves 0.2.0.
-#> ℹ Models are now saved by default.
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Warning: The `return.model` argument of `test_spectra()` is deprecated as of waves
-#> 0.2.0.
-#> ℹ Trained models are now returned by default.
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 #> Pretreatment initiated.
 #> Training models...
 #> Working on Raw_data
-#> Warning: The `wavelengths` argument of `train_spectra()` is deprecated as of waves
-#> 0.2.0.
-#> ℹ Wavelength specification is now inferred from column names.
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Warning: The `preprocessing` argument of `train_spectra()` is deprecated as of waves
-#> 0.2.0.
-#> ℹ Argument `preprocessing` is deprecated. Use `pretreatment` instead:
-#>   `pretreatment = 1:13` (all), or `pretreatment = 1` (raw only).
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Warning: The `save.model` argument of `train_spectra()` is deprecated as of waves 0.2.0.
-#> ℹ Models are now saved by default.
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Loading required package: lattice
-#> 
-#> Attaching package: 'pls'
-#> The following object is masked from 'package:caret':
-#> 
-#>     R2
-#> The following object is masked from 'package:stats':
-#> 
-#>     loadings
 #> Returning model...
 ```
 
