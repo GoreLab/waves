@@ -132,24 +132,20 @@ test_spectra <- function(train.data,
     tune.length = tune.length
   )
 
-  # Handle cv.scheme data setup
-  if (!is.null(cv.scheme)) {
-    train.data <- trial1
-  }
-
   # End error handling ---------------------------
-
-  n.train <- nrow(train.data)
-  n.test <- ifelse(is.null(test.data), 0, nrow(test.data))
 
   # Perform pretreatments on everything ---------------------------
   # Returns a list of data frames,
   # one for each transformation specified by pretreatment argument
-  if (verbose) {
-    cat("Pretreatment initiated.\n")
-  }
   if (!is.null(cv.scheme)) {
     train.data <- rbind(trial1, trial2, trial3)
+  }
+
+  n.train <- nrow(train.data)
+  n.test <- ifelse(is.null(test.data), 0, nrow(test.data))
+
+  if (verbose) {
+    cat("Pretreatment initiated.\n")
   }
 
   # Pretreat spectra ---------------------------
@@ -218,6 +214,8 @@ test_spectra <- function(train.data,
       trial2 = processed.data$trial2,
       trial3 = processed.data$trial3,
       split.test = split.test,
+      best.model.metric = best.model.metric,
+      seed = seed,
       verbose = verbose
     )
 

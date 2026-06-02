@@ -10,23 +10,34 @@
   - windows (R-devel)
 
 ## R CMD check results
-0 errors | 0 warnings | 1 note
-
-* checking for future file timestamps ... NOTE
-  unable to verify current time
-
-This note is unrelated to the package itself and occurs when system time verification fails during the check process on my local installation.
+0 errors | 0 warnings | 0 notes
 
 ## Comments
-This is a maintenance release that:
-* Fixes compatibility issue with updated spectacles package (v0.5.5) that was causing runtime errors
-* Significantly improves performance of train_spectra() and test_spectra() through optimized algorithms and reduced memory usage
-* Reduces cyclomatic complexity of core functions through internal refactoring
-* Eliminates code duplication with shared utility functions
-* Adds robust error handling for better package reliability
-* Introduces no user-facing API changes (all existing code remains fully compatible)
+This is a maintenance release that fixes several bugs in `train_spectra()`,
+`test_spectra()`, `predict_spectra()`, and internal utility functions:
 
-This release focuses on code quality improvements, performance optimization, and bug fixes while maintaining complete backwards compatibility.
+* The final RF model was trained with `ntree = tune.length` (≤5 trees) instead
+  of the standard 500; the tuned `mtry` was also not applied to the final model
+* The final SVM model incorrectly included `unique.id` as a predictor
+* The final PLS model used `ncomp = tune.length` instead of the best value
+  identified during training iterations; `predict_spectra()` now reads `ncomp`
+  directly from the model object
+* `train_spectra()` crashed with `undefined columns selected` when `cv.scheme`
+  was used, due to column indices computed before `format_cv()` removed the
+  genotype column
+* When `cv.scheme` is used, the final model was trained on incorrect data
+  (either all trials combined or trial1 alone); it now calls `format_cv()` to
+  use the scheme-appropriate training set
+* `set.seed()` was called after `createDataPartition()`, making stratified
+  train/test splits non-reproducible even when a seed was set
+* `best.model.metric` and `seed` were accepted by `test_spectra()` but never
+  forwarded to `train_spectra()`, silently ignoring user input
+* SVM importance output was corrupted (1×1 matrix instead of NULL) when
+  running with multiple pretreatments
+* Invalid `ntree` and `mtry` arguments were passed to `predict.randomForest()`,
+  where they are silently ignored
+
+All existing user-facing APIs remain fully compatible.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
