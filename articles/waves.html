@@ -496,14 +496,14 @@ provided.</li>
 </ol>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results.list</span><span class="op">$</span><span class="va">summary.model.performance</span></span>
-<span><span class="co">#&gt;   SummaryType ModelType      RMSEp        R2p       RPD      RPIQ        CCC</span></span>
-<span><span class="co">#&gt; 1        mean       pls 1.95376055 0.81071964 2.2929289 2.7735699 0.89625825</span></span>
-<span><span class="co">#&gt; 2          sd       pls 0.09988373 0.02828736 0.1234882 0.1134962 0.01896225</span></span>
-<span><span class="co">#&gt; 3        mode       pls 1.85463762 0.83763116 2.3948734 2.8890861 0.91442160</span></span>
-<span><span class="co">#&gt;          Bias       SEP     RMSEcv        R2cv       R2sp best.ncomp best.ntree</span></span>
-<span><span class="co">#&gt; 1 -0.03665762 1.9740073 2.00724284 0.751925760 0.76195677          3         NA</span></span>
-<span><span class="co">#&gt; 2  0.15395985 0.1009188 0.02247514 0.008214219 0.02488035          0         NA</span></span>
-<span><span class="co">#&gt; 3 -0.07584944 1.8738572 2.01782789 0.750662996 0.77188776          3         NA</span></span>
+<span><span class="co">#&gt;   SummaryType ModelType     RMSEp        R2p      RPD      RPIQ        CCC</span></span>
+<span><span class="co">#&gt; 1        mean       pls 2.0440540 0.77824381 2.085018 2.6038009 0.85155095</span></span>
+<span><span class="co">#&gt; 2          sd       pls 0.2661027 0.02093217 0.183391 0.3062501 0.04696515</span></span>
+<span><span class="co">#&gt; 3        mode       pls 1.8971232 0.78270780 2.139263 2.7700624 0.86628031</span></span>
+<span><span class="co">#&gt;          Bias       SEP     RMSEcv      R2cv       R2sp best.ncomp best.ntree</span></span>
+<span><span class="co">#&gt; 1 -0.05516781 2.0652364 1.95463427 0.7755627 0.77670789          3         NA</span></span>
+<span><span class="co">#&gt; 2  0.09468830 0.2688604 0.08412512 0.0157923 0.01211986          0         NA</span></span>
+<span><span class="co">#&gt; 3 -0.13588174 1.9167831 1.96423744 0.7807426 0.76866372          3         NA</span></span>
 <span><span class="co">#&gt;   best.mtry</span></span>
 <span><span class="co">#&gt; 1        NA</span></span>
 <span><span class="co">#&gt; 2        NA</span></span>
@@ -517,13 +517,13 @@ separately (see below).</li>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results.list</span><span class="op">$</span><span class="va">model.performance</span></span>
 <span><span class="co">#&gt;   Iteration ModelType    RMSEp       R2p      RPD     RPIQ       CCC</span></span>
-<span><span class="co">#&gt; 1         1       pls 1.854638 0.8376312 2.394873 2.889086 0.9144216</span></span>
-<span><span class="co">#&gt; 2         2       pls 2.054388 0.7812326 2.155615 2.662208 0.8765871</span></span>
-<span><span class="co">#&gt; 3         3       pls 1.952256 0.8132952 2.328298 2.769416 0.8977660</span></span>
+<span><span class="co">#&gt; 1         1       pls 1.897123 0.7827078 2.139263 2.770062 0.8662803</span></span>
+<span><span class="co">#&gt; 2         2       pls 1.883812 0.7965839 2.235167 2.790961 0.8893859</span></span>
+<span><span class="co">#&gt; 3         3       pls 2.351227 0.7554397 1.880623 2.250380 0.7989866</span></span>
 <span><span class="co">#&gt;          Bias      SEP   RMSEcv      R2cv      R2sp best.ncomp best.ntree</span></span>
-<span><span class="co">#&gt; 1 -0.07584944 1.873857 2.017828 0.7506630 0.7718878          3         NA</span></span>
-<span><span class="co">#&gt; 2  0.13311031 2.075678 1.981430 0.7606982 0.7803379          3         NA</span></span>
-<span><span class="co">#&gt; 3 -0.16723372 1.972487 2.022471 0.7444160 0.7336447          3         NA</span></span>
+<span><span class="co">#&gt; 1 -0.13588174 1.916783 1.964237 0.7807426 0.7686637          3         NA</span></span>
+<span><span class="co">#&gt; 2  0.04906262 1.903334 2.033546 0.7578310 0.7708123          3         NA</span></span>
+<span><span class="co">#&gt; 3 -0.07868431 2.375593 1.866120 0.7881145 0.7906476          3         NA</span></span>
 <span><span class="co">#&gt;   best.mtry</span></span>
 <span><span class="co">#&gt; 1        NA</span></span>
 <span><span class="co">#&gt; 2        NA</span></span>
@@ -537,12 +537,12 @@ iteration of model training.</li>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results.list</span><span class="op">$</span><span class="va">predictions</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   Iteration ModelType  unique.id reference predicted</span></span>
-<span><span class="co">#&gt; 1         1       pls  C16Mcal_5  33.44273  29.65800</span></span>
-<span><span class="co">#&gt; 2         1       pls C16Mcal_17  36.62819  38.96732</span></span>
-<span><span class="co">#&gt; 3         1       pls C16Mcal_18  39.56322  36.66932</span></span>
-<span><span class="co">#&gt; 4         1       pls C16Mcal_28  29.21000  30.11402</span></span>
-<span><span class="co">#&gt; 5         1       pls C16Mcal_31  32.40875  33.56930</span></span>
-<span><span class="co">#&gt; 6         1       pls C16Mcal_37  36.74377  37.08231</span></span></code></pre></div>
+<span><span class="co">#&gt; 1         1       pls  C16Mcal_3  42.04462  39.73413</span></span>
+<span><span class="co">#&gt; 2         1       pls C16Mcal_11  35.23000  37.05843</span></span>
+<span><span class="co">#&gt; 3         1       pls C16Mcal_14  42.23797  41.23787</span></span>
+<span><span class="co">#&gt; 4         1       pls C16Mcal_16  36.37963  38.47196</span></span>
+<span><span class="co">#&gt; 5         1       pls C16Mcal_17  36.62819  38.38934</span></span>
+<span><span class="co">#&gt; 6         1       pls C16Mcal_21  37.61227  37.58763</span></span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>
 <code>importance</code> is a <code>data.frame</code> containing
@@ -555,9 +555,9 @@ list item is <code>NULL</code>.</li>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span></span>
 <span><span class="co">#&gt;   Iteration ModelType   X350   X351   X352   X353   X354</span></span>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 pls       0.040<span style="text-decoration: underline;">4</span> 0.039<span style="text-decoration: underline;">7</span> 0.037<span style="text-decoration: underline;">4</span> 0.036<span style="text-decoration: underline;">9</span> 0.038<span style="text-decoration: underline;">8</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 pls       0.027<span style="text-decoration: underline;">7</span> 0.026<span style="text-decoration: underline;">3</span> 0.027<span style="text-decoration: underline;">9</span> 0.027<span style="text-decoration: underline;">8</span> 0.028<span style="text-decoration: underline;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 pls       0.022<span style="text-decoration: underline;">3</span> 0.022<span style="text-decoration: underline;">5</span> 0.023<span style="text-decoration: underline;">8</span> 0.024<span style="text-decoration: underline;">2</span> 0.025<span style="text-decoration: underline;">4</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 pls       0.025<span style="text-decoration: underline;">8</span> 0.024<span style="text-decoration: underline;">5</span> 0.027<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 pls       0.035<span style="text-decoration: underline;">1</span> 0.034<span style="text-decoration: underline;">4</span> 0.032<span style="text-decoration: underline;">9</span> 0.031<span style="text-decoration: underline;">5</span> 0.032<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 pls       0.024<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">6</span> 0.025<span style="text-decoration: underline;">8</span> 0.025<span style="text-decoration: underline;">3</span></span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -688,11 +688,11 @@ will take the extra step of saving an .Rds file for you if
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>id_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Pretreatment</span>, <span class="va">summary_type</span><span class="op">)</span>,</span>
 <span>              names_from <span class="op">=</span> <span class="va">statistic</span>, values_from <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 15</span></span></span>
-<span><span class="co">#&gt;   Pretreatment summary_type RMSEp    R2p   RPD  RPIQ    CCC    Bias   SEP RMSEcv</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> SNVSG        mean         1.64  0.853  2.71  3.41  0.922  -<span style="color: #BB0000;">0.018</span><span style="color: #BB0000; text-decoration: underline;">3</span> 1.67   1.47 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> SNVSG        sd           0.131 0.061<span style="text-decoration: underline;">2</span> 0.611 0.159 0.031<span style="text-decoration: underline;">3</span>  0.111  0.133  0.122</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> SNVSG        mode         1.55  0.897  3.14  3.52  0.944  -<span style="color: #BB0000;">0.097</span><span style="color: #BB0000; text-decoration: underline;">1</span> 1.57   1.56 </span></span>
+<span><span class="co">#&gt;   Pretreatment summary_type RMSEp    R2p   RPD  RPIQ    CCC   Bias   SEP RMSEcv</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> SNVSG        mean         1.71  0.845  2.55  3.19  0.907  -<span style="color: #BB0000;">0.140</span> 1.73  1.57  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> SNVSG        sd           0.299 0.057<span style="text-decoration: underline;">2</span> 0.398 0.604 0.032<span style="text-decoration: underline;">0</span>  0.442 0.303 0.014<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> SNVSG        mode         1.50  0.885  2.83  3.61  0.930  -<span style="color: #BB0000;">0.453</span> 1.52  1.56  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: R2cv &lt;dbl&gt;, R2sp &lt;dbl&gt;, best.ncomp &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   best.ntree &lt;dbl&gt;, best.mtry &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>

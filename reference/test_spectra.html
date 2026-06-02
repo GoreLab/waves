@@ -298,14 +298,14 @@ and <code><a href="train_spectra.html">train_spectra</a></code> functions.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pls::plsr(formula = reference ~ spectra, ncomp = get_mode(results.df$best.ncomp),     data = df.plsr)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $summary.model.performance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   SummaryType ModelType     RMSEp        R2p       RPD      RPIQ        CCC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        mean       pls 1.9550337 0.79397360 2.2214284 2.8386768 0.88086475</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          sd       pls 0.2489473 0.03040981 0.1618829 0.3850833 0.01865092</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        mode       pls 2.1731908 0.76545308 2.0814944 2.5072139 0.86792697</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Bias       SEP     RMSEcv       R2cv       R2sp best.ncomp best.ntree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.0138514 1.9752937 1.95600879 0.77110995 0.83091636          3         NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.1929671 0.2515272 0.05736842 0.02161451 0.01186654          0         NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.1393866 2.1957115 1.95054997 0.76339708 0.83312188          3         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   SummaryType ModelType     RMSEp        R2p      RPD      RPIQ        CCC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        mean       pls 2.0440540 0.77824381 2.085018 2.6038009 0.85155095</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          sd       pls 0.2661027 0.02093217 0.183391 0.3062501 0.04696515</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        mode       pls 1.8971232 0.78270780 2.139263 2.7700624 0.86628031</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Bias       SEP     RMSEcv      R2cv       R2sp best.ncomp best.ntree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.05516781 2.0652364 1.95463427 0.7755627 0.77670789          3         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.09468830 0.2688604 0.08412512 0.0157923 0.01211986          0         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -0.13588174 1.9167831 1.96423744 0.7807426 0.76866372          3         NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   best.mtry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2        NA</span>
@@ -313,13 +313,13 @@ and <code><a href="train_spectra.html">train_spectra</a></code> functions.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $model.performance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Iteration ModelType    RMSEp       R2p      RPD     RPIQ       CCC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         1       pls 2.173191 0.7654531 2.081494 2.507214 0.8679270</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         2       pls 2.008067 0.7904943 2.184064 2.747721 0.8724233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         3       pls 1.683843 0.8259734 2.398726 3.261096 0.9022440</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         1       pls 1.897123 0.7827078 2.139263 2.770062 0.8662803</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         2       pls 1.883812 0.7965839 2.235167 2.790961 0.8893859</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         3       pls 2.351227 0.7554397 1.880623 2.250380 0.7989866</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Bias      SEP   RMSEcv      R2cv      R2sp best.ncomp best.ntree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.13938660 2.195712 1.950550 0.7633971 0.8331219          3         NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.04961844 2.028877 2.015912 0.7544099 0.8181018          3         NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -0.23055925 1.701293 1.901565 0.7955229 0.8415254          3         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.13588174 1.916783 1.964237 0.7807426 0.7686637          3         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.04906262 1.903334 2.033546 0.7578310 0.7708123          3         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -0.07868431 2.375593 1.866120 0.7881145 0.7906476          3         NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   best.mtry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2        NA</span>
@@ -327,161 +327,161 @@ and <code><a href="train_spectra.html">train_spectra</a></code> functions.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $predictions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Iteration ModelType   unique.id reference predicted</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           1       pls   C16Mcal_4  39.00999  36.50554</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           1       pls   C16Mcal_8  26.27746  29.99556</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           1       pls  C16Mcal_10  31.79933  33.91478</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           1       pls  C16Mcal_11  35.23000  37.05689</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           1       pls  C16Mcal_14  42.23797  40.37191</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           1       pls  C16Mcal_16  36.37963  38.46198</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           1       pls  C16Mcal_20  34.13000  32.12386</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           1       pls  C16Mcal_33  34.97572  33.21051</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           1       pls  C16Mcal_34  42.53000  38.92911</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          1       pls  C16Mcal_36  36.40311  36.79291</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11          1       pls  C16Mcal_37  36.74377  37.07810</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12          1       pls  C16Mcal_38  33.78840  36.16584</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13          1       pls  C16Mcal_41  39.93124  39.59973</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14          1       pls  C16Mcal_45  29.94000  32.67283</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15          1       pls  C16Mcal_46  32.38298  33.66270</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16          1       pls  C16Mcal_53  41.46000  38.88892</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17          1       pls  C16Mcal_56  38.48000  37.90052</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18          1       pls  C16Mcal_59  28.98000  35.91302</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19          1       pls  C16Mcal_61  39.40313  40.58068</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20          1       pls  C16Mcal_69  31.96079  30.04438</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21          1       pls  C16Mcal_75  37.49795  40.17785</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22          1       pls  C16Mcal_85  33.13301  33.05767</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23          1       pls  C16Mcal_88  34.66000  36.29711</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24          1       pls  C16Mcal_90  40.72711  40.36644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25          1       pls  C16Mcal_91  37.96000  38.27436</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26          1       pls  C16Mcal_94  39.54911  38.89206</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27          1       pls  C16Mcal_95  36.73743  36.18515</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28          1       pls  C16Mcal_97  34.21594  35.33449</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29          1       pls  C16Mcal_99  39.23705  37.33942</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30          1       pls C16Mcal_100  34.83110  36.24078</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31          1       pls C16Mcal_101  41.60015  39.44391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32          1       pls C16Mcal_107  38.87000  37.73557</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33          1       pls C16Mcal_110  23.59213  19.28729</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34          1       pls C16Mcal_112  40.93710  39.24807</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35          1       pls C16Mcal_116  43.23313  41.59043</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36          1       pls C16Mcal_119  31.16000  28.70424</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37          1       pls   C16Mval_1  44.12970  40.80312</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38          1       pls   C16Mval_5  41.75497  41.58652</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39          1       pls  C16Mval_13  38.67529  38.22389</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40          1       pls  C16Mval_20  37.92153  37.76845</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41          1       pls  C16Mval_23  37.35000  38.46872</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42          1       pls  C16Mval_25  36.51727  37.22193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43          1       pls  C16Mval_27  36.46656  39.21296</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44          1       pls  C16Mval_36  35.00251  33.78686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45          1       pls  C16Mval_37  34.98731  36.38393</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46          1       pls  C16Mval_40  34.29912  34.51214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47          1       pls  C16Mval_48  30.83729  32.64455</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48          1       pls  C16Mval_49  30.81136  33.26690</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49          1       pls  C16Mval_51  28.30972  31.95275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50          2       pls   C16Mcal_7  35.81000  37.64045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51          2       pls  C16Mcal_10  31.79933  33.90104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52          2       pls  C16Mcal_13  35.35505  34.73994</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53          2       pls  C16Mcal_14  42.23797  40.32753</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54          2       pls  C16Mcal_15  31.65000  32.08634</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55          2       pls  C16Mcal_29  39.64507  40.03288</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56          2       pls  C16Mcal_31  32.40875  33.44434</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57          2       pls  C16Mcal_32  37.47000  37.95935</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58          2       pls  C16Mcal_34  42.53000  38.98974</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59          2       pls  C16Mcal_37  36.74377  36.91768</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60          2       pls  C16Mcal_40  36.13000  37.22844</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61          2       pls  C16Mcal_44  43.29622  39.26540</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62          2       pls  C16Mcal_46  32.38298  33.62651</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63          2       pls  C16Mcal_48  37.06249  37.36784</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64          2       pls  C16Mcal_51  39.34805  37.24778</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65          2       pls  C16Mcal_55  28.15000  31.67880</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66          2       pls  C16Mcal_57  40.57812  38.34005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67          2       pls  C16Mcal_58  39.88335  39.56305</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68          2       pls  C16Mcal_60  36.62512  37.10264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69          2       pls  C16Mcal_63  30.90000  31.96273</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70          2       pls  C16Mcal_64  27.26000  28.08015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71          2       pls  C16Mcal_68  33.17000  33.76058</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72          2       pls  C16Mcal_76  35.25478  34.50975</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73          2       pls  C16Mcal_78  39.37000  38.77967</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74          2       pls  C16Mcal_83  34.15620  33.52379</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75          2       pls  C16Mcal_88  34.66000  36.31884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76          2       pls  C16Mcal_92  34.42487  35.52188</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77          2       pls  C16Mcal_93  34.82713  35.99170</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78          2       pls  C16Mcal_94  39.54911  38.81317</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79          2       pls  C16Mcal_97  34.21594  35.24046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80          2       pls  C16Mcal_98  38.83000  40.01306</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81          2       pls  C16Mcal_99  39.23705  37.28656</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82          2       pls C16Mcal_105  41.13854  37.65220</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83          2       pls C16Mcal_106  40.36111  37.23188</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84          2       pls C16Mcal_110  23.59213  19.76384</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 85          2       pls C16Mcal_111  37.64000  36.53743</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86          2       pls C16Mcal_117  40.30803  39.02915</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 87          2       pls C16Mcal_121  34.33449  35.50744</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88          2       pls   C16Mval_2  43.74113  40.57742</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89          2       pls  C16Mval_11  38.89882  38.28787</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 90          2       pls  C16Mval_12  38.69113  39.23043</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 91          2       pls  C16Mval_15  38.50998  38.39315</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 92          2       pls  C16Mval_19  37.95000  39.26696</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 93          2       pls  C16Mval_30  36.19277  35.52484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 94          2       pls  C16Mval_39  34.57000  38.15507</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95          2       pls  C16Mval_43  33.83044  34.24600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 96          2       pls  C16Mval_48  30.83729  32.68528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 97          2       pls  C16Mval_49  30.81136  33.22291</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 98          2       pls  C16Mval_52  28.00003  34.22590</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 99          3       pls   C16Mcal_5  33.44273  30.38350</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100         3       pls   C16Mcal_8  26.27746  30.38023</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 101         3       pls   C16Mcal_9  38.12000  37.95717</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 102         3       pls  C16Mcal_14  42.23797  41.11843</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 103         3       pls  C16Mcal_17  36.62819  38.98191</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 104         3       pls  C16Mcal_18  39.56322  38.04276</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 105         3       pls  C16Mcal_20  34.13000  32.05256</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 106         3       pls  C16Mcal_21  37.61227  37.43845</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 107         3       pls  C16Mcal_25  31.76563  34.80034</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 108         3       pls  C16Mcal_27  38.89808  39.37409</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 109         3       pls  C16Mcal_29  39.64507  40.91366</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 110         3       pls  C16Mcal_30  30.93000  30.03865</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 111         3       pls  C16Mcal_31  32.40875  34.15086</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 112         3       pls  C16Mcal_37  36.74377  37.17385</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 113         3       pls  C16Mcal_42  34.72000  33.47320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 114         3       pls  C16Mcal_46  32.38298  33.99514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 115         3       pls  C16Mcal_47  31.60291  31.57118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 116         3       pls  C16Mcal_51  39.34805  39.09235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 117         3       pls  C16Mcal_52  39.11203  38.16011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 118         3       pls  C16Mcal_53  41.46000  40.62724</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 119         3       pls  C16Mcal_57  40.57812  39.36704</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 120         3       pls  C16Mcal_66  41.76970  39.96488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 121         3       pls  C16Mcal_68  33.17000  33.44908</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 122         3       pls  C16Mcal_72  40.12136  36.76306</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 123         3       pls  C16Mcal_76  35.25478  34.60691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124         3       pls  C16Mcal_77  33.85688  29.56876</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 125         3       pls  C16Mcal_84  34.19000  34.66959</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 126         3       pls  C16Mcal_93  34.82713  34.37493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 127         3       pls C16Mcal_100  34.83110  36.64348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 128         3       pls C16Mcal_102  31.11491  30.62915</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 129         3       pls C16Mcal_109  28.94000  31.70745</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 130         3       pls   C16Mval_1  44.12970  41.91103</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 131         3       pls   C16Mval_4  43.14000  41.17030</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 132         3       pls   C16Mval_5  41.75497  42.21544</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 133         3       pls   C16Mval_7  40.43132  39.24414</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 134         3       pls   C16Mval_8  39.82226  39.14380</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 135         3       pls  C16Mval_13  38.67529  37.33712</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136         3       pls  C16Mval_14  38.58000  37.64370</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 137         3       pls  C16Mval_19  37.95000  38.85701</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 138         3       pls  C16Mval_21  37.84025  38.13415</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 139         3       pls  C16Mval_22  37.48000  36.04261</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 140         3       pls  C16Mval_27  36.46656  38.45809</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 141         3       pls  C16Mval_31  36.03212  35.34500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 142         3       pls  C16Mval_34  35.18792  34.04633</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 143         3       pls  C16Mval_36  35.00251  33.43003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 144         3       pls  C16Mval_38  34.65316  37.29401</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 145         3       pls  C16Mval_40  34.29912  33.93664</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 146         3       pls  C16Mval_46  33.41928  33.38790</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 147         3       pls  C16Mval_53  27.34904  27.53191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           1       pls   C16Mcal_3  42.04462  39.73413</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           1       pls  C16Mcal_11  35.23000  37.05843</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           1       pls  C16Mcal_14  42.23797  41.23787</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           1       pls  C16Mcal_16  36.37963  38.47196</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           1       pls  C16Mcal_17  36.62819  38.38934</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           1       pls  C16Mcal_21  37.61227  37.58763</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           1       pls  C16Mcal_23  37.14000  36.16229</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           1       pls  C16Mcal_24  42.19112  40.00201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           1       pls  C16Mcal_28  29.21000  31.80886</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10          1       pls  C16Mcal_34  42.53000  38.72081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11          1       pls  C16Mcal_36  36.40311  36.24681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12          1       pls  C16Mcal_37  36.74377  37.09421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13          1       pls  C16Mcal_38  33.78840  35.81316</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14          1       pls  C16Mcal_40  36.13000  36.94475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15          1       pls  C16Mcal_46  32.38298  33.34937</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16          1       pls  C16Mcal_50  37.71000  34.05821</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17          1       pls  C16Mcal_52  39.11203  37.99830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18          1       pls  C16Mcal_53  41.46000  39.59285</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19          1       pls  C16Mcal_64  27.26000  28.69082</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20          1       pls  C16Mcal_68  33.17000  34.08023</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21          1       pls  C16Mcal_70  39.51004  37.68693</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22          1       pls  C16Mcal_77  33.85688  29.71884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23          1       pls  C16Mcal_78  39.37000  37.66322</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24          1       pls  C16Mcal_79  35.99000  38.70026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25          1       pls  C16Mcal_82  34.87000  30.40309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26          1       pls  C16Mcal_83  34.15620  33.30617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27          1       pls  C16Mcal_85  33.13301  32.40154</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28          1       pls  C16Mcal_89  40.60851  39.93190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29          1       pls  C16Mcal_92  34.42487  34.77004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30          1       pls C16Mcal_107  38.87000  37.13854</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31          1       pls C16Mcal_109  28.94000  31.36524</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32          1       pls C16Mcal_111  37.64000  36.89558</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33          1       pls C16Mcal_113  33.47000  35.53501</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34          1       pls C16Mcal_116  43.23313  41.74664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35          1       pls   C16Mval_2  43.74113  41.36972</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36          1       pls   C16Mval_5  41.75497  42.04256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37          1       pls  C16Mval_10  39.39553  37.62582</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38          1       pls  C16Mval_13  38.67529  37.25103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39          1       pls  C16Mval_15  38.50998  39.07893</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40          1       pls  C16Mval_17  38.39624  38.27696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41          1       pls  C16Mval_25  36.51727  36.46208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42          1       pls  C16Mval_28  36.38000  36.83738</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43          1       pls  C16Mval_32  35.91000  37.18442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44          1       pls  C16Mval_39  34.57000  37.11280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45          1       pls  C16Mval_40  34.29912  34.33355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46          1       pls  C16Mval_46  33.41928  34.16409</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47          1       pls  C16Mval_47  31.10258  34.46035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48          1       pls  C16Mval_49  30.81136  33.09713</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49          1       pls  C16Mval_53  27.34904  28.00849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50          2       pls   C16Mcal_4  39.00999  36.97214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51          2       pls  C16Mcal_12  41.97913  40.81870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52          2       pls  C16Mcal_19  39.70911  38.62620</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53          2       pls  C16Mcal_22  41.28000  40.57772</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54          2       pls  C16Mcal_23  37.14000  36.60694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55          2       pls  C16Mcal_24  42.19112  39.77167</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56          2       pls  C16Mcal_25  31.76563  34.10483</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57          2       pls  C16Mcal_29  39.64507  40.50481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58          2       pls  C16Mcal_33  34.97572  34.09109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59          2       pls  C16Mcal_41  39.93124  39.23849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60          2       pls  C16Mcal_42  34.72000  34.22190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61          2       pls  C16Mcal_45  29.94000  31.66503</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62          2       pls  C16Mcal_49  38.28000  37.99754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63          2       pls  C16Mcal_50  37.71000  34.51421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64          2       pls  C16Mcal_53  41.46000  39.27199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65          2       pls  C16Mcal_63  30.90000  31.73523</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66          2       pls  C16Mcal_67  36.26282  37.82109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67          2       pls  C16Mcal_69  31.96079  30.15139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68          2       pls  C16Mcal_71  40.02523  38.77683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69          2       pls  C16Mcal_73  29.92186  31.28319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70          2       pls  C16Mcal_74  32.09270  34.92711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71          2       pls  C16Mcal_80  31.55000  33.87377</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72          2       pls  C16Mcal_81  37.66915  38.76739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73          2       pls  C16Mcal_84  34.19000  33.67867</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74          2       pls  C16Mcal_87  35.05209  38.02618</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75          2       pls  C16Mcal_89  40.60851  39.63145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76          2       pls  C16Mcal_93  34.82713  35.74532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77          2       pls  C16Mcal_96  36.23665  39.15187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78          2       pls C16Mcal_103  39.35234  39.22313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79          2       pls C16Mcal_109  28.94000  31.62878</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80          2       pls C16Mcal_110  23.59213  19.27196</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81          2       pls C16Mcal_115  37.89000  34.08443</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82          2       pls C16Mcal_121  34.33449  35.42712</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83          2       pls   C16Mval_8  39.82226  37.75198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84          2       pls  C16Mval_10  39.39553  37.54001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85          2       pls  C16Mval_11  38.89882  38.06222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86          2       pls  C16Mval_16  38.48635  38.21584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87          2       pls  C16Mval_18  38.12000  39.75605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88          2       pls  C16Mval_20  37.92153  37.63294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89          2       pls  C16Mval_22  37.48000  35.88603</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90          2       pls  C16Mval_23  37.35000  37.85863</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91          2       pls  C16Mval_31  36.03212  35.03703</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92          2       pls  C16Mval_32  35.91000  37.69580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93          2       pls  C16Mval_33  35.46458  33.94265</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94          2       pls  C16Mval_38  34.65316  37.31160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95          2       pls  C16Mval_44  33.75234  35.33833</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96          2       pls  C16Mval_49  30.81136  33.05053</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97          2       pls  C16Mval_51  28.30972  32.02043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98          2       pls  C16Mval_53  27.34904  28.01556</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99          3       pls   C16Mcal_9  38.12000  37.61363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100         3       pls  C16Mcal_10  31.79933  33.99608</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101         3       pls  C16Mcal_12  41.97913  40.72232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102         3       pls  C16Mcal_14  42.23797  40.03229</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103         3       pls  C16Mcal_24  42.19112  38.74104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104         3       pls  C16Mcal_32  37.47000  37.80858</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105         3       pls  C16Mcal_34  42.53000  38.78957</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106         3       pls  C16Mcal_41  39.93124  39.27036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107         3       pls  C16Mcal_44  43.29622  38.98826</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108         3       pls  C16Mcal_45  29.94000  33.02270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109         3       pls  C16Mcal_54  35.05442  34.78421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110         3       pls  C16Mcal_56  38.48000  37.65017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111         3       pls  C16Mcal_59  28.98000  35.76920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112         3       pls  C16Mcal_60  36.62512  37.10832</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113         3       pls  C16Mcal_64  27.26000  28.35505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114         3       pls  C16Mcal_65  38.80697  37.03975</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115         3       pls  C16Mcal_72  40.12136  36.99847</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116         3       pls  C16Mcal_73  29.92186  31.51435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117         3       pls  C16Mcal_76  35.25478  34.53688</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118         3       pls  C16Mcal_79  35.99000  39.10992</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119         3       pls  C16Mcal_80  31.55000  33.99310</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 120         3       pls  C16Mcal_85  33.13301  33.53000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 121         3       pls  C16Mcal_88  34.66000  36.35874</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 122         3       pls  C16Mcal_92  34.42487  35.45899</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 123         3       pls  C16Mcal_93  34.82713  35.78262</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 124         3       pls  C16Mcal_97  34.21594  35.29127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 125         3       pls C16Mcal_100  34.83110  36.19697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 126         3       pls C16Mcal_101  41.60015  39.33334</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 127         3       pls C16Mcal_104  35.10946  34.36709</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 128         3       pls C16Mcal_105  41.13854  37.47349</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 129         3       pls C16Mcal_108  39.17000  38.22545</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 130         3       pls C16Mcal_109  28.94000  32.33037</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 131         3       pls C16Mcal_111  37.64000  36.61518</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 132         3       pls C16Mcal_112  40.93710  38.87781</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133         3       pls C16Mcal_115  37.89000  36.00755</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 134         3       pls C16Mcal_119  31.16000  29.01661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 135         3       pls   C16Mval_4  43.14000  40.36667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136         3       pls  C16Mval_10  39.39553  37.11115</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 137         3       pls  C16Mval_12  38.69113  38.99076</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 138         3       pls  C16Mval_20  37.92153  37.60176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139         3       pls  C16Mval_22  37.48000  35.71173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140         3       pls  C16Mval_24  36.77462  36.83839</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141         3       pls  C16Mval_28  36.38000  36.74491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 142         3       pls  C16Mval_29  36.23446  36.26530</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 143         3       pls  C16Mval_34  35.18792  32.79549</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 144         3       pls  C16Mval_42  33.87885  35.69421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 145         3       pls  C16Mval_49  30.81136  33.40937</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 146         3       pls  C16Mval_52  28.00003  34.26481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 147         3       pls  C16Mval_53  27.34904  28.10151</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $importance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2,153</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Iteration ModelType   X350   X351   X352   X353   X354   X355   X356   X357</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>         1 pls       0.024<span style="text-decoration: underline;">6</span> 0.024<span style="text-decoration: underline;">1</span> 0.026<span style="text-decoration: underline;">0</span> 0.024<span style="text-decoration: underline;">0</span> 0.025<span style="text-decoration: underline;">2</span> 0.028<span style="text-decoration: underline;">2</span> 0.031<span style="text-decoration: underline;">0</span> 0.028<span style="text-decoration: underline;">6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>         2 pls       0.024<span style="text-decoration: underline;">8</span> 0.025<span style="text-decoration: underline;">6</span> 0.027<span style="text-decoration: underline;">0</span> 0.027<span style="text-decoration: underline;">0</span> 0.026<span style="text-decoration: underline;">3</span> 0.029<span style="text-decoration: underline;">7</span> 0.031<span style="text-decoration: underline;">1</span> 0.030<span style="text-decoration: underline;">9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>         3 pls       0.040<span style="text-decoration: underline;">7</span> 0.038<span style="text-decoration: underline;">1</span> 0.037<span style="text-decoration: underline;">4</span> 0.037<span style="text-decoration: underline;">6</span> 0.037<span style="text-decoration: underline;">6</span> 0.038<span style="text-decoration: underline;">8</span> 0.043<span style="text-decoration: underline;">9</span> 0.044<span style="text-decoration: underline;">0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>         1 pls       0.025<span style="text-decoration: underline;">8</span> 0.024<span style="text-decoration: underline;">5</span> 0.027<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">5</span> 0.031<span style="text-decoration: underline;">1</span> 0.034<span style="text-decoration: underline;">3</span> 0.031<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>         2 pls       0.035<span style="text-decoration: underline;">1</span> 0.034<span style="text-decoration: underline;">4</span> 0.032<span style="text-decoration: underline;">9</span> 0.031<span style="text-decoration: underline;">5</span> 0.032<span style="text-decoration: underline;">8</span> 0.036<span style="text-decoration: underline;">5</span> 0.041<span style="text-decoration: underline;">6</span> 0.040<span style="text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>         3 pls       0.024<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">6</span> 0.025<span style="text-decoration: underline;">8</span> 0.025<span style="text-decoration: underline;">3</span> 0.029<span style="text-decoration: underline;">2</span> 0.032<span style="text-decoration: underline;">4</span> 0.031<span style="text-decoration: underline;">0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2,143 more variables: X358 &lt;dbl&gt;, X359 &lt;dbl&gt;, X360 &lt;dbl&gt;, X361 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   X362 &lt;dbl&gt;, X363 &lt;dbl&gt;, X364 &lt;dbl&gt;, X365 &lt;dbl&gt;, X366 &lt;dbl&gt;, X367 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   X368 &lt;dbl&gt;, X369 &lt;dbl&gt;, X370 &lt;dbl&gt;, X371 &lt;dbl&gt;, X372 &lt;dbl&gt;, X373 &lt;dbl&gt;,</span></span>

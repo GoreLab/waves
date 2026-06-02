@@ -41,6 +41,53 @@
   [`predict_spectra()`](https://GoreLab.github.io/waves/reference/predict_spectra.md)
   now reads `ncomp` directly from the model object instead of the stats
   file.
+- Bug fix:
+  [`train_spectra()`](https://GoreLab.github.io/waves/reference/train_spectra.md)
+  now correctly subsets partitioned data using column names rather than
+  pre-computed indices, preventing an `undefined columns selected` crash
+  when `cv.scheme` is used (the genotype column is removed by
+  [`format_cv()`](https://GoreLab.github.io/waves/reference/format_cv.md)
+  before subsetting).
+- Bug fix:
+  [`train_spectra()`](https://GoreLab.github.io/waves/reference/train_spectra.md)
+  now correctly determines the training data for the final model when
+  `cv.scheme` is used. It calls
+  [`format_cv()`](https://GoreLab.github.io/waves/reference/format_cv.md)
+  one final time to obtain the training set defined by the chosen
+  scheme: CV0/CV00 train on trial2 + trial3; CV1 trains on t1.b + t2.b;
+  CV2 trains on t1.b + trial2. In all schemes the test set is t1.a
+  (held-out genotypes from trial1).
+- Bug fix:
+  [`test_spectra()`](https://GoreLab.github.io/waves/reference/test_spectra.md)
+  now correctly forwards `best.model.metric` and `seed` to
+  [`train_spectra()`](https://GoreLab.github.io/waves/reference/train_spectra.md).
+  Previously these arguments were accepted but silently ignored.
+- Bug fix:
+  [`train_spectra()`](https://GoreLab.github.io/waves/reference/train_spectra.md)
+  now calls [`set.seed()`](https://rdrr.io/r/base/Random.html) before
+  `createDataPartition()`, ensuring that stratified train/test splits
+  are fully reproducible. Previously,
+  [`set.seed()`](https://rdrr.io/r/base/Random.html) was called after
+  `createDataPartition()`, so the partition depended on whatever the
+  random state happened to be at call time. **Note on reproducibility:**
+  users who called
+  [`test_spectra()`](https://GoreLab.github.io/waves/reference/test_spectra.md)
+  with a non-default `seed` were previously receiving results generated
+  with `seed = 1` regardless of the value they set. To reproduce old
+  results, set `seed = 1` explicitly. This will restore previous
+  iterative performance statistics (RMSEp, R2p, etc.), but the returned
+  `$model` object will still differ due to the RF, SVM, and PLS final
+  model fixes also introduced in this version.
+- Bug fix: Removed invalid `ntree` and `mtry` arguments from
+  `predict.randomForest()` calls in `train_individual_model()` and
+  [`predict_spectra()`](https://GoreLab.github.io/waves/reference/predict_spectra.md).
+  These arguments are not accepted by `predict.randomForest()` and were
+  silently ignored.
+- Bug fix: Fixed corrupted `importance` output when running
+  [`test_spectra()`](https://GoreLab.github.io/waves/reference/test_spectra.md)
+  with multiple pretreatments and an SVM model. Previously,
+  [`cbind()`](https://rdrr.io/r/base/cbind.html) on a `NULL` importance
+  element produced a garbage 1×1 matrix instead of `NULL`.
 
 ## waves 0.2.6
 

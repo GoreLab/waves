@@ -307,19 +307,19 @@ test.model <- ikeogu.2017 %>%
 #> # A tibble: 13 × 40
 #>    Pretreatment RMSEp_mean R2p_mean RPD_mean RPIQ_mean CCC_mean Bias_mean
 #>    <chr>             <dbl>    <dbl>    <dbl>     <dbl>    <dbl>     <dbl>
-#>  1 Raw_data           2.16   0.776     2.14       2.63    0.862    0.0232
-#>  2 SNV                1.44   0.891     3.10       4.17    0.942   -0.0648
-#>  3 SNV1D              2.55   0.655     1.72       2.30    0.774   -0.0250
-#>  4 SNV2D              4.25   0.1000    1.03       1.37    0.234    0.454 
-#>  5 D1                 2.47   0.685     1.77       2.35    0.784    0.111 
-#>  6 D2                 4.23   0.106     1.03       1.37    0.243    0.507 
-#>  7 SG                 1.93   0.804     2.25       3.01    0.884    0.0806
-#>  8 SNVSG              1.41   0.895     3.15       4.23    0.944   -0.0557
-#>  9 SGD1               1.98   0.794     2.20       2.94    0.880    0.0339
-#> 10 SG.D1W5            2.04   0.781     2.14       2.85    0.871    0.0847
-#> 11 SG.D1W11           1.94   0.804     2.25       3.01    0.886    0.0405
-#> 12 SG.D2W5            4.63   0.0689    0.953      1.27    0.163    0.542 
-#> 13 SG.D2W11           3.01   0.529     1.44       1.92    0.693    0.228 
+#>  1 Raw_data           2.30   0.717     1.86       2.41    0.817     0.299
+#>  2 SNV                1.83   0.820     2.34       3.03    0.888     0.190
+#>  3 SNV1D              2.88   0.559     1.47       1.90    0.717     0.351
+#>  4 SNV2D              4.28   0.0717    0.988      1.28    0.205     0.635
+#>  5 D1                 2.76   0.591     1.53       1.99    0.738     0.463
+#>  6 D2                 4.28   0.0728    0.988      1.28    0.206     0.658
+#>  7 SG                 2.30   0.716     1.86       2.41    0.817     0.299
+#>  8 SNVSG              1.80   0.828     2.39       3.09    0.893     0.167
+#>  9 SGD1               2.37   0.706     1.81       2.34    0.807     0.370
+#> 10 SG.D1W5            2.33   0.721     1.83       2.37    0.814     0.460
+#> 11 SG.D1W11           2.35   0.713     1.82       2.35    0.811     0.395
+#> 12 SG.D2W5            4.07   0.0941    1.04       1.35    0.225     0.370
+#> 13 SG.D2W11           3.15   0.497     1.34       1.74    0.635     0.850
 #> # ℹ 33 more variables: SEP_mean <dbl>, RMSEcv_mean <dbl>, R2cv_mean <dbl>,
 #> #   R2sp_mean <dbl>, best.ncomp_mean <dbl>, best.ntree_mean <dbl>,
 #> #   best.mtry_mean <dbl>, RMSEp_sd <dbl>, R2p_sd <dbl>, RPD_sd <dbl>,
@@ -342,7 +342,7 @@ test.model$best.model.stats
 #> # A tibble: 1 × 40
 #>   Pretreatment RMSEp_mean R2p_mean RPD_mean RPIQ_mean CCC_mean Bias_mean
 #>   <chr>             <dbl>    <dbl>    <dbl>     <dbl>    <dbl>     <dbl>
-#> 1 SNVSG              1.41    0.895     3.15      4.23    0.944   -0.0557
+#> 1 SNVSG              1.80    0.828     2.39      3.09    0.893     0.167
 #> # ℹ 33 more variables: SEP_mean <dbl>, RMSEcv_mean <dbl>, R2cv_mean <dbl>,
 #> #   R2sp_mean <dbl>, best.ncomp_mean <dbl>, best.ntree_mean <dbl>,
 #> #   best.mtry_mean <dbl>, RMSEp_sd <dbl>, R2p_sd <dbl>, RPD_sd <dbl>,

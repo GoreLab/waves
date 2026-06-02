@@ -404,14 +404,14 @@ summary(results.list$model)
 ``` r
 
 results.list$summary.model.performance
-#>   SummaryType ModelType      RMSEp        R2p       RPD      RPIQ        CCC
-#> 1        mean       pls 1.95376055 0.81071964 2.2929289 2.7735699 0.89625825
-#> 2          sd       pls 0.09988373 0.02828736 0.1234882 0.1134962 0.01896225
-#> 3        mode       pls 1.85463762 0.83763116 2.3948734 2.8890861 0.91442160
-#>          Bias       SEP     RMSEcv        R2cv       R2sp best.ncomp best.ntree
-#> 1 -0.03665762 1.9740073 2.00724284 0.751925760 0.76195677          3         NA
-#> 2  0.15395985 0.1009188 0.02247514 0.008214219 0.02488035          0         NA
-#> 3 -0.07584944 1.8738572 2.01782789 0.750662996 0.77188776          3         NA
+#>   SummaryType ModelType     RMSEp        R2p      RPD      RPIQ        CCC
+#> 1        mean       pls 2.0440540 0.77824381 2.085018 2.6038009 0.85155095
+#> 2          sd       pls 0.2661027 0.02093217 0.183391 0.3062501 0.04696515
+#> 3        mode       pls 1.8971232 0.78270780 2.139263 2.7700624 0.86628031
+#>          Bias       SEP     RMSEcv      R2cv       R2sp best.ncomp best.ntree
+#> 1 -0.05516781 2.0652364 1.95463427 0.7755627 0.77670789          3         NA
+#> 2  0.09468830 0.2688604 0.08412512 0.0157923 0.01211986          0         NA
+#> 3 -0.13588174 1.9167831 1.96423744 0.7807426 0.76866372          3         NA
 #>   best.mtry
 #> 1        NA
 #> 2        NA
@@ -426,13 +426,13 @@ results.list$summary.model.performance
 
 results.list$model.performance
 #>   Iteration ModelType    RMSEp       R2p      RPD     RPIQ       CCC
-#> 1         1       pls 1.854638 0.8376312 2.394873 2.889086 0.9144216
-#> 2         2       pls 2.054388 0.7812326 2.155615 2.662208 0.8765871
-#> 3         3       pls 1.952256 0.8132952 2.328298 2.769416 0.8977660
+#> 1         1       pls 1.897123 0.7827078 2.139263 2.770062 0.8662803
+#> 2         2       pls 1.883812 0.7965839 2.235167 2.790961 0.8893859
+#> 3         3       pls 2.351227 0.7554397 1.880623 2.250380 0.7989866
 #>          Bias      SEP   RMSEcv      R2cv      R2sp best.ncomp best.ntree
-#> 1 -0.07584944 1.873857 2.017828 0.7506630 0.7718878          3         NA
-#> 2  0.13311031 2.075678 1.981430 0.7606982 0.7803379          3         NA
-#> 3 -0.16723372 1.972487 2.022471 0.7444160 0.7336447          3         NA
+#> 1 -0.13588174 1.916783 1.964237 0.7807426 0.7686637          3         NA
+#> 2  0.04906262 1.903334 2.033546 0.7578310 0.7708123          3         NA
+#> 3 -0.07868431 2.375593 1.866120 0.7881145 0.7906476          3         NA
 #>   best.mtry
 #> 1        NA
 #> 2        NA
@@ -447,12 +447,12 @@ results.list$model.performance
 
 head(results.list$predictions)
 #>   Iteration ModelType  unique.id reference predicted
-#> 1         1       pls  C16Mcal_5  33.44273  29.65800
-#> 2         1       pls C16Mcal_17  36.62819  38.96732
-#> 3         1       pls C16Mcal_18  39.56322  36.66932
-#> 4         1       pls C16Mcal_28  29.21000  30.11402
-#> 5         1       pls C16Mcal_31  32.40875  33.56930
-#> 6         1       pls C16Mcal_37  36.74377  37.08231
+#> 1         1       pls  C16Mcal_3  42.04462  39.73413
+#> 2         1       pls C16Mcal_11  35.23000  37.05843
+#> 3         1       pls C16Mcal_14  42.23797  41.23787
+#> 4         1       pls C16Mcal_16  36.37963  38.47196
+#> 5         1       pls C16Mcal_17  36.62819  38.38934
+#> 6         1       pls C16Mcal_21  37.61227  37.58763
 ```
 
 5.  `importance` is a `data.frame` containing variable importance
@@ -465,9 +465,9 @@ results.list$importance[, 1:7]
 #> # A tibble: 3 × 7
 #>   Iteration ModelType   X350   X351   X352   X353   X354
 #>       <int> <chr>      <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
-#> 1         1 pls       0.0404 0.0397 0.0374 0.0369 0.0388
-#> 2         2 pls       0.0277 0.0263 0.0279 0.0278 0.0283
-#> 3         3 pls       0.0223 0.0225 0.0238 0.0242 0.0254
+#> 1         1 pls       0.0258 0.0245 0.0278 0.0268 0.0265
+#> 2         2 pls       0.0351 0.0344 0.0329 0.0315 0.0328
+#> 3         3 pls       0.0241 0.0251 0.0256 0.0258 0.0253
 ```
 
 | Statistic\* | Description |
@@ -547,11 +547,11 @@ model.to.save$best.model.stats %>%
   pivot_wider(id_cols = c(Pretreatment, summary_type),
               names_from = statistic, values_from = value)
 #> # A tibble: 3 × 15
-#>   Pretreatment summary_type RMSEp    R2p   RPD  RPIQ    CCC    Bias   SEP RMSEcv
-#>   <chr>        <chr>        <dbl>  <dbl> <dbl> <dbl>  <dbl>   <dbl> <dbl>  <dbl>
-#> 1 SNVSG        mean         1.64  0.853  2.71  3.41  0.922  -0.0183 1.67   1.47 
-#> 2 SNVSG        sd           0.131 0.0612 0.611 0.159 0.0313  0.111  0.133  0.122
-#> 3 SNVSG        mode         1.55  0.897  3.14  3.52  0.944  -0.0971 1.57   1.56 
+#>   Pretreatment summary_type RMSEp    R2p   RPD  RPIQ    CCC   Bias   SEP RMSEcv
+#>   <chr>        <chr>        <dbl>  <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>  <dbl>
+#> 1 SNVSG        mean         1.71  0.845  2.55  3.19  0.907  -0.140 1.73  1.57  
+#> 2 SNVSG        sd           0.299 0.0572 0.398 0.604 0.0320  0.442 0.303 0.0145
+#> 3 SNVSG        mode         1.50  0.885  2.83  3.61  0.930  -0.453 1.52  1.56  
 #> # ℹ 5 more variables: R2cv <dbl>, R2sp <dbl>, best.ncomp <dbl>,
 #> #   best.ntree <dbl>, best.mtry <dbl>
 ```
