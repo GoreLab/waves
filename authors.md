@@ -12,7 +12,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/GoreLab/waves/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/GoreLab/waves/blob/v0.2.7/inst/CITATION)
 
 Hershberger, J, Morales, N, Simoes, CC, Ellerbrock, B, Bauchet, G,
 Mueller, LA, & Gore, MA. (2021). Making waves in Breedbase: An

@@ -2,6 +2,8 @@
 
 ## waves 0.2.7
 
+CRAN release: 2026-06-02
+
 - Bug fix: Fixed namespace resolution error with
   [`lifecycle::deprecated()`](https://lifecycle.r-lib.org/reference/deprecated.html)
   function calls that was causing “could not find function deprecated”
