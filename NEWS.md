@@ -1,5 +1,9 @@
 # waves
 
+# waves 0.2.8 (development version)
+
+* Deprecated arguments in `train_spectra()` and `test_spectra()` now throw errors instead of warnings.
+
 # waves 0.2.7
 
 * Bug fix: Fixed namespace resolution error with `lifecycle::deprecated()` function calls that was causing "could not find function deprecated" errors for users. All function parameters now properly use `lifecycle::deprecated()` instead of `deprecated()`.

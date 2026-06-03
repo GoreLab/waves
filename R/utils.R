@@ -602,10 +602,10 @@ aggregate_pretreatment_results <- function(training.results.i,
 
     # Reformat summary statistics data.frame for multiple pretreatments
     summary.i <- training.results.i$summary.model.performance %>%
-      tidyr::pivot_longer(cols = .data$RMSEp:.data$best.mtry) %>%
+      tidyr::pivot_longer(cols = "RMSEp":"best.mtry") %>%
       tidyr::pivot_wider(
-        id_cols = c(.data$Pretreatment),
-        names_from = c(.data$name, .data$SummaryType),
+        id_cols = "Pretreatment",
+        names_from = c("name", "SummaryType"),
         names_sep = "_"
       )
   } else {
