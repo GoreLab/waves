@@ -46,12 +46,13 @@ test_that("test_spectra accepts both valid best.model.metric values without erro
 
 # ── SVM importance with multiple pretreatments ─────────────────────────────────
 
-test_that("test_spectra SVM importance is NULL with multiple pretreatments", {
+test_that("test_spectra svmLinear returns importance with multiple pretreatments", {
   skip_on_cran()
   result <- test_spectra(test_df, num.iterations = 2, tune.length = 3,
                          pretreatment = 1:2, model.method = "svmLinear",
                          verbose = FALSE)
-  expect_null(result$importance)
+  expect_false(is.null(result$importance))
+  expect_true(any(startsWith(names(result$importance), "X")))
 })
 
 # ── Output structure ───────────────────────────────────────────────────────────

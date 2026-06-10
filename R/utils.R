@@ -33,24 +33,24 @@ get_mode <- function(vector.input) {
 #' @importFrom lifecycle is_present deprecate_warn
 #' @noRd
 handle_deprecations <- function(function_name,
-                                wavelengths = NULL,
-                                preprocessing = NULL,
-                                output.summary = NULL,
-                                rf.variable.importance = NULL,
-                                save.model = NULL,
-                                return.model = NULL) {
+                                wavelengths = lifecycle::deprecated(),
+                                preprocessing = lifecycle::deprecated(),
+                                output.summary = lifecycle::deprecated(),
+                                rf.variable.importance = lifecycle::deprecated(),
+                                save.model = lifecycle::deprecated(),
+                                return.model = lifecycle::deprecated()) {
   
   if (lifecycle::is_present(wavelengths)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.2.8",
       what = paste0(function_name, "(wavelengths)"),
       details = "Wavelength specification is now inferred from column names."
     )
   }
 
   if (lifecycle::is_present(preprocessing)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.2.8",
       what = paste0(function_name, "(preprocessing)"),
       details = paste(
         "Argument `preprocessing` is deprecated.",
@@ -61,33 +61,33 @@ handle_deprecations <- function(function_name,
   }
 
   if (lifecycle::is_present(rf.variable.importance)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.2.8",
       what = paste0(function_name, "(rf.variable.importance)"),
       details = "Variable importance is now output by default when
-      `model.method` is set to `pls` or `rf`."
+      `model.method` is set to `pls`, `rf`, or `svmLinear`."
     )
   }
 
   if (lifecycle::is_present(output.summary)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.2.8",
       what = paste0(function_name, "(output.summary)"),
       details = "Summary output is now returned by default."
     )
   }
 
   if (lifecycle::is_present(save.model)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.2.8",
       what = paste0(function_name, "(save.model)"),
       details = "Models are now saved by default."
     )
   }
 
   if (lifecycle::is_present(return.model)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.2.8",
       what = paste0(function_name, "(return.model)"),
       details = "Trained models are now returned by default."
     )
@@ -393,10 +393,29 @@ train_individual_model <- function(train.ref.spectra,
     R2cv <- best.results$Rsquared
   }
 
-  # Variable importance (for pls and rf only)
+  # Variable importance
   importance.df <- NULL
   if (model.method %in% c("pls", "rf")) {
     importance.df <- caret::varImp(data.trained$finalModel)
+  } else if (model.method == "svmLinear") {
+    # caret does not support varImp for svmLinear regression. Importance is
+    # computed from the primal weight vector: w = X_sv^T * alpha, where X_sv
+    # are the support vectors and alpha are the dual coefficients. Absolute
+    # values give per-wavelength importance (standard for linear SVM).
+    importance.df <- tryCatch({
+      X <- as.matrix(train.ref.spectra[, -1])
+      alpha <- data.trained$finalModel@alpha
+      sv_idx <- data.trained$finalModel@SVindex
+      w <- t(X[sv_idx, ]) %*% alpha
+      data.frame(
+        Overall = abs(as.vector(w)),
+        row.names = colnames(X)
+      )
+    }, error = function(e) {
+      warning("Could not compute variable importance for svmLinear: ",
+              conditionMessage(e))
+      NULL
+    })
   }
 
   return(list(

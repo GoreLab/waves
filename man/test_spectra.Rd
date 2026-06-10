@@ -141,7 +141,7 @@ the full performance statistics.}
 \item{rf.variable.importance}{DEPRECATED
 \code{rf.variable.importance = FALSE} is no longer supported; variable
 importance results are always returned if the \code{model.method} is
-set to `pls` or `rf`.}
+set to `pls`, `rf`, or `svmLinear`.}
 }
 \value{
 \code{list} of 5 objects:
@@ -159,7 +159,20 @@ set to `pls` or `rf`.}
   model training.
   \item `importance` is a \code{data.frame} containing variable importance
   results for each wavelength at each iteration of model training.
-  If \code{model.method} is not "pls" or "rf", this list item is \code{NULL}.
+  Variable importance is not available for \code{model.method = "svmRadial"}
+  and this list item will be \code{NULL}. The importance measure differs by
+  model type:
+  \itemize{
+    \item \strong{PLS}: weighted sums of absolute regression coefficients,
+    weighted by the reduction in sums of squares across components
+    (via \code{caret::varImp})
+    \item \strong{RF}: mean decrease in accuracy/MSE from permuting each
+    variable across trees, normalized by standard error
+    (via \code{caret::varImp})
+    \item \strong{svmLinear}: absolute values of the primal weight vector
+    (\eqn{|w| = |X_{sv}^T \alpha|}), where \eqn{X_{sv}} are the support
+    vectors and \eqn{\alpha} are the dual coefficients
+  }
   }
 
 `summary.model.performance` and `model.performance` \code{data.frames}

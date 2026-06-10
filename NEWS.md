@@ -3,6 +3,7 @@
 # waves 0.2.8 (development version)
 
 * Deprecated arguments in `train_spectra()` and `test_spectra()` now throw errors instead of warnings.
+* `train_spectra()` and `test_spectra()` now return variable importance for `svmLinear` models. Importance is computed from the primal weight vector (absolute values of `w = X_sv^T * alpha`).
 
 # waves 0.2.7
 
