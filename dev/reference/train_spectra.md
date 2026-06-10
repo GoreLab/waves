@@ -156,7 +156,7 @@ train_spectra(
 
   DEPRECATED `rf.variable.importance = FALSE` is no longer supported;
   variable importance results are always returned if the `model.method`
-  is set to \`pls\` or \`rf\`.
+  is set to \`pls\`, \`rf\`, or \`svmLinear\`.
 
 - output.summary:
 
@@ -187,8 +187,21 @@ list of the following:
     test set entry at each iteration of model training.
 
 5.  `importance` is a `data.frame` that contains variable importance for
-    each wavelength. Only available for `model.method` options "rf" and
-    "pls".
+    each wavelength. Only available for `model.method` options "rf",
+    "pls", and "svmLinear". Not available for "svmRadial". The
+    importance measure differs by model type:
+
+    - **PLS**: weighted sums of absolute regression coefficients,
+      weighted by the reduction in sums of squares across components
+      (via [`caret::varImp`](https://rdrr.io/pkg/caret/man/varImp.html))
+
+    - **RF**: mean decrease in accuracy/MSE from permuting each variable
+      across trees, normalized by standard error (via
+      [`caret::varImp`](https://rdrr.io/pkg/caret/man/varImp.html))
+
+    - **svmLinear**: absolute values of the primal weight vector
+      (\\\|w\| = \|X\_{sv}^T \alpha\|\\), where \\X\_{sv}\\ are the
+      support vectors and \\\alpha\\ are the dual coefficients
 
 Included summary statistics:
 
@@ -204,7 +217,7 @@ Included summary statistics:
 - **RMSECV**, the root mean squared error of cross-validation
 
 - **R2cv**, the coefficient of multiple determination of
-  cross-validation for PLSR models
+  cross-validation (k-fold CV for pls/svm; OOB for rf)
 
 - **RMSEP**, the root mean squared error of prediction
 
@@ -251,7 +264,7 @@ ikeogu.2017 %>%
   summary()
 #> Returning model...
 #>                           Length Class      Mode
-#> model                     20     mvr        list
+#> model                     22     mvr        list
 #> summary.model.performance 15     data.frame list
 #> model.performance         15     data.frame list
 #> predictions                5     data.frame list

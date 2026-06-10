@@ -1,6 +1,22 @@
 # Changelog
 
-## waves 0.2.6.9000 (development version)
+## waves 0.2.8 (development version)
+
+- Deprecated arguments in
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  and
+  [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md)
+  now throw errors instead of warnings.
+- [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  and
+  [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md)
+  now return variable importance for `svmLinear` models. Importance is
+  computed from the primal weight vector (absolute values of
+  `w = X_sv^T * alpha`).
+
+## waves 0.2.7
+
+CRAN release: 2026-06-02
 
 - Bug fix: Fixed namespace resolution error with
   [`lifecycle::deprecated()`](https://lifecycle.r-lib.org/reference/deprecated.html)
@@ -8,6 +24,86 @@
   errors for users. All function parameters now properly use
   [`lifecycle::deprecated()`](https://lifecycle.r-lib.org/reference/deprecated.html)
   instead of `deprecated()`.
+- Bug fix:
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  now correctly populates `RMSEcv` and `R2cv` for `rf`, `svmLinear`, and
+  `svmRadial` model methods. Previously these were always `NA` for
+  non-PLS models.
+- Bug fix: Replaced deprecated tidyr and dplyr functions across
+  [`plot_spectra()`](https://GoreLab.github.io/waves/dev/reference/plot_spectra.md),
+  [`aggregate_spectra()`](https://GoreLab.github.io/waves/dev/reference/aggregate_spectra.md),
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md),
+  and the `ikeogu.2017` example to resolve deprecation warnings.
+- Internal: Fixed `trainControl()` configuration in
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  — changed `method` from `"repeatedcv"` (with no repeats set) to `"cv"`
+  and removed a malformed `seeds` argument that was being silently
+  ignored. Reproducibility is maintained via the existing
+  [`set.seed()`](https://rdrr.io/r/base/Random.html) call.
+- Bug fix: The final RF model returned by
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  is now trained with 500 trees (the randomForest default) instead of
+  `tune.length` (≤5). The tuned `mtry` from training iterations is now
+  correctly applied to the final model.
+- Bug fix: The final SVM model returned by
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  no longer incorrectly uses the `unique.id` column as a predictor.
+  Training data is now subset to reference and spectral columns only,
+  consistent with iterative model training.
+- Bug fix: The final PLS model returned by
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  is now fit using the modal best `ncomp` from training iterations
+  rather than `tune.length`.
+  [`predict_spectra()`](https://GoreLab.github.io/waves/dev/reference/predict_spectra.md)
+  now reads `ncomp` directly from the model object instead of the stats
+  file.
+- Bug fix:
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  now correctly subsets partitioned data using column names rather than
+  pre-computed indices, preventing an `undefined columns selected` crash
+  when `cv.scheme` is used (the genotype column is removed by
+  [`format_cv()`](https://GoreLab.github.io/waves/dev/reference/format_cv.md)
+  before subsetting).
+- Bug fix:
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  now correctly determines the training data for the final model when
+  `cv.scheme` is used. It calls
+  [`format_cv()`](https://GoreLab.github.io/waves/dev/reference/format_cv.md)
+  one final time to obtain the training set defined by the chosen
+  scheme: CV0/CV00 train on trial2 + trial3; CV1 trains on t1.b + t2.b;
+  CV2 trains on t1.b + trial2. In all schemes the test set is t1.a
+  (held-out genotypes from trial1).
+- Bug fix:
+  [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md)
+  now correctly forwards `best.model.metric` and `seed` to
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md).
+  Previously these arguments were accepted but silently ignored.
+- Bug fix:
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
+  now calls [`set.seed()`](https://rdrr.io/r/base/Random.html) before
+  `createDataPartition()`, ensuring that stratified train/test splits
+  are fully reproducible. Previously,
+  [`set.seed()`](https://rdrr.io/r/base/Random.html) was called after
+  `createDataPartition()`, so the partition depended on whatever the
+  random state happened to be at call time. **Note on reproducibility:**
+  users who called
+  [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md)
+  with a non-default `seed` were previously receiving results generated
+  with `seed = 1` regardless of the value they set. To reproduce old
+  results, set `seed = 1` explicitly. This will restore previous
+  iterative performance statistics (RMSEp, R2p, etc.), but the returned
+  `$model` object will still differ due to the RF, SVM, and PLS final
+  model fixes also introduced in this version.
+- Bug fix: Removed invalid `ntree` and `mtry` arguments from
+  `predict.randomForest()` calls in `train_individual_model()` and
+  [`predict_spectra()`](https://GoreLab.github.io/waves/dev/reference/predict_spectra.md).
+  These arguments are not accepted by `predict.randomForest()` and were
+  silently ignored.
+- Bug fix: Fixed corrupted `importance` output when running
+  [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md)
+  with multiple pretreatments and an SVM model. Previously,
+  [`cbind()`](https://rdrr.io/r/base/cbind.html) on a `NULL` importance
+  element produced a garbage 1×1 matrix instead of `NULL`.
 
 ## waves 0.2.6
 

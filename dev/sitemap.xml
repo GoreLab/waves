@@ -1,87 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/AggregateSpectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/DoPreprocessing.html</loc>
-  </url>
-  <url>
-    <loc>/reference/FilterSpectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/FormatCV.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PlotSpectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PredictFromSavedModel.html</loc>
-  </url>
-  <url>
-    <loc>/reference/SaveModel.html</loc>
-  </url>
-  <url>
-    <loc>/reference/TestModelPerformance.html</loc>
-  </url>
-  <url>
-    <loc>/reference/TrainSpectralModel.html</loc>
-  </url>
-  <url>
-    <loc>/reference/aggregate_spectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/filter_spectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/format_cv.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ikeogu.2017.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_spectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/predict_spectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pretreat_spectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rename.html</loc>
-  </url>
-  <url>
-    <loc>/reference/save_model.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_spectra.html</loc>
-  </url>
-  <url>
-    <loc>/reference/train_spectra.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://GoreLab.github.io/waves/dev/CONTRIBUTING.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/LICENSE-text.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/LICENSE.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/articles/index.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/articles/waves.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/authors.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/index.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/news/index.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/aggregate_spectra.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/filter_spectra.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/format_cv.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/ikeogu.2017.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/index.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/plot_spectra.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/predict_spectra.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/pretreat_spectra.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/rename.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/save_model.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/test_spectra.html</loc></url>
+<url><loc>https://GoreLab.github.io/waves/dev/reference/train_spectra.html</loc></url>
 </urlset>
+

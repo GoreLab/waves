@@ -37,6 +37,7 @@ More detailed examples can be found in the package
 vignette can also be found by running the following:
 
 ``` r
+
 vignette("waves")
 ```
 
@@ -45,6 +46,7 @@ vignette("waves")
 Install the latest `waves` release directly from CRAN:
 
 ``` r
+
 install.packages("waves")
 ```
 
@@ -52,6 +54,7 @@ Alternatively, install the development version to get the most
 up-to-date (but not necessarily thoroughly tested) version:
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("GoreLab/waves")
 ```

@@ -241,33 +241,9 @@ test.model <- ikeogu.2017 %>%
     tune.length = 3,
     num.iterations = 3
   )
-#> Warning: The `save.model` argument of `test_spectra()` is deprecated as of waves 0.2.0.
-#> ℹ Models are now saved by default.
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
-#> Warning: The `return.model` argument of `test_spectra()` is deprecated as of waves
-#> 0.2.0.
-#> ℹ Trained models are now returned by default.
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
 #> Pretreatment initiated.
 #> Training models...
 #> Working on Raw_data 
-#> Warning: The `wavelengths` argument of `train_spectra()` is deprecated as of waves
-#> 0.2.0.
-#> ℹ Wavelength specification is now inferred from column names.
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
-#> Warning: The `preprocessing` argument of `train_spectra()` is deprecated as of waves
-#> 0.2.0.
-#> ℹ Argument `preprocessing` is deprecated. Use `pretreatment` instead:
-#>   `pretreatment = 1:13` (all), or `pretreatment = 1` (raw only).
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
-#> Warning: The `save.model` argument of `train_spectra()` is deprecated as of waves 0.2.0.
-#> ℹ Models are now saved by default.
-#> ℹ The deprecated feature was likely used in the waves package.
-#>   Please report the issue at <https://github.com/GoreLab/waves/issues>.
 #> Loading required package: lattice
 #> 
 #> Attaching package: ‘pls’
@@ -307,19 +283,19 @@ test.model <- ikeogu.2017 %>%
 #> # A tibble: 13 × 40
 #>    Pretreatment RMSEp_mean R2p_mean RPD_mean RPIQ_mean CCC_mean Bias_mean
 #>    <chr>             <dbl>    <dbl>    <dbl>     <dbl>    <dbl>     <dbl>
-#>  1 Raw_data           2.17   0.774     2.16       2.50    0.873    0.141 
-#>  2 SNV                1.73   0.860     2.64       3.28    0.916   -0.0808
-#>  3 SNV1D              2.61   0.704     1.74       2.18    0.781   -0.119 
-#>  4 SNV2D              4.56   0.0323    0.992      1.25    0.118    0.420 
-#>  5 D1                 2.46   0.720     1.86       2.31    0.799   -0.0538
-#>  6 D2                 4.56   0.0329    0.992      1.25    0.117    0.449 
-#>  7 SG                 2.06   0.817     2.20       2.74    0.886   -0.245 
-#>  8 SNVSG              1.70   0.863     2.69       3.33    0.918   -0.0813
-#>  9 SGD1               2.02   0.801     2.27       2.81    0.880   -0.158 
-#> 10 SG.D1W5            2.05   0.798     2.25       2.79    0.869   -0.149 
-#> 11 SG.D1W11           1.97   0.809     2.33       2.89    0.884   -0.165 
-#> 12 SG.D2W5            4.32   0.0950    1.05       1.32    0.213    0.199 
-#> 13 SG.D2W11           2.70   0.665     1.70       2.11    0.759    0.0578
+#>  1 Raw_data           2.30   0.717     1.86       2.41    0.817     0.299
+#>  2 SNV                1.83   0.820     2.34       3.03    0.888     0.190
+#>  3 SNV1D              2.88   0.559     1.47       1.90    0.717     0.351
+#>  4 SNV2D              4.28   0.0717    0.988      1.28    0.205     0.635
+#>  5 D1                 2.76   0.591     1.53       1.99    0.738     0.463
+#>  6 D2                 4.28   0.0728    0.988      1.28    0.206     0.658
+#>  7 SG                 2.30   0.716     1.86       2.41    0.817     0.299
+#>  8 SNVSG              1.80   0.828     2.39       3.09    0.893     0.167
+#>  9 SGD1               2.37   0.706     1.81       2.34    0.807     0.370
+#> 10 SG.D1W5            2.33   0.721     1.83       2.37    0.814     0.460
+#> 11 SG.D1W11           2.35   0.713     1.82       2.35    0.811     0.395
+#> 12 SG.D2W5            4.07   0.0941    1.04       1.35    0.225     0.370
+#> 13 SG.D2W11           3.15   0.497     1.34       1.74    0.635     0.850
 #> # ℹ 33 more variables: SEP_mean <dbl>, RMSEcv_mean <dbl>, R2cv_mean <dbl>,
 #> #   R2sp_mean <dbl>, best.ncomp_mean <dbl>, best.ntree_mean <dbl>,
 #> #   best.mtry_mean <dbl>, RMSEp_sd <dbl>, R2p_sd <dbl>, RPD_sd <dbl>,
@@ -342,7 +318,7 @@ test.model$best.model.stats
 #> # A tibble: 1 × 40
 #>   Pretreatment RMSEp_mean R2p_mean RPD_mean RPIQ_mean CCC_mean Bias_mean
 #>   <chr>             <dbl>    <dbl>    <dbl>     <dbl>    <dbl>     <dbl>
-#> 1 SNVSG              1.70    0.863     2.69      3.33    0.918   -0.0813
+#> 1 SNVSG              1.80    0.828     2.39      3.09    0.893     0.167
 #> # ℹ 33 more variables: SEP_mean <dbl>, RMSEcv_mean <dbl>, R2cv_mean <dbl>,
 #> #   R2sp_mean <dbl>, best.ncomp_mean <dbl>, best.ntree_mean <dbl>,
 #> #   best.mtry_mean <dbl>, RMSEp_sd <dbl>, R2p_sd <dbl>, RPD_sd <dbl>,

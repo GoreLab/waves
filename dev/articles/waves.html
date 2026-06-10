@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="waves">
 <meta name="robots" content="noindex">
@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">waves</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.6.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.7.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -158,7 +158,7 @@ column names should start with “X”. Remove rows with missing values.</p>
 <span>    detect.outliers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    alternate.title <span class="op">=</span> <span class="st">"Example spectra"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="waves_files/figure-html/plot_raw-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
+<p><img src="waves_files/figure-html/plot_raw-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="perform-outlier-removal-with-filter_spectra-">3. Perform outlier removal with <code>filter_spectra()</code>.<a class="anchor" aria-label="anchor" href="#perform-outlier-removal-with-filter_spectra-"></a>
@@ -249,57 +249,9 @@ more information on the arguments and output for this function.</p>
 <span>    num.iterations <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>    pretreatment <span class="op">=</span> <span class="fl">1</span></span>
 <span>    <span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `save.model` argument of `test_spectra()` is deprecated as of waves 0.2.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Models are now saved by default.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">waves</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/GoreLab/waves/issues&gt;</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Warning: The `return.model` argument of `test_spectra()` is deprecated as of waves</span></span>
-<span><span class="co">#&gt; 0.2.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Trained models are now returned by default.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">waves</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/GoreLab/waves/issues&gt;</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="co">#&gt; Pretreatment initiated.</span></span>
 <span><span class="co">#&gt; Training models...</span></span>
 <span><span class="co">#&gt; Working on Raw_data</span></span>
-<span><span class="co">#&gt; Warning: The `wavelengths` argument of `train_spectra()` is deprecated as of waves</span></span>
-<span><span class="co">#&gt; 0.2.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Wavelength specification is now inferred from column names.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">waves</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/GoreLab/waves/issues&gt;</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Warning: The `preprocessing` argument of `train_spectra()` is deprecated as of waves</span></span>
-<span><span class="co">#&gt; 0.2.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Argument `preprocessing` is deprecated. Use `pretreatment` instead:</span></span>
-<span><span class="co">#&gt;   `pretreatment = 1:13` (all), or `pretreatment = 1` (raw only).</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">waves</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/GoreLab/waves/issues&gt;</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Warning: The `save.model` argument of `train_spectra()` is deprecated as of waves 0.2.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Models are now saved by default.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">waves</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/GoreLab/waves/issues&gt;</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Loading required package: lattice</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'pls'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:caret':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     R2</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     loadings</span></span>
 <span><span class="co">#&gt; Returning model...</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="pretreat-spectra">5.1. Pretreat spectra<a class="anchor" aria-label="anchor" href="#pretreat-spectra"></a>
@@ -340,7 +292,7 @@ available pretreatments:</p>
 <span>       x <span class="op">=</span> <span class="st">"Wavelength"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Spectral Value"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">pretreatment</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="waves_files/figure-html/plot_pretreatments-1.png" class="r-plt" width="672" style="display: block; margin: auto;">
+<p><img src="waves_files/figure-html/plot_pretreatments-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;">
 Note that the scales in this plot are “free”. Without free scales,
 anything derivative-based treatment (D1 or D2) looks like it’s a
 constant zero in comparison to those without derivative-based treatments
@@ -497,14 +449,14 @@ provided.</li>
 </ol>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results.list</span><span class="op">$</span><span class="va">summary.model.performance</span></span>
-<span><span class="co">#&gt;   SummaryType ModelType      RMSEp        R2p       RPD      RPIQ        CCC</span></span>
-<span><span class="co">#&gt; 1        mean       pls 1.95376055 0.81071964 2.2929289 2.7735699 0.89625825</span></span>
-<span><span class="co">#&gt; 2          sd       pls 0.09988373 0.02828736 0.1234882 0.1134962 0.01896225</span></span>
-<span><span class="co">#&gt; 3        mode       pls 1.85463762 0.83763116 2.3948734 2.8890861 0.91442160</span></span>
-<span><span class="co">#&gt;          Bias       SEP     RMSEcv        R2cv       R2sp best.ncomp best.ntree</span></span>
-<span><span class="co">#&gt; 1 -0.03665762 1.9740073 2.00724284 0.751925760 0.76195677          3         NA</span></span>
-<span><span class="co">#&gt; 2  0.15395985 0.1009188 0.02247514 0.008214219 0.02488035          0         NA</span></span>
-<span><span class="co">#&gt; 3 -0.07584944 1.8738572 2.01782789 0.750662996 0.77188776          3         NA</span></span>
+<span><span class="co">#&gt;   SummaryType ModelType     RMSEp        R2p      RPD      RPIQ        CCC</span></span>
+<span><span class="co">#&gt; 1        mean       pls 2.0440540 0.77824381 2.085018 2.6038009 0.85155095</span></span>
+<span><span class="co">#&gt; 2          sd       pls 0.2661027 0.02093217 0.183391 0.3062501 0.04696515</span></span>
+<span><span class="co">#&gt; 3        mode       pls 1.8971232 0.78270780 2.139263 2.7700624 0.86628031</span></span>
+<span><span class="co">#&gt;          Bias       SEP     RMSEcv      R2cv       R2sp best.ncomp best.ntree</span></span>
+<span><span class="co">#&gt; 1 -0.05516781 2.0652364 1.95463427 0.7755627 0.77670789          3         NA</span></span>
+<span><span class="co">#&gt; 2  0.09468830 0.2688604 0.08412512 0.0157923 0.01211986          0         NA</span></span>
+<span><span class="co">#&gt; 3 -0.13588174 1.9167831 1.96423744 0.7807426 0.76866372          3         NA</span></span>
 <span><span class="co">#&gt;   best.mtry</span></span>
 <span><span class="co">#&gt; 1        NA</span></span>
 <span><span class="co">#&gt; 2        NA</span></span>
@@ -518,13 +470,13 @@ separately (see below).</li>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results.list</span><span class="op">$</span><span class="va">model.performance</span></span>
 <span><span class="co">#&gt;   Iteration ModelType    RMSEp       R2p      RPD     RPIQ       CCC</span></span>
-<span><span class="co">#&gt; 1         1       pls 1.854638 0.8376312 2.394873 2.889086 0.9144216</span></span>
-<span><span class="co">#&gt; 2         2       pls 2.054388 0.7812326 2.155615 2.662208 0.8765871</span></span>
-<span><span class="co">#&gt; 3         3       pls 1.952256 0.8132952 2.328298 2.769416 0.8977660</span></span>
+<span><span class="co">#&gt; 1         1       pls 1.897123 0.7827078 2.139263 2.770062 0.8662803</span></span>
+<span><span class="co">#&gt; 2         2       pls 1.883812 0.7965839 2.235167 2.790961 0.8893859</span></span>
+<span><span class="co">#&gt; 3         3       pls 2.351227 0.7554397 1.880623 2.250380 0.7989866</span></span>
 <span><span class="co">#&gt;          Bias      SEP   RMSEcv      R2cv      R2sp best.ncomp best.ntree</span></span>
-<span><span class="co">#&gt; 1 -0.07584944 1.873857 2.017828 0.7506630 0.7718878          3         NA</span></span>
-<span><span class="co">#&gt; 2  0.13311031 2.075678 1.981430 0.7606982 0.7803379          3         NA</span></span>
-<span><span class="co">#&gt; 3 -0.16723372 1.972487 2.022471 0.7444160 0.7336447          3         NA</span></span>
+<span><span class="co">#&gt; 1 -0.13588174 1.916783 1.964237 0.7807426 0.7686637          3         NA</span></span>
+<span><span class="co">#&gt; 2  0.04906262 1.903334 2.033546 0.7578310 0.7708123          3         NA</span></span>
+<span><span class="co">#&gt; 3 -0.07868431 2.375593 1.866120 0.7881145 0.7906476          3         NA</span></span>
 <span><span class="co">#&gt;   best.mtry</span></span>
 <span><span class="co">#&gt; 1        NA</span></span>
 <span><span class="co">#&gt; 2        NA</span></span>
@@ -538,12 +490,12 @@ iteration of model training.</li>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results.list</span><span class="op">$</span><span class="va">predictions</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   Iteration ModelType  unique.id reference predicted</span></span>
-<span><span class="co">#&gt; 1         1       pls  C16Mcal_5  33.44273  29.65800</span></span>
-<span><span class="co">#&gt; 2         1       pls C16Mcal_17  36.62819  38.96732</span></span>
-<span><span class="co">#&gt; 3         1       pls C16Mcal_18  39.56322  36.66932</span></span>
-<span><span class="co">#&gt; 4         1       pls C16Mcal_28  29.21000  30.11402</span></span>
-<span><span class="co">#&gt; 5         1       pls C16Mcal_31  32.40875  33.56930</span></span>
-<span><span class="co">#&gt; 6         1       pls C16Mcal_37  36.74377  37.08231</span></span></code></pre></div>
+<span><span class="co">#&gt; 1         1       pls  C16Mcal_3  42.04462  39.73413</span></span>
+<span><span class="co">#&gt; 2         1       pls C16Mcal_11  35.23000  37.05843</span></span>
+<span><span class="co">#&gt; 3         1       pls C16Mcal_14  42.23797  41.23787</span></span>
+<span><span class="co">#&gt; 4         1       pls C16Mcal_16  36.37963  38.47196</span></span>
+<span><span class="co">#&gt; 5         1       pls C16Mcal_17  36.62819  38.38934</span></span>
+<span><span class="co">#&gt; 6         1       pls C16Mcal_21  37.61227  37.58763</span></span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>
 <code>importance</code> is a <code>data.frame</code> containing
@@ -556,9 +508,9 @@ list item is <code>NULL</code>.</li>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span></span>
 <span><span class="co">#&gt;   Iteration ModelType   X350   X351   X352   X353   X354</span></span>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 pls       0.040<span style="text-decoration: underline;">4</span> 0.039<span style="text-decoration: underline;">7</span> 0.037<span style="text-decoration: underline;">4</span> 0.036<span style="text-decoration: underline;">9</span> 0.038<span style="text-decoration: underline;">8</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 pls       0.027<span style="text-decoration: underline;">7</span> 0.026<span style="text-decoration: underline;">3</span> 0.027<span style="text-decoration: underline;">9</span> 0.027<span style="text-decoration: underline;">8</span> 0.028<span style="text-decoration: underline;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 pls       0.022<span style="text-decoration: underline;">3</span> 0.022<span style="text-decoration: underline;">5</span> 0.023<span style="text-decoration: underline;">8</span> 0.024<span style="text-decoration: underline;">2</span> 0.025<span style="text-decoration: underline;">4</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         1 pls       0.025<span style="text-decoration: underline;">8</span> 0.024<span style="text-decoration: underline;">5</span> 0.027<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">8</span> 0.026<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         2 pls       0.035<span style="text-decoration: underline;">1</span> 0.034<span style="text-decoration: underline;">4</span> 0.032<span style="text-decoration: underline;">9</span> 0.031<span style="text-decoration: underline;">5</span> 0.032<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>         3 pls       0.024<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">1</span> 0.025<span style="text-decoration: underline;">6</span> 0.025<span style="text-decoration: underline;">8</span> 0.025<span style="text-decoration: underline;">3</span></span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -691,9 +643,9 @@ will take the extra step of saving an .Rds file for you if
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 15</span></span></span>
 <span><span class="co">#&gt;   Pretreatment summary_type RMSEp    R2p   RPD  RPIQ    CCC   Bias   SEP RMSEcv</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> SNVSG        mean         1.72  0.860  2.74  3.33  0.915   0.142 1.74  1.54  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> SNVSG        sd           0.202 0.065<span style="text-decoration: underline;">0</span> 0.718 0.182 0.046<span style="text-decoration: underline;">6</span>  0.563 0.205 0.030<span style="text-decoration: underline;">0</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> SNVSG        mode         1.58  0.906  3.25  3.46  0.948  -<span style="color: #BB0000;">0.256</span> 1.60  1.56  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> SNVSG        mean         1.71  0.845  2.55  3.19  0.907  -<span style="color: #BB0000;">0.140</span> 1.73  1.57  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> SNVSG        sd           0.299 0.057<span style="text-decoration: underline;">2</span> 0.398 0.604 0.032<span style="text-decoration: underline;">0</span>  0.442 0.303 0.014<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> SNVSG        mode         1.50  0.885  2.83  3.61  0.930  -<span style="color: #BB0000;">0.453</span> 1.52  1.56  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: R2cv &lt;dbl&gt;, R2sp &lt;dbl&gt;, best.ncomp &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   best.ntree &lt;dbl&gt;, best.mtry &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
@@ -768,7 +720,7 @@ pretreat the new spectral dataset accordingly.</p>
 <span>       x <span class="op">=</span> <span class="st">"Observed"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Predicted"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="waves_files/figure-html/plot_predictions-1.png" class="r-plt" width="576" style="display: block; margin: auto;"></p>
+<p><img src="waves_files/figure-html/plot_predictions-1.png" class="r-plt" alt="" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
