@@ -1,12 +1,38 @@
 # Changelog
 
-## waves 0.2.8 (development version)
+## waves 0.3.0 (development version)
 
-- Deprecated arguments in
-  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
-  and
+- Bug fix:
+  [`save_model()`](https://GoreLab.github.io/waves/dev/reference/save_model.md)
+  now correctly forwards `seed` to
+  [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md).
+  Previously the argument was accepted but silently ignored, so every
+  call ran with the default `seed = 1` regardless of the value supplied.
+  This is the same class of bug fixed for
   [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md)
-  now throw errors instead of warnings.
+  in 0.2.7, one level up. Users who set a non-default `seed` in
+  [`save_model()`](https://GoreLab.github.io/waves/dev/reference/save_model.md)
+  will see different (correctly seeded) results after this change.
+- [`save_model()`](https://GoreLab.github.io/waves/dev/reference/save_model.md)
+  now returns and writes model statistics in a consistent shape
+  regardless of how many pretreatments are supplied. Previously a single
+  pretreatment produced three rows (`mean`/`sd`/`mode`) with plain
+  metric names, while multiple pretreatments produced one row with
+  `_mean`/`_sd`/`_mode` suffixes. Both now produce the one-row suffixed
+  form. Code that read `$best.model.stats$RMSEp` from a
+  single-pretreatment call should now read
+  `$best.model.stats$RMSEp_mean`.
+- Deprecated arguments in
+  [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md),
+  [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md),
+  and
+  [`save_model()`](https://GoreLab.github.io/waves/dev/reference/save_model.md)
+  now throw errors instead of warnings. In
+  [`save_model()`](https://GoreLab.github.io/waves/dev/reference/save_model.md)
+  these are `save.model`, `wavelengths`, `autoselect.preprocessing`, and
+  `preprocessing.method`.
+- `kernlab` is now listed under `Suggests`; it is required at runtime by
+  the `svmLinear` and `svmRadial` model methods.
 - [`train_spectra()`](https://GoreLab.github.io/waves/dev/reference/train_spectra.md)
   and
   [`test_spectra()`](https://GoreLab.github.io/waves/dev/reference/test_spectra.md)

@@ -33,8 +33,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.8" id="waves-028-development-version">waves 0.2.8 (development version)<a class="anchor" aria-label="anchor" href="#waves-028-development-version"></a></h2>
-<ul><li>Deprecated arguments in <code><a href="../reference/train_spectra.html">train_spectra()</a></code> and <code><a href="../reference/test_spectra.html">test_spectra()</a></code> now throw errors instead of warnings.</li>
+<h2 class="pkg-version" data-toc-text="0.3.0" id="waves-030-development-version">waves 0.3.0 (development version)<a class="anchor" aria-label="anchor" href="#waves-030-development-version"></a></h2>
+<ul><li>Bug fix: <code><a href="../reference/save_model.html">save_model()</a></code> now correctly forwards <code>seed</code> to <code><a href="../reference/test_spectra.html">test_spectra()</a></code>. Previously the argument was accepted but silently ignored, so every call ran with the default <code>seed = 1</code> regardless of the value supplied. This is the same class of bug fixed for <code><a href="../reference/test_spectra.html">test_spectra()</a></code> in 0.2.7, one level up. Users who set a non-default <code>seed</code> in <code><a href="../reference/save_model.html">save_model()</a></code> will see different (correctly seeded) results after this change.</li>
+<li>
+<code><a href="../reference/save_model.html">save_model()</a></code> now returns and writes model statistics in a consistent shape regardless of how many pretreatments are supplied. Previously a single pretreatment produced three rows (<code>mean</code>/<code>sd</code>/<code>mode</code>) with plain metric names, while multiple pretreatments produced one row with <code>_mean</code>/<code>_sd</code>/<code>_mode</code> suffixes. Both now produce the one-row suffixed form. Code that read <code>$best.model.stats$RMSEp</code> from a single-pretreatment call should now read <code>$best.model.stats$RMSEp_mean</code>.</li>
+<li>Deprecated arguments in <code><a href="../reference/train_spectra.html">train_spectra()</a></code>, <code><a href="../reference/test_spectra.html">test_spectra()</a></code>, and <code><a href="../reference/save_model.html">save_model()</a></code> now throw errors instead of warnings. In <code><a href="../reference/save_model.html">save_model()</a></code> these are <code>save.model</code>, <code>wavelengths</code>, <code>autoselect.preprocessing</code>, and <code>preprocessing.method</code>.</li>
+<li>
+<code>kernlab</code> is now listed under <code>Suggests</code>; it is required at runtime by the <code>svmLinear</code> and <code>svmRadial</code> model methods.</li>
 <li>
 <code><a href="../reference/train_spectra.html">train_spectra()</a></code> and <code><a href="../reference/test_spectra.html">test_spectra()</a></code> now return variable importance for <code>svmLinear</code> models. Importance is computed from the primal weight vector (absolute values of <code>w = X_sv^T * alpha</code>).</li>
 </ul></div>
@@ -184,7 +189,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
