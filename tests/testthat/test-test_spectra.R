@@ -48,6 +48,7 @@ test_that("test_spectra accepts both valid best.model.metric values without erro
 
 test_that("test_spectra svmLinear returns importance with multiple pretreatments", {
   skip_on_cran()
+  skip_if_not_installed("kernlab")
   result <- test_spectra(test_df, num.iterations = 2, tune.length = 3,
                          pretreatment = 1:2, model.method = "svmLinear",
                          verbose = FALSE)

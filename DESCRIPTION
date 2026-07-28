@@ -49,10 +49,11 @@ Imports:
     tibble,
     tidyr (>= 1.0),
     tidyselect
-Suggests: 
+Suggests:
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    kernlab
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr, rmarkdown

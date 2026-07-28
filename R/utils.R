@@ -30,7 +30,7 @@ get_mode <- function(vector.input) {
 #' @param return.model Deprecated; kept for compatibility
 #' @return `NULL` (warnings are issued as side effects)
 #' @keywords internal
-#' @importFrom lifecycle is_present deprecate_warn
+#' @importFrom lifecycle is_present deprecate_stop
 #' @noRd
 handle_deprecations <- function(function_name,
                                 wavelengths = lifecycle::deprecated(),
@@ -42,7 +42,7 @@ handle_deprecations <- function(function_name,
   
   if (lifecycle::is_present(wavelengths)) {
     lifecycle::deprecate_stop(
-      when = "0.2.8",
+      when = "0.3.0",
       what = paste0(function_name, "(wavelengths)"),
       details = "Wavelength specification is now inferred from column names."
     )
@@ -50,7 +50,7 @@ handle_deprecations <- function(function_name,
 
   if (lifecycle::is_present(preprocessing)) {
     lifecycle::deprecate_stop(
-      when = "0.2.8",
+      when = "0.3.0",
       what = paste0(function_name, "(preprocessing)"),
       details = paste(
         "Argument `preprocessing` is deprecated.",
@@ -62,7 +62,7 @@ handle_deprecations <- function(function_name,
 
   if (lifecycle::is_present(rf.variable.importance)) {
     lifecycle::deprecate_stop(
-      when = "0.2.8",
+      when = "0.3.0",
       what = paste0(function_name, "(rf.variable.importance)"),
       details = "Variable importance is now output by default when
       `model.method` is set to `pls`, `rf`, or `svmLinear`."
@@ -71,7 +71,7 @@ handle_deprecations <- function(function_name,
 
   if (lifecycle::is_present(output.summary)) {
     lifecycle::deprecate_stop(
-      when = "0.2.8",
+      when = "0.3.0",
       what = paste0(function_name, "(output.summary)"),
       details = "Summary output is now returned by default."
     )
@@ -79,7 +79,7 @@ handle_deprecations <- function(function_name,
 
   if (lifecycle::is_present(save.model)) {
     lifecycle::deprecate_stop(
-      when = "0.2.8",
+      when = "0.3.0",
       what = paste0(function_name, "(save.model)"),
       details = "Models are now saved by default."
     )
@@ -87,11 +87,38 @@ handle_deprecations <- function(function_name,
 
   if (lifecycle::is_present(return.model)) {
     lifecycle::deprecate_stop(
-      when = "0.2.8",
+      when = "0.3.0",
       what = paste0(function_name, "(return.model)"),
       details = "Trained models are now returned by default."
     )
   }
+}
+
+#' Internal: widen a summary performance data.frame to one row
+#'
+#' Collapses the three-row (mean/sd/mode) summary produced by [train_spectra()]
+#' into a single row whose columns are suffixed with the summary type, e.g.
+#' `RMSEp_mean`, `RMSEp_sd`, `RMSEp_mode`. Metric and tuning columns are
+#' selected by excluding the identifier columns, so the helper does not need to
+#' be updated when the set of reported statistics changes.
+#'
+#' @param summary.df A summary performance `data.frame` containing
+#'   `Pretreatment`, `SummaryType`, and `ModelType` columns
+#' @return A one-row `data.frame` keyed by `Pretreatment`
+#' @keywords internal
+#' @importFrom tidyr pivot_longer pivot_wider
+#' @importFrom magrittr %>%
+#' @noRd
+widen_summary <- function(summary.df) {
+  summary.df %>%
+    tidyr::pivot_longer(
+      cols = !c("Pretreatment", "SummaryType", "ModelType")
+    ) %>%
+    tidyr::pivot_wider(
+      id_cols = "Pretreatment",
+      names_from = c("name", "SummaryType"),
+      names_sep = "_"
+    )
 }
 
 #' Internal: validate common inputs for spectral functions
@@ -620,13 +647,7 @@ aggregate_pretreatment_results <- function(training.results.i,
     }
 
     # Reformat summary statistics data.frame for multiple pretreatments
-    summary.i <- training.results.i$summary.model.performance %>%
-      tidyr::pivot_longer(cols = "RMSEp":"best.mtry") %>%
-      tidyr::pivot_wider(
-        id_cols = "Pretreatment",
-        names_from = c("name", "SummaryType"),
-        names_sep = "_"
-      )
+    summary.i <- widen_summary(training.results.i$summary.model.performance)
   } else {
     summary.i <- training.results.i$summary.model.performance
   }

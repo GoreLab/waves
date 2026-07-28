@@ -59,6 +59,7 @@ test_that("train_spectra RF final model uses modal best mtry from iterations", {
 
 test_that("train_spectra SVM final model does not include unique.id as predictor", {
   skip_on_cran()
+  skip_if_not_installed("kernlab")
   result <- train_spectra(test_df, num.iterations = 3, tune.length = 3,
                           model.method = "svmLinear", verbose = FALSE)
   expect_false("unique.id" %in% result$model$coefnames)

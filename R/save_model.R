@@ -26,7 +26,7 @@
 #'
 #' @importFrom utils write.csv
 #' @importFrom rlang abort
-#' @importFrom lifecycle deprecated is_present deprecate_warn
+#' @importFrom lifecycle deprecated is_present deprecate_stop
 #' @importFrom tibble add_column
 #' @importFrom magrittr %>%
 #'
@@ -79,27 +79,27 @@ save_model <- function(df,
                        autoselect.preprocessing = lifecycle::deprecated(),
                        preprocessing.method = lifecycle::deprecated()) {
 
-  # Deprecate warnings
+  # Deprecated arguments -- these now throw errors, consistent with
+  # train_spectra() and test_spectra() (see handle_deprecations()).
   if (lifecycle::is_present(save.model)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.3.0",
       what = "save_model(save.model)",
       with = "save_model(write.model)"
     )
-    write.model <- save.model
   }
 
   if (lifecycle::is_present(wavelengths)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.3.0",
       what = "save_model(wavelengths)",
       details = "Wavelength specification is now inferred from column names."
     )
   }
 
   if (lifecycle::is_present(autoselect.preprocessing)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.3.0",
       what = "save_model(autoselect.preprocessing)",
       details = "If multiple pretreatment methods are supplied,
       the best will be selected automatically."
@@ -107,8 +107,8 @@ save_model <- function(df,
   }
 
   if (lifecycle::is_present(preprocessing.method)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
+    lifecycle::deprecate_stop(
+      when = "0.3.0",
       what = "save_model(preprocessing.method)",
       with = "save_model(pretreatment)"
     )
@@ -154,14 +154,19 @@ save_model <- function(df,
     trial2 = trial2,
     trial3 = trial3,
     split.test = FALSE,
+    seed = seed,
     verbose = verbose
   )
 
   if (length(pretreatment) == 1) {
     best.model <- training.results$model
+    # Widen to a single row so the returned and saved statistics have the same
+    # shape regardless of how many pretreatments were supplied. test_spectra()
+    # already returns the wide form when multiple pretreatments are used.
     best.model.stats <- training.results$summary.model.performance %>%
       tibble::add_column(Pretreatment = methods.list[pretreatment],
-                         .before = "SummaryType")
+                         .before = "SummaryType") %>%
+      widen_summary()
     if (verbose) print(best.model.stats)
   }
 
